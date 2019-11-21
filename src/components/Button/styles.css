@@ -1,0 +1,121 @@
+@define-mixin btn-theme $bg-color, $bg-color-active {
+    background-color: $bg-color;
+
+    &:hover {
+        background-color: $bg-color-active;
+    }
+
+    &:disabled {
+        background-color: var(--bg-color-disabled);
+    }
+
+    &.btn--border {
+        border-color: $bg-color;
+        color: $bg-color;
+        fill: $bg-color;
+        background-color: transparent;
+
+        .btn__icon {
+            fill: $bg-color;
+        }
+
+        &:hover:not(:disabled) {
+            border-color: $bg-color-active;
+            color: $bg-color-active;
+
+            .btn__icon {
+                fill: $bg-color-active;
+            }
+        }
+
+        &:disabled {
+            border-color: var(--bg-color-disabled);
+            color: var(--bg-color-disabled);
+        }
+    }
+}
+
+.btn {
+    --height: calc(var(--gs) * 6);
+    --height-sm: calc(var(--gs) * 4);
+    --border-width: 2px;
+    --padding: calc(var(--gs) * 3);
+    --padding-sm: calc(var(--gs) * 2);
+    --font-size: 14px;
+    --font-size-sm: 12px;
+    --bg-color-disabled: var(--cl-grey);
+    --color: var(--cl-white);
+    --bg-color-basic: var(--cl-blue);
+    --bg-color-hover-basic: var(--cl-dk-blue);
+    --bg-color-red: var(--cl-red);
+    --bg-color-hover-red: var(--cl-dk-red);
+
+    line-height: var(--height);
+    padding: 0 var(--padding);
+    text-align: center;
+    font-size: var(--font-size);
+    color: var(--color);
+    transition: color ease var(--time), background-color ease var(--time), border-color ease var(--time);
+
+    &:hover {
+        color: var(--color);
+    }
+
+    &:disabled {
+        background-color: var(--bg-color-disabled);
+        cursor: not-allowed;
+    }
+
+    &:focus {
+        outline-offset: 2px;
+    }
+
+    &--border {
+        line-height: calc(var(--height) - var(--border-width));
+        border: var(--border-width) solid transparent;
+    }
+
+    &--theme {
+        &_basic {
+            @mixin btn-theme var(--bg-color-basic), var(--bg-color-hover-basic);
+        }
+
+        &_red {
+            @mixin btn-theme var(--bg-color-red), var(--bg-color-hover-red);
+        }
+    }
+
+    &--sm {
+        line-height: var(--height-sm);
+        padding: 0 var(--padding-sm);
+        font-size: var(--font-size-sm);
+
+        &--border {
+            line-height: calc(var(--height-sm) - var(--border-width));
+        }
+    }
+
+    &--block {
+        display: block;
+        width: 100%;
+    }
+
+    &__icon {
+        vertical-align: middle;
+        margin-top: -4px;
+        fill: var(--color);
+        transition: fill ease var(--time);
+
+        .btn--border:disabled & {
+            fill: var(--bg-color-disabled);
+        }
+
+        &--before {
+            margin-right: var(--gs);
+        }
+
+        &--after {
+            margin-left: var(--gs);
+        }
+    }
+}

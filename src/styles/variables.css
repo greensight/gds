@@ -1,0 +1,15 @@
+:root {
+    --cl-black: #000;
+    --cl-white: #fff;
+    --cl-grey: #696969;
+    --cl-lg-grey: #ccc;
+    --cl-blue: #215bf0;
+    --cl-dk-blue: #0f41c4;
+    --cl-red: #ea1414;
+    --cl-dk-red: #c30c0c;
+    --rgb-black: 0, 0, 0;
+    --rgb-white: 255, 255, 255;
+    --rgb-blue: 33, 91, 240;
+    --gs: 8px;
+    --time: 300ms;
+}

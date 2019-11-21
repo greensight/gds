@@ -1,0 +1,11 @@
+/node_modules
+/cjs
+/esm
+/umd
+/docs
+.env
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+yarn-error.log

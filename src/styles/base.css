@@ -1,0 +1,107 @@
+@import-normalize;
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+::selection {
+    color: var(--cl-white);
+    background: var(--cl-red);
+}
+
+:focus {
+    outline: 2px solid var(--cl-black);
+}
+
+.js-focus-visible :focus:not(.focus-visible) {
+    outline: none;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    color: var(--cl-black);
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: var(--cl-white);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px solid var(--cl-blue);
+    color: var(--cl-blue);
+    fill: var(--cl-blue);
+    transition: color ease var(--time), border-color ease var(--time);
+
+    &:hover {
+        border-color: var(--cl-dk-blue);
+        color: var(--cl-dk-blue);
+    }
+
+    &:focus {
+        transition: none;
+        border-color: transparent;
+    }
+}
+
+:--heading {
+    margin: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+ul,
+ol {
+    li {
+        list-style: none;
+    }
+}
+
+:--btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+:--input {
+    border-radius: 0;
+}
+
+input[type='number'] {
+    appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        margin: 0;
+        appearance: none;
+    }
+}
+
+textarea {
+    resize: none;
+}
+
+fieldset {
+    border: none;
+}
+
+.table {
+    border-collapse: collapse;
+
+    th {
+        font-weight: 400;
+    }
+}
