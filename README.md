@@ -11,15 +11,15 @@
 ## Install
 
 ```bash
-yarn add @greensught/gds
+yarn add @greensight/gds
 ```
 
 ## Usage
 
 ```js
 import React from 'react';
-import 'gds/esm/index.css';
-import { Button } from 'gds';
+import '@greensight/gds/esm/index.css';
+import { Button } from '@greensight/gds';
 
 const MyComponent = () => {
     return (
