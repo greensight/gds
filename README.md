@@ -8,15 +8,36 @@
 
 ⚠️⚠️⚠️ We don't search at outsource contributors at the moment.
 
+## Install
+
+```bash
+yarn add @greensught/gds
+```
+
 ## Usage
 
-| `yarn <command>`  | Description                                        |
-| ----------------- | -------------------------------------------------- |
-| `dev`             | Build app in dev mode and start development server |
-| `prod`            | Build app in prod mode                             |
-| `storybook`       | Starts a Storybook in dev mode                     |
-| `storybook:build` | Build static Storybook version in `docs` folder    |
-| `storybook:serve` | Starts a static server for `docs` browsing         |
-| `eslint`          | Lint all `.js`, `.jsx`, `.ts` and `.tsx` files     |
-| `stylelint`       | Lint all `.css` files                              |
-| `clean`           | Removes the `build` folder and clears cache        |
+```js
+import React from 'react';
+import 'gds/esm/index.css';
+import { Button } from 'gds';
+
+const MyComponent = () => {
+    return (
+        <div>
+            <h1>Some title</h1>
+            <Button>Click me</Button>
+        </div>
+    );
+};
+```
+
+## Development
+
+| `yarn <command>`  | Description                                     |
+| ----------------- | ----------------------------------------------- |
+| `build`           | Build package                                   |
+| `storybook`       | Starts a Storybook in dev mode                  |
+| `storybook:build` | Build static Storybook version in `docs` folder |
+| `storybook:serve` | Starts a static server for `docs` browsing      |
+| `eslint`          | Lint all `.js`, `.jsx`, `.ts` and `.tsx` files  |
+| `stylelint`       | Lint all `.css` files                           |
