@@ -2,11 +2,11 @@
 
 **GDS** is a design system in [Greensight](https://greensight.pro/) company.
 
-⚠️ This system is supposed to use only inside our company, at least for now.
+⚠️ This system is supposed to be used only inside our company, at least for now.
 
-⚠️⚠️ GDS in early development stage, so probably everything is broken.
+⚠️⚠️ GDS is in early development stage, so probably everything is broken.
 
-⚠️⚠️⚠️ We don't search at outsource contributors at the moment.
+⚠️⚠️⚠️ We're not looking for outsource contributors at the moment.
 
 ## Install
 

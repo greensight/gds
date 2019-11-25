@@ -2,14 +2,16 @@ import React from 'react';
 import { addParameters, configure, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
-import theme from './theme';
+import { ThemeProvider } from 'emotion-theming';
+import storybookTheme from './theme';
 import 'focus-visible';
 import '../src/styles';
 import CenteredContainer from './components/CenteredContainer';
+import theme from '../src/scripts/theme';
 
 addParameters({
     options: {
-        theme,
+        theme: storybookTheme,
         showPanel: false,
     },
     viewport: {
@@ -89,6 +91,7 @@ addParameters({
 addDecorator(withKnobs);
 addDecorator(withA11y);
 addDecorator(storyFn => <CenteredContainer>{storyFn()}</CenteredContainer>);
+addDecorator(storyFn => <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>);
 
 function loadStories() {
     return [
