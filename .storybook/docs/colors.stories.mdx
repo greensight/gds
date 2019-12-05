@@ -1,10 +1,12 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import ColorsGrid from '../components/ColorsGrid';
 import ColorsPalette from '../components/ColorsPalette';
 
 <Meta title="Colors" />
 
 # Colors
 
-<br />
-<ColorsPalette />
-<br />
+<ColorsGrid>
+    <ColorsPalette name="red" />
+    <ColorsPalette name="blue" />
+</ColorsGrid>

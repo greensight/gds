@@ -1,51 +1,82 @@
 import React from 'react';
-import './ColorsPalette.css';
+import { useTheme } from 'emotion-theming';
 
-const ColorsPalette = () => {
-    const baseClass = 'colors-palette';
-
-    const styleSheets = Array.from(document.styleSheets);
-    const cssRules = styleSheets.map(styleSheet => Array.from(styleSheet.cssRules)).flat();
-    const roots = cssRules.filter(cssRule => cssRule.selectorText === ':root');
-    const rules = roots
-        .map(cssRule => {
-            const rules = cssRule.cssText.match(':root {(.+)}')[1].split(';');
-            return rules.map(rule => rule.trim());
-        })
-        .flat();
-    const colorRules = rules.filter(rule => rule.startsWith('--cl-'));
-    const colors = colorRules.map(rule => {
-        const parts = rule.split(': ');
-        return {
-            name: parts[0],
-            value: parts[1],
-        };
-    });
+const ColorsPalette = ({ name }) => {
+    const theme = useTheme();
+    const palette = theme.colors[name];
 
     return (
-        <ul className={baseClass}>
-            {colors.map(({ name, value }) => (
-                <ColorToken key={name} name={name} value={value} />
-            ))}
-        </ul>
-    );
-};
-
-const ColorToken = ({ name, value }) => {
-    const baseClass = 'color-token';
-
-    return (
-        <li className={baseClass} style={{ '--bg-color': value }}>
-            <div className={`${baseClass}__main`} />
-            <div className={`${baseClass}__info`}>
-                <div className={`${baseClass}__info-title`}>
-                    <strong>{name}</strong>
-                </div>
-                <div className={`${baseClass}__info-hex`}>
-                    <em>{value}</em>
-                </div>
+        <div
+            css={{
+                width: theme.step * 40,
+            }}
+        >
+            <div
+                css={{
+                    textAlign: 'center',
+                    fontSize: 24,
+                    textTransform: 'uppercase',
+                    fontWeight: 700,
+                    marginBottom: theme.space[2],
+                }}
+            >
+                {name}
             </div>
-        </li>
+            <ul>
+                {palette.map((color, index) => (
+                    <li
+                        key={color}
+                        css={{
+                            overflow: 'hidden',
+                            transition: `margin-right ease ${theme.time}, border-radius ease ${theme.time}`,
+                            ':first-child': {
+                                borderRadius: '8px 8px 0 0',
+                            },
+                            ':last-child': {
+                                borderRadius: '0 0 8px 8px',
+                            },
+                            ':hover': {
+                                marginRight: -1 * theme.space[2],
+                                borderRadius: '0 8px 8px 0',
+                            },
+                        }}
+                    >
+                        <button
+                            type="button"
+                            css={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                width: '100%',
+                                padding: theme.space[2],
+                                backgroundColor: color,
+                            }}
+                        >
+                            <span
+                                css={{
+                                    backgroundColor: theme.colors.white,
+                                    color: theme.colors.black,
+                                    padding: theme.space[1],
+                                    borderRadius: 4,
+                                }}
+                            >
+                                {index}
+                            </span>
+                            <span
+                                css={{
+                                    backgroundColor: theme.colors.white,
+                                    color: theme.colors.black,
+                                    padding: theme.space[1],
+                                    borderRadius: 4,
+                                }}
+                            >
+                                {color}
+                            </span>
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };
 
