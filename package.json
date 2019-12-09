@@ -33,9 +33,10 @@
     ],
     "scripts": {
         "build": "rimraf '{cjs,esm,umd}' && rollup -c",
-        "storybook": "start-storybook --ci",
-        "storybook:build": "build-storybook -o docs",
+        "storybook": "start-storybook -s ./public --ci",
+        "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 5000",
+        "tokens": "node utils",
         "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
         "stylelint": "stylelint '**/*.css' --fix",
         "prepublishOnly": "yarn build"
@@ -64,11 +65,12 @@
         "!/.storybook"
     ],
     "peerDependencies": {
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0",
         "@emotion/core": "^10.0.22",
         "@emotion/styled": "^10.0.23",
+        "axios": "^0.19.0",
         "emotion-theming": "^10.0.19",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
         "styled-system": "^5.1.2"
     },
     "devDependencies": {
@@ -94,9 +96,11 @@
         "@svgr/webpack": "^4.3.3",
         "@typescript-eslint/eslint-plugin": "^2.8.0",
         "@typescript-eslint/parser": "^2.8.0",
+        "axios": "^0.19.0",
         "babel-loader": "^8.0.6",
         "browserslist": "^4.7.3",
         "css-loader": "^3.2.0",
+        "dotenv": "^8.2.0",
         "emotion-theming": "^10.0.19",
         "eslint": "^6.6.0",
         "eslint-config-airbnb": "^18.0.1",
