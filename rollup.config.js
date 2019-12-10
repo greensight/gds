@@ -11,7 +11,6 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const plugins = [
     resolve({
         extensions,
-        preferBuiltins: true,
     }),
     commonjs({ exclude: 'src/**' }),
     babel({
@@ -23,7 +22,7 @@ const plugins = [
         minimize: true,
     }),
 ];
-const external = [...Object.keys(pkg.peerDependencies), 'path', 'fs'];
+const external = Object.keys(pkg.peerDependencies);
 
 const getEntries = prefix =>
     fs
@@ -47,13 +46,10 @@ export default [
             globals: {
                 '@emotion/core': 'emotionCore',
                 '@emotion/styled': 'emotionStyled',
-                axios: 'axios',
                 'emotion-theming': 'emotionTheming',
                 react: 'React',
                 'react-dom': 'ReactDOM',
                 'styled-system': 'styledSystem',
-                fs: 'fs',
-                path: 'path',
             },
             esModule: false,
         },
