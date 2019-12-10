@@ -1,6 +1,16 @@
 import React from 'react';
-import './CenteredContainer.css';
 
-const CenteredContainer = ({ children }) => <div className="centered-container">{children}</div>;
+const CenteredContainer = ({ children }) => (
+    <div
+        css={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 16,
+        }}
+    >
+        {children}
+    </div>
+);
 
 export default CenteredContainer;

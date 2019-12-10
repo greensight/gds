@@ -97,7 +97,6 @@ function loadStories() {
     return [
         require.context('./docs', false, /welcome\.stories\.mdx$/),
         require.context('./docs', false, /changelog\.stories\.mdx$/),
-        require.context('./docs', false, /icons\.stories\.mdx$/),
         require.context('./docs', false, /colors\.stories\.mdx$/),
         require.context('../src/components', true, /\.stories\.(jsx?|tsx?|mdx)$/),
     ];

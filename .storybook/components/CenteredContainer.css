@@ -1,6 +1,0 @@
-.centered-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: calc(var(--gs) * 2);
-}

@@ -8,14 +8,6 @@ const Palettes = () => {
 
     return (
         <div>
-            <h2
-                css={{
-                    marginBottom: 16,
-                    marginTop: 16,
-                }}
-            >
-                Color Palettes
-            </h2>
             <div
                 css={{
                     display: 'grid',
@@ -27,7 +19,7 @@ const Palettes = () => {
                     .filter(name => Array.isArray(palettes[name]))
                     .map(name => (
                         <div key={name}>
-                            <h3
+                            <div
                                 css={{
                                     textAlign: 'center',
                                     fontSize: 24,
@@ -37,7 +29,7 @@ const Palettes = () => {
                                 }}
                             >
                                 {name}
-                            </h3>
+                            </div>
                             <Palette name={name} />
                         </div>
                     ))}
