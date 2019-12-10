@@ -1,6 +1,6 @@
 import colorToToken from './colorToToken';
 
-async function getColors(figmaTree) {
+const getColors = figmaTree => {
     /*
     Ожидаемая структура:
     Page: "Base"
@@ -34,6 +34,6 @@ async function getColors(figmaTree) {
         }, {});
 
     return tokens;
-}
+};
 
 export default getColors;

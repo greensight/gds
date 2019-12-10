@@ -8,15 +8,15 @@ const Colors = () => {
 
     return (
         <div>
-            <h2 css={{ marginTop: theme.space[2] }}>Semantic Colors</h2>
+            <h2 css={{ marginTop: 16 }}>Semantic Colors</h2>
             {Object.keys(colors).map(groupName => (
-                <div>
+                <div key={groupName}>
                     <h3
                         css={{
                             fontSize: 24,
                             fontWeight: 700,
-                            marginBottom: theme.space[2],
-                            marginTop: theme.space[2],
+                            marginBottom: 16,
+                            marginTop: 16,
                         }}
                     >
                         {groupName}
@@ -25,7 +25,7 @@ const Colors = () => {
                         css={{
                             display: 'grid',
                             gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-                            gridGap: theme.space[8],
+                            gridGap: 64,
                         }}
                     >
                         {Object.keys(colors[groupName]).map(colorName => (

@@ -1,6 +1,6 @@
 import colorToToken from './colorToToken';
 
-async function getPalettes(figmaTree) {
+const getPalettes = figmaTree => {
     /*
     Ожидаемая структура:
     Page: "Base"
@@ -24,6 +24,6 @@ async function getPalettes(figmaTree) {
         );
 
     return tokens;
-}
+};
 
 export default getPalettes;

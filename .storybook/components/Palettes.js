@@ -10,8 +10,8 @@ const Palettes = () => {
         <div>
             <h2
                 css={{
-                    marginBottom: theme.space[2],
-                    marginTop: theme.space[2],
+                    marginBottom: 16,
+                    marginTop: 16,
                 }}
             >
                 Color Palettes
@@ -20,25 +20,27 @@ const Palettes = () => {
                 css={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(2, 1fr)',
-                    gridGap: theme.space[4],
+                    gridGap: 32,
                 }}
             >
-                {Object.keys(palettes).map(name => (
-                    <div key={name}>
-                        <h3
-                            css={{
-                                textAlign: 'center',
-                                fontSize: 24,
-                                fontWeight: 700,
-                                marginBottom: theme.space[2],
-                                marginTop: theme.space[2],
-                            }}
-                        >
-                            {name}
-                        </h3>
-                        <Palette name={name} />
-                    </div>
-                ))}
+                {Object.keys(palettes)
+                    .filter(name => Array.isArray(palettes[name]))
+                    .map(name => (
+                        <div key={name}>
+                            <h3
+                                css={{
+                                    textAlign: 'center',
+                                    fontSize: 24,
+                                    fontWeight: 700,
+                                    marginBottom: 16,
+                                    marginTop: 16,
+                                }}
+                            >
+                                {name}
+                            </h3>
+                            <Palette name={name} />
+                        </div>
+                    ))}
             </div>
         </div>
     );

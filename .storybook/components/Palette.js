@@ -12,9 +12,9 @@ const Palette = ({ name }) => {
                 <li
                     key={color}
                     css={{
-                        transition: `margin-right ease ${theme.time}`,
+                        transition: 'margin-right ease 300ms',
                         ':hover': {
-                            marginRight: -1 * theme.space[2],
+                            marginRight: -16,
                         },
                     }}
                 >
@@ -26,7 +26,7 @@ const Palette = ({ name }) => {
                             justifyContent: 'space-between',
                             alignItems: 'center',
                             width: '100%',
-                            padding: `${theme.space[2]}px ${theme.space[3]}px`,
+                            padding: '16px 24px',
                             backgroundColor: color,
                         }}
                     >
@@ -34,7 +34,7 @@ const Palette = ({ name }) => {
                             css={{
                                 backgroundColor: 'white',
                                 color: 'black',
-                                padding: `4px ${theme.space[1]}px`,
+                                padding: '4px 8px',
                                 borderRadius: 4,
                                 fontSize: 18,
                                 lineHeight: 1.36,
@@ -46,7 +46,7 @@ const Palette = ({ name }) => {
                             css={{
                                 backgroundColor: 'white',
                                 color: 'black',
-                                padding: `4px ${theme.space[1]}px`,
+                                padding: '4px 8px',
                                 borderRadius: 4,
                                 fontSize: 18,
                                 lineHeight: 1.36,
