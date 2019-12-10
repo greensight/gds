@@ -63,7 +63,6 @@ export default [
     {
         input: {
             index: 'src/index.js',
-            getTokens: 'src/scripts/getTokens.js',
             Storybook: 'src/components/Storybook/index.js',
             ...getEntries('src/components/'),
         },
