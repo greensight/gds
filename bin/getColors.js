@@ -1,4 +1,4 @@
-import colorToToken from './colorToToken';
+const colorToToken = require('./colorToToken');
 
 const getColors = figmaTree => {
     /*
@@ -36,4 +36,4 @@ const getColors = figmaTree => {
     return tokens;
 };
 
-export default getColors;
+module.exports = getColors;

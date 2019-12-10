@@ -1,9 +1,8 @@
-#!/usr/bin/env node
-import fs from 'fs';
-import { resolve } from 'path';
-import axios from './axios';
-import getPalettes from './getPalettes';
-import getColors from './getColors';
+const fs = require('fs');
+const path = require('path');
+const axios = require('./axios');
+const getPalettes = require('./getPalettes');
+const getColors = require('./getColors');
 
 let outputDir = '../public';
 if (process.argv.includes('-o')) outputDir = process.argv[process.argv.indexOf('-o') + 1];
@@ -35,10 +34,10 @@ async function getTokens(types) {
     const palettes = getToken('palettes');
     const colors = getToken('colors');
 
-    fs.writeFile(resolve(__dirname, `${outputDir}/tokens.json`), JSON.stringify({ palettes, colors }), err => {
+    fs.writeFile(path.resolve(__dirname, `${outputDir}/tokens.json`), JSON.stringify({ palettes, colors }), err => {
         if (err) throw err;
         console.log('Tokens are ready to use!');
     });
 }
 
-export default getTokens;
+module.exports = getTokens;

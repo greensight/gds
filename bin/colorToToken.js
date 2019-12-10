@@ -10,4 +10,4 @@ const colorToToken = color => {
     return rgbToHex(...rgb);
 };
 
-export default colorToToken;
+module.exports = colorToToken;

@@ -1,5 +1,4 @@
-#!/usr/bin/env node
-import colorToToken from './colorToToken';
+const colorToToken = require('./colorToToken');
 
 const getPalettes = figmaTree => {
     /*
@@ -27,4 +26,4 @@ const getPalettes = figmaTree => {
     return tokens;
 };
 
-export default getPalettes;
+module.exports = getPalettes;
