@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "repository": "https://github.com/greensight/gds",
     "description": "Greensight Design System",
     "license": "MIT",
@@ -15,7 +15,9 @@
         "*.css"
     ],
     "bin": {
-        "gds-tokens": "bin/index.js"
+        "gds-tokens": "bin/index.js",
+        "get-palettes": "bin/getPalettes.js",
+        "get-colors": "bin/getColors.js"
     },
     "keywords": [
         "GDS",
@@ -39,7 +41,7 @@
         "storybook": "start-storybook -s ./public --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 5000",
-        "tokens": "bin/index.js -o ../public",
+        "tokens": "bin/index.js",
         "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
         "stylelint": "stylelint '**/*.css' --fix",
         "prepublishOnly": "yarn build"

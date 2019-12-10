@@ -1,10 +1,12 @@
+#!/usr/bin/env node
 import fs from 'fs';
 import { resolve } from 'path';
 import axios from './axios';
 import getPalettes from './getPalettes';
 import getColors from './getColors';
 
-const outputDir = process.argv[process.argv.indexOf('-o') + 1];
+let outputDir = '../public';
+if (process.argv.includes('-o')) outputDir = process.argv[process.argv.indexOf('-o') + 1];
 
 const getters = {
     palettes: getPalettes,

@@ -8,4 +8,6 @@ require('@babel/register')({
 
 const getTokens = require('./getTokens').default;
 
-getTokens();
+let tokens;
+if (process.argv.includes('-t')) tokens = process.argv[process.argv.indexOf('-t') + 1].split(',');
+getTokens(tokens);
