@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "repository": "https://github.com/greensight/gds",
     "description": "Greensight Design System",
     "license": "MIT",
@@ -9,15 +9,14 @@
     "files": [
         "cjs/*",
         "esm/*",
-        "umd/*"
+        "umd/*",
+        "bin/*"
     ],
     "sideEffects": [
         "*.css"
     ],
     "bin": {
-        "gds-tokens": "bin/index.js",
-        "get-palettes": "bin/getPalettes.js",
-        "get-colors": "bin/getColors.js"
+        "gds-tokens": "bin/index.js"
     },
     "keywords": [
         "GDS",
