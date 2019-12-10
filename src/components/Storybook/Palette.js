@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from 'emotion-theming';
-import copyToClipboard from '../../src/scripts/copyToClipboard';
+import copyToClipboard from '../../scripts/copyToClipboard';
 
 const Palette = ({ name }) => {
     const theme = useTheme();

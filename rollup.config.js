@@ -11,8 +11,9 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const plugins = [
     resolve({
         extensions,
+        preferBuiltins: true,
     }),
-    commonjs(),
+    commonjs({ exclude: 'src/**' }),
     babel({
         exclude: 'node_modules/**',
         extensions,
@@ -22,16 +23,19 @@ const plugins = [
         minimize: true,
     }),
 ];
-const external = Object.keys(pkg.peerDependencies);
+const external = [...Object.keys(pkg.peerDependencies), 'path', 'fs'];
 
-const getEntries = (prefix, isFile = false) =>
-    fs.readdirSync(path.resolve(__dirname, prefix)).reduce(
-        (acc, name) => ({
-            ...acc,
-            [isFile ? name.match(/(.*)\./)[1] : name]: `${prefix}${name}${isFile ? '' : '/index.tsx'}`,
-        }),
-        {},
-    );
+const getEntries = prefix =>
+    fs
+        .readdirSync(path.resolve(__dirname, prefix))
+        .filter(name => name !== 'Storybook')
+        .reduce(
+            (acc, name) => ({
+                ...acc,
+                [name]: `${prefix}${name}/index.tsx`,
+            }),
+            {},
+        );
 
 export default [
     {
@@ -41,8 +45,15 @@ export default [
             format: 'umd',
             name: 'gds',
             globals: {
+                '@emotion/core': 'emotionCore',
+                '@emotion/styled': 'emotionStyled',
+                axios: 'axios',
+                'emotion-theming': 'emotionTheming',
                 react: 'React',
                 'react-dom': 'ReactDOM',
+                'styled-system': 'styledSystem',
+                fs: 'fs',
+                path: 'path',
             },
             esModule: false,
         },
@@ -52,8 +63,9 @@ export default [
     {
         input: {
             index: 'src/index.js',
+            getTokens: 'src/scripts/getTokens.js',
+            Storybook: 'src/components/Storybook/index.js',
             ...getEntries('src/components/'),
-            ...getEntries('src/scripts/', true),
         },
         output: [
             {

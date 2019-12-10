@@ -19,8 +19,8 @@ const theme = {
         time: '300ms',
         disabled: {
             color: 'white',
-            bg: palettes.gray[14],
-            borderColor: palettes.gray[12],
+            bg: palettes.grey[14],
+            borderColor: palettes.grey[12],
         },
         variants: {
             default: {

@@ -1,8 +1,10 @@
 import fs from 'fs';
 import { resolve } from 'path';
-import axios from '../src/scripts/axios';
-import getPalettes from '../src/scripts/getPalettes';
-import getColors from '../src/scripts/getColors';
+import axios from './axios';
+import getPalettes from './getPalettes';
+import getColors from './getColors';
+
+const outputDir = process.argv[process.argv.indexOf('-o') + 1];
 
 const getters = {
     palettes: getPalettes,
@@ -31,7 +33,7 @@ async function getTokens(types) {
     const palettes = getToken('palettes');
     const colors = getToken('colors');
 
-    fs.writeFile(resolve(__dirname, '../public/tokens.json'), JSON.stringify({ palettes, colors }), err => {
+    fs.writeFile(resolve(__dirname, `${outputDir}/tokens.json`), JSON.stringify({ palettes, colors }), err => {
         if (err) throw err;
         console.log('Tokens are ready to use!');
     });

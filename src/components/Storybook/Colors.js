@@ -8,7 +8,7 @@ const Colors = () => {
 
     return (
         <div>
-            <h2 css={{ marginTop: 16 }}>Semantic Colors</h2>
+            <h2>Semantic Colors</h2>
             {Object.keys(colors).map(groupName => (
                 <div key={groupName}>
                     <h3

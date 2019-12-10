@@ -1,5 +1,5 @@
 import React from 'react';
-import copyToClipboard from '../../src/scripts/copyToClipboard';
+import copyToClipboard from '../../scripts/copyToClipboard';
 
 const Color = ({ name, value }) => {
     return (

@@ -14,6 +14,9 @@
     "sideEffects": [
         "*.css"
     ],
+    "bin": {
+        "gds-tokens": "bin/index.js"
+    },
     "keywords": [
         "GDS",
         "Greensight",
@@ -36,7 +39,7 @@
         "storybook": "start-storybook -s ./public --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 5000",
-        "tokens": "node utils",
+        "tokens": "bin/index.js -o ../public",
         "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
         "stylelint": "stylelint '**/*.css' --fix",
         "prepublishOnly": "yarn build"
