@@ -8,10 +8,9 @@ const Colors = () => {
 
     return (
         <div>
-            <h2>Semantic Colors</h2>
             {Object.keys(colors).map(groupName => (
                 <div key={groupName}>
-                    <h3
+                    <div
                         css={{
                             fontSize: 24,
                             fontWeight: 700,
@@ -20,7 +19,7 @@ const Colors = () => {
                         }}
                     >
                         {groupName}
-                    </h3>
+                    </div>
                     <ul
                         css={{
                             display: 'grid',

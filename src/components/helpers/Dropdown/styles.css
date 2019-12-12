@@ -1,0 +1,21 @@
+@define-mixin tippy-arrow $placement {
+    &[data-placement^='$(placement)'] .tippy-arrow {
+        border-$(placement)-color: var(--bg-color);
+    }
+}
+
+.tippy-tooltip {
+    &.dropdown-theme {
+        --color: var(--cl-black);
+        --bg-color: var(--cl-white);
+
+        color: var(--color);
+        background-color: var(--bg-color);
+        box-shadow: 0 0 0 2px var(--cl-black);
+
+        @mixin tippy-arrow top;
+        @mixin tippy-arrow bottom;
+        @mixin tippy-arrow left;
+        @mixin tippy-arrow right;
+    }
+}
