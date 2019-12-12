@@ -3,7 +3,7 @@ import { useTheme } from 'emotion-theming';
 import Color from './Color';
 
 const Colors = () => {
-    const theme = useTheme();
+    const theme = useTheme().app;
     const { colors } = theme;
 
     return (

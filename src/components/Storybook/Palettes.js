@@ -3,7 +3,7 @@ import { useTheme } from 'emotion-theming';
 import Palette from './Palette';
 
 const Palettes = () => {
-    const theme = useTheme();
+    const theme = useTheme().app;
     const { palettes } = theme;
 
     return (

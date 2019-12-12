@@ -5,7 +5,7 @@ import Dropdown from '../helpers/Dropdown';
 import CheckIcon from '../../images/check.svg';
 
 const Palette = ({ name }) => {
-    const theme = useTheme();
+    const theme = useTheme().app;
     const { palettes, colors } = theme;
 
     const DropdownContent = (

@@ -24,7 +24,7 @@ const Button: React.FC<IButton> = ({
 };
 
 const useStyles = ({ size, variant, bordered, block }) => {
-    const theme = useTheme();
+    const theme = useTheme().app;
     const { disabled, borderWidth, time } = theme.button;
 
     const baseStyles = {

@@ -2,8 +2,9 @@ import React from 'react';
 import { useTheme } from 'emotion-theming';
 
 const Note = ({ icon, children }) => {
-    const theme = useTheme();
+    const theme = useTheme().app;
     const { colors } = theme;
+    console.log(theme);
 
     return (
         <div
@@ -11,7 +12,7 @@ const Note = ({ icon, children }) => {
                 position: 'relative',
                 padding: `16px 32px`,
                 background: colors.background.lighter,
-                color: colors.background.default,
+                color: colors.background.dark,
             }}
         >
             {icon && <span css={{ position: 'absolute', top: 16, left: 8 }}>{icon}</span>}

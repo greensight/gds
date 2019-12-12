@@ -12,7 +12,7 @@ const DoDont = ({ children }) => {
 };
 
 const Item = ({ type, children }) => {
-    const theme = useTheme();
+    const theme = useTheme().app;
     const { colors } = theme;
     const color = type === 'do' ? colors.function.success : colors.function.error;
     const Icon = type === 'do' ? CheckIcon : CrossIcon;
@@ -23,7 +23,7 @@ const Item = ({ type, children }) => {
             css={{
                 padding: `16px 32px`,
                 background: colors.background.lighter,
-                color: colors.background.default,
+                color: colors.background.dark,
                 borderTop: `4px solid ${color}`,
             }}
         >

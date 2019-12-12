@@ -11,9 +11,14 @@ const colors = {
     ...tokens.colors,
 };
 
+const typography = {
+    ...tokens.typography,
+};
+
 const theme = {
     palettes,
     colors,
+    typography,
     button: {
         borderWidth: 2,
         time: '300ms',
