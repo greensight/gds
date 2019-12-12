@@ -3,6 +3,7 @@ const path = require('path');
 const axios = require('./axios');
 const getPalettes = require('./getPalettes');
 const getColors = require('./getColors');
+const getTypography = require('./getTypography');
 
 let outputDir = '../public';
 if (process.argv.includes('-o')) outputDir = process.argv[process.argv.indexOf('-o') + 1];
@@ -10,6 +11,7 @@ if (process.argv.includes('-o')) outputDir = process.argv[process.argv.indexOf('
 const getters = {
     palettes: getPalettes,
     colors: getColors,
+    typography: getTypography,
 };
 
 async function getTokens(types) {
@@ -25,6 +27,7 @@ async function getTokens(types) {
                 console.log(`✅  ${type[0].toUpperCase()}${type.slice(1)}`);
             } catch (error) {
                 console.log(`❌  ${type[0].toUpperCase()}${type.slice(1)}`);
+                console.log(error);
             }
         }
 
@@ -33,11 +36,16 @@ async function getTokens(types) {
 
     const palettes = getToken('palettes');
     const colors = getToken('colors');
+    const typography = getToken('typography');
 
-    fs.writeFile(path.resolve(__dirname, `${outputDir}/tokens.json`), JSON.stringify({ palettes, colors }), err => {
-        if (err) throw err;
-        console.log('Tokens are ready to use!');
-    });
+    fs.writeFile(
+        path.resolve(__dirname, `${outputDir}/tokens.json`),
+        JSON.stringify({ palettes, colors, typography }),
+        err => {
+            if (err) throw err;
+            console.log('Tokens are ready to use!');
+        },
+    );
 }
 
 module.exports = getTokens;
