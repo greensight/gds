@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "0.3.3",
+    "version": "0.4.0",
     "repository": "https://github.com/greensight/gds",
     "description": "Greensight Design System",
     "license": "MIT",
@@ -96,6 +96,7 @@
         "@storybook/addons": "^5.2.5",
         "@storybook/react": "^5.2.5",
         "@storybook/theming": "^5.2.8",
+        "@svgr/rollup": "^4.3.3",
         "@svgr/webpack": "^4.3.3",
         "@typescript-eslint/eslint-plugin": "^2.8.0",
         "@typescript-eslint/parser": "^2.8.0",

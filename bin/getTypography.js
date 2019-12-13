@@ -21,7 +21,7 @@ const getStyles = text => ({
     lineHeight: convertLineHeight(text.style.lineHeightPercentFontSize),
     letterSpacing: convertLetterSpacing(text.style.letterSpacing, text.style.fontSize),
     fontStyle: text.style.italic && 'italic',
-    textTranform: convertTextTransform(text.style.textCase),
+    textTransform: convertTextTransform(text.style.textCase),
     textDecoration: convertTextDecoration(text.style.textDecoration),
     fontVariantNumeric: text.style.opentypeFlags && text.style.opentypeFlags.TNUM && 'tabular-nums',
 });
@@ -55,8 +55,6 @@ const getPalettes = figmaTree => {
         ...breakpointsTokens,
         ...textTokens,
     };
-
-    console.log(JSON.stringify(tokens, null, 2));
 
     return tokens;
 };
