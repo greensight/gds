@@ -5,7 +5,7 @@ import Palette from './Palette';
 const Palettes = () => {
     const theme = useTheme().app;
     const { palettes } = theme;
-
+    console.log(theme);
     return (
         <div>
             <div

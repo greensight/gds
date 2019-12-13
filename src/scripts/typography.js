@@ -1,6 +1,6 @@
 const pxToRem = px => px / 16;
 
-const fluid = (maxFs, minFs, maxVw, minVw) => {
+const getFluidStyles = (maxFs, minFs, maxVw, minVw) => {
     const mq = [maxVw, minVw].map(bp => `@media (max-width: ${bp}px)`);
 
     return {
@@ -38,7 +38,7 @@ const typography = (theme, name) => {
             ...desktopStyles,
             [`@media (max-width: ${minVw})`]: { ...uniqueMobileStyles },
         };
-        fluidStyles = fluid(maxFs, minFs, maxVw, minVw);
+        fluidStyles = getFluidStyles(maxFs, minFs, maxVw, minVw);
     }
 
     return {

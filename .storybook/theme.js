@@ -22,7 +22,5 @@ export default create({
     // brandUrl: 'https://example.com',
     // brandImage: 'https://placehold.it/350x150',
     gridCellSize: 8,
-    app: {
-        ...theme,
-    },
+    ...theme,
 });
