@@ -1,10 +1,21 @@
 // eslint-disable-next-line import/no-unresolved
 import tokens from '../../public/tokens';
 
+const typography = {
+    ...tokens.typography,
+    fonts: {
+        'PT Root UI': {
+            vf: 'PT Root UI VF',
+            stack: 'sans-serif',
+        },
+    },
+};
+
 /* В теме идёт обёртка в app, чтобы тема не конфликтовала с провайдером темы Storybook */
 const theme = {
     app: {
         ...tokens,
+        typography,
         button: {
             borderWidth: 2,
             time: '300ms',

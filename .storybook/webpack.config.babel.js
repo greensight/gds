@@ -70,6 +70,15 @@ module.exports = ({ config, mode }) => {
                 limit: 1024,
             },
         },
+        {
+            test: /\.woff2?$/,
+            include: path.resolve(__dirname, '../src/fonts'),
+            loader: 'url-loader',
+            options: {
+                name: '[name].[ext]',
+                limit: 1024,
+            },
+        },
     ];
 
     config.plugins = [

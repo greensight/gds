@@ -4,7 +4,6 @@ import { useTheme } from 'emotion-theming';
 const Note = ({ icon, children }) => {
     const theme = useTheme().app;
     const { colors } = theme;
-    console.log(theme);
 
     return (
         <div

@@ -16,32 +16,74 @@ const getFluidStyles = (maxFs, minFs, maxVw, minVw) => {
     };
 };
 
+const addFontStack = (font, stack) => {
+    if (!stack) return font;
+    return `"${font}", ${stack}`;
+};
+
+const removeFontFamily = styles => {
+    if (!styles) return undefined;
+    return Object.keys(styles)
+        .filter(name => name !== 'fontFamily')
+        .reduce(
+            (acc, key) => ({
+                ...acc,
+                [key]: styles[key],
+            }),
+            {},
+        );
+};
+
 const typography = (theme, name) => {
     const typography = theme.typography[name];
-    let mainStyles = typography.desktop;
+    let fontFamilyStyles = {
+        fontFamily: typography.desktop.fontFamily,
+    };
+    const definedFont = Object.keys(theme.typography.fonts).find(name => name === typography.desktop.fontFamily);
+
+    if (definedFont) {
+        const font = theme.typography.fonts[definedFont];
+        fontFamilyStyles.fontFamily = addFontStack(fontFamilyStyles.fontFamily, font.stack);
+
+        if (font.vf) {
+            fontFamilyStyles = {
+                ...fontFamilyStyles,
+                '@supports (font-variation-settings: normal)': {
+                    fontFamily: addFontStack(font.vf, font.stack),
+                },
+            };
+        }
+    }
+
+    const desktopStyles = removeFontFamily(typography.desktop);
+    const mobileStyles = removeFontFamily(typography.mobile);
     let fluidStyles = {};
+    let mainStyles = desktopStyles;
 
     if (typography.mobile) {
-        const { fontSize: maxFs, ...desktopStyles } = typography.desktop;
-        const { fontSize: minFs, ...mobileStyles } = typography.mobile;
+        const { fontSize: maxFs, ...desktopStylesWithoutFs } = desktopStyles;
+        const { fontSize: minFs, ...mobileStylesWithoutFs } = mobileStyles;
         const [maxVw, minVw] = theme.typography.breakpoints;
-        const uniqueMobileStyles = Object.keys(mobileStyles)
-            .filter(name => desktopStyles[name] && desktopStyles[name] === mobileStyles[name])
+        const uniqueMobileStyles = Object.keys(mobileStylesWithoutFs)
+            .filter(
+                name => desktopStylesWithoutFs[name] && desktopStylesWithoutFs[name] === mobileStylesWithoutFs[name],
+            )
             .reduce(
                 (acc, key) => ({
                     ...acc,
-                    [key]: mobileStyles[key],
+                    [key]: mobileStylesWithoutFs[key],
                 }),
                 {},
             );
         mainStyles = {
-            ...desktopStyles,
+            ...desktopStylesWithoutFs,
             [`@media (max-width: ${minVw})`]: { ...uniqueMobileStyles },
         };
         fluidStyles = getFluidStyles(maxFs, minFs, maxVw, minVw);
     }
 
     return {
+        ...fontFamilyStyles,
         ...mainStyles,
         ...fluidStyles,
     };
