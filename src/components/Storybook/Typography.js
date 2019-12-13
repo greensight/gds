@@ -27,7 +27,7 @@ const Typography = ({ text = 'Demo text 123' }) => {
                     )
                     .map(name => (
                         <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: 24 }}>
-                            <div css={{ minWidth: '120px', marginRight: 16 }}>
+                            <div css={{ minWidth: 136, marginRight: 16 }}>
                                 {theme.typography[name].mobile && <MobileMark>M</MobileMark>}
                                 <span css={{ color: theme.colors.text.second, fontSize: 16 }}>{name}</span>
                             </div>

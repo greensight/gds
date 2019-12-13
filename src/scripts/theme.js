@@ -1,57 +1,42 @@
 // eslint-disable-next-line import/no-unresolved
 import tokens from '../../public/tokens';
 
-const palettes = {
-    ...tokens.palettes,
-    black: '#000',
-    white: '#fff',
-};
-
-const colors = {
-    ...tokens.colors,
-};
-
-const typography = {
-    ...tokens.typography,
-};
-
+/* В теме идёт обёртка в app, чтобы тема не конфликтовала с провайдером темы Storybook */
 const theme = {
     app: {
-        palettes,
-        colors,
-        typography,
+        ...tokens,
         button: {
             borderWidth: 2,
             time: '300ms',
             disabled: {
-                color: 'white',
-                bg: palettes.grey[14],
-                borderColor: palettes.grey[12],
+                color: tokens.colors.text.default,
+                bg: tokens.colors.bg.disabled,
+                borderColor: tokens.colors.border.disabled,
             },
             variants: {
                 default: {
-                    color: 'white',
-                    colorActive: 'black',
-                    bg: colors.bg.fade,
-                    bgActive: 'white',
-                    borderColor: 'black',
-                    borderColorActive: 'black',
+                    color: tokens.colors.text.white,
+                    colorActive: tokens.colors.text.default,
+                    bg: tokens.colors.bg.inverse,
+                    bgActive: tokens.colors.bg.default,
+                    borderColor: tokens.colors.border.inverse,
+                    borderColorActive: tokens.colors.border.inverse,
                 },
                 primary: {
-                    color: 'white',
-                    colorActive: 'white',
-                    bg: palettes.blue[7],
-                    bgActive: palettes.blue[6],
-                    borderColor: palettes.blue[7],
-                    borderColorActive: palettes.blue[6],
+                    color: tokens.colors.text.white,
+                    colorActive: tokens.colors.text.white,
+                    bg: tokens.colors.bg.brand,
+                    bgActive: tokens.colors.bg.brandHover,
+                    borderColor: tokens.colors.border.brand,
+                    borderColorActive: tokens.colors.border.brand,
                 },
                 secondary: {
-                    color: 'white',
-                    colorActive: 'white',
-                    bg: palettes.red[8],
-                    bgActive: palettes.red[7],
-                    borderColor: palettes.red[8],
-                    borderColorActive: palettes.red[7],
+                    color: tokens.colors.text.white,
+                    colorActive: tokens.colors.text.white,
+                    bg: tokens.colors.bg.brandSecond,
+                    bgActive: tokens.colors.bg.brandSecondHover,
+                    borderColor: tokens.colors.border.default,
+                    borderColorActive: tokens.colors.border.default,
                 },
             },
             sizes: {
