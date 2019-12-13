@@ -16,14 +16,14 @@ const getters = {
 
 async function getTokens(types) {
     const response = await axios();
-    const figmaTree = response.data;
+    const page = response.data.document.children.find(page => page.name === 'Storybook');
 
     const getToken = type => {
         let token = {};
 
         if (!types || types.includes(type)) {
             try {
-                token = getters[type](figmaTree);
+                token = getters[type](page);
                 console.log(`✅  ${type[0].toUpperCase()}${type.slice(1)}`);
             } catch (error) {
                 console.log(`❌  ${type[0].toUpperCase()}${type.slice(1)}`);

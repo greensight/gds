@@ -32,7 +32,7 @@ const theme = {
                 default: {
                     color: 'white',
                     colorActive: 'black',
-                    bg: 'black',
+                    bg: colors.bg.fade,
                     bgActive: 'white',
                     borderColor: 'black',
                     borderColorActive: 'black',

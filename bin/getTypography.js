@@ -26,10 +26,8 @@ const getStyles = text => ({
     fontVariantNumeric: text.style.opentypeFlags && text.style.opentypeFlags.TNUM && 'tabular-nums',
 });
 
-const getPalettes = figmaTree => {
-    const typographyFrame = figmaTree.document.children
-        .find(artboard => artboard.name === 'Base')
-        .children.find(frame => frame.name === 'Typography');
+const getPalettes = page => {
+    const typographyFrame = page.children.find(frame => frame.name === 'Typography');
 
     const breakpointsFrame = typographyFrame.children.find(item => item.name === 'breakpoints');
     const firstPoint = Number(breakpointsFrame.children[0].name);

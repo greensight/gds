@@ -7,12 +7,12 @@ const Typography = ({ text = 'Demo text 123' }) => {
     const theme = useTheme().app;
 
     const MobileMark = styled('span')({
-        backgroundColor: theme.colors.background.lighter,
-        color: theme.colors.text.default,
+        backgroundColor: theme.colors.bg.lighter,
+        color: theme.colors.text.second,
         padding: 4,
         borderRadius: 4,
         marginRight: 8,
-        ...typography(theme, 'secondBold'),
+        ...typography(theme, 'smallBold'),
     });
 
     return (

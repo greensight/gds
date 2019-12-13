@@ -36,7 +36,7 @@ import colorStyle from '../../../src/images/color-style.jpg';
 Цвета разбиваются на группы:
 
 1. **text** - цвета текста
-1. **background** - цвета фона
+1. **bg** - цвета фона
 1. **border** - цвета рамок и разделителей
 1. **function** - функциональные цвета (успех, ошибка, предупреждение)
 
@@ -45,7 +45,7 @@ import colorStyle from '../../../src/images/color-style.jpg';
 ```json
 "colors": {
     "text": { link: "#215bf0", linkHover: "#1146cc", default: "#121314", second: "#6b6f7b", disabled: "#d6d8db" },
-    "background": {disabled: "#e4e5e7", brand: "#215bf0", brandHover: "#1146cc", brandSecond: "#ea1414", brandSecondHover: "#d40505" },
+    "bg": {disabled: "#e4e5e7", brand: "#215bf0", brandHover: "#1146cc", brandSecond: "#ea1414", brandSecondHover: "#d40505" },
     "borders": {second: "#6b6f7b", brand: "#215bf0", dark: "#121314", disable: "#d6d8db", light: "#e4e5e7" },
     "function": {info: "#215bf0", error: "#f14646", warning: "#f0b621", success: "#4aa253" },
 }
@@ -74,7 +74,7 @@ import { typography } from '@greensight/gds';
 const SomeComponent = () => {
     const theme = useTheme().app;
     return (
-        <button type="button" css={{ backgroundColor: theme.colors.background.brand }}>
+        <button type="button" css={{ backgroundColor: theme.colors.bg.brand }}>
             Button
         </button>
     );

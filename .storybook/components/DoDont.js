@@ -22,8 +22,8 @@ const Item = ({ type, children }) => {
         <div
             css={{
                 padding: `16px 32px`,
-                background: colors.background.lighter,
-                color: colors.background.dark,
+                background: colors.bg.lighter,
+                color: colors.bg.dark,
                 borderTop: `4px solid ${color}`,
             }}
         >
