@@ -1,13 +1,12 @@
 import fs from 'fs';
 import path from 'path';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import postcss from 'rollup-plugin-postcss';
 import svgr from '@svgr/rollup';
+import json from '@rollup/plugin-json';
 import pkg from './package.json';
-
-const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 const getEntries = prefix =>
     fs
@@ -45,18 +44,19 @@ export default [
         ],
         plugins: [
             resolve({
-                extensions,
+                extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
             }),
             commonjs({ exclude: 'src/**' }),
             babel({
                 exclude: 'node_modules/**',
-                extensions,
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
             }),
             postcss({
                 extract: true,
                 minimize: true,
             }),
             svgr(),
+            json(),
         ],
         external: Object.keys(pkg.peerDependencies),
     },
