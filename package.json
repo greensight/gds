@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "repository": "https://github.com/greensight/gds",
     "description": "Greensight Design System",
     "license": "MIT",
@@ -67,12 +67,8 @@
         "!/.storybook"
     ],
     "peerDependencies": {
-        "@emotion/core": "^10.0.22",
-        "@emotion/styled": "^10.0.23",
-        "emotion-theming": "^10.0.19",
         "react": "^16.12.0",
-        "react-dom": "^16.12.0",
-        "styled-system": "^5.1.2"
+        "react-dom": "^16.12.0"
     },
     "devDependencies": {
         "@babel/core": "^7.7.2",
@@ -83,8 +79,6 @@
         "@babel/preset-typescript": "^7.7.2",
         "@babel/register": "^7.7.0",
         "@emotion/babel-preset-css-prop": "^10.0.23",
-        "@emotion/core": "^10.0.22",
-        "@emotion/styled": "^10.0.23",
         "@storybook/addon-a11y": "^5.2.5",
         "@storybook/addon-actions": "^5.2.5",
         "@storybook/addon-backgrounds": "^5.2.5",
@@ -103,7 +97,6 @@
         "browserslist": "^4.7.3",
         "css-loader": "^3.2.0",
         "dotenv": "^8.2.0",
-        "emotion-theming": "^10.0.19",
         "eslint": "^6.6.0",
         "eslint-config-airbnb": "^18.0.1",
         "eslint-config-prettier": "^6.7.0",
@@ -134,21 +127,21 @@
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-postcss": "^2.0.3",
         "serve": "^11.2.0",
-        "styled-system": "^5.1.2",
         "stylelint": "^12.0.0",
         "stylelint-config-prettier": "^6.0.0",
         "stylelint-config-standard": "^19.0.0",
         "stylelint-prettier": "^1.1.1",
         "svg-url-loader": "^3.0.2",
-        "terser-webpack-plugin": "^2.2.1",
         "typescript": "^3.7.2",
-        "url-loader": "^2.2.0",
-        "webpack": "^4.41.2",
-        "webpack-cli": "^3.3.10"
+        "url-loader": "^2.2.0"
     },
     "dependencies": {
+        "@emotion/core": "^10.0.22",
+        "@emotion/styled": "^10.0.23",
         "@tippy.js/react": "^3.1.1",
         "core-js": "^3.4.1",
+        "emotion-theming": "^10.0.19",
+        "styled-system": "^5.1.2",
         "tippy.js": "^5.1.2"
     }
 }

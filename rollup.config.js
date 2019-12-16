@@ -28,6 +28,10 @@ export default [
             Storybook: 'src/components/Storybook/index.js',
             ...getEntries('src/components/'),
             typography: 'src/scripts/typography.js',
+            baseTheme: 'src/scripts/baseTheme.js',
+            createTheme: 'src/scripts/createTheme.js',
+            useTheme: 'src/scripts/useTheme.js',
+            ThemeProvider: 'src/scripts/ThemeProvider.js',
         },
         output: [
             {
