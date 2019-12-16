@@ -9,7 +9,6 @@
     "files": [
         "cjs/*",
         "esm/*",
-        "umd/*",
         "bin/*"
     ],
     "sideEffects": [
@@ -36,7 +35,7 @@
         "opera >= 60"
     ],
     "scripts": {
-        "build": "rimraf '{cjs,esm,umd}' && rollup -c",
+        "build": "rimraf '{cjs,esm}' && rollup -c",
         "storybook": "start-storybook -s ./public --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 5000",
@@ -64,7 +63,6 @@
         "node_modules",
         "cjs",
         "esm",
-        "umd",
         "docs",
         "!/.storybook"
     ],
@@ -135,7 +133,6 @@
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-postcss": "^2.0.3",
-        "rollup-plugin-terser": "^5.1.2",
         "serve": "^11.2.0",
         "styled-system": "^5.1.2",
         "stylelint": "^12.0.0",

@@ -1,7 +1,6 @@
 /node_modules
 /cjs
 /esm
-/umd
 /docs
 .env
 .vscode

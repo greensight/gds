@@ -4,27 +4,10 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import postcss from 'rollup-plugin-postcss';
-import { terser } from 'rollup-plugin-terser';
 import svgr from '@svgr/rollup';
 import pkg from './package.json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
-const plugins = [
-    resolve({
-        extensions,
-    }),
-    commonjs({ exclude: 'src/**' }),
-    babel({
-        exclude: 'node_modules/**',
-        extensions,
-    }),
-    postcss({
-        extract: true,
-        minimize: true,
-    }),
-    svgr(),
-];
-const external = Object.keys(pkg.peerDependencies);
 
 const getEntries = prefix =>
     fs
@@ -39,25 +22,6 @@ const getEntries = prefix =>
         );
 
 export default [
-    {
-        input: 'src/index.js',
-        output: {
-            file: 'umd/index.js',
-            format: 'umd',
-            name: 'gds',
-            globals: {
-                '@emotion/core': 'emotionCore',
-                '@emotion/styled': 'emotionStyled',
-                'emotion-theming': 'emotionTheming',
-                react: 'React',
-                'react-dom': 'ReactDOM',
-                'styled-system': 'styledSystem',
-            },
-            esModule: false,
-        },
-        plugins: [...plugins, terser()],
-        external,
-    },
     {
         input: {
             index: 'src/index.js',
@@ -75,7 +39,21 @@ export default [
                 format: 'cjs',
             },
         ],
-        plugins,
-        external,
+        plugins: [
+            resolve({
+                extensions,
+            }),
+            commonjs({ exclude: 'src/**' }),
+            babel({
+                exclude: 'node_modules/**',
+                extensions,
+            }),
+            postcss({
+                extract: true,
+                minimize: true,
+            }),
+            svgr(),
+        ],
+        external: Object.keys(pkg.peerDependencies),
     },
 ];
