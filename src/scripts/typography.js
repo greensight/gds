@@ -39,10 +39,10 @@ const typography = (theme, name) => {
     let fontFamilyStyles = {
         fontFamily: typography.desktop.fontFamily,
     };
-    const definedFont = Object.keys(theme.typography.fonts).find(name => name === typography.desktop.fontFamily);
 
-    if (definedFont) {
-        const font = theme.typography.fonts[definedFont];
+    if (theme.typography.fonts) {
+        const fontName = Object.keys(theme.typography.fonts).find(name => name === typography.desktop.fontFamily);
+        const font = theme.typography.fonts[fontName];
         fontFamilyStyles.fontFamily = addFontStack(fontFamilyStyles.fontFamily, font.stack);
 
         if (font.vf) {
@@ -79,7 +79,17 @@ const typography = (theme, name) => {
             ...desktopStylesWithoutFs,
             [`@media (max-width: ${minVw})`]: { ...uniqueMobileStyles },
         };
-        fluidStyles = getFluidStyles(maxFs, minFs, maxVw, minVw);
+
+        if (theme.typography.fluid !== false) {
+            fluidStyles = getFluidStyles(maxFs, minFs, maxVw, minVw);
+        } else {
+            fluidStyles = {
+                fontSize: maxFs,
+                [`@media (max-width: ${minVw}px)`]: {
+                    fontSize: minFs,
+                },
+            };
+        }
     }
 
     return {

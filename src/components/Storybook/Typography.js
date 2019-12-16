@@ -19,7 +19,7 @@ const Typography = ({ text = 'Demo text 123' }) => {
         <div>
             <ul>
                 {Object.keys(theme.typography)
-                    .filter(name => !['breakpoints', 'fonts'].includes(name))
+                    .filter(name => !['breakpoints', 'fonts', 'fluid'].includes(name))
                     .sort(
                         (a, b) =>
                             parseFloat(theme.typography[b].desktop.fontSize) -

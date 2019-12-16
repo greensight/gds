@@ -8,6 +8,7 @@ import structureBreakpoints from '../../../src/images/structure-breakpoints.png'
 import typographyVars from '../../../src/images/typography-vars.png';
 import multipleStyles from '../../../src/images/multiple-styles.png';
 import lineHeight from '../../../src/images/line-height.png';
+import paragraphsOffset from '../../../src/images/paragraphs-offset.jpg';
 
 <Meta title="Design | Typography" />
 
@@ -116,6 +117,10 @@ style={{ display: 'block', margin: '0 auto' }}/>
 -   Не используй line-height в качестве отступов при построении вертикальных списков. Это рушит логику работы с текстом, а при переносе строки мы имеем неадекватный line-height. Это мешает фронтенду выставить точные показатели. Это нарушает работу со стилями.
 
 <img src={lineHeight} alt="Пример выравнивания через некорректный line-height" />
+
+Правильнее в этом случае использовать отступ между абзацами:
+
+<img src={paragraphsOffset} alt="Пример выравнивания через отступы параграфов" />
 
 line-height в текстовом блоке с ссылками 32 px. Оригинальный — 24 px.
 

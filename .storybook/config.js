@@ -95,7 +95,10 @@ addDecorator(storyFn => <ThemeProvider theme={baseTheme}>{storyFn()}</ThemeProvi
 
 function loadStories() {
     return [
-        require.context('./docs', true, /\.stories\.(jsx?|tsx?|mdx)$/),
+        require.context('./docs/design', true, /\.stories\.(jsx?|tsx?|mdx)$/),
+        require.context('./docs/dev', false, /welcome\.stories\.(jsx?|tsx?|mdx)$/),
+        require.context('./docs/dev', false, /changelog\.stories\.(jsx?|tsx?|mdx)$/),
+        require.context('./docs/dev', true, /\.stories\.(jsx?|tsx?|mdx)$/),
         require.context('../src/components', true, /\.stories\.(jsx?|tsx?|mdx)$/),
     ];
 }
