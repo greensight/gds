@@ -2,9 +2,15 @@ import { Meta } from '@storybook/addon-docs/blocks';
 import Note from '../../components/Note';
 import Grid from '../../components/Grid';
 import DoDont from '../../components/DoDont';
-import lockColor from '../../../src/images/lock-color.jpg';
-import basicBlue from '../../../src/images/basic-blue.jpg';
 import aboutHSL from '../../../src/images/about-hsl.jpg';
+import colorBox from '../../../src/images/color-box.jpg';
+import basicBlue from '../../../src/images/basic-blue.jpg';
+import majorSteps from '../../../src/images/major-steps.jpg';
+import hue from '../../../src/images/hue.jpg';
+import saturation from '../../../src/images/saturation.jpg';
+import brightness from '../../../src/images/brightness.jpg';
+import lockColor from '../../../src/images/lock-color.jpg';
+import colorBoxPalette from '../../../src/images/color-box-palette.jpg';
 import colorDesignerLight from '../../../src/images/color-designer-light.jpg';
 import stackLight from '../../../src/images/stack-light.jpg';
 import colorDesignerDark from '../../../src/images/color-designer-dark.jpg';
@@ -13,6 +19,8 @@ import stackFull from '../../../src/images/stack-full.jpg';
 import structurePalettes from '../../../src/images/structure-palettes.jpg';
 import structureColors from '../../../src/images/structure-colors.jpg';
 import textFrame from '../../../src/images/text-frame.jpg';
+import functionColors from '../../../src/images/function-colors.jpg';
+import colorStyles from '../../../src/images/color-styles.png';
 
 <Meta title="Design | Colors" />
 
@@ -40,40 +48,83 @@ import textFrame from '../../../src/images/text-frame.jpg';
 </Note>
 <br />
 
-### Автоматизированный процесс построения палитры
-
-Инструмент [ColorBox](https://www.colorbox.io/) от Lyft Design.
-
-Гибкий и интуитивно понятный инструмент для создания цветовых палитр.
-
-Не забудь зафиксировать цвет, который дал клиент:
-
-<img
-    src={lockColor}
-    alt="Фиксируем цвет #EA1414 в Lock Color"
-    width={400}
-    style={{ display: 'block', margin: '0 auto' }}
-/>
-
-### Как самостоятельно построить палитру основных цветов
+### Цветовая модель HSL и HSLA
 
 <Grid>
     <Grid.Item>
-        Для примера мы возьмем синий цвет и рассмотрим его параметры в модели HSL: (208, 100, 34, 100).
+        HSL — цветовая модель, в основе которой лежат три параметра: Hue (оттенок), Saturation (Насыщенность)
+        и Lightness (Светлота).
         <br />
+        Частный случай HSL — включение в палитру четвертого параметра: альфа-канала для прозрачности. В этом случае
+        правильней называть систему HSLA.
         <br />
-        <img src={basicBlue} alt="Квадрат выбранного синего цвета" />
+        Мы строим палитру в HSL, а HSLA используем только когда необходима прозрачность для цвета.
     </Grid.Item>
     <Grid.Item>
-        <div>
-            HSL — цветовая модель, в основе которой лежат три параметра: Hue (оттенок), Saturation (Насыщенность)
-            и Lightness (Светлота).
-        </div>
-        <br />
-        <br />
         <img src={aboutHSL} alt="Демонстрация HSL" />
     </Grid.Item>
 </Grid>
+
+### Автоматизированный процесс построения палитры
+
+Инструмент [ColorBox](https://www.colorbox.io/) от Lyft Design - гибкий и интуитивно понятный инструмент для создания цветовых палитр с автоматической проверкой цветового контраста.
+
+<img src={colorBox} alt="Интерфейс ColorBox" style={{ display: 'block', margin: '0 auto' }} />
+
+Для примера мы возьмем синий цвет и будем строить для него палитру:
+HEX: #005BAD
+HSL: 208, 100, 34
+
+<img src={basicBlue} alt="Квадрат выбранного синего цвета" width={400} style={{ display: 'block', margin: '0 auto' }} />
+
+Определимся с количеством шагов и выставим нужное нам.
+
+<img src={majorSteps} alt="Ползунок Major Steps" width={400} style={{ display: 'block', margin: '0 auto' }} />
+
+В настройках Hue прописывается оттенок. По модели HSL параметр нашего оттенка 208. Ставим эти значения на Start и End для создания палитры в нашем оттенке.
+
+Можно задать диапазон для изменения оттенка в соседние цвета на протяжении палитры. Для этого поработай ползунками. Это сделает палитру неравномерной по цвету, но может подтолкнуть к интересной идее.
+
+<img src={hue} alt="Опция Hue" width={400} style={{ display: 'block', margin: '0 auto' }} />
+
+Saturation регулирует насыщенность в палитре.
+
+<img src={saturation} alt="Опция Saturation" width={400} style={{ display: 'block', margin: '0 auto' }} />
+
+Brightness устанавливает яркость палитры.
+
+<img src={brightness} alt="Опция Brightness" width={400} style={{ display: 'block', margin: '0 auto' }} />
+
+Не забудь зафиксировать цвет, который дал клиент. Эта настройка находится внизу и делает обязательным наличие исходного цвета в палитре.<img
+src={lockColor}
+alt="Фиксируем цвет #EA1414 в Lock Color"
+width={400}
+style={{ display: 'block', margin: '0 auto' }}
+/>
+
+<Grid>
+    <Grid.Item>
+        На выходе получаем палитру с десятью цветами.
+        <br />
+        На каждом цвете обозначен контраст для черного и белого текста и дан hex-код.
+        <br />
+        Начальный цвет сохранен в палитре и остался неизменным.
+    </Grid.Item>
+    <Grid.Item>
+        <img
+            src={colorBoxPalette}
+            alt="Получившаяся палитра синего"
+            width={400}
+            style={{ display: 'block', margin: '0 auto' }}
+        />
+    </Grid.Item>
+</Grid>
+
+### Как самостоятельно построить палитру основных цветов
+
+Для примера мы возьмем синий цвет и рассмотрим его параметры в модели HSL: (208, 100, 34, 100).
+
+<img src={basicBlue} alt="Квадрат выбранного синего цвета" />
 
 Построим палитру из 10-ти цветов с помощью плагина Color Designer. Параметр L у нашего цвета равен 34 из 100. Значит в палитре по светлости он будет третьим. Нужно сделать 7 цветов в сторону светлых оттенков и 2 в сторону темных.
 
@@ -158,6 +209,14 @@ import textFrame from '../../../src/images/text-frame.jpg';
 
 Чтобы лучше понимать, где цвет используется, внизу есть описание. Заполнять его не обязательно.
 
+#### Функциональные цвета
+
+В системе используется минимум один функциональный цвет — красный. Желтый и зеленый добавляется, если необходимо. Глобально эти цвета всегда красный, желтый и зеленый, но могут отличаться по яркости или насыщенности.еименовывается.
+
+<img src={functionColors} alt="Функциональные цвета" />
+
+Если в палитре присутствует оттенок из этих трех цветов, функциональный цвет лучше подобрать из палитры.
+
 ### Нейминг
 
 Задача дизайнера не только подобрать цвета, но и присвоить им переменные — _задекларировать_. Это делается во фрейме `Colors`.
@@ -191,9 +250,21 @@ import textFrame from '../../../src/images/text-frame.jpg';
 
 #### Тексты (text)
 
+`default` — основной
+
+`second` — дополнительный
+
+`disabled` — для заблокированных элементов
+
+`inverse` — инверсионный
+
 `link` — ссылки, фирменный
 
 `linkHover` —  ссылки, фирменный при наведении
+
+`lighter` — инверсионный
+
+#### Фоны (bg)
 
 `default` — основной
 
@@ -201,17 +272,9 @@ import textFrame from '../../../src/images/text-frame.jpg';
 
 `disabled` — для заблокированных элементов
 
-`lighter` — инверсионный
-
-#### Фоны (bg)
-
-`dark` — темный
-
-`second` —  серый
+`inverse` — инверсионный
 
 `lighter` — светлый
-
-`disabled` — для заблокированных элементов
 
 `brand` — главный фирменный цвет
 
@@ -221,17 +284,19 @@ import textFrame from '../../../src/images/text-frame.jpg';
 
 `brandSecondHover` — второстепенный фирменный цвет при наведении
 
+`fade` — подложка для попапов
+
 #### Рамки (border)
 
-`light` — светлые
+`default` — основной
 
-`second` —  дополнительные
-
-`brand` — фирменные
-
-`dark` — темные
+`second` — дополнительный
 
 `disabled` — для заблокированных элементов
+
+`inverse` — инверсионный
+
+`brand` — фирменные
 
 #### Функции (functions)
 
@@ -241,4 +306,19 @@ import textFrame from '../../../src/images/text-frame.jpg';
 
 `success` — успешные действия
 
-`info` — информация
+### Стили Фигмы
+
+<Grid>
+    <Grid.Item>
+        Переменные заносятся в стили Фигмы в таком же порядке, как расположены на фрейме.
+        <br />
+        <br />
+        Чтобы разбить стили по группам, пишите название слоя по конструкции: <em>
+            глобальная переменная/переменная цвета
+        </em>. Например, <strong>text/default</strong> или 
+        <strong>border/disabled</strong>.
+    </Grid.Item>
+    <Grid.Item>
+        <img src={colorStyles} alt="Стили цветов в Фигма" />
+    </Grid.Item>
+</Grid>

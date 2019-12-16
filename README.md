@@ -133,12 +133,13 @@ You can use it in your mdx Storybook files:
 ```mdx
 import { Meta } from '@storybook/addon-docs/blocks';
 import { Storybook } from '@greensight/gds';
+import theme from '../../src/client/scripts/theme';
 
 <Meta title="Docs | Typography" />
 
 # Typography
 
-<Storybook.Typography />
+<Storybook.Typography theme={theme} />
 ```
 
 ## Development
