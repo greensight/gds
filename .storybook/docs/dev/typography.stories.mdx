@@ -83,11 +83,10 @@ import typographyStyle from '../../../src/images/typography-style.jpg';
 Вы знаете имя стиля и можете передать его в хелпер `typography`:
 
 ```js
-import { useTheme } from 'emotion-theming';
-import { typography } from '@greensight/gds';
+import { useTheme, typography } from '@greensight/gds';
 
 const SomeComponent = () => {
-    const theme = useTheme().app;
+    const theme = useTheme();
     return <div css={{ ...typography(theme, 'subheading') }}>Text</div>;
 };
 ```

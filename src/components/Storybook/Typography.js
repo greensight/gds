@@ -1,10 +1,10 @@
 import React from 'react';
-import { useTheme } from 'emotion-theming';
 import styled from '@emotion/styled';
+import useTheme from '../../scripts/useTheme';
 import typography from '../../scripts/typography';
 
 const Typography = ({ text = 'Demo text 123' }) => {
-    const theme = useTheme().app;
+    const theme = useTheme();
 
     const MobileMark = styled('span')({
         backgroundColor: theme.colors.bg.lighter,

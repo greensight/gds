@@ -1,9 +1,9 @@
 import React from 'react';
-import { useTheme } from 'emotion-theming';
+import useTheme from '../../scripts/useTheme';
 import Palette from './Palette';
 
 const Palettes = () => {
-    const theme = useTheme().app;
+    const theme = useTheme();
     const { palettes } = theme;
 
     return (

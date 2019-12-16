@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from 'emotion-theming';
+import useTheme from '../../src/scripts/useTheme';
 import CheckIcon from '../../src/images/check.svg';
 import CrossIcon from '../../src/images/cross.svg';
 
@@ -12,7 +12,7 @@ const DoDont = ({ children }) => {
 };
 
 const Item = ({ type, children }) => {
-    const theme = useTheme().app;
+    const theme = useTheme();
     const { colors } = theme;
     const color = type === 'do' ? colors.function.success : colors.function.error;
     const Icon = type === 'do' ? CheckIcon : CrossIcon;

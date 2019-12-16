@@ -1,5 +1,5 @@
 import { create } from '@storybook/theming';
-import theme from '../src/scripts/theme';
+import baseTheme from '../src/scripts/baseTheme';
 
 export default create({
     base: 'light',
@@ -22,5 +22,5 @@ export default create({
     // brandUrl: 'https://example.com',
     // brandImage: 'https://placehold.it/350x150',
     gridCellSize: 8,
-    ...theme,
+    ...baseTheme,
 });

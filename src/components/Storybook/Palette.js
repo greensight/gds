@@ -1,11 +1,11 @@
 import React from 'react';
-import { useTheme } from 'emotion-theming';
+import useTheme from '../../scripts/useTheme';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import CheckIcon from '../../images/check.svg';
 
 const Palette = ({ name }) => {
-    const theme = useTheme().app;
+    const theme = useTheme();
     const { palettes, colors } = theme;
 
     const DropdownContent = (

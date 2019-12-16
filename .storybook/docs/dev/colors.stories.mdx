@@ -68,11 +68,10 @@ import colorStyle from '../../../src/images/color-style.jpg';
 Вы знаете имя стиля и можете обратиться к соответствующей переменной темы:
 
 ```js
-import { useTheme } from 'emotion-theming';
-import { typography } from '@greensight/gds';
+import { useTheme } from '@greensight/gds';
 
 const SomeComponent = () => {
-    const theme = useTheme().app;
+    const theme = useTheme();
     return (
         <button type="button" css={{ backgroundColor: theme.colors.bg.brand }}>
             Button

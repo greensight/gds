@@ -7,7 +7,7 @@ import storybookTheme from './theme';
 import 'focus-visible';
 import '../src/styles';
 import CenteredContainer from './components/CenteredContainer';
-import theme from '../src/scripts/theme';
+import baseTheme from '../src/scripts/baseTheme';
 
 addParameters({
     options: {
@@ -91,7 +91,7 @@ addParameters({
 addDecorator(withKnobs);
 addDecorator(withA11y);
 addDecorator(storyFn => <CenteredContainer>{storyFn()}</CenteredContainer>);
-addDecorator(storyFn => <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>);
+addDecorator(storyFn => <ThemeProvider theme={baseTheme}>{storyFn()}</ThemeProvider>);
 
 function loadStories() {
     return [

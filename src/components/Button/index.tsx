@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useTheme } from 'emotion-theming';
 import styled from '@emotion/styled';
 import { space, color, typography, layout, border, position, shadow } from 'styled-system';
+import useTheme from '../../scripts/useTheme';
 
 const Button: React.FC<IButton> = ({
     children,
@@ -24,7 +24,7 @@ const Button: React.FC<IButton> = ({
 };
 
 const useStyles = ({ size, variant, bordered, block }) => {
-    const theme = useTheme().app;
+    const theme = useTheme();
     const { disabled, borderWidth, time } = theme.button;
 
     const baseStyles = {
