@@ -1,7 +1,7 @@
 const colorToToken = require('./colorToToken');
 
 const getPalettes = page => {
-    const palettesFrame = page.children.find(frame => frame.name === 'Palettes');
+    const palettesFrame = page.children.find(({ name }) => name === 'Palettes');
 
     const tokens = palettesFrame.children
         .filter(({ type }) => type === 'FRAME')

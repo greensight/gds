@@ -1,7 +1,7 @@
 const colorToToken = require('./colorToToken');
 
 const getColors = page => {
-    const colorsFrame = page.children.find(frame => frame.name === 'Colors');
+    const colorsFrame = page.children.find(({ name }) => name === 'Colors');
 
     const tokens = colorsFrame.children
         .filter(({ type }) => type === 'FRAME')
