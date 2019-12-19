@@ -2,7 +2,7 @@ import React from 'react';
 import useTheme from '../../scripts/useTheme';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
-import CheckIcon from '../../images/check.svg';
+import CheckIcon from '../../images/icons/check.svg';
 
 const Palette = ({ name }) => {
     const theme = useTheme();

@@ -1,6 +1,6 @@
 const defaults = {
     tokensDir: 'public',
-    iconsDir: 'src/client/images/icons',
+    iconsDir: 'src/client/images/icons/tokens',
     page: 'Storybook',
     tokens: ['palettes', 'colors', 'typography', 'icons'],
     frames: {

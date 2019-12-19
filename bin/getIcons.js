@@ -13,8 +13,17 @@ async function getImageLinks(iconsData, figmaToken, figmaId) {
 }
 
 async function loadImage(icon, iconsDir) {
-    const iconPath = resolve(`${iconsDir}/${icon.name}.svg`);
-    const writeStream = fs.createWriteStream(iconPath);
+    const pathArr = icon.name.split('/').map(part => part.trim());
+    const directoryPath = pathArr.slice(0, pathArr.length - 1);
+    const name = pathArr[pathArr.length - 1];
+    let path;
+    if (directoryPath) {
+        await fs.promises.mkdir(resolve(`${iconsDir}/${directoryPath}`), { recursive: true });
+        path = `${iconsDir}/${directoryPath}/${name}.svg`;
+    } else {
+        path = `${iconsDir}/${name}.svg`;
+    }
+    const writeStream = fs.createWriteStream(resolve(path));
     const response = await axios(icon.url, { responseType: 'stream' });
     response.data.pipe(writeStream);
 
@@ -32,7 +41,7 @@ async function loadImage(icon, iconsDir) {
 async function getIcons(frame, config) {
     let iconsData = frame.children.map(({ id, name }) => ({ id, name }));
     iconsData = await getImageLinks(iconsData, config.figmaToken, config.figmaId);
-    await fs.promises.mkdir(config.iconsDir, { recursive: true });
+    await fs.promises.mkdir(resolve(config.iconsDir), { recursive: true });
     const icons = iconsData.map(icon => loadImage(icon, config.iconsDir));
     await Promise.all(icons);
     console.log(green(`Icons are available in directory: ${config.iconsDir}`));

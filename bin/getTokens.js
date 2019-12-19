@@ -39,11 +39,11 @@ async function getTokens(config) {
     try {
         response = await axios(`files/${config.figmaId}`);
     } catch (err) {
-        if (err.message.includes('403')) {
+        if (err.response.status === 403) {
             console.error(red(`${err.message}. Check your "figmaToken"`));
         }
 
-        if (err.message.includes('404')) {
+        if (err.response.status === 404) {
             console.error(red(`${err.message}. Check your "figmaId"`));
         }
 

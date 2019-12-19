@@ -1,7 +1,7 @@
 import React from 'react';
 import useTheme from '../../src/scripts/useTheme';
-import CheckIcon from '../../src/images/check.svg';
-import CrossIcon from '../../src/images/cross.svg';
+import CheckIcon from '../../src/images/icons/check.svg';
+import CrossIcon from '../../src/images/icons/cross.svg';
 
 const DoDont = ({ children }) => {
     return (

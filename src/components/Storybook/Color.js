@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import useTheme from '../../scripts/useTheme';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
-import CheckIcon from '../../images/check.svg';
+import CheckIcon from '../../images/icons/check.svg';
 
 const Color = ({ name, value }) => {
     const theme = useTheme();
