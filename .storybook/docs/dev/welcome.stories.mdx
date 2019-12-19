@@ -20,22 +20,27 @@ yarn add @greensight/gds
 
 ## Tokens
 
-GDS provides `gds-tokens` script, which fetches design tokens from Figma.
-To use tokens you need to create Figma file in proper template and provide .env file with 2 variables:
+GDS provides `gds-tokens` script, which fetches design tokens from Figma:
 
-1. **FIGMA_ID** - Figma project ID
-1. **FIGMA_TOKEN** - token from Figma settings
+```bash
+gds-tokens
+```
 
 `gds-tokens` options:
 
-1. **-o** - output directory for generated json file (path from bin script)
-1. **-t** - tokens to fetch (by default all defined in GDS tokens)
+1. **-c** - path to config file (`gds.config.js` by default)
 
-For example:
+To use tokens you need to create Figma file in proper template and provide `gds.config.js` file with at least `figmaToken` and `figmaId` properties:
 
-```bash
-gds-tokens -o ../../../../public
-```
+| Property          | Description                                                               | Default                                        |
+| ----------------- | --------------------------------------------------------------------------|------------------------------------------------|
+| `figmaToken`      | Personal Figma token: https://www.figma.com/developers/api#authentication | -                                              |
+| `figmaId`         | Id of figma file: https://www.figma.com/file/figmaId/project-name         | -                                              |
+| `tokensDir`       | Directory for `tokens.json` file                                          | 'public'                                       |
+| `iconsDir`        | Directory for saved icons                                                 | 'src/client/images/icons/tokens'               |
+| `tokens`          | Array of token types to fetch                                             | ['palettes', 'colors', 'typography', 'icons']  |
+| `page`            | Name of page with tokens                                                  | 'Storybook'                                    |
+| `frames`          | Object with frame names for different token types                         | 'Palettes', 'Colors', 'Typography', 'Icons'    |
 
 ## Theme
 
