@@ -1,49 +1,41 @@
 const fs = require('fs');
+const { resolve } = require('path');
 const axios = require('axios');
-const figmaAxios = require('./figmaAxios');
+const { red, green } = require('chalk');
+const figma = require('./figma');
 
-async function getImageLinks(iconsData) {
-    // const slicedData = iconsData.slice(0, 3);
+async function getImageLinks(iconsData, figmaToken, figmaId) {
     const iconIds = iconsData.map(({ id }) => id).join(',');
-    const response = await figmaAxios(`images/${process.env.FIGMA_ID}?ids=${iconIds}&format=svg`);
+    const axios = figma(figmaToken);
+    const response = await axios(`images/${figmaId}?ids=${iconIds}&format=svg`);
     const { images } = response.data;
     return iconsData.map(({ id, name }) => ({ id, name, url: images[id] }));
 }
 
-async function loadImage(iconData) {
-    // TODO replace with path variable from config
-    const iconPath = `./src/images/icons/${iconData.name}.svg`;
+async function loadImage(icon, iconsDir) {
+    const iconPath = resolve(`${iconsDir}/${icon.name}.svg`);
     const writeStream = fs.createWriteStream(iconPath);
-
-    const response = await axios(iconData.url, { responseType: 'stream' });
+    const response = await axios(icon.url, { responseType: 'stream' });
     response.data.pipe(writeStream);
 
     return new Promise((resolve, reject) => {
         writeStream.on('finish', () => {
-            resolve({
-                name: `${iconData.name}.svg`,
-                size: fs.statSync(iconPath).size,
-            });
+            resolve();
         });
         writeStream.on('error', err => {
-            console.log('error writting file', err);
+            console.log(red(`Cannot write file ${icon.name}.svg`), err);
             reject(err);
         });
     });
 }
 
-async function getIcons() {
-    // TODO Добавить обработку ошибок
-    // TODO Добавить создание директории, если её нет
-    const response = await figmaAxios(`files/${process.env.FIGMA_ID}`);
-    const page = response.data.document.children.find(({ name }) => name === 'Storybook');
-    const palettesFrame = page.children.find(({ name }) => name === 'Icons');
-    let iconsData = palettesFrame.children.map(({ id, name }) => ({ id, name }));
-    iconsData = await getImageLinks(iconsData);
-    const icons = iconsData.map(icon => loadImage(icon));
-    const res = await Promise.all(icons);
-    console.log(res);
-    console.log(`✅  Icons`);
+async function getIcons(frame, config) {
+    let iconsData = frame.children.map(({ id, name }) => ({ id, name }));
+    iconsData = await getImageLinks(iconsData, config.figmaToken, config.figmaId);
+    await fs.promises.mkdir(config.iconsDir, { recursive: true });
+    const icons = iconsData.map(icon => loadImage(icon, config.iconsDir));
+    await Promise.all(icons);
+    console.log(green(`Icons are available in directory: ${config.iconsDir}`));
 }
 
 module.exports = getIcons;

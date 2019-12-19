@@ -26,18 +26,16 @@ const getStyles = text => ({
     fontVariantNumeric: text.style.opentypeFlags && text.style.opentypeFlags.TNUM && 'tabular-nums',
 });
 
-const getPalettes = page => {
-    const typographyFrame = page.children.find(frame => frame.name === 'Typography');
-
-    const breakpointsFrame = typographyFrame.children.find(item => item.name === 'breakpoints');
+const getTypography = frame => {
+    const breakpointsFrame = frame.children.find(item => item.name === 'breakpoints');
     const firstPoint = Number(breakpointsFrame.children[0].name);
     const secondPoint = Number(breakpointsFrame.children[1].name);
     const breakpointsTokens = {
         breakpoints: [Math.max(firstPoint, secondPoint), Math.min(firstPoint, secondPoint)],
     };
 
-    const desktopFrame = typographyFrame.children.find(item => item.name === 'desktop');
-    const mobileFrame = typographyFrame.children.find(item => item.name === 'mobile');
+    const desktopFrame = frame.children.find(item => item.name === 'desktop');
+    const mobileFrame = frame.children.find(item => item.name === 'mobile');
     const textTokens = desktopFrame.children.reduce((acc, text) => {
         const mobileText = mobileFrame.children.find(mobileText => mobileText.name === text.name);
         return {
@@ -57,4 +55,4 @@ const getPalettes = page => {
     return tokens;
 };
 
-module.exports = getPalettes;
+module.exports = getTypography;

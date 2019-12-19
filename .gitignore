@@ -8,3 +8,4 @@
 *.sublime-project
 *.sublime-workspace
 yarn-error.log
+gds.config.json
