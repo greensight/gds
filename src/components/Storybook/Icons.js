@@ -8,7 +8,7 @@ import DropdownContent from '../helpers/DropdownContent';
 import typography from '../../scripts/typography';
 
 const Icons = ({ headingLevel = 2 }) => {
-    const iconsReq = require.context(`!!@svgr/webpack!Icons`);
+    const iconsReq = require.context(`!!@svgr/webpack!@icons`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const formattedName = name.match(/\.\/(.+)\.svg$/)[1];
         const nameParts = formattedName.split('/');
