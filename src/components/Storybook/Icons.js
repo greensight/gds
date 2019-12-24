@@ -8,8 +8,7 @@ import DropdownContent from '../helpers/DropdownContent';
 import typography from '../../scripts/typography';
 
 const Icons = ({ headingLevel = 2 }) => {
-    // TODO Придумать как передавать путь до иконок
-    const iconsReq = require.context(`!!@svgr/webpack!../../images/icons`);
+    const iconsReq = require.context(`!!@svgr/webpack!Icons`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const formattedName = name.match(/\.\/(.+)\.svg$/)[1];
         const nameParts = formattedName.split('/');
@@ -45,10 +44,10 @@ const Icons = ({ headingLevel = 2 }) => {
                 )}
                 {!!complexItems.length &&
                     complexItems.map(([name, value]) => (
-                        <>
+                        <React.Fragment key={name}>
                             <Heading css={{ margin: '16px 0' }}>{name}</Heading>
                             {mapIcons(value, true)}
-                        </>
+                        </React.Fragment>
                     ))}
             </>
         );
@@ -74,8 +73,12 @@ const Icon = ({ name, Icon }) => {
                         borderRadius: 4,
                         ...typography(theme, 'bodyBold'),
                         textAlign: 'center',
-                        ':hover': {
+                        transition: 'border-color ease 300ms',
+                        ':hover, :focus': {
                             borderColor: colors.border.inverse,
+                        },
+                        ':focus': {
+                            outline: 'none',
                         },
                     }}
                     onClick={() => copyToClipboard(name)}

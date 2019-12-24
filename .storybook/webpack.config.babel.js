@@ -90,6 +90,7 @@ module.exports = ({ config, mode }) => {
     ];
     config.devtool = mode === 'DEVELOPMENT' && 'source-map';
     config.resolve.extensions.push('.ts', '.tsx');
+    config.resolve.alias.Icons = path.resolve(__dirname, '../src/images/icons');
     config.performance = false;
 
     return config;
