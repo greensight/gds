@@ -27,7 +27,7 @@ const Colors = () => {
                     <ul
                         css={{
                             display: 'grid',
-                            gridTemplateColumns: `repeat(auto-fit, minmax(${major(20)}, 1fr))`,
+                            gridTemplateColumns: `repeat(auto-fit, minmax(${major(20)}px, 1fr))`,
                             gridGap: major(8),
                         }}
                     >
