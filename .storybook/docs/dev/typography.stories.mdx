@@ -87,7 +87,7 @@ import { useTheme, typography } from '@greensight/gds';
 
 const SomeComponent = () => {
     const theme = useTheme();
-    return <div css={{ ...typography(theme, 'subheading') }}>Text</div>;
+    return <div css={{ ...typography('subheading', theme) }}>Text</div>;
 };
 ```
 

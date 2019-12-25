@@ -5,7 +5,7 @@ import deepMerge from '../../scripts/deepMerge';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import DropdownContent from '../helpers/DropdownContent';
-import typography from '../../scripts/typography';
+import typography from '../../scripts/customTypography';
 import major from '../../scripts/major';
 
 const Icons = ({ headingLevel = 2 }) => {
@@ -72,7 +72,7 @@ const Icon = ({ name, Icon }) => {
                         padding: major(2),
                         border: `2px solid ${colors.border.default}`,
                         borderRadius: 4,
-                        ...typography(theme, 'bodyBold'),
+                        ...typography('bodyBold'),
                         textAlign: 'center',
                         transition: 'border-color ease 300ms',
                         ':hover, :focus': {

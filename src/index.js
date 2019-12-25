@@ -5,3 +5,5 @@ export { default as baseTheme } from './scripts/baseTheme';
 export { default as createTheme } from './scripts/createTheme';
 export { default as useTheme } from './scripts/useTheme';
 export { default as ThemeProvider } from './scripts/ThemeProvider';
+export { default as major } from './scripts/major';
+export { default as minor } from './scripts/minor';

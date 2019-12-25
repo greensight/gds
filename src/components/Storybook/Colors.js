@@ -4,7 +4,7 @@ import useTheme from '../../scripts/useTheme';
 import DropdownContent from '../helpers/DropdownContent';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
-import typography from '../../scripts/typography';
+import typography from '../../scripts/customTypography';
 import major from '../../scripts/major';
 
 const Colors = () => {
@@ -17,7 +17,7 @@ const Colors = () => {
                 <div key={groupName}>
                     <div
                         css={{
-                            ...typography(theme, 'headline'),
+                            ...typography('headline'),
                             marginBottom: major(2),
                             marginTop: major(2),
                         }}
@@ -50,7 +50,7 @@ const Color = ({ name, value }) => {
         color: colors.text.default,
         padding: major(1),
         borderRadius: '4px 4px 4px 0px',
-        ...typography(theme, 'smallBold'),
+        ...typography('smallBold'),
     });
 
     return (

@@ -4,7 +4,7 @@ import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import DropdownContent from '../helpers/DropdownContent';
 import major from '../../scripts/major';
-import typography from '../../scripts/typography';
+import typography from '../../scripts/customTypography';
 import minor from '../../scripts/minor';
 
 const Palettes = () => {
@@ -27,7 +27,7 @@ const Palettes = () => {
                             <div
                                 css={{
                                     textAlign: 'center',
-                                    ...typography(theme, 'headline'),
+                                    ...typography('headline'),
                                     marginBottom: major(2),
                                     marginTop: major(2),
                                 }}
@@ -80,7 +80,7 @@ const Palette = ({ name }) => {
                                     color: colors.text.default,
                                     padding: `${minor(1)}px ${major(1)}px`,
                                     borderRadius: 4,
-                                    ...typography(theme, 'subheading'),
+                                    ...typography('subheading'),
                                 }}
                             >
                                 {index}
@@ -91,7 +91,7 @@ const Palette = ({ name }) => {
                                     color: colors.text.default,
                                     padding: `${minor(1)}px ${major(1)}px`,
                                     borderRadius: 4,
-                                    ...typography(theme, 'subheading'),
+                                    ...typography('subheading'),
                                 }}
                             >
                                 {color}

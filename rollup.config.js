@@ -31,6 +31,8 @@ export default [
             createTheme: 'src/scripts/createTheme.js',
             useTheme: 'src/scripts/useTheme.js',
             ThemeProvider: 'src/scripts/ThemeProvider.js',
+            major: 'src/scripts/major.js',
+            minor: 'src/scripts/minor.js',
         },
         output: [
             {

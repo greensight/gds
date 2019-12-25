@@ -157,6 +157,25 @@ For example, in Storybook webpack config override looks like that:
 config.resolve.alias['@icons'] = path.resolve(__dirname, '../src/client/images/icons');
 ```
 
+## Helpers
+
+Greensight Design System provides some helpers:
+
+1. `typography` - returns object with typography styles by style name
+1. `major` - returns value of major scale by multiplier
+1. `minor` - returns value of minor scale by multiplier
+
+Helpers can be redefined with your `theme` object to simplify helper call. For example:
+
+```js
+import typography from '@greensight/gds';
+import theme from '../../scripts/theme';
+
+const customTypography = name => typography(name, theme.app);
+
+export default customTypography;
+```
+
 ## Development
 
 | `yarn <command>`  | Description                                     |

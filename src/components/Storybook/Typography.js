@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import useTheme from '../../scripts/useTheme';
+import customTypography from '../../scripts/customTypography';
 import typography from '../../scripts/typography';
 import minor from '../../scripts/minor';
 import major from '../../scripts/major';
@@ -14,7 +15,7 @@ const Typography = ({ text = 'Demo text 123' }) => {
         padding: minor(1),
         borderRadius: 4,
         marginRight: major(1),
-        ...typography(theme, 'smallBold'),
+        ...customTypography('smallBold'),
     });
 
     return (
@@ -31,13 +32,13 @@ const Typography = ({ text = 'Demo text 123' }) => {
                         <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: major(3) }}>
                             <div css={{ minWidth: major(17), marginRight: major(2) }}>
                                 {theme.typography[name].mobile && <MobileMark>M</MobileMark>}
-                                <span css={{ color: theme.colors.text.second, ...typography(theme, 'body') }}>
+                                <span css={{ color: theme.colors.text.second, ...customTypography('body') }}>
                                     {name}
                                 </span>
                             </div>
                             <div
                                 css={{
-                                    ...typography(theme, name),
+                                    ...typography(name, theme),
                                     color: theme.colors.text.default,
                                 }}
                             >

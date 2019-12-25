@@ -34,7 +34,7 @@ const removeFontFamily = styles => {
         );
 };
 
-const typography = (theme, name) => {
+const typography = (name, theme) => {
     const typography = theme.typography[name];
     let fontFamilyStyles = {
         fontFamily: typography.desktop.fontFamily,
