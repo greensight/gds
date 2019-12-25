@@ -39,6 +39,7 @@
         "storybook": "start-storybook -s ./public --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 5000",
+        "storybook:deploy": "storybook-to-ghpages -e docs",
         "tokens": "node bin/index.js",
         "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
         "stylelint": "stylelint '**/*.css' --fix",
@@ -66,6 +67,9 @@
         "docs",
         "!/.storybook"
     ],
+    "storybook-deployer": {
+        "gitUsername": "greensight"
+    },
     "peerDependencies": {
         "react": "^16.12.0",
         "react-dom": "^16.12.0"
@@ -81,14 +85,15 @@
         "@emotion/babel-preset-css-prop": "^10.0.23",
         "@rollup/plugin-json": "^4.0.0",
         "@rollup/plugin-node-resolve": "^6.0.0",
-        "@storybook/addon-a11y": "^5.2.5",
-        "@storybook/addon-actions": "^5.2.5",
-        "@storybook/addon-backgrounds": "^5.2.5",
-        "@storybook/addon-docs": "^5.2.5",
-        "@storybook/addon-knobs": "^5.2.5",
-        "@storybook/addon-viewport": "^5.2.5",
-        "@storybook/addons": "^5.2.5",
-        "@storybook/react": "^5.2.5",
+        "@storybook/addon-a11y": "^5.2.8",
+        "@storybook/addon-actions": "^5.2.8",
+        "@storybook/addon-backgrounds": "^5.2.8",
+        "@storybook/addon-docs": "^5.2.8",
+        "@storybook/addon-knobs": "^5.2.8",
+        "@storybook/addon-viewport": "^5.2.8",
+        "@storybook/addons": "^5.2.8",
+        "@storybook/react": "^5.2.8",
+        "@storybook/storybook-deployer": "^2.8.1",
         "@storybook/theming": "^5.2.8",
         "@svgr/rollup": "^4.3.3",
         "@svgr/webpack": "^4.3.3",

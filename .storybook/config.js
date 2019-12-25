@@ -3,12 +3,14 @@ import { addParameters, configure, addDecorator } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import { ThemeProvider } from 'emotion-theming';
+import { styles } from '../src/styles';
 import storybookTheme from './theme';
 import 'focus-visible';
-import '../src/styles';
 import CenteredContainer from './components/CenteredContainer';
 import baseTheme from '../src/scripts/baseTheme';
 
+/* Style function makes no sense - this is a hack for imports to work on production. No comments :\ */
+styles();
 addParameters({
     options: {
         theme: storybookTheme,
