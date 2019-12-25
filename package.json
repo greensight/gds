@@ -67,9 +67,6 @@
         "docs",
         "!/.storybook"
     ],
-    "storybook-deployer": {
-        "gitUsername": "greensight"
-    },
     "peerDependencies": {
         "react": "^16.12.0",
         "react-dom": "^16.12.0"
