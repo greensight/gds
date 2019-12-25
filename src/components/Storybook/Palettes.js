@@ -3,6 +3,9 @@ import useTheme from '../../scripts/useTheme';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import DropdownContent from '../helpers/DropdownContent';
+import major from '../../scripts/major';
+import typography from '../../scripts/typography';
+import minor from '../../scripts/minor';
 
 const Palettes = () => {
     const theme = useTheme();
@@ -14,7 +17,7 @@ const Palettes = () => {
                 css={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(2, 1fr)',
-                    gridGap: 32,
+                    gridGap: major(4),
                 }}
             >
                 {Object.keys(palettes)
@@ -24,10 +27,9 @@ const Palettes = () => {
                             <div
                                 css={{
                                     textAlign: 'center',
-                                    fontSize: 24,
-                                    fontWeight: 700,
-                                    marginBottom: 16,
-                                    marginTop: 16,
+                                    ...typography(theme, 'headline'),
+                                    marginBottom: major(2),
+                                    marginTop: major(2),
                                 }}
                             >
                                 {name}
@@ -52,7 +54,7 @@ const Palette = ({ name }) => {
                     css={{
                         transition: 'margin-right ease 300ms',
                         ':hover': {
-                            marginRight: -16,
+                            marginRight: -major(2),
                         },
                     }}
                 >
@@ -68,7 +70,7 @@ const Palette = ({ name }) => {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                                 width: '100%',
-                                padding: '16px 24px',
+                                padding: `${major(2)}px ${major(3)}px`,
                                 backgroundColor: color,
                             }}
                         >
@@ -76,10 +78,9 @@ const Palette = ({ name }) => {
                                 css={{
                                     backgroundColor: colors.bg.default,
                                     color: colors.text.default,
-                                    padding: '4px 8px',
+                                    padding: `${minor(1)}px ${major(1)}px`,
                                     borderRadius: 4,
-                                    fontSize: 18,
-                                    lineHeight: 1.36,
+                                    ...typography(theme, 'subheading'),
                                 }}
                             >
                                 {index}
@@ -88,10 +89,9 @@ const Palette = ({ name }) => {
                                 css={{
                                     backgroundColor: colors.bg.default,
                                     color: colors.text.default,
-                                    padding: '4px 8px',
+                                    padding: `${minor(1)}px ${major(1)}px`,
                                     borderRadius: 4,
-                                    fontSize: 18,
-                                    lineHeight: 1.36,
+                                    ...typography(theme, 'subheading'),
                                 }}
                             >
                                 {color}

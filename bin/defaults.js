@@ -9,6 +9,7 @@ const defaults = {
         typography: 'Typography',
         icons: 'Icons',
     },
+    majorStep: 8,
 };
 
 module.exports = defaults;

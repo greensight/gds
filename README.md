@@ -37,6 +37,7 @@ To use tokens you need to create Figma file in proper template and provide `gds.
 | `tokens`     | Array of token types to fetch                                             | ['palettes', 'colors', 'typography', 'icons'] |
 | `page`       | Name of page with tokens                                                  | 'Storybook'                                   |
 | `frames`     | Object with frame names for different token types                         | 'Palettes', 'Colors', 'Typography', 'Icons'   |
+| `majorStep`  | Step of spacings scale                                                    | 8                                             |
 
 ## Theme
 

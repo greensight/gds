@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import useTheme from '../../scripts/useTheme';
 import typography from '../../scripts/typography';
+import minor from '../../scripts/minor';
+import major from '../../scripts/major';
 
 const Typography = ({ text = 'Demo text 123' }) => {
     const theme = useTheme();
@@ -9,9 +11,9 @@ const Typography = ({ text = 'Demo text 123' }) => {
     const MobileMark = styled('span')({
         backgroundColor: theme.colors.bg.lighter,
         color: theme.colors.text.second,
-        padding: 4,
+        padding: minor(1),
         borderRadius: 4,
-        marginRight: 8,
+        marginRight: major(1),
         ...typography(theme, 'smallBold'),
     });
 
@@ -26,10 +28,12 @@ const Typography = ({ text = 'Demo text 123' }) => {
                             parseFloat(theme.typography[a].desktop.fontSize),
                     )
                     .map(name => (
-                        <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: 24 }}>
-                            <div css={{ minWidth: 136, marginRight: 16 }}>
+                        <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: major(3) }}>
+                            <div css={{ minWidth: major(17), marginRight: major(2) }}>
                                 {theme.typography[name].mobile && <MobileMark>M</MobileMark>}
-                                <span css={{ color: theme.colors.text.second, fontSize: 16 }}>{name}</span>
+                                <span css={{ color: theme.colors.text.second, ...typography(theme, 'body') }}>
+                                    {name}
+                                </span>
                             </div>
                             <div
                                 css={{

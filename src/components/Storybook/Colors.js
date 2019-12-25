@@ -5,6 +5,7 @@ import DropdownContent from '../helpers/DropdownContent';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/typography';
+import major from '../../scripts/major';
 
 const Colors = () => {
     const theme = useTheme();
@@ -16,10 +17,9 @@ const Colors = () => {
                 <div key={groupName}>
                     <div
                         css={{
-                            fontSize: 24,
-                            fontWeight: 700,
-                            marginBottom: 16,
-                            marginTop: 16,
+                            ...typography(theme, 'headline'),
+                            marginBottom: major(2),
+                            marginTop: major(2),
                         }}
                     >
                         {groupName}
@@ -27,8 +27,8 @@ const Colors = () => {
                     <ul
                         css={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-                            gridGap: 64,
+                            gridTemplateColumns: `repeat(auto-fit, minmax(${major(20)}, 1fr))`,
+                            gridGap: major(8),
                         }}
                     >
                         {Object.keys(colors[groupName]).map(colorName => (
@@ -48,7 +48,7 @@ const Color = ({ name, value }) => {
     const SmallBox = styled('span')({
         backgroundColor: colors.bg.default,
         color: colors.text.default,
-        padding: 8,
+        padding: major(1),
         borderRadius: '4px 4px 4px 0px',
         ...typography(theme, 'smallBold'),
     });
@@ -64,13 +64,13 @@ const Color = ({ name, value }) => {
                         flexDirection: 'column',
                         justifyContent: 'flex-end',
                         width: '100%',
-                        height: 224,
-                        padding: 8,
+                        height: major(28),
+                        padding: major(1),
                         backgroundColor: value,
                         borderRadius: '24px 24px 24px 0px',
                     }}
                 >
-                    <SmallBox css={{ marginBottom: 8 }}>{value}</SmallBox>
+                    <SmallBox css={{ marginBottom: major(1) }}>{value}</SmallBox>
                     <SmallBox>{name}</SmallBox>
                 </button>
             </Dropdown>

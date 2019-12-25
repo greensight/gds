@@ -1,5 +1,6 @@
 import tokens from '../../public/tokens';
 import createTheme from './createTheme';
+import major from './major';
 
 const baseTheme = createTheme({
     tokens,
@@ -48,13 +49,13 @@ const baseTheme = createTheme({
             },
             sizes: {
                 medium: {
-                    height: 48,
-                    padding: 24,
+                    height: major(6),
+                    padding: major(3),
                     fontSize: 16,
                 },
                 small: {
-                    height: 32,
-                    padding: 16,
+                    height: major(4),
+                    padding: major(2),
                     fontSize: 14,
                 },
             },

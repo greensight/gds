@@ -6,6 +6,7 @@ import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import DropdownContent from '../helpers/DropdownContent';
 import typography from '../../scripts/typography';
+import major from '../../scripts/major';
 
 const Icons = ({ headingLevel = 2 }) => {
     const iconsReq = require.context(`!!@svgr/webpack!@icons`);
@@ -35,8 +36,8 @@ const Icons = ({ headingLevel = 2 }) => {
                     <ul
                         css={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fill, minmax(144px, 1fr))',
-                            gridGap: 16,
+                            gridTemplateColumns: `repeat(auto-fill, minmax(${major(18)}px, 1fr))`,
+                            gridGap: major(2),
                         }}
                     >
                         {list}
@@ -45,7 +46,7 @@ const Icons = ({ headingLevel = 2 }) => {
                 {!!complexItems.length &&
                     complexItems.map(([name, value]) => (
                         <React.Fragment key={name}>
-                            <Heading css={{ margin: '16px 0' }}>{name}</Heading>
+                            <Heading css={{ margin: `${major(2)}px 0` }}>{name}</Heading>
                             {mapIcons(value, true)}
                         </React.Fragment>
                     ))}
@@ -68,7 +69,7 @@ const Icon = ({ name, Icon }) => {
                     css={{
                         width: '100%',
                         height: '100%',
-                        padding: '16px',
+                        padding: major(2),
                         border: `2px solid ${colors.border.default}`,
                         borderRadius: 4,
                         ...typography(theme, 'bodyBold'),
@@ -83,7 +84,7 @@ const Icon = ({ name, Icon }) => {
                     }}
                     onClick={() => copyToClipboard(name)}
                 >
-                    <Icon css={{ marginBottom: 8 }} />
+                    <Icon css={{ marginBottom: major(1) }} />
                     <div>{name}</div>
                 </button>
             </Dropdown>
