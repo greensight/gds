@@ -1,15 +1,17 @@
 import React from 'react';
 
-const Item = ({ children }) => {
+const Item = ({ children, style }) => {
     return (
         <div
             css={{
                 display: 'flex',
                 justifyContent: 'center',
+                alignItems: 'center',
                 height: '100%',
                 padding: 16,
-                border: '2px solid black',
-                backgroundColor: 'white',
+                boxShadow: '0 0 0 2px black',
+                // backgroundColor: '#ebebeb',
+                ...style,
             }}
         >
             {children}

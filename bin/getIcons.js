@@ -14,7 +14,7 @@ async function getImageLinks(iconsData, figmaToken, figmaId) {
 
 async function loadImage(icon, iconsDir) {
     const pathArr = icon.name.split('/').map(part => part.trim());
-    const directoryPath = pathArr.slice(0, pathArr.length - 1);
+    const directoryPath = pathArr.slice(0, pathArr.length - 1).join('/');
     const name = pathArr[pathArr.length - 1];
     let path;
     if (directoryPath) {
@@ -39,7 +39,7 @@ async function loadImage(icon, iconsDir) {
 }
 
 async function getIcons(frame, config) {
-    let iconsData = frame.children.map(({ id, name }) => ({ id, name }));
+    let iconsData = frame.children.filter(({ type }) => type === 'COMPONENT').map(({ id, name }) => ({ id, name }));
     iconsData = await getImageLinks(iconsData, config.figmaToken, config.figmaId);
     await fs.promises.mkdir(resolve(config.iconsDir), { recursive: true });
     const icons = iconsData.map(icon => loadImage(icon, config.iconsDir));

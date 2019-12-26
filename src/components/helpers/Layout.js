@@ -1,29 +1,39 @@
 import React from 'react';
+import isObject from '../../scripts/isObject';
+import mq from '../../scripts/mediaQueries';
+import major from '../../scripts/major';
 
-const Layout = ({ children, gap, auto, autoMode = 'fill' }) => {
-    let gridGap;
-    if (gap) {
-        if (Array.isArray(gap)) {
-            gridGap = `${gap[0]}px ${gap[1]}px`;
-        } else {
-            gridGap = gap;
-        }
-    }
+// TODO Move cols/gap defaults to config/theme
 
+const Layout = ({ children, cols = 10, rows, gap = major(3), auto, justify, align }) => {
     let gridTemplateColumns;
     if (auto) {
-        gridTemplateColumns = `repeat(auto-${autoMode}, minmax(${auto}px, 1fr))`;
+        gridTemplateColumns = {
+            gridTemplateColumns: `repeat(auto-fill, minmax(${auto}px, 1fr))`,
+        };
     } else {
-        gridTemplateColumns = 'repeat(12, 1fr)';
+        gridTemplateColumns = setProperty('gridTemplateColumns', cols, value =>
+            Number.isInteger(value) ? `repeat(${value}, 1fr)` : value,
+        );
     }
+    const gridTemplateRows = setProperty('gridTemplateRows', rows, value =>
+        Number.isInteger(value) ? `repeat(${value}, 1fr)` : value,
+    );
+    const gridGap = setProperty('gridGap', gap, value =>
+        Array.isArray(value) ? `${value[0]}px ${value[1]}px` : value,
+    );
+    const justifyItems = setProperty('justifyItems', justify);
+    const alignItems = setProperty('alignItems', align);
 
     return (
         <div
             css={{
                 display: 'grid',
-                gridTemplateColumns,
-                gridGap,
-                justifyContent: 'stretch',
+                ...gridTemplateColumns,
+                ...gridTemplateRows,
+                ...gridGap,
+                ...justifyItems,
+                ...alignItems,
             }}
         >
             {children}
@@ -31,34 +41,41 @@ const Layout = ({ children, gap, auto, autoMode = 'fill' }) => {
     );
 };
 
-const Item = ({ children, column, row }) => {
-    let gridColumn;
-    if (column) {
-        if (Array.isArray(column)) {
-            gridColumn = `${column[0]} / ${column[1]}`;
-        } else {
-            gridColumn = `span ${column}`;
-        }
-    }
+const Item = ({ children, col, row }) => {
+    const gridColumn = setProperty('gridColumn', col, value =>
+        Array.isArray(value) ? `${value[0]} / ${value[1]}` : `span ${value}`,
+    );
+    const gridRow = setProperty('gridRow', row, value =>
+        Array.isArray(value) ? `${value[0]} / ${value[1]}` : `span ${value}`,
+    );
 
-    let gridRow;
-    if (row) {
-        if (Array.isArray(row)) {
-            gridRow = `${row[0]} / ${row[1]}`;
-        } else {
-            gridRow = `span ${row}`;
-        }
-    }
     return (
         <div
             css={{
-                gridColumn,
-                gridRow,
+                ...gridColumn,
+                ...gridRow,
             }}
         >
             {children}
         </div>
     );
+};
+
+const setProperty = (name, value, transform) => {
+    if (!value) return;
+
+    if (!isObject(value)) value = { default: value };
+
+    return Object.entries(value).reduce((acc, [bp, bpValue]) => {
+        const rule = {
+            [name]: transform ? transform(bpValue) : bpValue,
+        };
+
+        return {
+            ...acc,
+            ...(mq[bp] ? { [mq[bp]]: rule } : rule),
+        };
+    }, {});
 };
 
 Layout.Item = Item;

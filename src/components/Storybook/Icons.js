@@ -8,6 +8,10 @@ import DropdownContent from '../helpers/DropdownContent';
 import typography from '../../scripts/customTypography';
 import major from '../../scripts/major';
 
+// TODO Доработать заголовки
+// TODO Обдумать чистку директории и дубли после внесения изменений
+// TODO Осмыслить перенос fill/stoke наверх, нужен ли парсинг
+
 const Icons = ({ headingLevel = 2 }) => {
     const iconsReq = require.context(`!!@svgr/webpack!@icons`);
     const icons = iconsReq.keys().reduce((acc, name) => {
@@ -25,7 +29,7 @@ const Icons = ({ headingLevel = 2 }) => {
     function mapIcons(icons) {
         const simpleItems = Object.entries(icons).filter(([, value]) => !isObject(value));
         const complexItems = Object.entries(icons).filter(([, value]) => isObject(value));
-        const list = simpleItems.map(([name, value]) => <Icon key={name} name={name} Icon={value} />);
+        const list = simpleItems.map(([name, value]) => <Icon key={name} name={name} Icon={value} fill="pink" />);
 
         const Heading = `h${level}`;
         level = complexItems.length ? level + 1 : headingLevel;
