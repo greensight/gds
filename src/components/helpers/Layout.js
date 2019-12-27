@@ -68,19 +68,24 @@ const Item = ({ children, col, row }) => {
     );
 };
 
+const NAMES = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
+
 const setProperty = (name, value, breakpoints, transform) => {
     if (!value) return;
 
     if (!isObject(value)) return setValue(name, value, transform);
 
-    return Object.entries(value).reduce((acc, [bp, bpValue]) => {
-        const rule = setValue(name, bpValue, transform);
+    // TODO Вероятно стоит свести все @media к хелперу
 
-        return {
-            ...acc,
-            [breakpoints[bp]]: rule,
-        };
-    }, {});
+    return Object.entries(value)
+        .sort(([a], [b]) => NAMES.indexOf(b) - NAMES.indexOf(a))
+        .reduce((acc, [bp, bpValue], index) => {
+            const rule = setValue(name, bpValue, transform);
+            return {
+                ...acc,
+                ...(index ? { [`@media (max-width: ${breakpoints[bp] - 1}px)`]: rule } : rule),
+            };
+        }, {});
 };
 
 const setValue = (name, value, transform) => ({

@@ -1,5 +1,6 @@
 const NAMES = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
-
+// TODO Подумать над порядкой имён - так или обратно
+// TODO Где-то тут была завязка на индексах, можно упрочить проверку
 const getCols = frames => frames[0].children.filter(({ name }) => name === 'col').length;
 
 const getContainer = frames => {

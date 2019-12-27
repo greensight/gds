@@ -12,7 +12,7 @@ const Section = ({ children, container = false, bg = '#fff', mb, pv, pt, pb, css
         },
         css,
     );
-    console.log(css);
+
     return <Component>{container ? <Container>{children}</Container> : children}</Component>;
 };
 

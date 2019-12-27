@@ -1,14 +1,27 @@
 import React from 'react';
-import major from '../../scripts/major';
+import useTheme from '../../scripts/useTheme';
 
-const Container = ({ children, css }) => {
-    console.log('css', css);
-    // TODO add container and padding
+const NAMES = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
+// TODO NAMES повторяются в нескольких местах
+const Container = ({ children }) => {
+    const { layout } = useTheme();
+
+    const padding = Object.entries(layout.padding).reduce((acc, [bp, bpValue]) => {
+        const name = NAMES[NAMES.indexOf(bp) + 1];
+        return {
+            ...acc,
+            [`@media (max-width: ${layout.breakpoints[name] - 1}px)`]: {
+                padding: `0 ${bpValue}px`,
+            },
+        };
+    }, {});
+
     return (
         <div
             css={{
-                width: major(180),
+                maxWidth: layout.container,
                 margin: '0 auto',
+                ...padding,
             }}
         >
             {children}
