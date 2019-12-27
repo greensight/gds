@@ -6,12 +6,14 @@ const getPalettes = require('./getPalettes');
 const getColors = require('./getColors');
 const getTypography = require('./getTypography');
 const getIcons = require('./getIcons');
+const getLayout = require('./getLayout');
 
 const getters = {
     palettes: getPalettes,
     colors: getColors,
     typography: getTypography,
     icons: getIcons,
+    layout: getLayout,
 };
 
 async function getToken(type, page, config) {

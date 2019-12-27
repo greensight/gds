@@ -4,6 +4,7 @@ import Item from './Item';
 import useTheme from '../../src/scripts/useTheme';
 import major from '../../src/scripts/major';
 import minor from '../../src/scripts/minor';
+import Section from '../../src/components/Section';
 
 const TestLayout = () => {
     const theme = useTheme();
@@ -28,7 +29,7 @@ const TestLayout = () => {
     return (
         <>
             <header>
-                <Section container>
+                <Section container css={{ backgroundColor: 'pink' }}>
                     <Item>Preheader</Item>
                 </Section>
                 <Section container bg={theme.colors.bg.brand}>
@@ -171,35 +172,6 @@ const TestLayout = () => {
                 </Section>
             </footer>
         </>
-    );
-};
-
-const Container = ({ children }) => {
-    return (
-        <div
-            css={{
-                width: major(180),
-                margin: '0 auto',
-            }}
-        >
-            {children}
-        </div>
-    );
-};
-
-const Section = ({ children, container = false, bg = '#fff', mb, pv, pt, pb, style }) => {
-    return (
-        <section
-            css={{
-                marginBottom: mb,
-                paddingTop: pv || pt,
-                paddingBottom: pv || pb,
-                backgroundColor: bg,
-                ...style,
-            }}
-        >
-            {container ? <Container>{children}</Container> : children}
-        </section>
     );
 };
 
