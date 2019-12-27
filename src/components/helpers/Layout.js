@@ -2,8 +2,6 @@ import React from 'react';
 import isObject from '../../scripts/isObject';
 import useTheme from '../../scripts/useTheme';
 
-// TODO Move cols/gap defaults to config/theme
-
 const Layout = ({ children, cols, rows, gap, auto, justify, align }) => {
     const { layout } = useTheme();
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Item = ({ children, style }) => {
+const Item = ({ children, ...props }) => {
     return (
         <div
             css={{
@@ -11,7 +11,7 @@ const Item = ({ children, style }) => {
                 padding: 16,
                 boxShadow: '0 0 0 2px black',
                 // backgroundColor: '#ebebeb',
-                ...style,
+                ...props,
             }}
         >
             {children}

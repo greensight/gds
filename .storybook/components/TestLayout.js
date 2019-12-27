@@ -20,16 +20,16 @@ const TestLayout = () => {
 
     // TODO Реализовать заголовки
     // TODO Продумать aside
-    // TODO Доработать Container
-    // TODO Вынести базовые параметры в тему
-    // TODO Унифицировать css/style, padding/margin
+    // TODO Унифицировать padding/margin
     // TODO Продумать hr/border
     // TODO Сетки в контексте Storybook, CenteredContainer
 
+    // TODO Зачем использовать useTheme, если есть css функции
+
     return (
         <>
-            <header>
-                <Section container css={{ backgroundColor: 'pink' }}>
+            <header css={theme => ({ color: theme.app.colors.text.link })}>
+                <Section container css={{ backgroundColor: 'black' }}>
                     <Item>Preheader</Item>
                 </Section>
                 <Section container bg={theme.colors.bg.brand}>
@@ -59,7 +59,7 @@ const TestLayout = () => {
                                     xs: 6,
                                 }}
                             >
-                                <Item style={{ height: major(49) }}>Category {item}</Item>
+                                <Item css={{ height: major(49) }}>Category {item}</Item>
                             </Layout.Item>
                         ))}
                     </Layout>
@@ -70,11 +70,11 @@ const TestLayout = () => {
                 <Section container bg={theme.colors.bg.lighter} pv={major(5)}>
                     <Layout cols={12}>
                         <Layout.Item col={12}>
-                            <Item style={{ height: major(56) }}>Sports {sports[0]}</Item>
+                            <Item css={{ height: major(56) }}>Sports {sports[0]}</Item>
                         </Layout.Item>
                         {sports.slice(1).map(item => (
                             <Layout.Item key={item} col={4}>
-                                <Item style={{ height: major(35) }}>Sports {item}</Item>
+                                <Item css={{ height: major(35) }}>Sports {item}</Item>
                             </Layout.Item>
                         ))}
                     </Layout>
@@ -134,7 +134,7 @@ const TestLayout = () => {
                 <Section
                     container
                     pt={major(7)}
-                    style={{
+                    css={{
                         borderTop: `1px solid ${theme.colors.border.second}`,
                     }}
                 >
