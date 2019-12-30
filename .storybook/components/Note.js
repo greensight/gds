@@ -9,7 +9,7 @@ const Note = ({ icon, children }) => {
         <div
             css={{
                 position: 'relative',
-                padding: `16px 32px`,
+                padding: '16px 32px',
                 background: colors.bg.lighter,
                 color: colors.bg.dark,
             }}

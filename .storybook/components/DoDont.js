@@ -3,13 +3,11 @@ import useTheme from '../../src/scripts/useTheme';
 import CheckIcon from '../../src/images/icons/check.svg';
 import CrossIcon from '../../src/images/icons/cross.svg';
 
-const DoDont = ({ children }) => {
-    return (
-        <div css={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gridGap: 32 }}>
-            {children}
-        </div>
-    );
-};
+const DoDont = ({ children }) => (
+    <div css={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gridGap: 32 }}>
+        {children}
+    </div>
+);
 
 const Item = ({ type, children }) => {
     const theme = useTheme();
@@ -21,7 +19,7 @@ const Item = ({ type, children }) => {
     return (
         <div
             css={{
-                padding: `16px 32px`,
+                padding: '16px 32px',
                 background: colors.bg.lighter,
                 color: colors.bg.dark,
                 borderTop: `4px solid ${color}`,

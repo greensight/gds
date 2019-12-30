@@ -13,7 +13,7 @@ import major from '../../scripts/major';
 // TODO Осмыслить перенос fill/stoke наверх, нужен ли парсинг
 
 const Icons = ({ headingLevel = 2 }) => {
-    const iconsReq = require.context(`!!@svgr/webpack!@icons`);
+    const iconsReq = require.context('!!@svgr/webpack!@icons');
     const icons = iconsReq.keys().reduce((acc, name) => {
         const formattedName = name.match(/\.\/(.+)\.svg$/)[1];
         const nameParts = formattedName.split('/');

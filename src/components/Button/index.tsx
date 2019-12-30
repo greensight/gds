@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { space, color, typography, layout, border, position, shadow } from 'styled-system';
 import useTheme from '../../scripts/useTheme';
+import IButton from './Button';
 
 const Button: React.FC<IButton> = ({
     children,
@@ -13,7 +14,12 @@ const Button: React.FC<IButton> = ({
     css,
     ...props
 }) => {
-    const styles = useStyles({ size, variant, bordered, block });
+    const styles = useStyles({
+        size,
+        variant,
+        bordered,
+        block,
+    });
     const Component = styled('button')(styles, css, space, color, typography, layout, border, position, shadow);
 
     return (

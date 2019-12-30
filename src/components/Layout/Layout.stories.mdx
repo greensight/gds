@@ -1,0 +1,203 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { radios, boolean, text, array, select, number } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import Item from '../../../.storybook/components/Item';
+import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
+
+<Meta title="Dev | Components / Layout" component={Layout} />
+
+# Layout
+
+<Story name="Knobs">
+    {() => {
+        const itemsCount = number(
+            'Items count (demo)',
+            6,
+            {
+                range: true,
+                min: 2,
+                max: 16,
+                step: 1,
+            },
+            'Layout',
+        );
+        const type = radios('Type', ['grid', 'flex'], 'grid', 'Layout');
+        const cols = number(
+            'Columns count',
+            12,
+            {
+                range: true,
+                min: 1,
+                max: 16,
+                step: 1,
+            },
+            'Layout',
+        );
+        const columnGap = number(
+            'Gap (columns)',
+            16,
+            {
+                min: 0,
+                max: 160,
+                step: 4,
+            },
+            'Layout',
+        );
+        const rowGap = number(
+            'Gap (rows)',
+            16,
+            {
+                min: 0,
+                max: 160,
+                step: 4,
+            },
+            'Layout',
+        );
+        const justify = select(
+            'Alignment (horizontal)',
+            ['', 'start', 'end', 'center', 'stretch', 'space-around', 'space-between', 'space-evenly'],
+            '',
+            'Layout',
+        );
+        const align = select('Alignment (vertical)', ['', 'start', 'end', 'center', 'stretch'], '', 'Layout');
+        const inline = boolean('inline', false, 'Layout (hardcore)');
+        const colsHard = text('cols', '', 'Layout (hardcore)');
+        const rows = text('rows', '', 'Layout (hardcore)');
+        const areas = array('areas (grid)', [], ', ', 'Layout (hardcore)');
+        const direction = radios('direction', ['row', 'column'], 'row', 'Layout (hardcore)');
+        const reverse = boolean('reverse (flex)', false, 'Layout (hardcore)');
+        const wrap = boolean('wrap (flex)', false, 'Layout (hardcore)');
+        const autoRows = text('autoRows (grid)', '', 'Layout (hardcore)');
+        const autoCols = text('autoCols (grid)', '', 'Layout (hardcore)');
+        const dense = boolean('dense (grid)', false, 'Layout (hardcore)');
+        const layoutProps = {
+            type,
+            cols: colsHard || cols,
+            inline,
+            rows,
+            areas,
+            gap: [rowGap, columnGap],
+            justify,
+            align,
+            direction,
+            reverse,
+            wrap,
+            autoRows,
+            autoCols,
+            dense,
+        };
+        const col = number(
+            'Columns count',
+            1,
+            {
+                range: true,
+                min: 1,
+                max: 16,
+                step: 1,
+            },
+            'All items',
+        );
+        const row = number(
+            'Rows count',
+            1,
+            {
+                range: true,
+                min: 1,
+                max: 16,
+                step: 1,
+            },
+            'All items',
+        );
+        const colHard = text('col', '', 'All items (hardcore)');
+        const rowHard = text('row', '', 'All items (hardcore)');
+        const grow = boolean('grow', false, 'All items (hardcore)');
+        const shrink = boolean('shrink', true, 'All items (hardcore)');
+        const basis = text('basis', '', 'All items (hardcore)');
+        const allItemsProps = {
+            col: colHard || col,
+            row: rowHard || row,
+            grow,
+            shrink,
+            basis,
+        };
+        return (
+            <Layout {...layoutProps}>
+                {new Array(itemsCount).fill('').map((item, index) => {
+                    index++;
+                    const col = text(`Item ${index} col`, '', 'Item (hardcore)') || allItemsProps.col;
+                    const row = text(`Item ${index} row`, '', 'Item (hardcore)') || allItemsProps.row;
+                    const area = text(`Item ${index} area (grid)`, '', 'Item (hardcore)');
+                    const justify = select(
+                        `Item ${index} justify`,
+                        ['start', 'end', 'center', 'stretch'],
+                        'stretch',
+                        'Item (hardcore)',
+                    );
+                    const align = select(
+                        `Item ${index} align`,
+                        ['start', 'end', 'center', 'stretch'],
+                        'stretch',
+                        'Item (hardcore)',
+                    );
+                    const order = number(`Item ${index} order`, 0, {}, 'Item (hardcore)');
+                    const basis = text(`Item ${index} basis (flex)`, '', 'Item (hardcore)') || allItemsProps.basis;
+                    const itemProps = {
+                        col: col || allItemsProps.col,
+                        row: row || allItemsProps.row,
+                        area,
+                        justify,
+                        align,
+                        order,
+                        grow: allItemsProps.grow,
+                        shrink: allItemsProps.shrink,
+                        basis: basis || allItemsProps.basis,
+                    };
+                    return (
+                        <Layout.Item key={index} {...itemProps}>
+                            <Item>Item {index}</Item>
+                        </Layout.Item>
+                    );
+                })}
+            </Layout>
+        );
+    }}
+</Story>
+
+## Props
+
+### Layout
+
+<Props of={LayoutProps} />
+
+### Layout.Item
+
+<Props of={LayoutItemProps} />
+
+## Use Cases
+
+### Basic
+
+<Preview>
+    <Story name="Basic">
+        <Layout cols={4}>
+            <Layout.Item>
+                <Item>Item 1</Item>
+            </Layout.Item>
+            <Layout.Item>
+                <Item>Item 2</Item>
+            </Layout.Item>
+            <Layout.Item>
+                <Item>Item 3</Item>
+            </Layout.Item>
+            <Layout.Item>
+                <Item>Item 4</Item>
+            </Layout.Item>
+            <Layout.Item>
+                <Item>Item 5</Item>
+            </Layout.Item>
+            <Layout.Item>
+                <Item>Item 6</Item>
+            </Layout.Item>
+        </Layout>
+    </Story>
+</Preview>

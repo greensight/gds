@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../../src/components/helpers/Layout';
+import Layout from '../../src/components/Layout';
 import Item from './Item';
 import useTheme from '../../src/scripts/useTheme';
 import major from '../../src/scripts/major';
