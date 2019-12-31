@@ -66,7 +66,7 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
         const areas = array('areas (grid)', [], ', ', 'Layout (hardcore)');
         const direction = radios('direction', ['row', 'column'], 'row', 'Layout (hardcore)');
         const reverse = boolean('reverse (flex)', false, 'Layout (hardcore)');
-        const wrap = boolean('wrap (flex)', false, 'Layout (hardcore)');
+        const wrap = boolean('wrap (flex)', true, 'Layout (hardcore)');
         const autoRows = text('autoRows (grid)', '', 'Layout (hardcore)');
         const autoCols = text('autoCols (grid)', '', 'Layout (hardcore)');
         const dense = boolean('dense (grid)', false, 'Layout (hardcore)');
@@ -129,28 +129,28 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
                     const area = text(`Item ${index} area (grid)`, '', 'Item (hardcore)');
                     const justify = select(
                         `Item ${index} justify`,
-                        ['start', 'end', 'center', 'stretch'],
-                        'stretch',
+                        ['', 'start', 'end', 'center', 'stretch'],
+                        '',
                         'Item (hardcore)',
                     );
                     const align = select(
                         `Item ${index} align`,
-                        ['start', 'end', 'center', 'stretch'],
-                        'stretch',
+                        ['', 'start', 'end', 'center', 'stretch'],
+                        '',
                         'Item (hardcore)',
                     );
                     const order = number(`Item ${index} order`, 0, {}, 'Item (hardcore)');
                     const basis = text(`Item ${index} basis (flex)`, '', 'Item (hardcore)') || allItemsProps.basis;
                     const itemProps = {
-                        col: col || allItemsProps.col,
-                        row: row || allItemsProps.row,
+                        col: !basis ? col : undefined,
+                        row,
                         area,
                         justify,
                         align,
                         order,
                         grow: allItemsProps.grow,
                         shrink: allItemsProps.shrink,
-                        basis: basis || allItemsProps.basis,
+                        basis,
                     };
                     return (
                         <Layout.Item key={index} {...itemProps}>

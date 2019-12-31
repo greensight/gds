@@ -36,7 +36,7 @@ export interface ILayoutItem {
     children: React.ReactNode;
     /** Колонки */
     col?: number | number[2] | string;
-    /** Строки */
+    /** Строки (type: 'grid') */
     row?: number | number[2] | string;
     /** Имя зоны (type: 'grid') */
     area?: string;
