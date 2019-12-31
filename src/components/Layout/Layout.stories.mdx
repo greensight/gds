@@ -110,14 +110,10 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
         const colHard = text('col', '', 'All items (hardcore)');
         const rowHard = text('row', '', 'All items (hardcore)');
         const grow = boolean('grow', false, 'All items (hardcore)');
-        const shrink = boolean('shrink', true, 'All items (hardcore)');
-        const basis = text('basis', '', 'All items (hardcore)');
         const allItemsProps = {
             col: colHard || col,
             row: rowHard || row,
             grow,
-            shrink,
-            basis,
         };
         return (
             <Layout {...layoutProps}>
@@ -139,17 +135,14 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
                         'Item (hardcore)',
                     );
                     const order = number(`Item ${index} order`, 0, {}, 'Item (hardcore)');
-                    const basis = text(`Item ${index} basis (flex)`, '', 'Item (hardcore)') || allItemsProps.basis;
                     const itemProps = {
-                        col: !basis ? col : undefined,
+                        col,
                         row,
                         area,
                         justify,
                         align,
                         order,
                         grow: allItemsProps.grow,
-                        shrink: allItemsProps.shrink,
-                        basis,
                     };
                     return (
                         <Layout.Item key={index} {...itemProps}>

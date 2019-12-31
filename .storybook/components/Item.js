@@ -1,16 +1,17 @@
 import React from 'react';
+import major from '../../src/scripts/major';
 
-const Item = ({ children, ...props }) => (
+const Item = ({ children, bg, ...props }) => (
     <div
-        css={{
+        css={theme => ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             height: '100%',
-            padding: 16,
-            border: '2px solid black',
-            ...props,
-        }}
+            padding: major(2),
+            backgroundColor: bg || theme.app.colors.bg.lighter,
+        })}
+        {...props}
     >
         {children}
     </div>

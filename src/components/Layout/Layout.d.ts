@@ -29,6 +29,8 @@ export interface ILayout {
     reverse?: boolean;
     /** Многострочный режим (type: 'flex') */
     wrap?: boolean;
+    /** Минимальный размер элемента в авто-режиме */
+    auto?: number;
 }
 
 export interface ILayoutItem {
@@ -48,8 +50,4 @@ export interface ILayoutItem {
     order?: number;
     /** grow (type: 'flex')  */
     grow?: boolean | number;
-    /** shrink (type: 'flex')  */
-    shrink?: boolean | number;
-    /** basis (type: 'flex')  */
-    basis?: string;
 }

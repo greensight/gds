@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createContext, useContext } from 'react';
 import useCSSProperty from '../../scripts/useCSSProperty';
+import useTheme from '../../scripts/useTheme';
 import toArray from '../../scripts/toArray';
 import { ILayout, ILayoutItem } from './Layout';
 
@@ -22,36 +23,44 @@ export const Layout: React.FC<ILayout> = ({
     dense,
     reverse,
     wrap = true,
+    auto,
     ...props
 }) => {
+    const { layout } = useTheme();
+
     return (
-        <LayoutContext.Provider value={{ type, gap, cols }}>
+        <LayoutContext.Provider value={{ type, gap: gap || layout.gap, cols: cols || layout.cols, auto }}>
             <div
-                css={{
-                    display: useCSSProperty({
+                css={[
+                    useCSSProperty({
+                        name: 'display',
                         value: [type, inline],
                         transform: ([type, inline]) => (inline ? `inline-${type}` : type),
                     }),
-                    gridTemplateColumns: useCSSProperty({
-                        value: cols,
+                    useCSSProperty({
+                        name: 'gridTemplateColumns',
+                        value: [cols, auto],
                         defaultProperty: 'cols',
-                        condition: type === 'grid',
-                        transform: value => {
-                            if (Number.isInteger(value)) return `repeat(${value}, 1fr)`;
-                            const arr = toArray(value);
+                        condition: type === 'grid' && !areas,
+                        transform: ([cols, auto]) => {
+                            if (auto) return `repeat(auto-fit, minmax(${auto}px, 1fr))`;
+                            if (Number.isInteger(cols)) return `repeat(${cols}, 1fr)`;
+                            const arr = toArray(cols);
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
-                    gridTemplateRows: useCSSProperty({
+                    useCSSProperty({
+                        name: 'gridTemplateRows',
                         value: rows,
-                        condition: type === 'grid',
+                        condition: type === 'grid' && !areas,
                         transform: value => {
                             if (Number.isInteger(value)) return `repeat(${value}, 1fr)`;
                             const arr = toArray(value);
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
-                    gridTemplateAreas: useCSSProperty({
+                    useCSSProperty({
+                        name: 'gridTemplateAreas',
                         value: areas,
                         condition: type === 'grid',
                         transform: value => {
@@ -59,7 +68,8 @@ export const Layout: React.FC<ILayout> = ({
                             return arr.map(val => `"${val}"`).join(' ');
                         },
                     }),
-                    gridGap: useCSSProperty({
+                    useCSSProperty({
+                        name: 'gridGap',
                         value: gap,
                         defaultProperty: 'gap',
                         condition: type === 'grid',
@@ -68,7 +78,8 @@ export const Layout: React.FC<ILayout> = ({
                             return value;
                         },
                     }),
-                    margin: useCSSProperty({
+                    useCSSProperty({
+                        name: 'margin',
                         value: gap,
                         defaultProperty: 'gap',
                         condition: type === 'flex',
@@ -77,11 +88,13 @@ export const Layout: React.FC<ILayout> = ({
                             return `-${value}px 0 0 -${value}px`;
                         },
                     }),
-                    justifyItems: useCSSProperty({
+                    useCSSProperty({
+                        name: 'justifyItems',
                         value: justify,
                         condition: type === 'grid',
                     }),
-                    justifyContent: useCSSProperty({
+                    useCSSProperty({
+                        name: 'justifyContent',
                         value: justify,
                         condition: type === 'flex',
                         transform: value => {
@@ -89,14 +102,16 @@ export const Layout: React.FC<ILayout> = ({
                             return value;
                         },
                     }),
-                    alignItems: useCSSProperty({
+                    useCSSProperty({
+                        name: 'alignItems',
                         value: align,
                         transform: value => {
                             if (type === 'flex' && (value === 'start' || value === 'end')) return `flex-${value}`;
                             return value;
                         },
                     }),
-                    gridAutoRows: useCSSProperty({
+                    useCSSProperty({
+                        name: 'gridAutoRows',
                         value: autoRows,
                         condition: type === 'grid',
                         transform: value => {
@@ -104,7 +119,8 @@ export const Layout: React.FC<ILayout> = ({
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
-                    gridAutoColumns: useCSSProperty({
+                    useCSSProperty({
+                        name: 'gridAutoColumns',
                         value: autoCols,
                         condition: type === 'grid',
                         transform: value => {
@@ -112,24 +128,27 @@ export const Layout: React.FC<ILayout> = ({
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
-                    gridAutoFlow: useCSSProperty({
+                    useCSSProperty({
+                        name: 'gridAutoFlow',
                         value: [direction, dense],
                         condition: type === 'grid' && (direction === 'column' || dense),
                         transform: ([direction, dense]) =>
                             `${direction === 'column' ? 'column' : ''}${dense ? ' dense' : ''}`.trim(),
                     }),
-                    flexDirection: useCSSProperty({
+                    useCSSProperty({
+                        name: 'flexDirection',
                         value: [direction, reverse],
                         condition: type === 'flex' && (direction === 'column' || reverse),
                         transform: ([direction, reverse]) =>
                             `${direction === 'column' ? 'column' : 'row'}${reverse ? '-reverse' : ''}`,
                     }),
-                    flexWrap: useCSSProperty({
+                    useCSSProperty({
+                        name: 'flexWrap',
                         value: wrap,
                         condition: type === 'flex',
                         transform: value => (value ? 'wrap' : 'nowrap'),
                     }),
-                }}
+                ]}
                 {...props}
             >
                 {children}
@@ -138,25 +157,14 @@ export const Layout: React.FC<ILayout> = ({
     );
 };
 
-export const Item: React.FC<ILayoutItem> = ({
-    children,
-    col,
-    row,
-    area,
-    justify,
-    align,
-    order,
-    grow,
-    shrink,
-    basis = '100%',
-    ...props
-}) => {
-    const { type, gap, cols } = useContext(LayoutContext);
+export const Item: React.FC<ILayoutItem> = ({ children, col, row, area, justify, align, order, grow, ...props }) => {
+    const { type, gap, cols, auto } = useContext(LayoutContext);
 
     return (
         <div
-            css={{
-                gridColumn: useCSSProperty({
+            css={[
+                useCSSProperty({
+                    name: 'gridColumn',
                     value: col,
                     condition: type === 'grid',
                     transform: value => {
@@ -165,7 +173,8 @@ export const Item: React.FC<ILayoutItem> = ({
                         return value;
                     },
                 }),
-                gridRow: useCSSProperty({
+                useCSSProperty({
+                    name: 'gridRow',
                     value: row,
                     condition: type === 'grid',
                     transform: value => {
@@ -174,33 +183,39 @@ export const Item: React.FC<ILayoutItem> = ({
                         return value;
                     },
                 }),
-                gridArea: useCSSProperty({
+                useCSSProperty({
+                    name: 'gridArea',
                     value: area,
                     condition: type === 'grid',
                 }),
-                justifySelf: useCSSProperty({
+                useCSSProperty({
+                    name: 'justifySelf',
                     value: justify,
                     condition: type === 'grid',
                 }),
-                alignSelf: useCSSProperty({
+                useCSSProperty({
+                    name: 'alignSelf',
                     value: align,
                     transform: value => {
                         if (type === 'flex' && (value === 'start' || value === 'end')) return `flex-${value}`;
                         return value;
                     },
                 }),
-                order: useCSSProperty({ value: order }),
-                flexGrow: useCSSProperty({
-                    value: grow,
-                    condition: type === 'flex',
-                    transform: value => (!Number.isInteger(value) ? Number(value) : value),
+                useCSSProperty({
+                    name: 'order',
+                    value: order,
                 }),
-                flexShrink: useCSSProperty({
-                    value: shrink,
+                useCSSProperty({
+                    name: 'flexGrow',
+                    value: [grow, auto],
                     condition: type === 'flex',
-                    transform: value => (!Number.isInteger(value) ? Number(value) : value),
+                    transform: ([grow, auto]) => {
+                        if (auto) return 1;
+                        return !Number.isInteger(grow) ? Number(grow) : grow;
+                    },
                 }),
-                padding: useCSSProperty({
+                useCSSProperty({
+                    name: 'padding',
                     value: gap,
                     condition: type === 'flex',
                     transform: value => {
@@ -208,16 +223,17 @@ export const Item: React.FC<ILayoutItem> = ({
                         return `${value}px 0 0 ${value}px`;
                     },
                 }),
-                flexBasis: useCSSProperty({
-                    value: [col, basis],
+                useCSSProperty({
+                    name: 'flexBasis',
+                    value: [col, auto],
                     condition: type === 'flex',
-                    transform: ([col, basis]) => {
+                    transform: ([col, auto]) => {
+                        if (auto) return auto;
                         if (Number.isInteger(Number(col))) return `${Math.floor((100 * col * 100) / cols) / 100}%`;
-                        if (col) return col;
-                        return basis;
+                        return col;
                     },
                 }),
-            }}
+            ]}
             {...props}
         >
             {children}
