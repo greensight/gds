@@ -1,16 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import Container from '../Container';
+import ISection from './Section';
 
-const Section = ({ children, container = false, bg = '#fff', mb, pv, pt, pb, ...props }) => (
+const Section: React.FC<ISection> = ({ children, container = false, bg, mb, pv, pt, pb, ...props }) => (
     <section
-        css={[
-            {
-                marginBottom: mb,
-                paddingTop: pv || pt,
-                paddingBottom: pv || pb,
-                backgroundColor: bg,
-            },
-        ]}
+        css={{
+            marginBottom: mb,
+            paddingTop: pv || pt,
+            paddingBottom: pv || pb,
+            backgroundColor: bg,
+        }}
         {...props}
     >
         {container ? <Container>{children}</Container> : children}
