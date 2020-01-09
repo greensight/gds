@@ -24,6 +24,7 @@ export const Layout: React.FC<ILayout> = ({
     reverse,
     wrap = true,
     auto,
+    css,
     ...props
 }) => {
     const { layout } = useTheme();
@@ -148,6 +149,7 @@ export const Layout: React.FC<ILayout> = ({
                         condition: type === 'flex',
                         transform: value => (value ? 'wrap' : 'nowrap'),
                     }),
+                    css,
                 ]}
                 {...props}
             >
@@ -157,7 +159,18 @@ export const Layout: React.FC<ILayout> = ({
     );
 };
 
-export const Item: React.FC<ILayoutItem> = ({ children, col, row, area, justify, align, order, grow, ...props }) => {
+export const Item: React.FC<ILayoutItem> = ({
+    children,
+    col,
+    row,
+    area,
+    justify,
+    align,
+    order,
+    grow,
+    css,
+    ...props
+}) => {
     const { type, gap, cols, auto } = useContext(LayoutContext);
 
     return (
@@ -233,6 +246,7 @@ export const Item: React.FC<ILayoutItem> = ({ children, col, row, area, justify,
                         return col;
                     },
                 }),
+                css,
             ]}
             {...props}
         >

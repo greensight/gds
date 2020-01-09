@@ -13,6 +13,10 @@ const TestLayout = () => {
     // TODO Сетки в контексте Storybook, CenteredContainer
     // TODO Зачем использовать useTheme, если есть css функции
     // TODO Внести auto в кнобсы
+    // TODO Поправить добавление css prop
+    // TODO Брать размеры брейкпоинтов из размеров элементов
+    // TODO Брать контейнер не по auto, а по тексту нечисленному
+    // TODO Предусмотреть контейнер с одной стороны
 
     const data = {
         one: [1, 2],
@@ -106,7 +110,7 @@ const TestLayout = () => {
                         <Item bg={theme.colors.bg.default}>1/5</Item>
                     </Layout.Item>
                     <Layout.Item col={4}>
-                        <Layout cols={6} rows={6} dense>
+                        <Layout cols={6} dense>
                             {data.eight.map(item => (
                                 <Layout.Item key={item} col={{ _: 5, sm: 6 }} row={3}>
                                     <Item bg={theme.colors.bg.default}>5/6</Item>
