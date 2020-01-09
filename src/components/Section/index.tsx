@@ -4,7 +4,7 @@ import useTheme from '../../scripts/useTheme';
 import useCSSProperty from '../../scripts/useCSSProperty';
 import ISection from './Section';
 
-const Section: React.FC<ISection> = ({ children, container, mb, pv, pt, pb, bg, ...props }) => {
+const Section: React.FC<ISection> = ({ children, container, mb, pv, pt, pb, bg, css, ...props }) => {
     const { layout } = useTheme();
     const hasContainer = container !== undefined ? container : !!layout.container;
 
@@ -29,6 +29,7 @@ const Section: React.FC<ISection> = ({ children, container, mb, pv, pt, pb, bg, 
                     name: 'background',
                     value: bg,
                 }),
+                css,
             ]}
             {...props}
         >

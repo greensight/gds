@@ -1,16 +1,105 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { boolean, number, color } from '@storybook/addon-knobs';
+import Item from '../../../.storybook/components/Item';
+import major from '../../scripts/major';
+import baseTheme from '../../scripts/baseTheme';
 import Section from '.';
 
 <Meta title="Dev | Components / Section" component={Section} />
 
 # Section
 
-<Preview>
-    <Story name="Basic">
-        <Section>Content</Section>
-    </Story>
-</Preview>
+Обычно при разметке основного контента страницы он делится на разделы через тег section. Для упрощения этого процесса предусмотрен компонент `Section`.
+
+⚠️ В документации используется компонент `Item` чисто в демонстративных целях - визуально показать бокс контента. Это вспомогательный компонент и на проекте его не будет - будет ваш контент.
+
+<Story name="Knobs">
+    <Section
+        container={boolean('container', true)}
+        mb={number('mb', 0, {
+            min: 0,
+            max: 160,
+            step: 4,
+        })}
+        pt={number('pt', 0, {
+            min: 0,
+            max: 160,
+            step: 4,
+        })}
+        pb={number('pb', 0, {
+            min: 0,
+            max: 160,
+            step: 4,
+        })}
+        bg={color('bg', '#fff')}
+    >
+        <Item>Here goes section content</Item>
+    </Section>
+</Story>
 
 ## Props
 
 <Props of={Section} />
+
+## Use Cases
+
+### Container
+
+Внутри каждого раздела может быть или не быть контейнер. По умолчанию контейнер ставится или нет в зависимости от его присутствия во фрейме `Layout` в Figma. GDS - это проект с контейнером, так что проп `container` проставляется по дефолту, но его можно убрать для разделов без контейнера, передав false.
+
+Величина контейнера читается через токены. Также через токены читаются поля для разрешений, где контейнер занимает 100% ширины.
+
+<Preview>
+    <Story name="Container">
+        <>
+            <Section mb={major(2)}>
+                <Item>Section with container</Item>
+            </Section>
+            <Section container={false}>
+                <Item>Section without container</Item>
+            </Section>
+        </>
+    </Story>
+</Preview>
+
+### Margins & Paddings
+
+В качестве спейсингов обычно используются либо нижние отступы, либо вертикальные поля. Для них предусмотрены пропсы `mb`, `pt`, `pb` и `pv`. `pv` выступает в качестве шортката для указания равных вертикальных полей.
+
+<Preview>
+    <Story name="Margins & Paddings">
+        <>
+            <Section mb={major(2)}>
+                <Item>Section with margin</Item>
+            </Section>
+            <Section mb={major(2)} pv={major(2)}>
+                <Item>Section with margin and equal paddings</Item>
+            </Section>
+            <Section pt={major(4)} pb={major(2)}>
+                <Item>Section with different paddings</Item>
+            </Section>
+        </>
+    </Story>
+</Preview>
+
+### Backgrounds
+
+Типовой кейс - использование разделов с фоном. Для фона предусмотрен проп `bg`.
+
+⚠️ Использовать изображения в качестве фона не рекомендуется, т.к. они не поддаются оптимизации - используйте компонент `Picture` с абсолютно спозиционированным изображением.
+
+<Preview>
+    <Story name="Backgrounds">
+        <>
+            <Section mb={major(2)}>
+                <Item>Simple section</Item>
+            </Section>
+            <Section mb={major(2)} pv={major(2)} bg={baseTheme.app.colors.bg.second}>
+                <Item>Section with background</Item>
+            </Section>
+            <Section>
+                <Item>Simple section</Item>
+            </Section>
+        </>
+    </Story>
+</Preview>
