@@ -2,7 +2,7 @@ import * as React from 'react';
 import useCSSProperty from '../../scripts/useCSSProperty';
 import IContainer from './Container';
 
-const Container: React.FC<IContainer> = ({ children, ...props }) => {
+const Container: React.FC<IContainer> = ({ children, css, ...props }) => {
     return (
         <div
             css={[
@@ -18,6 +18,7 @@ const Container: React.FC<IContainer> = ({ children, ...props }) => {
                 {
                     margin: '0 auto',
                 },
+                css,
             ]}
             {...props}
         >

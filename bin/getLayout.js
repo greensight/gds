@@ -1,6 +1,9 @@
 const NAMES = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
 // TODO Подумать над порядкой имён - так или обратно
 // TODO Где-то тут была завязка на индексах, можно упрочить проверку
+// TODO Брать размеры брейкпоинтов из размеров элементов
+// TODO Брать контейнер не по auto, а по тексту нечисленному
+// TODO Предусмотреть контейнер с одной стороны
 const getCols = frames => frames[0].children.filter(({ name }) => name === 'col').length;
 
 const getContainer = frames => {

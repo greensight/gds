@@ -64,6 +64,16 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
             'Layout',
         );
         const align = select('Alignment (vertical)', ['', 'start', 'end', 'center', 'stretch'], '', 'Layout');
+        const auto = number(
+            'Auto mode',
+            0,
+            {
+                min: 0,
+                max: 400,
+                step: 8,
+            },
+            'Layout'
+        );
         const inline = boolean('inline', false, 'Layout (hardcore)');
         const colsHard = text('cols', '', 'Layout (hardcore)');
         const rows = text('rows', '', 'Layout (hardcore)');
@@ -89,6 +99,7 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
             autoRows,
             autoCols,
             dense,
+            auto: auto !== 0 ? auto : undefined,
         };
         const col = number(
             'Columns count',

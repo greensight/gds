@@ -92,6 +92,7 @@ addParameters({
 
 addDecorator(withKnobs);
 addDecorator(withA11y);
+// TODO Придумать что-нибудь по CenteredContainer - он нужен для демонстрации компонентов, но не для лайаутов и прочих глобальных штук.
 // addDecorator(storyFn => <CenteredContainer>{storyFn()}</CenteredContainer>);
 addDecorator(storyFn => <ThemeProvider theme={baseTheme}>{storyFn()}</ThemeProvider>);
 

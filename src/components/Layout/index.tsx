@@ -7,16 +7,6 @@ import { ILayout, ILayoutItem } from './Layout';
 
 const LayoutContext = createContext();
 
-// TODO Реализовать заголовки
-// TODO Продумать hr/border
-// TODO Сетки в контексте Storybook, CenteredContainer
-// TODO Зачем использовать useTheme, если есть css функции
-// TODO Внести auto в кнобсы
-// TODO Поправить добавление css prop
-// TODO Брать размеры брейкпоинтов из размеров элементов
-// TODO Брать контейнер не по auto, а по тексту нечисленному
-// TODO Предусмотреть контейнер с одной стороны
-
 export const Layout: React.FC<ILayout> = ({
     children,
     type = 'grid',
