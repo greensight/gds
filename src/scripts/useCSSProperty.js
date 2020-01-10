@@ -1,9 +1,7 @@
 import useTheme from './useTheme';
 import isObject from './isObject';
 import toArray from './toArray';
-
-// TODO Убрать отсюда NAMES
-const NAMES = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
+import { BREAKPOINTS_NAMES } from './constants';
 
 const useCSSProperty = ({ name, value, defaultProperty, condition, transform }) => {
     const { layout } = useTheme();
@@ -25,10 +23,10 @@ const useCSSProperty = ({ name, value, defaultProperty, condition, transform }) 
     if (!obj) return setValue(name, arr, transform);
 
     return Object.keys(obj)
-        .sort((a, b) => NAMES.indexOf(b) - NAMES.indexOf(a))
+        .sort((a, b) => BREAKPOINTS_NAMES.indexOf(a) - BREAKPOINTS_NAMES.indexOf(b))
         .reduce((acc, bp) => {
-            const nameIndex = NAMES.indexOf(bp);
-            const nextBp = nameIndex !== -1 && NAMES[nameIndex + 1];
+            const nameIndex = BREAKPOINTS_NAMES.indexOf(bp);
+            const nextBp = nameIndex !== -1 && BREAKPOINTS_NAMES[nameIndex - 1];
             const values = arr.map(value => (!isObject(value) ? value : value[bp]));
             const rule = setValue(name, values, transform);
             return {

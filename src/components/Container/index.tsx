@@ -15,9 +15,14 @@ const Container: React.FC<IContainer> = ({ children, css, ...props }) => {
                     defaultProperty: 'padding',
                     transform: value => `0 ${value}px`,
                 }),
-                {
-                    margin: '0 auto',
-                },
+                useCSSProperty({
+                    name: 'marginLeft',
+                    defaultProperty: 'marginLeft',
+                }),
+                useCSSProperty({
+                    name: 'marginRight',
+                    defaultProperty: 'marginRight',
+                }),
                 css,
             ]}
             {...props}

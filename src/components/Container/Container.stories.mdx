@@ -1,4 +1,5 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import Item from '../../../.storybook/components/Item';
 import Container from '.';
 
 <Meta title="Dev | Components / Container" component={Container} />
@@ -9,9 +10,13 @@ import Container from '.';
 
 Контейнер используется в компоненте `Section`, но может использоваться и напрямую в других местах, где тег section не нужен.
 
+⚠️ В документации используется компонент `Item` чисто в демонстративных целях - визуально показать бокс контента. Это вспомогательный компонент и на проекте его не будет - будет ваш контент.
+
 <Preview>
     <Story name="Basic">
-        <Container>Content</Container>
+        <Container>
+            <Item>Content</Item>
+        </Container>
     </Story>
 </Preview>
 

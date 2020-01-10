@@ -1,23 +1,78 @@
-const NAMES = ['xxxs', 'xxs', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl'];
-// TODO Подумать над порядкой имён - так или обратно
-// TODO Где-то тут была завязка на индексах, можно упрочить проверку
-// TODO Брать размеры брейкпоинтов из размеров элементов
-// TODO Брать контейнер не по auto, а по тексту нечисленному
-// TODO Предусмотреть контейнер с одной стороны
-const getCols = frames => frames[0].children.filter(({ name }) => name === 'col').length;
+const BREAKPOINTS_NAMES = ['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs', 'xxxs'];
+
+const getBpWidth = frame =>
+    parseInt(
+        frame.children
+            .filter(({ type }) => type === 'INSTANCE' || type === 'COMPONENT')
+            .reduce((acc, instance) => acc + instance.absoluteBoundingBox.width, 0),
+        10,
+    );
+
+const isAuto = padding => Number.isNaN(parseInt(padding.children[0].characters, 10));
+
+const getMaxFixedBp = frames => {
+    let maxFixedBp;
+    frames.some((frame, index) => {
+        const paddings = frame.children.filter(({ name }) => name === 'padding');
+        if (!isAuto(paddings[0]) && !isAuto(paddings[1])) {
+            maxFixedBp = BREAKPOINTS_NAMES[index];
+            return true;
+        }
+        return false;
+    });
+    return maxFixedBp;
+};
+
+const getCols = frames => {
+    const maxBpFrame = frames[0];
+    return maxBpFrame.children.filter(({ name }) => name === 'col').length;
+};
 
 const getContainer = frames => {
-    const maxPaddingItem = frames[0].children.find(({ name }) => name === 'padding');
-    return maxPaddingItem && maxPaddingItem.children[0].characters === 'auto'
-        ? frames[0].name - maxPaddingItem.absoluteBoundingBox.width * 2
-        : undefined;
+    const maxBpFrame = frames[0];
+    const maxBpWidth = getBpWidth(maxBpFrame);
+    const paddings = maxBpFrame.children.filter(({ name }) => name === 'padding');
+    if (!isAuto(paddings[0]) && !isAuto(paddings[1])) return;
+
+    return {
+        _: maxBpWidth - paddings[0].absoluteBoundingBox.width - paddings[1].absoluteBoundingBox.width,
+        [getMaxFixedBp(frames)]: 'none',
+    };
+};
+
+const getMarginLeft = frames => {
+    const maxBpFrame = frames[0];
+    const paddings = maxBpFrame.children.filter(({ name }) => name === 'padding');
+    if (!isAuto(paddings[0]) && !isAuto(paddings[1])) return;
+
+    const autoPaddingsNum = paddings.reduce((acc, padding) => acc + Number(isAuto(padding)), 0);
+    let margin;
+    if (autoPaddingsNum === 1) {
+        margin = paddings[0].absoluteBoundingBox.width;
+    }
+
+    return {
+        _: margin || 'auto',
+        [getMaxFixedBp(frames)]: 0,
+    };
+};
+
+const getMarginRight = frames => {
+    const maxBpFrame = frames[0];
+    const paddings = maxBpFrame.children.filter(({ name }) => name === 'padding');
+    if (!isAuto(paddings[0]) && !isAuto(paddings[1])) return;
+
+    return {
+        _: 'auto',
+        [getMaxFixedBp(frames)]: 0,
+    };
 };
 
 const getBreakpoints = frames =>
     frames.reduce(
         (acc, frame, index) => ({
             ...acc,
-            [NAMES[frames.length - index - 1]]: Number(frame.name),
+            [BREAKPOINTS_NAMES[index]]: getBpWidth(frame),
         }),
         {},
     );
@@ -30,38 +85,36 @@ const getGap = frames =>
 
         return {
             ...acc,
-            [NAMES[frames.length - index - 1]]: value,
+            [BREAKPOINTS_NAMES[index]]: value,
         };
     }, {});
 
 const getPadding = frames =>
     frames.reduce((acc, frame, index) => {
-        const paddingItem = frame.children.find(({ name }) => name === 'padding');
-        if (!paddingItem) return acc;
+        const padding = frame.children.filter(({ name }) => name === 'padding')[1];
+        if (isAuto(padding)) return acc;
 
-        const isAuto = paddingItem.children[0].characters === 'auto';
-        const value = paddingItem.absoluteBoundingBox.width;
+        const value = padding.absoluteBoundingBox.width;
         const prev = Object.values(acc)[Object.values(acc).length - 1];
-        if (isAuto || value === prev) return acc;
+        if (value === prev) return acc;
 
         return {
             ...acc,
-            [NAMES[frames.length - index - 1]]: value,
+            [BREAKPOINTS_NAMES[index]]: value,
         };
     }, {});
 
 const getLayout = frame => {
-    const frames = frame.children.filter(({ type }) => type === 'FRAME').sort((a, b) => b.name - a.name);
-
+    const frames = frame.children.filter(({ type }) => type === 'FRAME').sort((a, b) => getBpWidth(b) - getBpWidth(a));
     const tokens = {
         cols: getCols(frames),
         container: getContainer(frames),
+        marginLeft: getMarginLeft(frames),
+        marginRight: getMarginRight(frames),
         breakpoints: getBreakpoints(frames),
         gap: getGap(frames),
         padding: getPadding(frames),
     };
-
-    console.log(tokens);
 
     return tokens;
 };
