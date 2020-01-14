@@ -1,19 +1,26 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import CheckIcon from '../../images/icons/check.svg';
 import Button from '.';
 
 <Meta title="Dev | Components / Button" component={Button} />
 
 # Button
 
+Компонент кнопки.
+
+Здесь будет описание.
+
 <Story name="Knobs">
     <Button
-        variant={radios('theme', ['default', 'primary', 'secondary'], 'default')}
-        bordered={boolean('bordered', false)}
-        size={radios('size', ['medium', 'small'], 'medium')}
+        theme={radios('theme', ['primary', 'secondary'], 'primary')}
+        size={radios('size', ['lg', 'md', 'sm'], 'md')}
         block={boolean('block', false)}
         disabled={boolean('disabled', false)}
+        Icon={boolean('icon', false) && CheckIcon}
+        iconAfter={boolean('iconAfter', false)}
+        hidden={boolean('hidden', false)}
         onClick={action('onClick')}
     >
         {text('children', 'Click me')}
@@ -28,8 +35,177 @@ import Button from '.';
 
 ### Basic
 
+Кнопка без параметров рендерится с темой "primary" и размером "md".
+
 <Preview>
     <Story name="Basic">
         <Button>Button</Button>
     </Story>
 </Preview>
+
+### Themes
+
+Темы для кнопок определяются в объекте темы в поле `button.themes`. Присвоенные стилизациям имена становятся доступны через проп `theme`.
+
+**Рекомендуемые имена:** 'primary', 'secondary' и далее их производные.
+
+<Preview>
+    <Story name="Themes">
+        <>
+            <Button theme="primary" css={{marginRight: 16}}>Button</Button>
+            <Button theme="secondary">Button</Button>
+        </>
+    </Story>
+</Preview>
+
+### Sizes
+
+Размеры для кнопок определяются в объекте темы в поле `button.sizes`. Присвоенные размерам имена становятся доступны через проп `size`.
+
+**Рекомендуемые имена:** 'lg', 'md', 'sm'.
+
+<Preview>
+    <Story name="Sizes">
+        <>
+            <Button size="lg" css={{marginRight: 16}}>Button</Button>
+            <Button size="md" css={{marginRight: 16}}>Button</Button>
+            <Button size="sm">Button</Button>
+        </>
+    </Story>
+</Preview>
+
+### Block
+
+По умолчанию ширина кнопки определяется её контентом. Проп `block` ставит размеры по ширине контейнера.
+
+<Preview>
+    <Story name="Block">
+        <Button block>Button</Button>
+    </Story>
+</Preview>
+
+### Disabled
+
+Стилизация заблокированных кнопок может задаваться общая для всех тем через `global` или для каждой темы отдельно в `themes`.
+
+<Preview>
+    <Story name="Disabled">
+        <>
+            <Button disabled css={{marginRight: 16}}>Button</Button>
+            <Button theme="secondary" disabled>Button</Button>
+        </>
+    </Story>
+</Preview>
+
+### Icons
+
+Иконки добавляются через проп `Icon`. Иконка идёт с отступом, определённым через `iconOffset` в настройках `sizes`.
+
+По умолчанию кнопка идёт перед текстом, но её можно поставить в конец через `iconAfter`.
+<Preview>
+    <Story name="Icons">
+        <>
+            <Button Icon={CheckIcon} css={{marginRight: 16}}>Button</Button>
+            <Button Icon={CheckIcon} iconAfter>Button</Button>
+        </>
+    </Story>
+</Preview>
+
+### Icon only
+
+Доступен режим иконочной кнопки через проп `hidden`. Текст при этом всё равно долже указываться для доступности с AT.
+
+<Preview>
+    <Story name="Icon only">
+        <>
+            <Button Icon={CheckIcon} hidden css={{marginRight: 16}}>Button</Button>
+            <Button theme="secondary" Icon={CheckIcon} hidden>Button</Button>
+        </>
+    </Story>
+</Preview>
+
+### Links
+
+Кнопку можно отрендерить в качестве ссылки - для этого достаточно передать проп `href`.
+
+В качестве ссылки может использоваться компонент `Link` используемого роутера. Для этого нужно передать компонент роутера в проп `as` и использовать `to` вместо `href`.
+
+Также ссылка может быть внешняя, т.е. открывать вкладку в новом окне. Чтобы задать подобное поведение, передайте проп `external`.
+
+<Preview>
+    <Story name="Links">
+        <>
+            <Button href="/" css={{marginRight: 16}}>Button</Button>
+            <Button href="/" external>Button</Button>
+        </>
+    </Story>
+</Preview>
+
+## Theme
+
+Объект темы для кнопки разделён на 3 группы:
+
+1. `global` - глобальные настройки для всех кнопок проекта. Это обычный CSS;
+1. `sizes` - настройки размеров. Доступны параметры `pt`, `pb`, `ph`, `iconOffset` и `typography`. При необходимости можно передать CSS;
+1. `themes` - настройки тем. Доступны параметры `color`, `border`, `bg` и стейты `hover`, `active`, `disabled`, `focus`. Для указания специфичных стилей используйте CSS.
+
+```js
+button: {
+    global: {
+        borderRadius: 3,
+        ':focus': {
+            outlineOffset: 2,
+            outlineColor: colors.brand,
+        },
+    },
+    sizes: {
+        lg: {
+            pt: 16,
+            pb: 17,
+            ph: major(3),
+            iconOffset: major(1),
+            typography: 'buttonLg',
+        },
+        md: {
+            pt: 11,
+            pb: 13,
+            ph: major(3),
+            iconOffset: major(1),
+            typography: 'buttonMd',
+        },
+        sm: {
+            pt: 10,
+            pb: 8,
+            ph: major(2),
+            iconOffset: major(1),
+            typography: 'buttonSm',
+        },
+    },
+    themes: {
+        primary: {
+            color: colors.white,
+            bg: colors.brand,
+            hover: {
+                bg: colors.brandHover,
+            },
+            disabled: {
+                bg: colors.lighter,
+                color: colors.grey,
+            },
+        },
+        secondary: {
+            color: colors.brand,
+            border: colors.brand,
+            bg: colors.white,
+            hover: {
+                color: colors.brandHover,
+                border: colors.brandHover,
+            },
+            disabled: {
+                border: colors.light,
+                color: colors.grey,
+            },
+        },
+    },
+},
+```

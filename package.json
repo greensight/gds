@@ -39,7 +39,7 @@
         "storybook": "start-storybook -s ./public --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 5000",
-        "storybook:deploy": "storybook-to-ghpages -e docs",
+        "storybook:deploy": "storybook-to-ghpages -o docs",
         "tokens": "node bin/index.js",
         "eslint": "eslint . --ext js,jsx,ts,tsx --fix",
         "stylelint": "stylelint '**/*.css' --fix",

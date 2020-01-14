@@ -6,7 +6,7 @@ import { ThemeProvider } from 'emotion-theming';
 import { styles } from '../src/styles';
 import storybookTheme from './theme';
 import 'focus-visible';
-// import CenteredContainer from './components/CenteredContainer';
+import CenteredContainer from './components/CenteredContainer';
 import baseTheme from '../src/scripts/baseTheme';
 
 /* Style function makes no sense - this is a hack for imports to work on production. No comments :\ */
@@ -93,7 +93,7 @@ addParameters({
 addDecorator(withKnobs);
 addDecorator(withA11y);
 // TODO Придумать что-нибудь по CenteredContainer - он нужен для демонстрации компонентов, но не для лайаутов и прочих глобальных штук.
-// addDecorator(storyFn => <CenteredContainer>{storyFn()}</CenteredContainer>);
+addDecorator(storyFn => <CenteredContainer>{storyFn()}</CenteredContainer>);
 addDecorator(storyFn => <ThemeProvider theme={baseTheme}>{storyFn()}</ThemeProvider>);
 
 function loadStories() {
