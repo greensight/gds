@@ -74,13 +74,13 @@ const Icon = ({ name, Icon }) => {
                         width: '100%',
                         height: '100%',
                         padding: major(2),
-                        border: `2px solid ${colors.border.default}`,
+                        border: `2px solid ${colors.lighter}`,
                         borderRadius: 4,
                         ...typography('bodyBold'),
                         textAlign: 'center',
                         transition: 'border-color ease 300ms',
                         ':hover, :focus': {
-                            borderColor: colors.border.inverse,
+                            borderColor: colors.darker,
                         },
                         ':focus': {
                             outline: 'none',

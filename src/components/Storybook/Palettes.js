@@ -76,8 +76,8 @@ const Palette = ({ name }) => {
                         >
                             <span
                                 css={{
-                                    backgroundColor: colors.bg.default,
-                                    color: colors.text.default,
+                                    backgroundColor: colors.white,
+                                    color: colors.darker,
                                     padding: `${minor(1)}px ${major(1)}px`,
                                     borderRadius: 4,
                                     ...typography('subheading'),
@@ -87,8 +87,8 @@ const Palette = ({ name }) => {
                             </span>
                             <span
                                 css={{
-                                    backgroundColor: colors.bg.default,
-                                    color: colors.text.default,
+                                    backgroundColor: colors.white,
+                                    color: colors.darker,
                                     padding: `${minor(1)}px ${major(1)}px`,
                                     borderRadius: 4,
                                     ...typography('subheading'),

@@ -8,7 +8,7 @@ const DropdownContent = ({ children }) => {
 
     return (
         <>
-            <CheckIcon css={{ fill: colors.function.success, marginRight: 8, verticalAlign: 'middle' }} />
+            <CheckIcon css={{ fill: colors.success, marginRight: 8, verticalAlign: 'middle' }} />
             {children}
         </>
     );

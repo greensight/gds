@@ -12,32 +12,17 @@ const Colors = () => {
     const { colors } = theme;
 
     return (
-        <div>
-            {Object.keys(colors).map(groupName => (
-                <div key={groupName}>
-                    <div
-                        css={{
-                            ...typography('headline'),
-                            marginBottom: major(2),
-                            marginTop: major(2),
-                        }}
-                    >
-                        {groupName}
-                    </div>
-                    <ul
-                        css={{
-                            display: 'grid',
-                            gridTemplateColumns: `repeat(auto-fit, minmax(${major(20)}px, 1fr))`,
-                            gridGap: major(8),
-                        }}
-                    >
-                        {Object.keys(colors[groupName]).map(colorName => (
-                            <Color key={colorName} name={colorName} value={colors[groupName][colorName]} />
-                        ))}
-                    </ul>
-                </div>
+        <ul
+            css={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(auto-fit, minmax(${major(20)}px, 1fr))`,
+                gridGap: major(8),
+            }}
+        >
+            {Object.keys(colors).map(colorName => (
+                <Color key={colorName} name={colorName} value={colors[colorName]} />
             ))}
-        </div>
+        </ul>
     );
 };
 
@@ -46,8 +31,8 @@ const Color = ({ name, value }) => {
     const { colors } = theme;
 
     const SmallBox = styled('span')({
-        backgroundColor: colors.bg.default,
-        color: colors.text.default,
+        backgroundColor: colors.white,
+        color: colors.darker,
         padding: major(1),
         borderRadius: '4px 4px 4px 0px',
         ...typography('smallBold'),
