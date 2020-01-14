@@ -26,7 +26,7 @@ const baseTheme = createTheme({
             sizes: {
                 lg: {
                     pt: 16,
-                    pb: 17,
+                    pb: 18,
                     ph: major(3),
                     iconOffset: major(1),
                     typography: 'buttonLg',
@@ -40,7 +40,7 @@ const baseTheme = createTheme({
                 },
                 sm: {
                     pt: 10,
-                    pb: 8,
+                    pb: 9,
                     ph: major(2),
                     iconOffset: major(1),
                     typography: 'buttonSm',
