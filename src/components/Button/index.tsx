@@ -3,21 +3,23 @@ import useTheme from '../../scripts/useTheme';
 import baseTheme from '../../scripts/baseTheme';
 import major from '../../scripts/major';
 import typography from '../../scripts/typography';
+import cloneElement from '../../scripts/cloneElement';
 import IButton from './Button';
 
 // TODO Разделить timeIn и timeOut
-// TODO Разобраться с передачей fill/stroke. Обработать случай с различными цветами текста и иконки
 // TODO Добавить forwardRef
-// TODO Реализовать link или отказаться от этой идеи
-// TODO Фокус круглым аутлайном нереализуем
-// TODO Что делать с размерами иконки? Фиксируя размеры снаружи нельзя задать скейлы/автокит
-// TODO Что делать с вертикальным выравниванием иконки?
-// TODO Как задать цвет иконки, если она может быть и fill и stroke?
 // TODO Придумать враппер для компонентов, чтобы не давать всем кнопкам маржины
 // TODO Подумать как можно позволить играться с темами со стороны Storybook
 // TODO Стили ссылок конфликтуют с базовыми. Переопределять все?
-// TODO Добавить иконку из токенов, внести плюс в токены
 // TODO Добавить сторис про мультилайн
+
+// TODO Что делать с размерами иконки? Фиксируя размеры снаружи нельзя задать скейлы/автокит. Кнопка диктует размеры - iconSize
+// TODO Сменить иконку на токеновую после правки fill (удаления из импортируемого файла)
+// TODO Импортированные из Фигмы иконки идут с зашитым филлом - нужно чистить
+// TODO Нам на фронте не нужно 3 иконки разных размеров, если мы можем их заскейлить
+// TODO Добавить borderRadius - зависит от size
+// TODO Убрать дублирование css для иконок
+// TODO Убрать lift - он для теста (ну или доработать, если нужен)
 
 const Button: React.FC<IButton> = ({
     children,
@@ -38,9 +40,13 @@ const Button: React.FC<IButton> = ({
     const themeObj = useTheme();
     const buttonTheme = themeObj.button || baseTheme.app.button;
 
-    const { borderWidth = 1, borderStyle = 'solid', time = 200, ...globalCss } = buttonTheme.global;
+    const { borderWidth = 1, borderStyle = 'solid', time = 200, lift = true, ...globalCss } = buttonTheme.global;
     const baseStyles = {
-        textAlign: 'center',
+        // display: 'inline-block',
+        // textAlign: 'center',
+        display: 'inline-flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderWidth,
         borderStyle,
         transition: `color ease ${time}ms, fill ease ${time}ms, background-color ease ${time}ms, border-color ease ${time}ms`,
@@ -48,10 +54,30 @@ const Button: React.FC<IButton> = ({
     };
 
     const { sizes } = buttonTheme;
-    const { pt = 16, pb = 18, ph = major(2), iconOffset = major(1), typography: typographyName } = sizes[size];
+    const {
+        height = major(6),
+        padding: ph = major(2),
+        iconOffset = major(1),
+        iconSize = 0,
+        typography: typographyName,
+        ...sizesCss
+    } = sizes[size];
+    const typographyStyles = typography(typographyName, themeObj.button ? themeObj : baseTheme.app);
+    const fontSize = parseFloat(typographyStyles.fontSize, 10) * 16;
+    const textHeight = Math.floor(fontSize * typographyStyles.lineHeight);
+    const maxHeight = Math.max(textHeight, iconSize);
+    const pv = (height - maxHeight - borderWidth * 2) / 2;
+    // let pt = pv;
+    // let pb = pv;
+    // if (lift) {
+    //     pt = Number.isInteger(pv) ? pv - 1 : Math.floor(pv);
+    //     pb = Number.isInteger(pv) ? pv + 1 : Math.ceil(pv);
+    // }
     const sizeStyles = {
-        padding: `${pt}px ${ph}px ${pb}px`,
+        // padding: `${pt}px ${ph}px ${pb}px`,
+        padding: `${pv}px ${ph}px`,
         ...typography(typographyName, themeObj.button ? themeObj : baseTheme.app),
+        ...sizesCss,
     };
 
     const { themes } = buttonTheme;
@@ -87,6 +113,39 @@ const Button: React.FC<IButton> = ({
         Component = as;
     }
 
+    let iconProps;
+    let IconComponent;
+    if (Icon) {
+        if (!iconAfter) {
+            iconProps = {
+                css: {
+                    marginRight: !hidden ? iconOffset : undefined,
+                    width: iconSize,
+                    height: iconSize,
+                    // position: 'relative',
+                    // marginTop: '-4px',
+                    // verticalAlign: 'middle',
+                },
+            };
+        } else {
+            iconProps = {
+                css: {
+                    marginLeft: !hidden ? iconOffset : undefined,
+                    width: iconSize,
+                    height: iconSize,
+                    // marginTop: '-4px',
+                    // verticalAlign: 'middle',
+                },
+            };
+        }
+
+        if (typeof Icon === 'function') {
+            IconComponent = <Icon {...iconProps} />;
+        } else if (typeof Icon === 'object') {
+            IconComponent = cloneElement(Icon, iconProps);
+        }
+    }
+
     return (
         <Component
             type={!href && !as ? type : null}
@@ -97,9 +156,9 @@ const Button: React.FC<IButton> = ({
             css={styles}
             {...props}
         >
-            {Icon && !iconAfter && <Icon css={{ marginRight: !hidden ? iconOffset : undefined }} />}
+            {Icon && !iconAfter && IconComponent}
             {children}
-            {Icon && iconAfter && <Icon css={{ marginLeft: !hidden ? iconOffset : undefined }} />}
+            {Icon && iconAfter && IconComponent}
         </Component>
     );
 };

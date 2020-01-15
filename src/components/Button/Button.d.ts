@@ -8,7 +8,7 @@ export default interface IButton {
     /** Блочная кнопка. Занимает 100% ширины родителя */
     block?: boolean;
     /** Иконка */
-    Icon?: React.Component;
+    Icon?: Function | React.Component;
     /** Распологает иконку после текста */
     iconAfter?: boolean;
     /** Визуально скрытое содержимое. Для "иконочных" кнопок */

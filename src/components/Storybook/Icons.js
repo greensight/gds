@@ -11,6 +11,7 @@ import major from '../../scripts/major';
 // TODO Доработать заголовки
 // TODO Обдумать чистку директории и дубли после внесения изменений
 // TODO Осмыслить перенос fill/stoke наверх, нужен ли парсинг
+// TODO Добавить в гайд, что используем только fill
 
 const Icons = ({ headingLevel = 2 }) => {
     const iconsReq = require.context('!!@svgr/webpack!@icons');

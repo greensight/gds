@@ -1,6 +1,7 @@
 import tokens from '../../public/tokens';
 import createTheme from './createTheme';
 import major from './major';
+import minor from './minor';
 
 const { colors } = tokens;
 
@@ -17,7 +18,6 @@ const baseTheme = createTheme({
         },
         button: {
             global: {
-                borderRadius: 3,
                 ':focus': {
                     outlineOffset: 2,
                     outlineColor: colors.brand,
@@ -25,25 +25,28 @@ const baseTheme = createTheme({
             },
             sizes: {
                 lg: {
-                    pt: 16,
-                    pb: 18,
-                    ph: major(3),
+                    height: major(8),
+                    padding: major(3),
+                    iconSize: minor(9),
                     iconOffset: major(1),
                     typography: 'buttonLg',
+                    borderRadius: 32,
                 },
                 md: {
-                    pt: 11,
-                    pb: 13,
-                    ph: major(3),
+                    height: major(6),
+                    padding: major(3),
+                    iconSize: major(3),
                     iconOffset: major(1),
                     typography: 'buttonMd',
+                    borderRadius: 24,
                 },
                 sm: {
-                    pt: 10,
-                    pb: 9,
-                    ph: major(2),
+                    height: major(5),
+                    padding: major(2),
+                    iconSize: minor(3),
                     iconOffset: major(1),
                     typography: 'buttonSm',
+                    borderRadius: 24,
                 },
             },
             themes: {
@@ -68,6 +71,24 @@ const baseTheme = createTheme({
                     },
                     disabled: {
                         border: colors.light,
+                        color: colors.grey,
+                    },
+                },
+                link: {
+                    color: colors.brand,
+                    hover: {
+                        color: colors.brandHover,
+                    },
+                    disabled: {
+                        color: colors.grey,
+                    },
+                },
+                subtle: {
+                    color: colors.brand,
+                    hover: {
+                        bg: colors.lightest,
+                    },
+                    disabled: {
                         color: colors.grey,
                     },
                 },

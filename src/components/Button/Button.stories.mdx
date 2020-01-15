@@ -1,7 +1,8 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import CheckIcon from '../../images/icons/check.svg';
+import PlusIcon from '../../images/icons/tokens/collection/plus.svg';
+import major from '../../scripts/major';
 import Button from '.';
 
 <Meta title="Dev | Components / Button" component={Button} />
@@ -14,11 +15,11 @@ import Button from '.';
 
 <Story name="Knobs">
     <Button
-        theme={radios('theme', ['primary', 'secondary'], 'primary')}
+        theme={radios('theme', ['primary', 'secondary', 'link', 'subtle'], 'primary')}
         size={radios('size', ['lg', 'md', 'sm'], 'md')}
         block={boolean('block', false)}
         disabled={boolean('disabled', false)}
-        Icon={boolean('icon', false) && CheckIcon}
+        Icon={boolean('icon', false) && PlusIcon}
         iconAfter={boolean('iconAfter', false)}
         hidden={boolean('hidden', false)}
         onClick={action('onClick')}
@@ -47,13 +48,15 @@ import Button from '.';
 
 Темы для кнопок определяются в объекте темы в поле `button.themes`. Присвоенные стилизациям имена становятся доступны через проп `theme`.
 
-**Рекомендуемые имена:** 'primary', 'secondary' и далее их производные.
+**Рекомендуемые имена:** 'primary', 'secondary' и их производные - так их делят дизайнеры. Могут использоваться общепринятые типы вроде 'link' и 'subtle'.
 
 <Preview>
     <Story name="Themes">
         <>
             <Button theme="primary" css={{marginRight: 16}}>Button</Button>
-            <Button theme="secondary">Button</Button>
+            <Button theme="secondary" css={{marginRight: 16}}>Button</Button>
+            <Button theme="link" css={{marginRight: 16}}>Button</Button>
+            <Button theme="subtle">Button</Button>
         </>
     </Story>
 </Preview>
@@ -105,8 +108,8 @@ import Button from '.';
 <Preview>
     <Story name="Icons">
         <>
-            <Button Icon={CheckIcon} css={{marginRight: 16}}>Button</Button>
-            <Button Icon={CheckIcon} iconAfter>Button</Button>
+            <Button Icon={PlusIcon} css={{marginRight: 16}}>Button</Button>
+            <Button Icon={PlusIcon} iconAfter>Button</Button>
         </>
     </Story>
 </Preview>
@@ -118,9 +121,19 @@ import Button from '.';
 <Preview>
     <Story name="Icon only">
         <>
-            <Button Icon={CheckIcon} hidden css={{marginRight: 16}}>Button</Button>
-            <Button theme="secondary" Icon={CheckIcon} hidden>Button</Button>
+            <Button Icon={PlusIcon} hidden css={{marginRight: 16}}>Button</Button>
+            <Button theme="secondary" Icon={PlusIcon} hidden>Button</Button>
         </>
+    </Story>
+</Preview>
+
+### Custom icon
+
+Проп `Icon` может принимать jsx вместо SVGR компонента. jsx используется в редких случаях, когда нужно переопределить атрибуты иконки, например, задать цвет, отличный от цвета текста.
+
+<Preview>
+    <Story name="Custom icon">
+        <Button Icon={<PlusIcon fill="deeppink" />}>Button</Button>
     </Story>
 </Preview>
 
@@ -141,6 +154,24 @@ import Button from '.';
     </Story>
 </Preview>
 
+### Multiline
+
+В кнопках нет лока высоты, так что становится возможно создание многострочных кнопок без дополнительных трудозатрат.
+
+Многострочный режим может происходить как из-за вставки `<br/>`, так и автоматически при ограничении по ширине (оба кейса показаны ниже).
+
+Иконка при этом выравнивается по центру кнопки.
+
+<Preview>
+    <Story name="Multiline">
+        <>
+            <Button css={{marginRight: 16}}>Button<br/>Button</Button>
+            <Button css={{width: major(15), marginRight: 16}}>Button Button</Button>
+            <Button Icon={PlusIcon}>Button<br/>Button</Button>
+        </>
+    </Story>
+</Preview>
+
 ## Theme
 
 Объект темы для кнопки разделён на 3 группы:
@@ -152,7 +183,6 @@ import Button from '.';
 ```js
 button: {
     global: {
-        borderRadius: 3,
         ':focus': {
             outlineOffset: 2,
             outlineColor: colors.brand,
@@ -160,25 +190,28 @@ button: {
     },
     sizes: {
         lg: {
-            pt: 16,
-            pb: 18,
-            ph: major(3),
+            height: major(8),
+            padding: major(3),
+            iconSize: minor(9),
             iconOffset: major(1),
             typography: 'buttonLg',
+            borderRadius: 32,
         },
         md: {
-            pt: 11,
-            pb: 13,
-            ph: major(3),
+            height: major(6),
+            padding: major(3),
+            iconSize: major(3),
             iconOffset: major(1),
             typography: 'buttonMd',
+            borderRadius: 24,
         },
         sm: {
-            pt: 10,
-            pb: 9,
-            ph: major(2),
+            height: major(5),
+            padding: major(2),
+            iconSize: minor(3),
             iconOffset: major(1),
             typography: 'buttonSm',
+            borderRadius: 24,
         },
     },
     themes: {
@@ -203,6 +236,24 @@ button: {
             },
             disabled: {
                 border: colors.light,
+                color: colors.grey,
+            },
+        },
+        link: {
+            color: colors.brand,
+            hover: {
+                color: colors.brandHover,
+            },
+            disabled: {
+                color: colors.grey,
+            },
+        },
+        subtle: {
+            color: colors.brand,
+            hover: {
+                bg: colors.lightest,
+            },
+            disabled: {
                 color: colors.grey,
             },
         },

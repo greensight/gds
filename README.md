@@ -100,7 +100,7 @@ import { useTheme } from '@greensight/gds';
 const SomeComponent = () => {
     const theme = useTheme();
     return (
-        <button type="button" css={{ backgroundColor: theme.colors.bg.brand }}>
+        <button type="button" css={{ backgroundColor: theme.colors.brand }}>
             Button
         </button>
     );

@@ -6,6 +6,8 @@ import typography from '../../scripts/typography';
 import minor from '../../scripts/minor';
 import major from '../../scripts/major';
 
+// TODO Есть проблема с рендером шрифтов на Windows - прогнать
+
 const Typography = ({ text = 'Demo text 123' }) => {
     const theme = useTheme();
 
@@ -37,7 +39,7 @@ const Typography = ({ text = 'Demo text 123' }) => {
                             <div
                                 css={{
                                     ...typography(name, theme),
-                                    color: theme.colors.text.default,
+                                    color: theme.colors.black,
                                 }}
                             >
                                 {text}
