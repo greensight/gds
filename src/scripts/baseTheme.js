@@ -17,10 +17,12 @@ const baseTheme = createTheme({
             },
         },
         button: {
-            global: {
-                ':focus': {
-                    outlineOffset: 2,
-                    outlineColor: colors.brand,
+            base: {
+                css: {
+                    ':focus': {
+                        outlineOffset: 2,
+                        outlineColor: colors.brand,
+                    },
                 },
             },
             sizes: {
@@ -76,17 +78,9 @@ const baseTheme = createTheme({
                 },
                 link: {
                     color: colors.brand,
+                    bg: 'transparent',
                     hover: {
                         color: colors.brandHover,
-                    },
-                    disabled: {
-                        color: colors.grey,
-                    },
-                },
-                subtle: {
-                    color: colors.brand,
-                    hover: {
-                        bg: colors.lightest,
                     },
                     disabled: {
                         color: colors.grey,

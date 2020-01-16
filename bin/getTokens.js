@@ -8,6 +8,8 @@ const getTypography = require('./getTypography');
 const getIcons = require('./getIcons');
 const getLayout = require('./getLayout');
 
+// TODO Можно ли причесать токены в итоговом файле?
+
 const getters = {
     palettes: getPalettes,
     colors: getColors,

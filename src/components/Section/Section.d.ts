@@ -13,4 +13,6 @@ export default interface ISection {
     pb?: number;
     /** Фон */
     bg?: string;
+    /** Кастомный CSS */
+    css?: Object;
 }

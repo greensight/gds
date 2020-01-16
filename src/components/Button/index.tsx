@@ -4,22 +4,11 @@ import baseTheme from '../../scripts/baseTheme';
 import major from '../../scripts/major';
 import typography from '../../scripts/typography';
 import cloneElement from '../../scripts/cloneElement';
-import IButton from './Button';
+import { IButton } from './Button';
 
-// TODO Разделить timeIn и timeOut
 // TODO Добавить forwardRef
 // TODO Придумать враппер для компонентов, чтобы не давать всем кнопкам маржины
-// TODO Подумать как можно позволить играться с темами со стороны Storybook
 // TODO Стили ссылок конфликтуют с базовыми. Переопределять все?
-// TODO Добавить сторис про мультилайн
-
-// TODO Что делать с размерами иконки? Фиксируя размеры снаружи нельзя задать скейлы/автокит. Кнопка диктует размеры - iconSize
-// TODO Сменить иконку на токеновую после правки fill (удаления из импортируемого файла)
-// TODO Импортированные из Фигмы иконки идут с зашитым филлом - нужно чистить
-// TODO Нам на фронте не нужно 3 иконки разных размеров, если мы можем их заскейлить
-// TODO Добавить borderRadius - зависит от size
-// TODO Убрать дублирование css для иконок
-// TODO Убрать lift - он для теста (ну или доработать, если нужен)
 
 const Button: React.FC<IButton> = ({
     children,
@@ -34,116 +23,109 @@ const Button: React.FC<IButton> = ({
     as,
     external = false,
     onClick,
+    themeObj: propThemeObj,
     css,
     ...props
 }) => {
-    const themeObj = useTheme();
-    const buttonTheme = themeObj.button || baseTheme.app.button;
+    const globalTheme = useTheme();
+    const themeObj = globalTheme.button ? globalTheme : baseTheme.app;
+    const buttonTheme = propThemeObj || themeObj.button;
 
-    const { borderWidth = 1, borderStyle = 'solid', time = 200, lift = true, ...globalCss } = buttonTheme.global;
-    const baseStyles = {
-        // display: 'inline-block',
-        // textAlign: 'center',
-        display: 'inline-flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth,
-        borderStyle,
-        transition: `color ease ${time}ms, fill ease ${time}ms, background-color ease ${time}ms, border-color ease ${time}ms`,
-        ...globalCss,
+    const getRule = (name, defaultValue) =>
+        buttonTheme.themes[theme][name] || buttonTheme.sizes[size][name] || buttonTheme.base[name] || defaultValue;
+
+    const getStateStyles = (name, css) => {
+        const state = getRule(name);
+        if (!state) return;
+        const { color, bg, border, css: stateCss } = state;
+        return {
+            [`:${name}`]: {
+                color,
+                fill: color,
+                background: bg,
+                borderColor: border,
+                ...stateCss,
+                ...css,
+            },
+        };
     };
 
-    const { sizes } = buttonTheme;
-    const {
-        height = major(6),
-        padding: ph = major(2),
-        iconOffset = major(1),
-        iconSize = 0,
-        typography: typographyName,
-        ...sizesCss
-    } = sizes[size];
-    const typographyStyles = typography(typographyName, themeObj.button ? themeObj : baseTheme.app);
-    const fontSize = parseFloat(typographyStyles.fontSize, 10) * 16;
-    const textHeight = Math.floor(fontSize * typographyStyles.lineHeight);
-    const maxHeight = Math.max(textHeight, iconSize);
+    const border = getRule('border');
+    const borderWidth = getRule('borderWidth', border ? 1 : 0);
+    const borderStyle = getRule('borderStyle', 'solid');
+    const borderRadius = getRule('borderRadius');
+    const time = getRule('time', 200);
+    const timeIn = getRule('timeIn');
+    const typographyName = getRule('typography');
+    const height = getRule('height', major(6));
+    const padding = getRule('padding', major(3));
+    const iconSize = getRule('iconSize', major(3));
+    const iconOffset = getRule('iconOffset', major(1));
+    const color = getRule('color', baseTheme.app.colors.white);
+    const bg = getRule('bg', baseTheme.app.colors.black);
+
+    const typographyStyles = typography(typographyName, themeObj);
+    const { fontSize = '1rem', lineHeight = 1.4 } = typographyStyles || buttonTheme.sizes[size];
+    const parsedFontSize = parseFloat(fontSize) * 16;
+    const textHeight = Math.floor(parsedFontSize * lineHeight);
+    const maxHeight = Math.max(textHeight, Icon ? iconSize : 0);
     const pv = (height - maxHeight - borderWidth * 2) / 2;
-    // let pt = pv;
-    // let pb = pv;
-    // if (lift) {
-    //     pt = Number.isInteger(pv) ? pv - 1 : Math.floor(pv);
-    //     pb = Number.isInteger(pv) ? pv + 1 : Math.ceil(pv);
-    // }
-    const sizeStyles = {
-        // padding: `${pt}px ${ph}px ${pb}px`,
-        padding: `${pv}px ${ph}px`,
-        ...typography(typographyName, themeObj.button ? themeObj : baseTheme.app),
-        ...sizesCss,
-    };
 
-    const { themes } = buttonTheme;
-    const { color, bg = 'transparent', border = 'transparent', hover, active, disabled, focus, ...themeCss } = themes[
-        theme
-    ];
-    const themeStyles = {
-        color,
-        fill: color,
-        background: bg,
-        borderColor: border,
-        ':hover': getStateStyles(hover),
-        ':active': active ? getStateStyles(active) : getStateStyles(hover),
-        ':disabled': {
-            cursor: 'not-allowed',
-            ...getStateStyles(disabled),
+    const transition = time =>
+        `color ease ${time}ms, fill ease ${time}ms, background-color ease ${time}ms, border-color ease ${time}ms`;
+
+    const blockStyles = { display: 'flex', width: '100%' };
+
+    const hiddenStyles = { fontSize: 0 };
+
+    const styles = [
+        {
+            display: 'inline-flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderWidth,
+            borderStyle,
+            borderRadius,
+            padding: `${pv}px ${padding}px`,
+            ...typographyStyles,
+            color,
+            fill: color,
+            background: bg,
+            borderColor: border,
+            transition: transition(time),
+            ...getStateStyles('hover', {
+                ...(timeIn && { transition: transition(timeIn) }),
+            }),
+            ...getStateStyles('active'),
+            ...getStateStyles('disabled', {
+                cursor: 'not-allowed',
+            }),
+            ...getStateStyles('focus'),
         },
-        ':focus': getStateStyles(focus),
-        ...themeCss,
+        buttonTheme.base.css,
+        buttonTheme.sizes[size].css,
+        buttonTheme.themes[theme].css,
+        block && blockStyles,
+        hidden && hiddenStyles,
+        css,
+    ];
+
+    const Component = href ? 'a' : as || 'button';
+
+    const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
+    const iconProps = {
+        css: {
+            [marginRule]: !hidden ? iconOffset : undefined,
+            width: iconSize,
+            height: iconSize,
+        },
     };
 
-    const blockStyles = {
-        display: 'block',
-        width: '100%',
-    };
-
-    const styles = [baseStyles, sizeStyles, themeStyles, block && blockStyles, hidden && { fontSize: 0 }, css];
-
-    let Component = 'button';
-    if (href) {
-        Component = 'a';
-    } else if (as) {
-        Component = as;
-    }
-
-    let iconProps;
     let IconComponent;
-    if (Icon) {
-        if (!iconAfter) {
-            iconProps = {
-                css: {
-                    marginRight: !hidden ? iconOffset : undefined,
-                    width: iconSize,
-                    height: iconSize,
-                    // position: 'relative',
-                    // marginTop: '-4px',
-                    // verticalAlign: 'middle',
-                },
-            };
-        } else {
-            iconProps = {
-                css: {
-                    marginLeft: !hidden ? iconOffset : undefined,
-                    width: iconSize,
-                    height: iconSize,
-                    // marginTop: '-4px',
-                    // verticalAlign: 'middle',
-                },
-            };
-        }
-
-        if (typeof Icon === 'function') {
-            IconComponent = <Icon {...iconProps} />;
-        } else if (typeof Icon === 'object') {
-            IconComponent = cloneElement(Icon, iconProps);
-        }
+    if (typeof Icon === 'function') {
+        IconComponent = <Icon {...iconProps} />;
+    } else if (typeof Icon === 'object') {
+        IconComponent = cloneElement(Icon, iconProps);
     }
 
     return (
@@ -161,18 +143,6 @@ const Button: React.FC<IButton> = ({
             {Icon && iconAfter && IconComponent}
         </Component>
     );
-};
-
-const getStateStyles = state => {
-    if (!state) return;
-    const { color, bg: background, border: borderColor, ...stateCss } = state;
-    return {
-        color,
-        fill: color,
-        background,
-        borderColor,
-        ...stateCss,
-    };
 };
 
 export default Button;

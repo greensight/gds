@@ -1,4 +1,4 @@
-export default interface IButton {
+export interface IButton {
     /** Содержимое кнопки */
     children: React.ReactNode;
     /** Тема. Выбирается из определённых в объекте темы */
@@ -25,4 +25,8 @@ export default interface IButton {
     external?: boolean;
     /** Обработчик клика */
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
+    themeObj?: IButtonTheme;
+    /** Кастомный CSS */
+    css?: Object;
 }

@@ -34,7 +34,14 @@ const removeFontFamily = styles => {
         );
 };
 
+// TODO Можно ли что-то придумать с опусканием объекта темы? Он бесит
+
 const typography = (name, theme) => {
+    if (!name) {
+        console.warn('name argument is not defined');
+        return;
+    }
+
     const typography = theme.typography[name];
     let fontFamilyStyles = {
         fontFamily: typography.desktop.fontFamily,

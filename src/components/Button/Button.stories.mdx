@@ -1,11 +1,18 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { radios, boolean, text } from '@storybook/addon-knobs';
+import { radios, boolean, object, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import PlusIcon from '../../images/icons/tokens/collection/plus.svg';
+import PlusIcon from '../../images/icons/plus.svg';
 import major from '../../scripts/major';
+import minor from '../../scripts/minor';
+import theme from '../../scripts/baseTheme';
 import Button from '.';
+import CenteredContainer from '../../../.storybook/components/CenteredContainer';
 
-<Meta title="Dev | Components / Button" component={Button} />
+<Meta
+    title="Dev | Components / Button"
+    component={Button}
+    decorators={[storyFn => <CenteredContainer>{storyFn()}</CenteredContainer>]}
+/>
 
 # Button
 
@@ -14,18 +21,95 @@ import Button from '.';
 Здесь будет описание.
 
 <Story name="Knobs">
-    <Button
-        theme={radios('theme', ['primary', 'secondary', 'link', 'subtle'], 'primary')}
-        size={radios('size', ['lg', 'md', 'sm'], 'md')}
-        block={boolean('block', false)}
-        disabled={boolean('disabled', false)}
-        Icon={boolean('icon', false) && PlusIcon}
-        iconAfter={boolean('iconAfter', false)}
-        hidden={boolean('hidden', false)}
-        onClick={action('onClick')}
-    >
-        {text('children', 'Click me')}
-    </Button>
+    {() => {
+        const { colors } = theme.app;
+        return (
+            <Button
+                theme={radios('theme', ['primary', 'secondary', 'link'], 'primary')}
+                size={radios('size', ['lg', 'md', 'sm'], 'md')}
+                block={boolean('block', false)}
+                disabled={boolean('disabled', false)}
+                Icon={boolean('icon', false) && PlusIcon}
+                iconAfter={boolean('iconAfter', false)}
+                hidden={boolean('hidden', false)}
+                onClick={action('onClick')}
+                themeObj={boolean('Use custom theme', false) ? object('themeObj', {
+                    base: {
+                        css: {
+                            ':focus': {
+                                outlineOffset: 2,
+                                outlineColor: colors.brand,
+                            },
+                        },
+                    },
+                    sizes: {
+                        lg: {
+                            height: major(8),
+                            padding: major(3),
+                            iconSize: minor(9),
+                            iconOffset: major(1),
+                            typography: 'buttonLg',
+                            borderRadius: 32,
+                        },
+                        md: {
+                            height: major(6),
+                            padding: major(3),
+                            iconSize: major(3),
+                            iconOffset: major(1),
+                            typography: 'buttonMd',
+                            borderRadius: 24,
+                        },
+                        sm: {
+                            height: major(5),
+                            padding: major(2),
+                            iconSize: minor(3),
+                            iconOffset: major(1),
+                            typography: 'buttonSm',
+                            borderRadius: 24,
+                        },
+                    },
+                    themes: {
+                        primary: {
+                            color: colors.white,
+                            bg: colors.brand,
+                            hover: {
+                                bg: colors.brandHover,
+                            },
+                            disabled: {
+                                bg: colors.lighter,
+                                color: colors.grey,
+                            },
+                        },
+                        secondary: {
+                            color: colors.brand,
+                            border: colors.brand,
+                            bg: colors.white,
+                            hover: {
+                                color: colors.brandHover,
+                                border: colors.brandHover,
+                            },
+                            disabled: {
+                                border: colors.light,
+                                color: colors.grey,
+                            },
+                        },
+                        link: {
+                            color: colors.brand,
+                            bg: 'transparent',
+                            hover: {
+                                color: colors.brandHover,
+                            },
+                            disabled: {
+                                color: colors.grey,
+                            },
+                        },
+                    },
+                }) : undefined}
+            >
+                {text('children', 'Click me')}
+            </Button>
+        );
+    }}
 </Story>
 
 ## Props
@@ -55,8 +139,7 @@ import Button from '.';
         <>
             <Button theme="primary" css={{marginRight: 16}}>Button</Button>
             <Button theme="secondary" css={{marginRight: 16}}>Button</Button>
-            <Button theme="link" css={{marginRight: 16}}>Button</Button>
-            <Button theme="subtle">Button</Button>
+            <Button theme="link">Button</Button>
         </>
     </Story>
 </Preview>
@@ -181,82 +264,64 @@ import Button from '.';
 1. `themes` - настройки тем. Доступны параметры `color`, `border`, `bg` и стейты `hover`, `active`, `disabled`, `focus`. Для указания специфичных стилей используйте CSS.
 
 ```js
-button: {
-    global: {
-        ':focus': {
-            outlineOffset: 2,
-            outlineColor: colors.brand,
-        },
-    },
+interface IButtonThemeRules extends IButtonRules {
+    /** Правила на ховер */
+    hover: IButtonRules;
+    /** Правила на клик */
+    active: IButtonRules;
+    /** Правила на блокирование */
+    disabled: IButtonRules;
+    /** Правила на фокус */
+    focus: IButtonRules;
+}
+
+interface IButtonTheme {
+    /** Глобальные стили. Распространяются на все кнопки */
+    base: IButtonRules;
+    /** Стили размеров */
     sizes: {
-        lg: {
-            height: major(8),
-            padding: major(3),
-            iconSize: minor(9),
-            iconOffset: major(1),
-            typography: 'buttonLg',
-            borderRadius: 32,
-        },
-        md: {
-            height: major(6),
-            padding: major(3),
-            iconSize: major(3),
-            iconOffset: major(1),
-            typography: 'buttonMd',
-            borderRadius: 24,
-        },
-        sm: {
-            height: major(5),
-            padding: major(2),
-            iconSize: minor(3),
-            iconOffset: major(1),
-            typography: 'buttonSm',
-            borderRadius: 24,
-        },
-    },
+        /** Дефолтный размер */
+        md: IButtonRules;
+        /** Можно добавлять свои размеры */
+        [size: string]: IButtonRules;
+    };
+    /** Стили тем */
     themes: {
-        primary: {
-            color: colors.white,
-            bg: colors.brand,
-            hover: {
-                bg: colors.brandHover,
-            },
-            disabled: {
-                bg: colors.lighter,
-                color: colors.grey,
-            },
-        },
-        secondary: {
-            color: colors.brand,
-            border: colors.brand,
-            bg: colors.white,
-            hover: {
-                color: colors.brandHover,
-                border: colors.brandHover,
-            },
-            disabled: {
-                border: colors.light,
-                color: colors.grey,
-            },
-        },
-        link: {
-            color: colors.brand,
-            hover: {
-                color: colors.brandHover,
-            },
-            disabled: {
-                color: colors.grey,
-            },
-        },
-        subtle: {
-            color: colors.brand,
-            hover: {
-                bg: colors.lightest,
-            },
-            disabled: {
-                color: colors.grey,
-            },
-        },
-    },
-},
+        /** Деволтная тема */
+        primary: IButtonThemeRules;
+        /** Можно добавлять свои темы */
+        [theme: string]: IButtonThemeRules;
+    };
+}
+
+interface IButtonRules {
+    /** Цвет текста и иконки */
+    color?: string;
+    /** Цвет фона */
+    bg?: string;
+    /** Цвет обводки */
+    border?: string;
+    /** Высота кнопки */
+    height?: number;
+    /** Горизонтальные поля */
+    padding?: number;
+    /** Размер иконки */
+    iconSize?: number;
+    /** Отступ от иконки */
+    iconOffset?: number;
+    /** Имя типографического стиля */
+    typography?: string;
+    /** Толщина обводки. Проставляется автоматически, если передан border */
+    borderWidth?: number;
+    /** Стиль обводки */
+    borderStyle?: string;
+    /** Скругление кнопки */
+    borderRadius?: number | string;
+    /** Время анимации ховера */
+    time?: number;
+    /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
+    timeIn?: number;
+    /** Кастомный CSS */
+    css?: Object;
+}
 ```

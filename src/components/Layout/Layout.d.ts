@@ -31,6 +31,8 @@ export interface ILayout {
     wrap?: boolean;
     /** Минимальный размер элемента в авто-режиме */
     auto?: number;
+    /** Кастомный CSS */
+    css?: Object;
 }
 
 export interface ILayoutItem {
@@ -50,4 +52,6 @@ export interface ILayoutItem {
     order?: number;
     /** grow (type: 'flex')  */
     grow?: boolean | number;
+    /** Кастомный CSS */
+    css?: Object;
 }
