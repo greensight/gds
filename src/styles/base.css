@@ -42,20 +42,6 @@ img {
 a {
     display: inline-block;
     text-decoration: none;
-    border-bottom: 1px solid var(--cl-blue);
-    color: var(--cl-blue);
-    fill: var(--cl-blue);
-    transition: color ease var(--time), border-color ease var(--time);
-
-    &:hover {
-        border-color: var(--cl-dk-blue);
-        color: var(--cl-dk-blue);
-    }
-
-    &:focus {
-        transition: none;
-        border-color: transparent;
-    }
 }
 
 :--heading {

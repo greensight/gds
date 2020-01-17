@@ -9,6 +9,7 @@ const getIcons = require('./getIcons');
 const getLayout = require('./getLayout');
 
 // TODO Можно ли причесать токены в итоговом файле?
+// TODO Протестировать можно ли вытянуть тени
 
 const getters = {
     palettes: getPalettes,

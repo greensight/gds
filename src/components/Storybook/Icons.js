@@ -15,6 +15,7 @@ import major from '../../scripts/major';
 // TODO Нам на фронте не нужно 3 иконки разных размеров, если мы можем их заскейлить
 // TODO Импортированные из Фигмы иконки идут с зашитым филлом - нужно чистить
 // TODO Добавить в кнопку иконку из токенов после правки fill
+// TODO Выделить иконку-плейсхолдер
 
 const Icons = ({ headingLevel = 2 }) => {
     const iconsReq = require.context('!!@svgr/webpack!@icons');
@@ -84,7 +85,7 @@ const Icon = ({ name, Icon }) => {
                         textAlign: 'center',
                         transition: 'border-color ease 300ms',
                         ':hover, :focus': {
-                            borderColor: colors.darker,
+                            borderColor: colors.grey0,
                         },
                         ':focus': {
                             outline: 'none',

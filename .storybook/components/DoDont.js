@@ -20,8 +20,8 @@ const Item = ({ type, children }) => {
         <div
             css={{
                 padding: '16px 32px',
-                background: colors.lightest,
-                color: colors.dark,
+                background: colors.grey90,
+                color: colors.grey20,
                 borderTop: `4px solid ${color}`,
             }}
         >

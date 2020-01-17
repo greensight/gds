@@ -12,8 +12,8 @@ const Typography = ({ text = 'Demo text 123' }) => {
     const theme = useTheme();
 
     const MobileMark = styled('span')({
-        backgroundColor: theme.colors.lightest,
-        color: theme.colors.dark,
+        backgroundColor: theme.colors.grey90,
+        color: theme.colors.grey20,
         padding: minor(1),
         borderRadius: 4,
         marginRight: major(1),
@@ -34,7 +34,7 @@ const Typography = ({ text = 'Demo text 123' }) => {
                         <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: major(3) }}>
                             <div css={{ minWidth: major(17), marginRight: major(2) }}>
                                 {theme.typography[name].mobile && <MobileMark>M</MobileMark>}
-                                <span css={{ color: theme.colors.dark, ...customTypography('body') }}>{name}</span>
+                                <span css={{ color: theme.colors.grey20, ...customTypography('body') }}>{name}</span>
                             </div>
                             <div
                                 css={{

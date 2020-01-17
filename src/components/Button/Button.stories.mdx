@@ -5,7 +5,7 @@ import PlusIcon from '../../images/icons/plus.svg';
 import major from '../../scripts/major';
 import minor from '../../scripts/minor';
 import theme from '../../scripts/baseTheme';
-import Button from '.';
+import Button, { Button as ButtonProps } from '.';
 import CenteredContainer from '../../../.storybook/components/CenteredContainer';
 
 <Meta
@@ -25,7 +25,7 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
         const { colors } = theme.app;
         return (
             <Button
-                theme={radios('theme', ['primary', 'secondary', 'link'], 'primary')}
+                theme={radios('theme', ['primary', 'secondary'], 'primary')}
                 size={radios('size', ['lg', 'md', 'sm'], 'md')}
                 block={boolean('block', false)}
                 disabled={boolean('disabled', false)}
@@ -75,9 +75,14 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
                             hover: {
                                 bg: colors.brandHover,
                             },
+                            active: {
+                                border: 'transparent',
+                                shadow:
+                                    'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
+                            },
                             disabled: {
-                                bg: colors.lighter,
-                                color: colors.grey,
+                                bg: colors.grey70,
+                                color: colors.grey40,
                             },
                         },
                         secondary: {
@@ -88,19 +93,15 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
                                 color: colors.brandHover,
                                 border: colors.brandHover,
                             },
-                            disabled: {
-                                border: colors.light,
-                                color: colors.grey,
-                            },
-                        },
-                        link: {
-                            color: colors.brand,
-                            bg: 'transparent',
-                            hover: {
-                                color: colors.brandHover,
+                            active: {
+                                bg: colors.grey90,
+                                border: 'transparent',
+                                shadow:
+                                    'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
                             },
                             disabled: {
-                                color: colors.grey,
+                                border: colors.grey60,
+                                color: colors.grey40,
                             },
                         },
                     },
@@ -114,7 +115,7 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 
 ## Props
 
-<Props of={Button} />
+<Props of={ButtonProps} />
 
 ## Use Cases
 
@@ -135,12 +136,9 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 **Рекомендуемые имена:** 'primary', 'secondary' и их производные - так их делят дизайнеры. Могут использоваться общепринятые типы вроде 'link' и 'subtle'.
 
 <Preview>
-    <Story name="Themes">
-        <>
-            <Button theme="primary" css={{marginRight: 16}}>Button</Button>
-            <Button theme="secondary" css={{marginRight: 16}}>Button</Button>
-            <Button theme="link">Button</Button>
-        </>
+    <Story id="dev-components-button--basic" />
+    <Story name="Secondary theme">
+        <Button theme="secondary">Button</Button>
     </Story>
 </Preview>
 
@@ -151,12 +149,12 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 **Рекомендуемые имена:** 'lg', 'md', 'sm'.
 
 <Preview>
-    <Story name="Sizes">
-        <>
-            <Button size="lg" css={{marginRight: 16}}>Button</Button>
-            <Button size="md" css={{marginRight: 16}}>Button</Button>
-            <Button size="sm">Button</Button>
-        </>
+    <Story name="Large size">
+        <Button size="lg">Button</Button>
+    </Story>
+    <Story id="dev-components-button--basic" />
+    <Story name="Small size">
+        <Button size="sm">Button</Button>
     </Story>
 </Preview>
 
@@ -176,10 +174,7 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 
 <Preview>
     <Story name="Disabled">
-        <>
-            <Button disabled css={{marginRight: 16}}>Button</Button>
-            <Button theme="secondary" disabled>Button</Button>
-        </>
+        <Button disabled>Button</Button>
     </Story>
 </Preview>
 
@@ -189,24 +184,21 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 
 По умолчанию кнопка идёт перед текстом, но её можно поставить в конец через `iconAfter`.
 <Preview>
-    <Story name="Icons">
-        <>
-            <Button Icon={PlusIcon} css={{marginRight: 16}}>Button</Button>
-            <Button Icon={PlusIcon} iconAfter>Button</Button>
-        </>
+    <Story name="With icon (before)">
+        <Button Icon={PlusIcon}>Button</Button>
+    </Story>
+    <Story name="With icon (after)">
+        <Button Icon={PlusIcon} iconAfter>Button</Button>
     </Story>
 </Preview>
 
-### Icon only
+### Hidden mode
 
 Доступен режим иконочной кнопки через проп `hidden`. Текст при этом всё равно долже указываться для доступности с AT.
 
 <Preview>
-    <Story name="Icon only">
-        <>
-            <Button Icon={PlusIcon} hidden css={{marginRight: 16}}>Button</Button>
-            <Button theme="secondary" Icon={PlusIcon} hidden>Button</Button>
-        </>
+    <Story name="Hidden mode">
+        <Button Icon={PlusIcon} hidden>Button</Button>
     </Story>
 </Preview>
 
@@ -216,7 +208,7 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 
 <Preview>
     <Story name="Custom icon">
-        <Button Icon={<PlusIcon fill="deeppink" />}>Button</Button>
+        <Button Icon={<PlusIcon fill={theme.app.colors.brandSecond} />}>Button</Button>
     </Story>
 </Preview>
 
@@ -229,15 +221,15 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 Также ссылка может быть внешняя, т.е. открывать вкладку в новом окне. Чтобы задать подобное поведение, передайте проп `external`.
 
 <Preview>
-    <Story name="Links">
-        <>
-            <Button href="/" css={{marginRight: 16}}>Button</Button>
-            <Button href="/" external>Button</Button>
-        </>
+    <Story name="Link">
+        <Button href="http://greensight.pro">Button</Button>
+    </Story>
+    <Story name="External link">
+        <Button href="http://greensight.pro" external>Button</Button>
     </Story>
 </Preview>
 
-### Multiline
+### Multiline mode
 
 В кнопках нет лока высоты, так что становится возможно создание многострочных кнопок без дополнительных трудозатрат.
 
@@ -246,12 +238,11 @@ import CenteredContainer from '../../../.storybook/components/CenteredContainer'
 Иконка при этом выравнивается по центру кнопки.
 
 <Preview>
-    <Story name="Multiline">
-        <>
-            <Button css={{marginRight: 16}}>Button<br/>Button</Button>
-            <Button css={{width: major(15), marginRight: 16}}>Button Button</Button>
-            <Button Icon={PlusIcon}>Button<br/>Button</Button>
-        </>
+    <Story name="Multiline mode (br)">
+        <Button>Multiline<br/>button</Button>
+    </Story>
+    <Story name="Multiline mode (fixed width)">
+        <Button css={{width: major(15)}}>Multiline button</Button>
     </Story>
 </Preview>
 
@@ -287,7 +278,7 @@ interface IButtonTheme {
     };
     /** Стили тем */
     themes: {
-        /** Деволтная тема */
+        /** Дефолтная тема */
         primary: IButtonThemeRules;
         /** Можно добавлять свои темы */
         [theme: string]: IButtonThemeRules;
@@ -301,6 +292,8 @@ interface IButtonRules {
     bg?: string;
     /** Цвет обводки */
     border?: string;
+    /** Тень. Прежде всего для активного стейта */
+    shadow?: string;
     /** Высота кнопки */
     height?: number;
     /** Горизонтальные поля */
@@ -321,6 +314,8 @@ interface IButtonRules {
     time?: number;
     /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
     timeIn?: number;
+    /** Функция анимации */
+    easing?: string;
     /** Кастомный CSS */
     css?: Object;
 }

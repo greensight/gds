@@ -29,4 +29,6 @@ export interface IButton {
     themeObj?: IButtonTheme;
     /** Кастомный CSS */
     css?: Object;
+    /** ref. DOM node доступен через current */
+    ref?: HTMLButtonElement;
 }

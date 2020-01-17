@@ -58,9 +58,14 @@ const baseTheme = createTheme({
                     hover: {
                         bg: colors.brandHover,
                     },
+                    active: {
+                        border: 'transparent',
+                        shadow:
+                            'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
+                    },
                     disabled: {
-                        bg: colors.lighter,
-                        color: colors.grey,
+                        bg: colors.grey70,
+                        color: colors.grey40,
                     },
                 },
                 secondary: {
@@ -71,19 +76,15 @@ const baseTheme = createTheme({
                         color: colors.brandHover,
                         border: colors.brandHover,
                     },
-                    disabled: {
-                        border: colors.light,
-                        color: colors.grey,
-                    },
-                },
-                link: {
-                    color: colors.brand,
-                    bg: 'transparent',
-                    hover: {
-                        color: colors.brandHover,
+                    active: {
+                        bg: colors.grey90,
+                        border: 'transparent',
+                        shadow:
+                            'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
                     },
                     disabled: {
-                        color: colors.grey,
+                        border: colors.grey60,
+                        color: colors.grey40,
                     },
                 },
             },

@@ -6,27 +6,26 @@ import typography from '../../scripts/typography';
 import cloneElement from '../../scripts/cloneElement';
 import { IButton } from './Button';
 
-// TODO Добавить forwardRef
-// TODO Придумать враппер для компонентов, чтобы не давать всем кнопкам маржины
-// TODO Стили ссылок конфликтуют с базовыми. Переопределять все?
-
-const Button: React.FC<IButton> = ({
-    children,
-    theme = 'primary',
-    size = 'md',
-    block = false,
-    Icon,
-    iconAfter = false,
-    hidden = false,
-    type = 'button',
-    href,
-    as,
-    external = false,
-    onClick,
-    themeObj: propThemeObj,
-    css,
-    ...props
-}) => {
+export const Button: React.FC<IButton> = (
+    {
+        children,
+        theme = 'primary',
+        size = 'md',
+        block = false,
+        Icon,
+        iconAfter = false,
+        hidden = false,
+        type = 'button',
+        href,
+        as,
+        external = false,
+        onClick,
+        themeObj: propThemeObj,
+        css,
+        ...props
+    },
+    ref,
+) => {
     const globalTheme = useTheme();
     const themeObj = globalTheme.button ? globalTheme : baseTheme.app;
     const buttonTheme = propThemeObj || themeObj.button;
@@ -37,13 +36,14 @@ const Button: React.FC<IButton> = ({
     const getStateStyles = (name, css) => {
         const state = getRule(name);
         if (!state) return;
-        const { color, bg, border, css: stateCss } = state;
+        const { color, bg, border, shadow, css: stateCss } = state;
         return {
             [`:${name}`]: {
                 color,
                 fill: color,
                 background: bg,
                 borderColor: border,
+                boxShadow: shadow,
                 ...stateCss,
                 ...css,
             },
@@ -56,6 +56,7 @@ const Button: React.FC<IButton> = ({
     const borderRadius = getRule('borderRadius');
     const time = getRule('time', 200);
     const timeIn = getRule('timeIn');
+    const easing = getRule('easing', 'ease');
     const typographyName = getRule('typography');
     const height = getRule('height', major(6));
     const padding = getRule('padding', major(3));
@@ -63,6 +64,9 @@ const Button: React.FC<IButton> = ({
     const iconOffset = getRule('iconOffset', major(1));
     const color = getRule('color', baseTheme.app.colors.white);
     const bg = getRule('bg', baseTheme.app.colors.black);
+    const shadow = getRule('shadow');
+
+    const transition = time => `all ${easing} ${time}ms`;
 
     const typographyStyles = typography(typographyName, themeObj);
     const { fontSize = '1rem', lineHeight = 1.4 } = typographyStyles || buttonTheme.sizes[size];
@@ -70,9 +74,6 @@ const Button: React.FC<IButton> = ({
     const textHeight = Math.floor(parsedFontSize * lineHeight);
     const maxHeight = Math.max(textHeight, Icon ? iconSize : 0);
     const pv = (height - maxHeight - borderWidth * 2) / 2;
-
-    const transition = time =>
-        `color ease ${time}ms, fill ease ${time}ms, background-color ease ${time}ms, border-color ease ${time}ms`;
 
     const blockStyles = { display: 'flex', width: '100%' };
 
@@ -92,6 +93,7 @@ const Button: React.FC<IButton> = ({
             fill: color,
             background: bg,
             borderColor: border,
+            boxShadow: shadow,
             transition: transition(time),
             ...getStateStyles('hover', {
                 ...(timeIn && { transition: transition(timeIn) }),
@@ -136,6 +138,7 @@ const Button: React.FC<IButton> = ({
             rel={external ? 'noopener' : null}
             onClick={onClick}
             css={styles}
+            ref={ref}
             {...props}
         >
             {Icon && !iconAfter && IconComponent}
@@ -145,4 +148,4 @@ const Button: React.FC<IButton> = ({
     );
 };
 
-export default Button;
+export default React.forwardRef(Button);

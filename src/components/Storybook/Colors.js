@@ -7,6 +7,8 @@ import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
 import major from '../../scripts/major';
 
+// TODO Не нравится, что в цветах нет сортировки - можно ли с этим что-то сделать?
+
 const Colors = () => {
     const theme = useTheme();
     const { colors } = theme;
@@ -32,7 +34,7 @@ const Color = ({ name, value }) => {
 
     const SmallBox = styled('span')({
         backgroundColor: colors.white,
-        color: colors.darker,
+        color: colors.grey0,
         padding: major(1),
         borderRadius: '4px 4px 4px 0px',
         ...typography('smallBold'),

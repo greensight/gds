@@ -10,8 +10,8 @@ const Note = ({ icon, children }) => {
             css={{
                 position: 'relative',
                 padding: '16px 32px',
-                background: colors.lightest,
-                color: colors.dark,
+                background: colors.grey90,
+                color: colors.grey20,
             }}
         >
             {icon && <span css={{ position: 'absolute', top: 16, left: 8 }}>{icon}</span>}
