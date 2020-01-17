@@ -1,5 +1,10 @@
 import React from 'react';
 
+// TODO Убрать ненужные компоненты Storybook и унифицировать документацию
+// TODO Реализовать caption
+// TODO Разобраться со вставкой изображений
+// TODO Переконвертировать png из доков в jpeg
+
 const Grid = ({ children }) => (
     <div
         css={{
