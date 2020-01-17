@@ -38,7 +38,7 @@ const removeFontFamily = styles => {
 
 const typography = (name, theme) => {
     if (!name) {
-        console.warn('name argument is not defined');
+        console.warn('"name" argument is not defined');
         return;
     }
 

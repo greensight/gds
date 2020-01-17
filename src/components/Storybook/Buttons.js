@@ -9,7 +9,7 @@ import PlusIcon from '../../images/icons/plus.svg';
 
 const Colors = ({ text = 'Button', Icon = PlusIcon }) => {
     const theme = useTheme();
-    const { button: buttonTheme } = theme;
+    const buttonTheme = theme.button || baseTheme.app.button;
 
     return (
         <ul>

@@ -30,8 +30,28 @@ export const Button: React.FC<IButton> = (
     const themeObj = globalTheme.button ? globalTheme : baseTheme.app;
     const buttonTheme = propThemeObj || themeObj.button;
 
-    const getRule = (name, defaultValue) =>
-        buttonTheme.themes[theme][name] || buttonTheme.sizes[size][name] || buttonTheme.base[name] || defaultValue;
+    if (!buttonTheme.themes[theme]) {
+        console.warn(`Specify "${theme}" theme. Default values are used instead`);
+    }
+
+    if (!buttonTheme.sizes[size]) {
+        console.warn(`Specify "${size}" size. Default values are used instead`);
+    }
+
+    const getRule = (name, defaultValue) => {
+        const themeStyles = buttonTheme.themes[theme];
+        let themeRule;
+        if (themeStyles) themeRule = themeStyles[name];
+
+        const sizeStyles = buttonTheme.sizes[size];
+        let sizeRule;
+        if (sizeStyles) sizeRule = sizeStyles[name];
+
+        const baseStyles = buttonTheme.base;
+        const baseRule = baseStyles && baseStyles[name];
+
+        return themeRule || sizeRule || baseRule || defaultValue;
+    };
 
     const getStateStyles = (name, css) => {
         const state = getRule(name);
@@ -66,10 +86,13 @@ export const Button: React.FC<IButton> = (
     const bg = getRule('bg', baseTheme.app.colors.black);
     const shadow = getRule('shadow');
 
-    const transition = time => `all ${easing} ${time}ms`;
+    const transition = time =>
+        ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
+            .map(name => `${name} ${easing} ${time}ms`)
+            .join(', ');
 
     const typographyStyles = typography(typographyName, themeObj);
-    const { fontSize = '1rem', lineHeight = 1.4 } = typographyStyles || buttonTheme.sizes[size];
+    const { fontSize = '1rem', lineHeight = 1.4 } = typographyStyles || buttonTheme.sizes[size] || {};
     const parsedFontSize = parseFloat(fontSize) * 16;
     const textHeight = Math.floor(parsedFontSize * lineHeight);
     const maxHeight = Math.max(textHeight, Icon ? iconSize : 0);
@@ -104,9 +127,9 @@ export const Button: React.FC<IButton> = (
             }),
             ...getStateStyles('focus'),
         },
-        buttonTheme.base.css,
-        buttonTheme.sizes[size].css,
-        buttonTheme.themes[theme].css,
+        buttonTheme.base && buttonTheme.base.css,
+        buttonTheme.sizes[size] && buttonTheme.sizes[size].css,
+        buttonTheme.themes[theme] && buttonTheme.themes[theme].css,
         block && blockStyles,
         hidden && hiddenStyles,
         css,

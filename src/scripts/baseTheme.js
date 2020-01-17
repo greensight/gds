@@ -17,14 +17,6 @@ const baseTheme = createTheme({
             },
         },
         button: {
-            base: {
-                css: {
-                    ':focus': {
-                        outlineOffset: 2,
-                        outlineColor: colors.brand,
-                    },
-                },
-            },
             sizes: {
                 lg: {
                     height: major(8),
