@@ -57,7 +57,10 @@ export default [
                 extract: true,
                 minimize: true,
             }),
-            svgr(),
+            svgr({
+                svgo: false,
+                titleProp: true,
+            }),
             json(),
         ],
         external: Object.keys(pkg.peerDependencies),
