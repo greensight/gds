@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+// TODO Как писать код вне bin, оставив здесь единственный скрипт вызова?
+
 const { resolve } = require('path');
 const fs = require('fs');
 const { red, bold } = require('chalk');

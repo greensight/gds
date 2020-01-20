@@ -1,8 +1,16 @@
 const fs = require('fs');
 const { resolve } = require('path');
+const { Transform } = require('stream');
 const axios = require('axios');
 const { red, green } = require('chalk');
 const figma = require('./figma');
+
+class RemoveFillStream extends Transform {
+    _transform(data, encoding, callback) {
+        this.push(data.toString().replace(/ fill=".*?"/g, ''));
+        callback();
+    }
+}
 
 async function getImageLinks(iconsData, figmaToken, figmaId) {
     const iconIds = iconsData.map(({ id }) => id).join(',');
@@ -25,7 +33,7 @@ async function loadImage(icon, iconsDir) {
     }
     const writeStream = fs.createWriteStream(resolve(path));
     const response = await axios(icon.url, { responseType: 'stream' });
-    response.data.pipe(writeStream);
+    response.data.pipe(new RemoveFillStream()).pipe(writeStream);
 
     return new Promise((resolve, reject) => {
         writeStream.on('finish', () => {

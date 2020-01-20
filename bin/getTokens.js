@@ -9,7 +9,8 @@ const getIcons = require('./getIcons');
 const getLayout = require('./getLayout');
 
 // TODO Можно ли причесать токены в итоговом файле?
-// TODO Протестировать можно ли вытянуть тени
+// TODO Добавить токенизацию теней
+// TODO Доработать режимы - скачивание отдельных токенов без перезаписи json, иконки отдельно
 
 const getters = {
     palettes: getPalettes,

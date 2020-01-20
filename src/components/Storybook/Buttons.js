@@ -5,7 +5,7 @@ import Layout from '../Layout';
 import typography from '../../scripts/typography';
 import baseTheme from '../../scripts/baseTheme';
 import major from '../../scripts/major';
-import PlusIcon from '../../images/icons/plus.svg';
+import PlusIcon from '../../images/icons/tokens/collection/plus.svg';
 
 const Colors = ({ text = 'Button', Icon = PlusIcon }) => {
     const theme = useTheme();
