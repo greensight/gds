@@ -8,9 +8,6 @@ import typography from '../../scripts/customTypography';
 import major from '../../scripts/major';
 import Layout from '../Layout';
 
-// TODO Добавить плейсхолдер в конфиг темы и в доку
-// TODO Перенести дизайнерскую доку
-
 const Icons = ({ headingLevel = 2 }) => {
     const iconsReq = require.context('!!@svgr/webpack!@icons');
     const icons = iconsReq.keys().reduce((acc, name) => {
@@ -38,12 +35,11 @@ const Icons = ({ headingLevel = 2 }) => {
         const complexItems = Object.entries(icons).filter(([, value]) => !value.Component);
 
         const Heading = `h${level}`;
-        level = complexItems.length ? level + 1 : headingLevel;
 
         return (
             <>
                 {!!simpleItems.length && (
-                    <Layout auto={major(18)} gap={major(2)}>
+                    <Layout auto={major(18)} gap={major(2)} css={{ marginBottom: major(2) }}>
                         {simpleItems.map(([name, value]) => (
                             <Layout.Item key={name}>
                                 <Icon name={name} Component={value.Component} path={value.path} />
@@ -54,15 +50,15 @@ const Icons = ({ headingLevel = 2 }) => {
                 {!!complexItems.length &&
                     complexItems.map(([name, value]) => (
                         <React.Fragment key={name}>
-                            <Heading css={{ margin: `${major(2)}px 0` }}>{name}</Heading>
-                            {mapIcons(value, level)}
+                            <Heading css={{ marginBottom: major(2) }}>{name}</Heading>
+                            {mapIcons(value, level + 1)}
                         </React.Fragment>
                     ))}
             </>
         );
     }
 
-    return <div css={{ padding: `${major(2)}px 0` }}>{mapIcons(icons, headingLevel)}</div>;
+    return <div css={{ paddingTop: major(2) }}>{mapIcons(icons, headingLevel)}</div>;
 };
 
 const Icon = ({ name, Component, path }) => {
