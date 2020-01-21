@@ -1,7 +1,7 @@
 import React from 'react';
 import useTheme from '../../src/scripts/useTheme';
-import CheckIcon from '../../src/images/icons/check.svg';
-import CrossIcon from '../../src/images/icons/cross.svg';
+import CheckCircle from '../../src/images/icons/tokens/medium/checkCircle.svg';
+import CrossCircle from '../../src/images/icons/tokens/medium/crossCircle.svg';
 
 const DoDont = ({ children }) => (
     <div css={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gridGap: 32 }}>
@@ -13,7 +13,7 @@ const Item = ({ type, children }) => {
     const theme = useTheme();
     const { colors } = theme;
     const color = type === 'do' ? colors.success : colors.error;
-    const Icon = type === 'do' ? CheckIcon : CrossIcon;
+    const Icon = type === 'do' ? CheckCircle : CrossCircle;
     const heading = type === 'do' ? 'Do' : "Don't";
 
     return (

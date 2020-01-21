@@ -1,13 +1,14 @@
 import tokens from '../../public/tokens';
+import Placeholder from '../images/icons/tokens/medium/placeholder.svg';
 import createTheme from './createTheme';
 import major from './major';
-import minor from './minor';
 
 const { colors } = tokens;
 
 const baseTheme = createTheme({
     tokens,
     theme: {
+        PlaceholderIcon: Placeholder,
         typography: {
             fonts: {
                 'PT Root UI': {
@@ -21,7 +22,7 @@ const baseTheme = createTheme({
                 lg: {
                     height: major(8),
                     padding: major(3),
-                    iconSize: minor(9),
+                    iconSize: major(4),
                     iconOffset: major(1),
                     typography: 'buttonLg',
                     borderRadius: 32,
@@ -37,7 +38,7 @@ const baseTheme = createTheme({
                 sm: {
                     height: major(5),
                     padding: major(2),
-                    iconSize: minor(3),
+                    iconSize: major(2),
                     iconOffset: major(1),
                     typography: 'buttonSm',
                     borderRadius: 24,

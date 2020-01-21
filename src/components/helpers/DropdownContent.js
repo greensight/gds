@@ -1,6 +1,7 @@
 import React from 'react';
 import useTheme from '../../scripts/useTheme';
-import CheckIcon from '../../images/icons/check.svg';
+import major from '../../scripts/major';
+import CheckCircle from '../../images/icons/tokens/medium/checkCircle.svg';
 
 const DropdownContent = ({ children }) => {
     const theme = useTheme();
@@ -8,7 +9,7 @@ const DropdownContent = ({ children }) => {
 
     return (
         <>
-            <CheckIcon css={{ fill: colors.success, marginRight: 8, verticalAlign: 'middle' }} />
+            <CheckCircle fill={colors.success} css={{ marginRight: major(1), verticalAlign: 'middle' }} />
             {children}
         </>
     );

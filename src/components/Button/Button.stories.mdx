@@ -2,7 +2,6 @@ import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, object, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import CenteredContainer from '../../../.storybook/components/CenteredContainer';
-import PlusIcon from '../../images/icons/tokens/collection/plus.svg';
 import major from '../../scripts/major';
 import minor from '../../scripts/minor';
 import theme from '../../scripts/baseTheme';
@@ -40,7 +39,7 @@ import Button, { Button as ButtonProps } from '.';
                 size={radios('size', ['lg', 'md', 'sm'], 'md')}
                 block={boolean('block', false)}
                 disabled={boolean('disabled', false)}
-                Icon={boolean('icon', false) && PlusIcon}
+                Icon={boolean('icon', false) && theme.app.PlaceholderIcon}
                 iconAfter={boolean('iconAfter', false)}
                 hidden={boolean('hidden', false)}
                 onClick={action('onClick')}
@@ -197,10 +196,10 @@ import Button, { Button as ButtonProps } from '.';
 
 <Preview>
     <Story name="With icon (before)">
-        <Button Icon={PlusIcon}>Button</Button>
+        <Button Icon={theme.app.PlaceholderIcon}>Button</Button>
     </Story>
     <Story name="With icon (after)">
-        <Button Icon={PlusIcon} iconAfter>Button</Button>
+        <Button Icon={theme.app.PlaceholderIcon} iconAfter>Button</Button>
     </Story>
 </Preview>
 
@@ -210,7 +209,7 @@ import Button, { Button as ButtonProps } from '.';
 
 <Preview>
     <Story name="Hidden mode">
-        <Button Icon={PlusIcon} hidden>Button</Button>
+        <Button Icon={theme.app.PlaceholderIcon} hidden>Button</Button>
     </Story>
 </Preview>
 
@@ -222,7 +221,7 @@ jsx используется в редких случаях, когда нужн
 
 <Preview>
     <Story name="Custom icon">
-        <Button Icon={<PlusIcon fill={theme.app.colors.brandSecond} />}>Button</Button>
+        <Button Icon={<theme.app.PlaceholderIcon fill={theme.app.colors.brandSecond} />}>Button</Button>
     </Story>
 </Preview>
 
