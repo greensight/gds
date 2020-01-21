@@ -2,11 +2,11 @@
 
 **GDS** is a design system in [Greensight](https://greensight.pro/) company.
 
-⚠️ This system is supposed to be used only inside our company, at least for now.
+❗️ This system is supposed to be used only inside our company, at least for now.
 
-⚠️⚠️ GDS is in early development stage, so probably everything is broken.
+❗️❗️ GDS is in early development stage, so probably everything is broken.
 
-⚠️⚠️⚠️ We're not looking for outsource contributors at the moment.
+❗️❗️❗️ We're not looking for outsource contributors at the moment.
 
 ## Install
 
@@ -109,7 +109,7 @@ const SomeComponent = () => {
 
 ## Components
 
-**⚠️ Components are currently under development**
+**❗️ Components are currently under development**
 
 GDS provides collection of components:
 
@@ -149,7 +149,7 @@ import theme from '../../src/client/scripts/theme';
 <Storybook.Typography theme={theme} />
 ```
 
-⚠️ Icons widget uses `require.context` with `@icons` alias. To make it work you need to add webpack alias in your config. You need this even if you don't use Icons widget, sorry about that, i'll search for more beautiful solution later :\
+❗️ Icons widget uses `require.context` with `@icons` alias. To make it work you need to add webpack alias in your config. You need this even if you don't use Icons widget, sorry about that, i'll search for more beautiful solution later :\
 
 For example, in Storybook webpack config override looks like that:
 
