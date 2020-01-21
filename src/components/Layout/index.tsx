@@ -44,7 +44,7 @@ export const Layout: React.FC<ILayout> = ({
                         defaultProperty: 'cols',
                         condition: type === 'grid' && !areas,
                         transform: ([cols, auto]) => {
-                            if (auto) return `repeat(auto-fit, minmax(${auto}px, 1fr))`;
+                            if (auto) return `repeat(auto-fill, minmax(${auto}px, 1fr))`;
                             if (Number.isInteger(cols)) return `repeat(${cols}, 1fr)`;
                             const arr = toArray(cols);
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');

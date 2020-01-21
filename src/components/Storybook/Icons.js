@@ -7,15 +7,7 @@ import Dropdown from '../helpers/Dropdown';
 import DropdownContent from '../helpers/DropdownContent';
 import typography from '../../scripts/customTypography';
 import major from '../../scripts/major';
-
-// TODO Доработать заголовки
-// TODO Обдумать чистку директории и дубли после внесения изменений
-// TODO Осмыслить перенос fill/stoke наверх, нужен ли парсинг
-// TODO Добавить в гайд, что используем только fill
-// TODO Нам на фронте не нужно 3 иконки разных размеров, если мы можем их заскейлить
-// TODO Импортированные из Фигмы иконки идут с зашитым филлом - нужно чистить
-// TODO Добавить в кнопку иконку из токенов после правки fill
-// TODO Выделить иконку-плейсхолдер
+import Layout from '../Layout';
 
 const Icons = ({ headingLevel = 2 }) => {
     const iconsReq = require.context('!!@svgr/webpack!@icons');
@@ -29,41 +21,35 @@ const Icons = ({ headingLevel = 2 }) => {
         return deepMerge(acc, obj);
     }, {});
 
-    let level = headingLevel;
-
-    function mapIcons(icons) {
+    function mapIcons(icons, level) {
         const simpleItems = Object.entries(icons).filter(([, value]) => !isObject(value));
         const complexItems = Object.entries(icons).filter(([, value]) => isObject(value));
-        const list = simpleItems.map(([name, value]) => <Icon key={name} name={name} Icon={value} fill="pink" />);
-
         const Heading = `h${level}`;
         level = complexItems.length ? level + 1 : headingLevel;
 
         return (
             <>
-                {list && (
-                    <ul
-                        css={{
-                            display: 'grid',
-                            gridTemplateColumns: `repeat(auto-fill, minmax(${major(18)}px, 1fr))`,
-                            gridGap: major(2),
-                        }}
-                    >
-                        {list}
-                    </ul>
+                {!!simpleItems.length && (
+                    <Layout auto={major(18)} gap={major(2)}>
+                        {simpleItems.map(([name, value]) => (
+                            <Layout.Item key={name}>
+                                <Icon name={name} Icon={value} />
+                            </Layout.Item>
+                        ))}
+                    </Layout>
                 )}
                 {!!complexItems.length &&
                     complexItems.map(([name, value]) => (
                         <React.Fragment key={name}>
                             <Heading css={{ margin: `${major(2)}px 0` }}>{name}</Heading>
-                            {mapIcons(value, true)}
+                            {mapIcons(value, level)}
                         </React.Fragment>
                     ))}
             </>
         );
     }
 
-    return <div>{mapIcons(icons)}</div>;
+    return mapIcons(icons, headingLevel);
 };
 
 const Icon = ({ name, Icon }) => {
@@ -71,33 +57,31 @@ const Icon = ({ name, Icon }) => {
     const { colors } = theme;
 
     return (
-        <li>
-            <Dropdown content={<DropdownContent>Icon name is copied to the clipboard</DropdownContent>} arrow={false}>
-                <button
-                    type="button"
-                    css={{
-                        width: '100%',
-                        height: '100%',
-                        padding: major(2),
-                        border: `2px solid ${colors.lighter}`,
-                        borderRadius: 4,
-                        ...typography('bodyBold'),
-                        textAlign: 'center',
-                        transition: 'border-color ease 300ms',
-                        ':hover, :focus': {
-                            borderColor: colors.grey0,
-                        },
-                        ':focus': {
-                            outline: 'none',
-                        },
-                    }}
-                    onClick={() => copyToClipboard(name)}
-                >
-                    <Icon css={{ marginBottom: major(1) }} />
-                    <div>{name}</div>
-                </button>
-            </Dropdown>
-        </li>
+        <Dropdown content={<DropdownContent>Icon name is copied to the clipboard</DropdownContent>} arrow={false}>
+            <button
+                type="button"
+                css={{
+                    width: '100%',
+                    height: '100%',
+                    padding: major(2),
+                    border: `2px solid ${colors.grey70}`,
+                    borderRadius: 4,
+                    ...typography('bodyBold'),
+                    textAlign: 'center',
+                    transition: 'border-color ease 300ms',
+                    ':hover, :focus': {
+                        borderColor: colors.grey0,
+                    },
+                    ':focus': {
+                        outline: 'none',
+                    },
+                }}
+                onClick={() => copyToClipboard(name)}
+            >
+                <Icon css={{ marginBottom: major(1) }} />
+                <div>{name}</div>
+            </button>
+        </Dropdown>
     );
 };
 
