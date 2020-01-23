@@ -186,4 +186,3 @@ export default customTypography;
 | `storybook:serve` | Starts a static server for `docs` browsing      |
 | `tokens`          | Fetch design tokens from Figma                  |
 | `eslint`          | Lint all `.js`, `.jsx`, `.ts` and `.tsx` files  |
-| `stylelint`       | Lint all `.css` files                           |

@@ -19,21 +19,6 @@ module.exports = ({ config, mode }) => {
         },
         {
             test: /\.css$/,
-            exclude: /node_modules/,
-            use: [
-                ExtractCssChunksPlugin.loader,
-                {
-                    loader: 'css-loader',
-                    options: {
-                        importLoaders: 1,
-                    },
-                },
-                'postcss-loader',
-            ],
-        },
-        {
-            test: /\.css$/,
-            include: /node_modules/,
             use: [ExtractCssChunksPlugin.loader, 'css-loader'],
         },
         {

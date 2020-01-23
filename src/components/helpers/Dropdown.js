@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Tippy from '@tippy.js/react';
 import 'tippy.js/dist/tippy.css';
-import { IDropdown } from './Dropdown';
-import './styles.css';
 
-export const Dropdown: React.FC<IDropdown> = ({
+export const Dropdown = ({
     children,
     content,
     theme = 'dropdown',

@@ -1,11 +1,10 @@
 import React from 'react';
-import useTheme from '../../scripts/useTheme';
+import baseTheme from '../../scripts/baseTheme';
 import major from '../../scripts/major';
 import CheckCircle from '../../images/icons/tokens/medium/checkCircle.svg';
 
 const DropdownContent = ({ children }) => {
-    const theme = useTheme();
-    const { colors } = theme;
+    const { colors } = baseTheme.app;
 
     return (
         <>
