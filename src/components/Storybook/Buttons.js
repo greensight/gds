@@ -8,8 +8,8 @@ import major from '../../scripts/major';
 
 const Buttons = ({ text = 'Button', Icon }) => {
     const theme = useTheme();
-    const buttonTheme = theme.button || baseTheme.app.button;
-    Icon = Icon || theme.PlaceholderIcon || baseTheme.app.PlaceholderIcon;
+    const buttonTheme = (theme.components && theme.components.Button) || baseTheme.app.components.Button;
+    Icon = Icon || theme.placeholder || baseTheme.app.placeholder;
 
     return (
         <ul>

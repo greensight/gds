@@ -3,6 +3,7 @@ export { default as Layout } from './components/Layout';
 export { default as Section } from './components/Section';
 export { default as Container } from './components/Container';
 export { default as Storybook } from './components/Storybook';
+export { default as Global } from './components/Global';
 export { default as typography } from './scripts/typography';
 export { default as baseTheme } from './scripts/baseTheme';
 export { default as createTheme } from './scripts/createTheme';

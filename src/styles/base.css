@@ -1,5 +1,3 @@
-@import-normalize;
-
 *,
 ::before,
 ::after {
@@ -30,6 +28,7 @@ body {
 body {
     color: var(--cl-black);
     font-size: 16px;
+    font-size: 10px;
     line-height: 1.5;
     background-color: var(--cl-white);
     font-family: Arial, sans-serif;

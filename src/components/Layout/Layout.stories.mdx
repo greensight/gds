@@ -8,10 +8,6 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
 
 # Layout
 
-Компонент `Layout` помогает строить сетки. По умолчанию он использует CSS Grid, но есть возможность использовать CSS Flex через изменение `type`. По сути это React компонент, который позволяет задать сетку, как в CSS, но через props и с упрощённым API.
-
-Сетка всегда строится через сочетание обёртки `Layout` и очерёдности колонок через `Layout.Item`.
-
 <Story name="Knobs">
     {() => {
         const itemsCount = number(
@@ -170,6 +166,10 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
         );
     }}
 </Story>
+
+Компонент `Layout` помогает строить сетки. По умолчанию он использует CSS Grid, но есть возможность использовать CSS Flex через изменение `type`. По сути это React компонент, который позволяет задать сетку, как в CSS, но через props и с упрощённым API.
+
+Сетка всегда строится через сочетание обёртки `Layout` и очерёдности колонок через `Layout.Item`.
 
 ## Props
 

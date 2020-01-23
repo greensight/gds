@@ -35,6 +35,8 @@ const removeFontFamily = styles => {
 };
 
 // TODO Можно ли что-то придумать с опусканием объекта темы? Он бесит
+// TODO Добавить отключение флюидки через параметр
+// TODO Определять vf из объекта global.fonts
 
 const typography = (name, theme) => {
     if (!name) {

@@ -1,8 +1,8 @@
-import { useTheme } from 'emotion-theming';
+import { useTheme as useEmotionTheme } from 'emotion-theming';
 
-const useThemeCustom = () => {
-    const theme = useTheme();
+const useTheme = () => {
+    const theme = useEmotionTheme();
     return theme.app;
 };
 
-export default useThemeCustom;
+export default useTheme;

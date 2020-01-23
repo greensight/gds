@@ -27,8 +27,8 @@ export const Button: React.FC<IButton> = (
     ref,
 ) => {
     const globalTheme = useTheme();
-    const themeObj = globalTheme.button ? globalTheme : baseTheme.app;
-    const buttonTheme = propThemeObj || themeObj.button;
+    const themeObj = globalTheme.components && globalTheme.components.Button ? globalTheme : baseTheme.app;
+    const buttonTheme = propThemeObj || themeObj.components.Button;
 
     if (!buttonTheme.themes[theme]) {
         console.warn(`Specify "${theme}" theme. Default values are used instead`);
