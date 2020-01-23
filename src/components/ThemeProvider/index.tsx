@@ -7,10 +7,10 @@ import baseTheme from '../../scripts/baseTheme';
 import typography from '../../scripts/typography';
 import IThemeProvider from './ThemeProvider';
 
-// TODO Добавить в доку focus-visible
 // TODO Обработать normalize
+// TODO Добавить в доку focus-visible
 // TODO Отписать по base
-// TODO Добавить про импорты шрифтов
+// TODO Добавить интерфейсы тем в разделы
 // TODO Добавить интерфейсы токенов
 
 const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }) => {

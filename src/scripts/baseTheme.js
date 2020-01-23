@@ -4,8 +4,8 @@ import createTheme from './createTheme';
 import major from './major';
 import PTRootUIRegularWoff2 from '../fonts/PTRootUI/PTRootUI-Regular.woff2';
 import PTRootUIRegularWoff from '../fonts/PTRootUI/PTRootUI-Regular.woff';
-import PTRootUIBoldWoff2 from '../fonts/PTRootUI/PTRootUI-Regular.woff2';
-import PTRootUIBoldWoff from '../fonts/PTRootUI/PTRootUI-Regular.woff';
+import PTRootUIBoldWoff2 from '../fonts/PTRootUI/PTRootUI-Bold.woff2';
+import PTRootUIBoldWoff from '../fonts/PTRootUI/PTRootUI-Bold.woff';
 import PTRootUIMediumWoff2 from '../fonts/PTRootUI/PTRootUI-Medium.woff2';
 import PTRootUIMediumWoff from '../fonts/PTRootUI/PTRootUI-Medium.woff';
 import PTRootUIVF from '../fonts/PTRootUI/PTRootUI-VF.woff2';
@@ -51,7 +51,7 @@ const baseTheme = createTheme({
                 body: {
                     typography: 'body',
                     color: colors.black,
-                    bg: colors.black,
+                    bg: colors.white,
                 },
             },
         },

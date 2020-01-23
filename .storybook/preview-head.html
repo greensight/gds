@@ -1,11 +1,111 @@
 <style>
-    .sb-show-main {
-        background-color: inherit;
+    @font-face {
+        font-family: PT Root UI;
+        src: url(PTRootUI-Regular.woff2) format('woff2'), url(PTRootUI-Regular.woff) format('woff');
+        font-display: swap;
     }
+
+    @font-face {
+        font-family: PT Root UI;
+        src: url(PTRootUI-Medium.woff2) format('woff2'), url(PTRootUI-Medium.woff) format('woff');
+        font-display: swap;
+        font-weight: 500;
+    }
+
+    @font-face {
+        font-family: PT Root UI;
+        src: url(PTRootUI-Bold.woff2) format('woff2'), url(PTRootUI-Bold.woff) format('woff');
+        font-display: swap;
+        font-weight: 700;
+    }
+
+    @font-face {
+        font-family: PT Root UI VF;
+        src: url(PTRootUI-VF.woff2) format('woff2 supports variations'),
+            url(PTRootUI-VF.woff2) format('woff2-variations');
+        font-display: swap;
+        font-weight: 300 700;
+    }
+
+    ::selection {
+        color: #fff;
+        background-color: #215bf0;
+    }
+
+    :focus {
+        outline: 2px solid #215bf0;
+        outline-offset: 2px;
+    }
+
+    .js-focus-visible :focus:not(.focus-visible) {
+        outline: none;
+    }
+
+    body,
+    p.sbdocs-p,
+    h1.sbdocs-h1,
+    h2.sbdocs-h2,
+    h3.sbdocs-h3,
+    h4.sbdocs-h4,
+    li.sbdocs-li,
+    a.sbdocs-a {
+        font-family: 'PT Root UI', sans-serif;
+        color: #000;
+    }
+
+    body,
+    p.sbdocs-p,
+    li.sbdocs-li,
+    a.sbdocs-a {
+        font-size: 1rem;
+    }
+
+    body {
+        font-weight: 400;
+        line-height: 1.4;
+    }
+
+    @supports (font-variation-settings: normal) {
+        body,
+        p.sbdocs-p,
+        h1.sbdocs-h1,
+        h2.sbdocs-h2,
+        h3.sbdocs-h3,
+        h4.sbdocs-h4,
+        li.sbdocs-li {
+            font-family: 'PT Root UI VF', sans-serif;
+        }
+    }
+
+    a:not(.sbdocs-a) {
+        display: inline-block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    a.sbdocs-a {
+        color: #215bf0;
+    }
+
+    a.sbdocs-a:hover {
+        color: #1146cc;
+    }
+
+    ul li:not(.sbdocs-li),
+    ol li:not(.sbdocs-li) {
+        list-style: none;
+    }
+
     .sbdocs-li {
         list-style: inherit;
     }
-    .sbdocs-a {
+
+    button,
+    [type='button'],
+    [type='reset'],
+    [type='submit'] {
         border: none;
+        background: none;
+        cursor: pointer;
     }
 </style>
