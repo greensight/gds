@@ -7,8 +7,6 @@ import baseTheme from '../../scripts/baseTheme';
 import typography from '../../scripts/typography';
 import IThemeProvider from './ThemeProvider';
 
-// TODO Добавить в доку focus-visible
-// TODO Отписать по base
 // TODO Добавить интерфейсы тем в разделы
 // TODO Добавить интерфейсы токенов
 
