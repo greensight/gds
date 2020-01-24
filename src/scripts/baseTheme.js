@@ -2,13 +2,7 @@ import tokens from '../../public/tokens';
 import PlaceholderIcon from '../images/icons/tokens/medium/placeholder.svg';
 import createTheme from './createTheme';
 import major from './major';
-import PTRootUIRegularWoff2 from '../fonts/PTRootUI/PTRootUI-Regular.woff2';
-import PTRootUIRegularWoff from '../fonts/PTRootUI/PTRootUI-Regular.woff';
-import PTRootUIBoldWoff2 from '../fonts/PTRootUI/PTRootUI-Bold.woff2';
-import PTRootUIBoldWoff from '../fonts/PTRootUI/PTRootUI-Bold.woff';
-import PTRootUIMediumWoff2 from '../fonts/PTRootUI/PTRootUI-Medium.woff2';
-import PTRootUIMediumWoff from '../fonts/PTRootUI/PTRootUI-Medium.woff';
-import PTRootUIVF from '../fonts/PTRootUI/PTRootUI-VF.woff2';
+import { FONT_STACK } from './constants';
 
 const { colors } = tokens;
 
@@ -19,21 +13,21 @@ const baseTheme = createTheme({
             fonts: {
                 'PT Root UI': [
                     {
-                        woff2: PTRootUIRegularWoff2,
-                        woff: PTRootUIRegularWoff,
+                        woff2: 'PTRootUI-Regular.woff2',
+                        woff: 'PTRootUI-Regular.woff',
                     },
                     {
-                        woff2: PTRootUIMediumWoff2,
-                        woff: PTRootUIMediumWoff,
+                        woff2: 'PTRootUI-Medium.woff2',
+                        woff: 'PTRootUI-Medium.woff',
                         weight: 500,
                     },
                     {
-                        woff2: PTRootUIBoldWoff2,
-                        woff: PTRootUIBoldWoff,
+                        woff2: 'PTRootUI-Bold.woff2',
+                        woff: 'PTRootUI-Bold.woff',
                         weight: 700,
                     },
                     {
-                        vf: PTRootUIVF,
+                        vf: 'PTRootUI-VF.woff2',
                         weight: '300 700',
                     },
                 ],
@@ -59,7 +53,7 @@ const baseTheme = createTheme({
             fonts: {
                 'PT Root UI': {
                     vf: 'PT Root UI VF',
-                    stack: 'sans-serif',
+                    stack: FONT_STACK,
                 },
             },
         },

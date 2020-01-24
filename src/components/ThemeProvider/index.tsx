@@ -2,19 +2,18 @@ import * as React from 'react';
 import { Global as EmotionGlobal } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
-import normalize from 'normalize.css';
+import 'normalize.css';
 import baseTheme from '../../scripts/baseTheme';
 import typography from '../../scripts/typography';
 import IThemeProvider from './ThemeProvider';
 
-// TODO Обработать normalize
 // TODO Добавить в доку focus-visible
 // TODO Отписать по base
 // TODO Добавить интерфейсы тем в разделы
 // TODO Добавить интерфейсы токенов
 
 const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }) => {
-    const { global } = theme.app;
+    const global = theme.app.global || baseTheme.app.global;
     const fonts = global.fonts || baseTheme.app.global.fonts;
     const { selection, focus, body } = global.base || baseTheme.app.global.base;
     const { css } = global;
@@ -117,7 +116,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }
 
     return (
         <EmotionThemeProvider theme={theme}>
-            <EmotionGlobal styles={[normalize, fontStyles, baseStyles, css]} />
+            <EmotionGlobal styles={[fontStyles, baseStyles, css]} />
             {children}
         </EmotionThemeProvider>
     );
