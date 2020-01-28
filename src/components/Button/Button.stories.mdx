@@ -18,7 +18,7 @@ import Button, { Button as ButtonProps } from '.';
 
 <Story name="Knobs">
     {() => {
-        const { colors } = theme.app;
+        const { colors, shadows } = theme.app;
         return (
             <Button
                 theme={radios('theme', ['primary', 'secondary'], 'primary')}
@@ -73,8 +73,7 @@ import Button, { Button as ButtonProps } from '.';
                             },
                             active: {
                                 border: 'transparent',
-                                shadow:
-                                    'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
+                                shadow: shadows.inner,
                             },
                             disabled: {
                                 bg: colors.grey70,
@@ -92,8 +91,7 @@ import Button, { Button as ButtonProps } from '.';
                             active: {
                                 bg: colors.grey90,
                                 border: 'transparent',
-                                shadow:
-                                    'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
+                                shadow: shadows.inner,
                             },
                             disabled: {
                                 border: colors.grey60,

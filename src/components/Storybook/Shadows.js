@@ -7,11 +7,9 @@ import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
 import major from '../../scripts/major';
 
-// TODO Не нравится, что в цветах нет сортировки - можно ли с этим что-то сделать?
-
-const Colors = () => {
+const Shadows = () => {
     const theme = useTheme();
-    const { colors } = theme;
+    const { shadows } = theme;
 
     return (
         <ul
@@ -21,14 +19,14 @@ const Colors = () => {
                 gridGap: major(8),
             }}
         >
-            {Object.keys(colors).map(name => (
-                <Color key={name} name={name} value={colors[name]} />
+            {Object.keys(shadows).map(name => (
+                <Shadow key={name} name={name} value={shadows[name]} />
             ))}
         </ul>
     );
 };
 
-const Color = ({ name, value }) => {
+const Shadow = ({ name, value }) => {
     const theme = useTheme();
     const { colors } = theme;
 
@@ -42,7 +40,10 @@ const Color = ({ name, value }) => {
 
     return (
         <li>
-            <Dropdown content={<DropdownContent>Hex code is copied to the clipboard</DropdownContent>} arrow={false}>
+            <Dropdown
+                content={<DropdownContent>Box shadow value is copied to the clipboard</DropdownContent>}
+                arrow={false}
+            >
                 <button
                     type="button"
                     onClick={() => copyToClipboard(value)}
@@ -53,11 +54,11 @@ const Color = ({ name, value }) => {
                         width: '100%',
                         height: major(28),
                         padding: major(1),
-                        backgroundColor: value,
+                        backgroundColor: colors.white,
                         borderRadius: '24px 24px 24px 0px',
+                        boxShadow: value,
                     }}
                 >
-                    <SmallBox css={{ marginBottom: major(1) }}>{value}</SmallBox>
                     <SmallBox>{name}</SmallBox>
                 </button>
             </Dropdown>
@@ -65,4 +66,4 @@ const Color = ({ name, value }) => {
     );
 };
 
-export default Colors;
+export default Shadows;

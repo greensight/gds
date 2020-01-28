@@ -6,6 +6,8 @@ import typography from '../../scripts/typography';
 import cloneElement from '../../scripts/cloneElement';
 import { IButton } from './Button';
 
+// TODO Заменить themeObj на theme
+
 export const Button: React.FC<IButton> = (
     {
         children,

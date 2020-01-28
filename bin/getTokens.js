@@ -7,6 +7,7 @@ const getColors = require('./getColors');
 const getTypography = require('./getTypography');
 const getIcons = require('./getIcons');
 const getLayout = require('./getLayout');
+const getShadows = require('./getShadows');
 
 // TODO Можно ли причесать токены в итоговом файле?
 // TODO Добавить токенизацию теней
@@ -18,6 +19,7 @@ const getters = {
     typography: getTypography,
     icons: getIcons,
     layout: getLayout,
+    shadows: getShadows,
 };
 
 async function getToken(type, page, config) {

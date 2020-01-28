@@ -4,7 +4,7 @@ import createTheme from './createTheme';
 import major from './major';
 import { FONT_STACK } from './constants';
 
-const { colors } = tokens;
+const { colors, shadows } = tokens;
 
 const baseTheme = createTheme({
     tokens,
@@ -95,8 +95,7 @@ const baseTheme = createTheme({
                         },
                         active: {
                             border: 'transparent',
-                            shadow:
-                                'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
+                            shadow: shadows.inner,
                         },
                         disabled: {
                             bg: colors.grey70,
@@ -114,8 +113,7 @@ const baseTheme = createTheme({
                         active: {
                             bg: colors.grey90,
                             border: 'transparent',
-                            shadow:
-                                'inset 0px 3px 2px rgba(0, 0, 0, 0.1), inset 0px 5px 5px rgba(0, 0, 0, 0.1), inset 0px 1px 1px rgba(0, 0, 0, 0.2)',
+                            shadow: shadows.inner,
                         },
                         disabled: {
                             border: colors.grey60,
