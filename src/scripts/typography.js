@@ -16,11 +16,6 @@ const getFluidStyles = (maxFs, minFs, maxVw, minVw) => {
     };
 };
 
-const addFontStack = (font, stack) => {
-    if (!stack) return font;
-    return `"${font}", ${stack}`;
-};
-
 const removeFontFamily = styles => {
     if (!styles) return undefined;
     return Object.keys(styles)
@@ -34,10 +29,6 @@ const removeFontFamily = styles => {
         );
 };
 
-// TODO Можно ли что-то придумать с опусканием объекта темы? Он бесит
-// TODO Добавить отключение флюидки через параметр
-// TODO Определять vf из объекта global.fonts
-
 const typography = (name, theme) => {
     if (!name) {
         console.warn('"name" argument is not defined');
@@ -45,23 +36,24 @@ const typography = (name, theme) => {
     }
 
     const typography = theme.typography[name];
+    const fontName = typography.desktop.fontFamily;
+    const stack = (theme.typography.stacks && theme.typography.stacks[fontName]) || 'sans-serif';
     let fontFamilyStyles = {
-        fontFamily: typography.desktop.fontFamily,
+        fontFamily: `"${fontName}", ${stack}`,
     };
 
-    if (theme.typography.fonts) {
-        const fontName = Object.keys(theme.typography.fonts).find(name => name === typography.desktop.fontFamily);
-        const font = theme.typography.fonts[fontName];
-        fontFamilyStyles.fontFamily = addFontStack(fontFamilyStyles.fontFamily, font.stack);
-
-        if (font.vf) {
-            fontFamilyStyles = {
-                ...fontFamilyStyles,
-                '@supports (font-variation-settings: normal)': {
-                    fontFamily: addFontStack(font.vf, font.stack),
-                },
-            };
-        }
+    const isVf =
+        theme.global &&
+        theme.global.fonts &&
+        theme.global.fonts[fontName] &&
+        theme.global.fonts[fontName].some(({ vf }) => vf);
+    if (isVf) {
+        fontFamilyStyles = {
+            ...fontFamilyStyles,
+            '@supports (font-variation-settings: normal)': {
+                fontFamily: `"${fontName} VF", ${stack}`,
+            },
+        };
     }
 
     const desktopStyles = removeFontFamily(typography.desktop);
@@ -89,7 +81,7 @@ const typography = (name, theme) => {
             [`@media (max-width: ${minVw})`]: { ...uniqueMobileStyles },
         };
 
-        if (theme.typography.fluid !== false) {
+        if (theme.typography.fluid !== false && typography.fluid !== false) {
             fluidStyles = getFluidStyles(maxFs, minFs, maxVw, minVw);
         } else {
             fluidStyles = {

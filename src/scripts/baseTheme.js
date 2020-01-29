@@ -50,11 +50,8 @@ const baseTheme = createTheme({
             },
         },
         typography: {
-            fonts: {
-                'PT Root UI': {
-                    vf: 'PT Root UI VF',
-                    stack: FONT_STACK,
-                },
+            stacks: {
+                'PT Root UI': FONT_STACK,
             },
         },
         placeholder: PlaceholderIcon,

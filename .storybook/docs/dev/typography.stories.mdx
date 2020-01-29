@@ -70,7 +70,18 @@ import typographyStyle from '../../../src/images/docs/typography-style.jpg';
 
 После синхронизации токенов структура данных становится доступна в объекте темы. Можно обращаться к ним напрямую. Но для большего удобства предоставляется хелпер `typography`, который позволяет автоматически применить выбранные стили, включая флюидную типографику.
 
-Общий процесс такой:
+Чтобы пользоваться хелпером на проекте, необходимо привязать к нему свой объект темы. Для этого создаёте свой скрипт typography, который в дальнейшем будете вызывать вместо прямого вызова хелпера из пакета GDS:
+
+```js
+import { typography as gdsTypography } from '@greensight/gds';
+import theme from './theme';
+
+const typography = name => gdsTypography(name, theme);
+
+export default typography;
+```
+
+Далее общий процесс такой:
 
 Нужно задать стили типографики для некоторого текста. В макете у этого текста указан стиль:
 
@@ -83,29 +94,9 @@ import typographyStyle from '../../../src/images/docs/typography-style.jpg';
 Вы знаете имя стиля и можете передать его в хелпер `typography`:
 
 ```js
-import { useTheme, typography } from '@greensight/gds';
+import typography from '../../scripts/typography';
 
 const SomeComponent = () => {
-    const theme = useTheme();
-    return <div css={{ ...typography('subheading', theme) }}>Text</div>;
+    return <div css={{ ...typography('subheading') }}>Text</div>;
 };
 ```
-
-## Объект темы
-
-Поле `typography` заполняется списком шрифтов, получаемым из токенов. Помимо этого доступны настройки:
-
--   **fonts** - настройки отдельных шрифтов
-    -   **vf** - при наличии variable font указывается его имя, и будут добавлены подключения в стили
-    -   **stack** - стек из системных фолбеков
-
-```js
-fonts: {
-    'PT Root UI': {
-        vf: 'PT Root UI VF',
-        stack: 'sans-serif',
-    },
-},
-```
-
--   **fluid** - значение `false` отключает флюидную типографику
