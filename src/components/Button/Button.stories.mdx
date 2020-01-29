@@ -38,14 +38,17 @@ import Button, { Button as ButtonProps } from '.';
                             },
                         },
                     },
+                    base: {
+                        round: true,
+                        half: true,
+                    },
                     sizes: {
                         lg: {
                             height: major(8),
                             padding: major(3),
-                            iconSize: minor(9),
+                            iconSize: major(4),
                             iconOffset: major(1),
                             typography: 'buttonLg',
-                            borderRadius: 32,
                         },
                         md: {
                             height: major(6),
@@ -53,15 +56,13 @@ import Button, { Button as ButtonProps } from '.';
                             iconSize: major(3),
                             iconOffset: major(1),
                             typography: 'buttonMd',
-                            borderRadius: 24,
                         },
                         sm: {
                             height: major(5),
                             padding: major(2),
-                            iconSize: minor(3),
+                            iconSize: major(2),
                             iconOffset: major(1),
                             typography: 'buttonSm',
-                            borderRadius: 24,
                         },
                     },
                     themes: {
@@ -219,7 +220,7 @@ jsx используется в редких случаях, когда нужн
 
 <Preview>
     <Story name="Custom icon">
-        <Button Icon={<theme.app.placeholder fill={theme.app.colors.brandSecond} />}>Button</Button>
+        <Button Icon={<theme.app.placeholder fill={theme.app.colors.warning} />}>Button</Button>
     </Story>
 </Preview>
 

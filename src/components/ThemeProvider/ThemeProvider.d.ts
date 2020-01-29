@@ -88,6 +88,10 @@ interface IButtonRules {
     borderStyle?: string;
     /** Скругление кнопки */
     borderRadius?: number | string;
+    /** Режим половинчатого скругления. border-radius в половину высоты */
+    half?: boolean;
+    /** Режим полного скругления. border-radius в 50% для hidden режима */
+    round?: boolean;
     /** Время анимации ховера */
     time?: number;
     /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */

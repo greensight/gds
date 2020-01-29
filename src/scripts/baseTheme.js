@@ -60,6 +60,10 @@ const baseTheme = createTheme({
         placeholder: PlaceholderIcon,
         components: {
             Button: {
+                base: {
+                    round: true,
+                    half: true,
+                },
                 sizes: {
                     lg: {
                         height: major(8),
@@ -67,7 +71,6 @@ const baseTheme = createTheme({
                         iconSize: major(4),
                         iconOffset: major(1),
                         typography: 'buttonLg',
-                        borderRadius: 32,
                     },
                     md: {
                         height: major(6),
@@ -75,7 +78,6 @@ const baseTheme = createTheme({
                         iconSize: major(3),
                         iconOffset: major(1),
                         typography: 'buttonMd',
-                        borderRadius: 24,
                     },
                     sm: {
                         height: major(5),
@@ -83,7 +85,6 @@ const baseTheme = createTheme({
                         iconSize: major(2),
                         iconOffset: major(1),
                         typography: 'buttonSm',
-                        borderRadius: 24,
                     },
                 },
                 themes: {

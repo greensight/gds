@@ -6,8 +6,6 @@ import typography from '../../scripts/typography';
 import cloneElement from '../../scripts/cloneElement';
 import { IButton } from './Button';
 
-// TODO Заменить themeObj на theme
-
 export const Button: React.FC<IButton> = (
     {
         children,
@@ -22,15 +20,15 @@ export const Button: React.FC<IButton> = (
         as,
         external = false,
         onClick,
-        themeObj: propThemeObj,
+        themeObj,
         css,
         ...props
     },
     ref,
 ) => {
     const globalTheme = useTheme();
-    const themeObj = globalTheme.components && globalTheme.components.Button ? globalTheme : baseTheme.app;
-    const buttonTheme = propThemeObj || themeObj.components.Button;
+    const usedTheme = globalTheme.components && globalTheme.components.Button ? globalTheme : baseTheme.app;
+    const buttonTheme = themeObj || usedTheme.components.Button;
 
     if (!buttonTheme.themes[theme]) {
         console.warn(`Specify "${theme}" theme. Default values are used instead`);
@@ -72,6 +70,43 @@ export const Button: React.FC<IButton> = (
         };
     };
 
+    const getPv = typographyStyles => {
+        let fontSize = '1rem';
+        let lineHeight = 1.4;
+
+        const cssRule = buttonTheme.sizes[size].css;
+
+        if (typographyStyles) {
+            fontSize = parseFloat(typographyStyles.fontSize) * 16;
+            lineHeight = typographyStyles.lineHeight;
+        } else if (cssRule) {
+            if (cssRule.fontSize) {
+                if (typeof cssRule.fontSize === 'number') {
+                    fontSize = cssRule.fontSize;
+                } else if (typeof cssRule.fontSize === 'string') {
+                    if (cssRule.fontSize.endsWith('rem')) {
+                        fontSize = parseFloat(cssRule.fontSize) * 16;
+                    } else {
+                        fontSize = parseFloat(cssRule.fontSize);
+                    }
+                }
+            }
+
+            if (cssRule.lineHeight) lineHeight = cssRule.lineHeight;
+        }
+
+        const textHeight = Math.floor(fontSize * lineHeight);
+        const maxHeight = Math.max(textHeight, Icon ? iconSize : 0);
+        const pv = (height - maxHeight - borderWidth * 2) / 2;
+
+        return pv;
+    };
+
+    const transition = time =>
+        ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
+            .map(name => `${name} ${easing} ${time}ms`)
+            .join(', ');
+
     const border = getRule('border');
     const borderWidth = getRule('borderWidth', border ? 1 : 0);
     const borderStyle = getRule('borderStyle', 'solid');
@@ -87,22 +122,21 @@ export const Button: React.FC<IButton> = (
     const color = getRule('color', baseTheme.app.colors.white);
     const bg = getRule('bg', baseTheme.app.colors.black);
     const shadow = getRule('shadow');
+    const round = getRule('round');
+    const half = getRule('half');
 
-    const transition = time =>
-        ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
-            .map(name => `${name} ${easing} ${time}ms`)
-            .join(', ');
-
-    const typographyStyles = typography(typographyName, themeObj);
-    const { fontSize = '1rem', lineHeight = 1.4 } = typographyStyles || buttonTheme.sizes[size] || {};
-    const parsedFontSize = parseFloat(fontSize) * 16;
-    const textHeight = Math.floor(parsedFontSize * lineHeight);
-    const maxHeight = Math.max(textHeight, Icon ? iconSize : 0);
-    const pv = (height - maxHeight - borderWidth * 2) / 2;
+    const typographyStyles = typographyName && typography(typographyName, usedTheme);
+    const pv = getPv(typographyStyles);
 
     const blockStyles = { display: 'flex', width: '100%' };
 
-    const hiddenStyles = { fontSize: 0 };
+    const hiddenStyles = {
+        fontSize: 0,
+        ...(round && {
+            borderRadius: '50%',
+            padding: `${pv}px ${(height - iconSize - borderWidth) / 2}px`,
+        }),
+    };
 
     const styles = [
         {
@@ -111,7 +145,7 @@ export const Button: React.FC<IButton> = (
             alignItems: 'center',
             borderWidth,
             borderStyle,
-            borderRadius,
+            borderRadius: !half ? borderRadius : height / 2,
             padding: `${pv}px ${padding}px`,
             ...typographyStyles,
             color,
