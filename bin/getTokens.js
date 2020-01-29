@@ -66,9 +66,7 @@ async function getTokens(config) {
 
     const tokenGetters = config.tokens.map(token => getToken(token, page, config));
     const tokensArr = await Promise.all(tokenGetters);
-    const tokensObj = tokensArr.reduce((acc, item) => ({ ...acc, ...item }), {
-        majorStep: config.majorStep,
-    });
+    const tokensObj = tokensArr.reduce((acc, item) => ({ ...acc, ...item }), {});
 
     const fullTokensDir = resolve(config.tokensDir);
     await fs.promises.mkdir(fullTokensDir, { recursive: true });

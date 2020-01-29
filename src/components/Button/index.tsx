@@ -1,7 +1,7 @@
 import * as React from 'react';
 import useTheme from '../../scripts/useTheme';
 import baseTheme from '../../scripts/baseTheme';
-import major from '../../scripts/major';
+import scale from '../../scripts/scale';
 import typography from '../../scripts/typography';
 import cloneElement from '../../scripts/cloneElement';
 import { IButton } from './Button';
@@ -115,10 +115,10 @@ export const Button: React.FC<IButton> = (
     const timeIn = getRule('timeIn');
     const easing = getRule('easing', 'ease');
     const typographyName = getRule('typography');
-    const height = getRule('height', major(6));
-    const padding = getRule('padding', major(3));
-    const iconSize = getRule('iconSize', major(3));
-    const iconOffset = getRule('iconOffset', major(1));
+    const height = getRule('height', scale(6));
+    const padding = getRule('padding', scale(3));
+    const iconSize = getRule('iconSize', scale(3));
+    const iconOffset = getRule('iconOffset', scale(1));
     const color = getRule('color', baseTheme.app.colors.white);
     const bg = getRule('bg', baseTheme.app.colors.black);
     const shadow = getRule('shadow');

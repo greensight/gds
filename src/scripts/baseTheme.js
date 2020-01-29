@@ -1,7 +1,7 @@
 import tokens from '../../public/tokens';
 import PlaceholderIcon from '../images/icons/tokens/medium/placeholder.svg';
 import createTheme from './createTheme';
-import major from './major';
+import scale from './scale';
 import { FONT_STACK } from './constants';
 
 const { colors, shadows } = tokens;
@@ -66,24 +66,24 @@ const baseTheme = createTheme({
                 },
                 sizes: {
                     lg: {
-                        height: major(8),
-                        padding: major(3),
-                        iconSize: major(4),
-                        iconOffset: major(1),
+                        height: scale(8),
+                        padding: scale(3),
+                        iconSize: scale(4),
+                        iconOffset: scale(1),
                         typography: 'buttonLg',
                     },
                     md: {
-                        height: major(6),
-                        padding: major(3),
-                        iconSize: major(3),
-                        iconOffset: major(1),
+                        height: scale(6),
+                        padding: scale(3),
+                        iconSize: scale(3),
+                        iconOffset: scale(1),
                         typography: 'buttonMd',
                     },
                     sm: {
-                        height: major(5),
-                        padding: major(2),
-                        iconSize: major(2),
-                        iconOffset: major(1),
+                        height: scale(5),
+                        padding: scale(2),
+                        iconSize: scale(2),
+                        iconOffset: scale(1),
                         typography: 'buttonSm',
                     },
                 },

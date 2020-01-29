@@ -11,7 +11,6 @@ const defaults = {
         layout: 'Layout',
         shadows: 'Shadows',
     },
-    majorStep: 8,
 };
 
 module.exports = defaults;

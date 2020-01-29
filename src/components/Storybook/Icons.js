@@ -5,7 +5,7 @@ import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import DropdownContent from '../helpers/DropdownContent';
 import typography from '../../scripts/customTypography';
-import major from '../../scripts/major';
+import scale from '../../scripts/scale';
 import Layout from '../Layout';
 
 const Icons = ({ headingLevel = 2 }) => {
@@ -39,7 +39,7 @@ const Icons = ({ headingLevel = 2 }) => {
         return (
             <>
                 {!!simpleItems.length && (
-                    <Layout auto={major(18)} gap={major(2)} css={{ marginBottom: major(2) }}>
+                    <Layout auto={scale(18)} gap={scale(2)} css={{ marginBottom: scale(2) }}>
                         {simpleItems.map(([name, value]) => (
                             <Layout.Item key={name}>
                                 <Icon name={name} Component={value.Component} path={value.path} />
@@ -50,7 +50,7 @@ const Icons = ({ headingLevel = 2 }) => {
                 {!!complexItems.length &&
                     complexItems.map(([name, value]) => (
                         <React.Fragment key={name}>
-                            <Heading css={{ marginBottom: major(2) }}>{name}</Heading>
+                            <Heading css={{ marginBottom: scale(2) }}>{name}</Heading>
                             {mapIcons(value, level + 1)}
                         </React.Fragment>
                     ))}
@@ -58,7 +58,7 @@ const Icons = ({ headingLevel = 2 }) => {
         );
     }
 
-    return <div css={{ paddingTop: major(2) }}>{mapIcons(icons, headingLevel)}</div>;
+    return <div css={{ paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
 };
 
 const Icon = ({ name, Component, path }) => {
@@ -72,7 +72,7 @@ const Icon = ({ name, Component, path }) => {
                 css={{
                     width: '100%',
                     height: '100%',
-                    padding: major(2),
+                    padding: scale(2),
                     border: `2px solid ${colors.grey70}`,
                     borderRadius: 4,
                     ...typography('bodyBold'),
@@ -87,7 +87,7 @@ const Icon = ({ name, Component, path }) => {
                 }}
                 onClick={() => copyToClipboard(path)}
             >
-                <Component css={{ marginBottom: major(1) }} />
+                <Component css={{ marginBottom: scale(1) }} />
                 <div>{name}</div>
             </button>
         </Dropdown>

@@ -5,7 +5,7 @@ import DropdownContent from '../helpers/DropdownContent';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
-import major from '../../scripts/major';
+import scale from '../../scripts/scale';
 
 // TODO Не нравится, что в цветах нет сортировки - можно ли с этим что-то сделать?
 
@@ -17,8 +17,8 @@ const Colors = () => {
         <ul
             css={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(auto-fit, minmax(${major(20)}px, 1fr))`,
-                gridGap: major(8),
+                gridTemplateColumns: `repeat(auto-fit, minmax(${scale(20)}px, 1fr))`,
+                gridGap: scale(8),
             }}
         >
             {Object.keys(colors).map(name => (
@@ -35,7 +35,7 @@ const Color = ({ name, value }) => {
     const SmallBox = styled('span')({
         backgroundColor: colors.white,
         color: colors.grey0,
-        padding: major(1),
+        padding: scale(1),
         borderRadius: '4px 4px 4px 0px',
         ...typography('smallBold'),
     });
@@ -51,13 +51,13 @@ const Color = ({ name, value }) => {
                         flexDirection: 'column',
                         justifyContent: 'flex-end',
                         width: '100%',
-                        height: major(28),
-                        padding: major(1),
+                        height: scale(28),
+                        padding: scale(1),
                         backgroundColor: value,
                         borderRadius: '24px 24px 24px 0px',
                     }}
                 >
-                    <SmallBox css={{ marginBottom: major(1) }}>{value}</SmallBox>
+                    <SmallBox css={{ marginBottom: scale(1) }}>{value}</SmallBox>
                     <SmallBox>{name}</SmallBox>
                 </button>
             </Dropdown>

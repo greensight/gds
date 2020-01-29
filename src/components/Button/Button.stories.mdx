@@ -2,8 +2,7 @@ import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, object, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import CenteredContainer from '../../../.storybook/components/CenteredContainer';
-import major from '../../scripts/major';
-import minor from '../../scripts/minor';
+import scale from '../../scripts/scale';
 import theme from '../../scripts/baseTheme';
 import Buttons from '../Storybook/Buttons';
 import Button, { Button as ButtonProps } from '.';
@@ -44,24 +43,24 @@ import Button, { Button as ButtonProps } from '.';
                     },
                     sizes: {
                         lg: {
-                            height: major(8),
-                            padding: major(3),
-                            iconSize: major(4),
-                            iconOffset: major(1),
+                            height: scale(8),
+                            padding: scale(3),
+                            iconSize: scale(4),
+                            iconOffset: scale(1),
                             typography: 'buttonLg',
                         },
                         md: {
-                            height: major(6),
-                            padding: major(3),
-                            iconSize: major(3),
-                            iconOffset: major(1),
+                            height: scale(6),
+                            padding: scale(3),
+                            iconSize: scale(3),
+                            iconOffset: scale(1),
                             typography: 'buttonMd',
                         },
                         sm: {
-                            height: major(5),
-                            padding: major(2),
-                            iconSize: major(2),
-                            iconOffset: major(1),
+                            height: scale(5),
+                            padding: scale(2),
+                            iconSize: scale(2),
+                            iconOffset: scale(1),
                             typography: 'buttonSm',
                         },
                     },
@@ -252,6 +251,6 @@ jsx используется в редких случаях, когда нужн
         <Button>Multiline<br/>button</Button>
     </Story>
     <Story name="Multiline mode (fixed width)">
-        <Button css={{width: major(14)}}>Multiline button</Button>
+        <Button css={{width: scale(14)}}>Multiline button</Button>
     </Story>
 </Preview>

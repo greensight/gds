@@ -8,5 +8,4 @@ export { default as typography } from './scripts/typography';
 export { default as baseTheme } from './scripts/baseTheme';
 export { default as createTheme } from './scripts/createTheme';
 export { default as useTheme } from './scripts/useTheme';
-export { default as major } from './scripts/major';
-export { default as minor } from './scripts/minor';
+export { default as scale } from './scripts/scale';

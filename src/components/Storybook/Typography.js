@@ -3,8 +3,7 @@ import styled from '@emotion/styled';
 import useTheme from '../../scripts/useTheme';
 import customTypography from '../../scripts/customTypography';
 import typography from '../../scripts/typography';
-import minor from '../../scripts/minor';
-import major from '../../scripts/major';
+import scale from '../../scripts/scale';
 
 // TODO Есть проблема с рендером шрифтов на Windows - прогнать
 
@@ -14,9 +13,9 @@ const Typography = ({ text = 'Demo text 123' }) => {
     const MobileMark = styled('span')({
         backgroundColor: theme.colors.grey90,
         color: theme.colors.grey20,
-        padding: minor(1),
+        padding: scale(1, true),
         borderRadius: 4,
-        marginRight: major(1),
+        marginRight: scale(1),
         ...customTypography('smallBold'),
     });
 
@@ -31,8 +30,8 @@ const Typography = ({ text = 'Demo text 123' }) => {
                             parseFloat(theme.typography[a].desktop.fontSize),
                     )
                     .map(name => (
-                        <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: major(3) }}>
-                            <div css={{ minWidth: major(17), marginRight: major(2) }}>
+                        <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: scale(3) }}>
+                            <div css={{ minWidth: scale(17), marginRight: scale(2) }}>
                                 {theme.typography[name].mobile && <MobileMark>M</MobileMark>}
                                 <span css={{ color: theme.colors.grey20, ...customTypography('body') }}>{name}</span>
                             </div>

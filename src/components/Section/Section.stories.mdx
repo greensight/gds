@@ -1,7 +1,7 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { boolean, number, color } from '@storybook/addon-knobs';
 import Item from '../../../.storybook/components/Item';
-import major from '../../scripts/major';
+import scale from '../../scripts/scale';
 import baseTheme from '../../scripts/baseTheme';
 import Section from '.';
 
@@ -52,7 +52,7 @@ import Section from '.';
 <Preview>
     <Story name="Container">
         <>
-            <Section mb={major(2)}>
+            <Section mb={scale(2)}>
                 <Item>Section with container</Item>
             </Section>
             <Section container={false}>
@@ -69,13 +69,13 @@ import Section from '.';
 <Preview>
     <Story name="Margins & Paddings">
         <>
-            <Section mb={major(2)}>
+            <Section mb={scale(2)}>
                 <Item>Section with margin</Item>
             </Section>
-            <Section mb={major(2)} pv={major(2)}>
+            <Section mb={scale(2)} pv={scale(2)}>
                 <Item>Section with margin and equal paddings</Item>
             </Section>
-            <Section pt={major(4)} pb={major(2)}>
+            <Section pt={scale(4)} pb={scale(2)}>
                 <Item>Section with different paddings</Item>
             </Section>
         </>
@@ -91,10 +91,10 @@ import Section from '.';
 <Preview>
     <Story name="Backgrounds">
         <>
-            <Section mb={major(2)}>
+            <Section mb={scale(2)}>
                 <Item>Simple section</Item>
             </Section>
-            <Section mb={major(2)} pv={major(2)} bg={baseTheme.app.colors.grey20}>
+            <Section mb={scale(2)} pv={scale(2)} bg={baseTheme.app.colors.grey20}>
                 <Item>Section with background</Item>
             </Section>
             <Section>

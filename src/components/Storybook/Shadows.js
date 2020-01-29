@@ -5,7 +5,7 @@ import DropdownContent from '../helpers/DropdownContent';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
-import major from '../../scripts/major';
+import scale from '../../scripts/scale';
 
 const Shadows = () => {
     const theme = useTheme();
@@ -15,8 +15,8 @@ const Shadows = () => {
         <ul
             css={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(auto-fit, minmax(${major(20)}px, 1fr))`,
-                gridGap: major(8),
+                gridTemplateColumns: `repeat(auto-fit, minmax(${scale(20)}px, 1fr))`,
+                gridGap: scale(8),
             }}
         >
             {Object.keys(shadows).map(name => (
@@ -33,7 +33,7 @@ const Shadow = ({ name, value }) => {
     const SmallBox = styled('span')({
         backgroundColor: colors.white,
         color: colors.grey0,
-        padding: major(1),
+        padding: scale(1),
         borderRadius: '4px 4px 4px 0px',
         ...typography('smallBold'),
     });
@@ -52,8 +52,8 @@ const Shadow = ({ name, value }) => {
                         flexDirection: 'column',
                         justifyContent: 'flex-end',
                         width: '100%',
-                        height: major(28),
-                        padding: major(1),
+                        height: scale(28),
+                        padding: scale(1),
                         backgroundColor: colors.white,
                         borderRadius: '24px 24px 24px 0px',
                         boxShadow: value,
