@@ -30,7 +30,9 @@ export const Layout: React.FC<ILayout> = ({
     const { layout } = useTheme();
 
     return (
-        <LayoutContext.Provider value={{ type, gap: gap || layout.gap, cols: cols || layout.cols, auto }}>
+        <LayoutContext.Provider
+            value={{ type, gap: gap !== undefined ? gap : layout.gap, cols: cols || layout.cols, auto }}
+        >
             <div
                 css={[
                     useCSSProperty({

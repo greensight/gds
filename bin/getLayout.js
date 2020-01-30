@@ -23,10 +23,17 @@ const getMaxFixedBp = frames => {
     return maxFixedBp;
 };
 
-const getCols = frames => {
-    const maxBpFrame = frames[0];
-    return maxBpFrame.children.filter(({ name }) => name === 'col').length;
-};
+const getCols = frames =>
+    frames.reduce((acc, frame, index) => {
+        const value = frame.children.filter(({ name }) => name === 'col').length;
+        const prev = Object.values(acc)[Object.values(acc).length - 1];
+        if (value === prev) return acc;
+
+        return {
+            ...acc,
+            [BREAKPOINTS_NAMES[index]]: value,
+        };
+    }, {});
 
 const getContainer = frames => {
     const maxBpFrame = frames[0];
@@ -35,7 +42,8 @@ const getContainer = frames => {
     if (!isAuto(paddings[0]) && !isAuto(paddings[1])) return;
 
     return {
-        _: maxBpWidth - paddings[0].absoluteBoundingBox.width - paddings[1].absoluteBoundingBox.width,
+        [BREAKPOINTS_NAMES[0]]:
+            maxBpWidth - paddings[0].absoluteBoundingBox.width - paddings[1].absoluteBoundingBox.width,
         [getMaxFixedBp(frames)]: 'none',
     };
 };
@@ -52,7 +60,7 @@ const getMarginLeft = frames => {
     }
 
     return {
-        _: margin || 'auto',
+        [BREAKPOINTS_NAMES[0]]: margin || 'auto',
         [getMaxFixedBp(frames)]: 0,
     };
 };
@@ -63,7 +71,7 @@ const getMarginRight = frames => {
     if (!isAuto(paddings[0]) && !isAuto(paddings[1])) return;
 
     return {
-        _: 'auto',
+        [BREAKPOINTS_NAMES[0]]: 'auto',
         [getMaxFixedBp(frames)]: 0,
     };
 };
