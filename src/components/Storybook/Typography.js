@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import useTheme from '../../scripts/useTheme';
 import customTypography from '../../scripts/customTypography';
 import typography from '../../scripts/typography';
@@ -12,14 +11,14 @@ const Typography = ({ text = 'Demo text 123' }) => {
     const globalFontsTheme = theme.global && theme.global.fonts;
     const fontStacksTheme = theme.typography && theme.typography.stacks;
 
-    const MobileMark = styled('span')({
+    const markCss = {
         backgroundColor: theme.colors.grey90,
         color: theme.colors.grey20,
         padding: scale(1, true),
         borderRadius: 4,
         marginRight: scale(1),
         ...customTypography('smallBold'),
-    });
+    };
 
     return (
         <div>
@@ -35,11 +34,11 @@ const Typography = ({ text = 'Demo text 123' }) => {
                         <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: scale(3) }}>
                             <div css={{ minWidth: scale(17), marginRight: scale(2) }}>
                                 {theme.typography[name].mobile && (
-                                    <MobileMark>
+                                    <span css={markCss}>
                                         {theme.typography[name].fluid !== false && theme.typography.fluid !== false
                                             ? 'F'
                                             : 'M'}
-                                    </MobileMark>
+                                    </span>
                                 )}
                                 <span css={{ color: theme.colors.grey20, ...customTypography('body') }}>{name}</span>
                             </div>
@@ -60,11 +59,11 @@ const Typography = ({ text = 'Demo text 123' }) => {
                     <strong>{theme.typography.breakpoints[1]}</strong>
                 </p>
                 <p>
-                    <MobileMark>F</MobileMark> - &quot;F for fluid&quot;, style has adaptive variation with fluid
+                    <span css={markCss}>F</span> - &quot;F for fluid&quot;, style has adaptive variation with fluid
                     typography
                 </p>
                 <p>
-                    <MobileMark>M</MobileMark> - &quot;M for mobile&quot;, style has adaptive version without fluid
+                    <span css={markCss}>M</span> - &quot;M for mobile&quot;, style has adaptive version without fluid
                     typography
                 </p>
             </div>

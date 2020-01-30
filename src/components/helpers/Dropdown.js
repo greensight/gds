@@ -1,57 +1,38 @@
-import * as React from 'react';
+import React from 'react';
 import Tippy from '@tippy.js/react';
 import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/shift-away.css';
+import baseTheme from '../../scripts/baseTheme';
+import scale from '../../scripts/scale';
+import CheckCircle from '../../images/icons/tokens/medium/checkCircle.svg';
 
-export const Dropdown = ({
-    children,
-    content,
-    theme = 'dropdown',
-    arrow = true,
-    ignoreAttributes = true,
-    interactive = true,
-    trigger = 'click',
-    aria = null,
-    appendTo = 'parent',
-    ...props
-}) => {
-    const handleMount = (...args) => {
-        const [instance] = args;
-        instance.reference.setAttribute('aria-expanded', 'true');
-        if (props.onMount) props.onMount(...args);
-    };
-
-    const handleHide = (...args) => {
-        const [instance] = args;
-        instance.reference.setAttribute('aria-expanded', 'false');
-        if (props.onHide) props.onHide(...args);
-    };
-
-    const handleTrigger = (...args) => {
-        const [instance, event] = args;
-        if (event.type === 'focus') {
-            instance.set({ delay: 0 });
-        }
-        if (props.onTrigger) props.onTrigger(...args);
-    };
-
+const Dropdown = ({ children, content, ...props }) => {
     return (
         <Tippy
-            className="dropdown"
-            content={content}
-            theme={theme}
-            arrow={arrow}
-            ignoreAttributes={ignoreAttributes}
-            interactive={interactive}
-            trigger={trigger}
-            aria={aria}
-            appendTo={appendTo}
+            content={<DropdownContent>{content}</DropdownContent>}
+            trigger="click"
+            arrow={false}
+            animation="shift-away"
+            onShow={instance =>
+                setTimeout(() => {
+                    instance.hide();
+                }, 1000)
+            }
             {...props}
-            onMount={handleMount}
-            onHide={handleHide}
-            onTrigger={handleTrigger}
         >
             {children}
         </Tippy>
+    );
+};
+
+const DropdownContent = ({ children }) => {
+    const { colors } = baseTheme.app;
+
+    return (
+        <>
+            <CheckCircle fill={colors.success} css={{ marginRight: scale(1), verticalAlign: 'middle' }} />
+            {children}
+        </>
     );
 };
 

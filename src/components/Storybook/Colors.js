@@ -1,13 +1,9 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React, { useRef } from 'react';
 import useTheme from '../../scripts/useTheme';
-import DropdownContent from '../helpers/DropdownContent';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
 import scale from '../../scripts/scale';
-
-// TODO Не нравится, что в цветах нет сортировки - можно ли с этим что-то сделать?
 
 const Colors = () => {
     const theme = useTheme();
@@ -32,20 +28,23 @@ const Color = ({ name, value }) => {
     const theme = useTheme();
     const { colors } = theme;
 
-    const SmallBox = styled('span')({
+    const buttonRef = useRef();
+
+    const boxCss = {
         backgroundColor: colors.white,
         color: colors.grey0,
         padding: scale(1),
         borderRadius: '4px 4px 4px 0px',
         ...typography('smallBold'),
-    });
+    };
 
     return (
         <li>
-            <Dropdown content={<DropdownContent>Hex code is copied to the clipboard</DropdownContent>} arrow={false}>
+            <Dropdown content="Variable name is copied to the clipboard">
                 <button
+                    ref={buttonRef}
                     type="button"
-                    onClick={() => copyToClipboard(value)}
+                    onClick={() => copyToClipboard(`colors.${name}`, buttonRef)}
                     css={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -55,10 +54,15 @@ const Color = ({ name, value }) => {
                         padding: scale(1),
                         backgroundColor: value,
                         borderRadius: '24px 24px 24px 0px',
+                        transition: 'box-shadow ease 300ms',
+                        ':focus.focus-visible': {
+                            outline: 'none',
+                            boxShadow: `0 0 0 2px ${colors.grey0}`,
+                        },
                     }}
                 >
-                    <SmallBox css={{ marginBottom: scale(1) }}>{value}</SmallBox>
-                    <SmallBox>{name}</SmallBox>
+                    <span css={{ ...boxCss, marginBottom: scale(1) }}>{value}</span>
+                    <span css={boxCss}>{name}</span>
                 </button>
             </Dropdown>
         </li>

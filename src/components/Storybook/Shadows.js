@@ -1,7 +1,5 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React, { useRef } from 'react';
 import useTheme from '../../scripts/useTheme';
-import DropdownContent from '../helpers/DropdownContent';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
@@ -30,23 +28,15 @@ const Shadow = ({ name, value }) => {
     const theme = useTheme();
     const { colors } = theme;
 
-    const SmallBox = styled('span')({
-        backgroundColor: colors.white,
-        color: colors.grey0,
-        padding: scale(1),
-        borderRadius: '4px 4px 4px 0px',
-        ...typography('smallBold'),
-    });
+    const buttonRef = useRef();
 
     return (
         <li>
-            <Dropdown
-                content={<DropdownContent>Box shadow value is copied to the clipboard</DropdownContent>}
-                arrow={false}
-            >
+            <Dropdown content="Variable name is copied to the clipboard">
                 <button
+                    ref={buttonRef}
                     type="button"
-                    onClick={() => copyToClipboard(value)}
+                    onClick={() => copyToClipboard(`shadows.${name}`, buttonRef)}
                     css={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -57,9 +47,24 @@ const Shadow = ({ name, value }) => {
                         backgroundColor: colors.white,
                         borderRadius: '24px 24px 24px 0px',
                         boxShadow: value,
+                        transition: 'box-shadow ease 300ms',
+                        ':focus.focus-visible': {
+                            outline: 'none',
+                            boxShadow: `0 0 0 2px ${colors.grey0}`,
+                        },
                     }}
                 >
-                    <SmallBox>{name}</SmallBox>
+                    <span
+                        css={{
+                            backgroundColor: colors.white,
+                            color: colors.grey0,
+                            padding: scale(1),
+                            borderRadius: '4px 4px 4px 0px',
+                            ...typography('smallBold'),
+                        }}
+                    >
+                        {name}
+                    </span>
                 </button>
             </Dropdown>
         </li>

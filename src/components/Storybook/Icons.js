@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import useTheme from '../../scripts/useTheme';
 import deepMerge from '../../scripts/deepMerge';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
-import DropdownContent from '../helpers/DropdownContent';
 import typography from '../../scripts/customTypography';
 import scale from '../../scripts/scale';
 import Layout from '../Layout';
@@ -65,9 +64,12 @@ const Icon = ({ name, Component, path }) => {
     const theme = useTheme();
     const { colors } = theme;
 
+    const buttonRef = useRef();
+
     return (
-        <Dropdown content={<DropdownContent>Path to icon is copied to the clipboard</DropdownContent>} arrow={false}>
+        <Dropdown content="Path to icon is copied to the clipboard">
             <button
+                ref={buttonRef}
                 type="button"
                 css={{
                     width: '100%',
@@ -78,14 +80,12 @@ const Icon = ({ name, Component, path }) => {
                     ...typography('bodyBold'),
                     textAlign: 'center',
                     transition: 'border-color ease 300ms',
-                    ':hover, :focus': {
+                    ':hover, :focus.focus-visible': {
                         borderColor: colors.grey0,
-                    },
-                    ':focus': {
                         outline: 'none',
                     },
                 }}
-                onClick={() => copyToClipboard(path)}
+                onClick={() => copyToClipboard(path, buttonRef)}
             >
                 <Component css={{ marginBottom: scale(1) }} />
                 <div>{name}</div>

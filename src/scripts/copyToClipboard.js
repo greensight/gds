@@ -1,4 +1,4 @@
-const copyToClipboard = str => {
+const copyToClipboard = (str, ref) => {
     const el = document.createElement('textarea');
     el.value = str;
     el.setAttribute('readonly', '');
@@ -13,6 +13,7 @@ const copyToClipboard = str => {
         document.getSelection().removeAllRanges();
         document.getSelection().addRange(selected);
     }
+    ref.current.focus();
 };
 
 export default copyToClipboard;
