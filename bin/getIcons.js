@@ -2,7 +2,7 @@ const fs = require('fs');
 const { resolve } = require('path');
 const { Transform } = require('stream');
 const axios = require('axios');
-const { red, green } = require('chalk');
+const { red } = require('chalk');
 const figma = require('./figma');
 
 class RemoveFillStream extends Transform {
@@ -52,7 +52,6 @@ async function getIcons(frame, config) {
     await fs.promises.mkdir(resolve(config.iconsDir), { recursive: true });
     const icons = iconsData.map(icon => loadImage(icon, config.iconsDir));
     await Promise.all(icons);
-    console.log(green(`Icons are available in directory: ${config.iconsDir}`));
 }
 
 module.exports = getIcons;

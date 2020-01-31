@@ -26,6 +26,14 @@ try {
     process.exit(1);
 }
 
+let tokens = [];
+const tokensFullList = ['palettes', 'colors', 'typography', 'icons', 'layout', 'shadows'];
+tokensFullList.forEach(token => {
+    if (process.argv.includes(`--${token}`)) tokens.push(token);
+});
+if (!tokens.length) tokens = config.tokens;
+if (!tokens) tokens = tokensFullList;
+
 if (!config.figmaToken) {
     console.log(
         red(
@@ -46,11 +54,6 @@ if (!config.figmaId) {
     process.exit(1);
 }
 
-config = { ...defaults, ...config };
+config = { ...defaults, ...config, tokens };
 
-if (Array.isArray(config.tokens) && config.tokens.length) {
-    getTokens(config);
-} else {
-    console.log(red('Pass array of tokens in "tokens" field of config file'));
-    process.exit(1);
-}
+getTokens(config);

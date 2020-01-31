@@ -9,10 +9,6 @@ const getIcons = require('./getIcons');
 const getLayout = require('./getLayout');
 const getShadows = require('./getShadows');
 
-// TODO Можно ли причесать токены в итоговом файле?
-// TODO Добавить токенизацию теней
-// TODO Доработать режимы - скачивание отдельных токенов без перезаписи json, иконки отдельно
-
 const getters = {
     palettes: getPalettes,
     colors: getColors,
@@ -24,18 +20,18 @@ const getters = {
 
 async function getToken(type, page, config) {
     let token;
-    const name = `${type[0].toUpperCase()}${type.slice(1)}`;
-    const frame = page.children.find(({ name }) => name === config.frames[type]);
+    const frameName = `${type[0].toUpperCase()}${type.slice(1)}`;
+    const frame = page.children.find(({ name }) => name === frameName);
     if (frame) {
         try {
             token = await getters[type](frame, config);
-            if (token) console.log(`✅  ${name}`);
+            console.log(`✅  ${frameName}`);
         } catch (err) {
-            console.log(`❌  ${name}`);
+            console.log(`❌  ${frameName}`);
             console.error(red(err.message));
         }
     } else {
-        console.error(red(`Cannot find frame "${config.frames[type]}"`));
+        console.error(red(`Cannot find frame "${frameName}"`));
     }
 
     return { [type]: token };
@@ -72,8 +68,18 @@ async function getTokens(config) {
     await fs.promises.mkdir(fullTokensDir, { recursive: true });
 
     try {
-        await fs.promises.writeFile(`${fullTokensDir}/tokens.json`, JSON.stringify(tokensObj));
+        const oldFile = await fs.promises.readFile(`${fullTokensDir}/tokens.json`);
+        const oldFileData = JSON.parse(oldFile);
+        const newFileData = Object.entries(tokensObj).reduce(
+            (acc, [name, value]) => ({
+                ...acc,
+                [name]: value,
+            }),
+            oldFileData,
+        );
+        await fs.promises.writeFile(`${fullTokensDir}/tokens.json`, JSON.stringify(newFileData));
         console.log(green(`Tokens are ready to use: ${config.tokensDir}/tokens.json`));
+        console.log(green(`Icons are available in directory: ${config.iconsDir}`));
     } catch (err) {
         console.error(red(err.message));
         console.log(red(`Cannot write file: ${fullTokensDir}/tokens.json`));
