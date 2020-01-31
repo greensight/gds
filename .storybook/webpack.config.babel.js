@@ -1,3 +1,4 @@
+import webpack from 'webpack';
 import path from 'path';
 import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 
@@ -72,10 +73,10 @@ module.exports = ({ config, mode }) => {
             filename: '[name].css',
             ignoreOrder: true,
         }),
+        new webpack.EnvironmentPlugin({ ICONS_DIR: '../../images/icons' }),
     ];
     config.devtool = mode === 'DEVELOPMENT' && 'source-map';
     config.resolve.extensions.push('.ts', '.tsx');
-    config.resolve.alias['@icons'] = path.resolve(__dirname, '../src/images/icons');
     config.performance = false;
 
     return config;

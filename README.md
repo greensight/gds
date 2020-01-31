@@ -147,14 +147,6 @@ import theme from '../../src/client/scripts/theme';
 <Storybook.Typography theme={theme} />
 ```
 
-❗️ Icons widget uses `require.context` with `@icons` alias. To make it work you need to add webpack alias in your config. You need this even if you don't use Icons widget, sorry about that, i'll search for more beautiful solution later :\
-
-For example, in Storybook webpack config override looks like that:
-
-```js
-config.resolve.alias['@icons'] = path.resolve(__dirname, '../src/client/images/icons');
-```
-
 ## Helpers
 
 Greensight Design System provides some helpers:
