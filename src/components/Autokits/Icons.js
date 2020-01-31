@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import useTheme from '../../scripts/useTheme';
 import deepMerge from '../../scripts/deepMerge';
 import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
 import scale from '../../scripts/scale';
 import Layout from '../Layout';
+import baseTheme from '../../scripts/baseTheme';
 
 const Icons = ({ headingLevel = 2 }) => {
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
@@ -61,8 +61,7 @@ const Icons = ({ headingLevel = 2 }) => {
 };
 
 const Icon = ({ name, Component, path }) => {
-    const theme = useTheme();
-    const { colors } = theme;
+    const { colors } = baseTheme.app;
 
     const buttonRef = useRef();
 

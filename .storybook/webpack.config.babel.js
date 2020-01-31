@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import path from 'path';
+import { resolve } from 'path';
 import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 
 module.exports = ({ config, mode }) => {
@@ -24,7 +24,7 @@ module.exports = ({ config, mode }) => {
         },
         {
             test: /\.svg$/,
-            include: path.resolve(__dirname, '../src/images'),
+            include: resolve(__dirname, '../src/images'),
             issuer: {
                 test: /\.(jsx?|tsx?|mdx)$/,
             },
@@ -36,7 +36,7 @@ module.exports = ({ config, mode }) => {
         },
         {
             test: /\.svg$/,
-            include: path.resolve(__dirname, '../src/images'),
+            include: resolve(__dirname, '../src/images'),
             issuer: {
                 test: /\.css$/,
             },
@@ -49,7 +49,7 @@ module.exports = ({ config, mode }) => {
         },
         {
             test: /\.(jpe?g|png)$/,
-            include: path.resolve(__dirname, '../src/images'),
+            include: resolve(__dirname, '../src/images'),
             loader: 'url-loader',
             options: {
                 name: '[name].[ext]',
@@ -58,7 +58,7 @@ module.exports = ({ config, mode }) => {
         },
         {
             test: /\.woff2?$/,
-            include: path.resolve(__dirname, '../src/fonts'),
+            include: resolve(__dirname, '../src/fonts'),
             loader: 'url-loader',
             options: {
                 name: '[name].[ext]',
@@ -73,7 +73,9 @@ module.exports = ({ config, mode }) => {
             filename: '[name].css',
             ignoreOrder: true,
         }),
-        new webpack.EnvironmentPlugin({ ICONS_DIR: '../../images/icons' }),
+        new webpack.EnvironmentPlugin({
+            ICONS_DIR: resolve(__dirname, 'src/client/images/icons'),
+        }),
     ];
     config.devtool = mode === 'DEVELOPMENT' && 'source-map';
     config.resolve.extensions.push('.ts', '.tsx');

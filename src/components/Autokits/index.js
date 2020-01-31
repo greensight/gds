@@ -2,16 +2,16 @@ import Palettes from './Palettes';
 import Colors from './Colors';
 import Typography from './Typography';
 import Icons from './Icons';
-import Buttons from './Buttons';
-import Shadows from './Shadows';
 import Layout from './Layout';
+import Shadows from './Shadows';
+import Buttons from './Buttons';
 
 export default {
     Palettes,
     Colors,
     Typography,
     Icons,
-    Buttons,
-    Shadows,
     Layout,
+    Shadows,
+    Buttons,
 };

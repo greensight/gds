@@ -77,7 +77,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }
                 minHeight: '100%',
             },
             body: {
-                ...(body && typography(body.typography, theme.app)),
+                ...(body && typography(body.typography, theme.app && theme.app.typography ? theme.app : baseTheme.app)),
                 color: body && body.color,
                 backgroundColor: body && body.bg,
                 ...(body && body.css),

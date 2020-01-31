@@ -67,16 +67,22 @@ async function getTokens(config) {
     const fullTokensDir = resolve(config.tokensDir);
     await fs.promises.mkdir(fullTokensDir, { recursive: true });
 
+    let newFileData;
     try {
         const oldFile = await fs.promises.readFile(`${fullTokensDir}/tokens.json`);
         const oldFileData = JSON.parse(oldFile);
-        const newFileData = Object.entries(tokensObj).reduce(
+        newFileData = Object.entries(tokensObj).reduce(
             (acc, [name, value]) => ({
                 ...acc,
                 [name]: value,
             }),
             oldFileData,
         );
+    } catch (error) {
+        newFileData = tokensObj;
+    }
+
+    try {
         await fs.promises.writeFile(`${fullTokensDir}/tokens.json`, JSON.stringify(newFileData));
         console.log(green(`Tokens are ready to use: ${config.tokensDir}/tokens.json`));
         console.log(green(`Icons are available in directory: ${config.iconsDir}`));

@@ -3,6 +3,7 @@ import useTheme from '../../scripts/useTheme';
 import typography from '../../scripts/customTypography';
 import scale from '../../scripts/scale';
 import Layout from '../Layout';
+import baseTheme from '../../scripts/baseTheme';
 import { BREAKPOINTS_NAMES } from '../../scripts/constants';
 
 const getLayoutValue = (param, bpName) => {
@@ -18,7 +19,8 @@ const getLayoutValue = (param, bpName) => {
 
 const LayoutComponent = () => {
     const theme = useTheme();
-    const { layout, colors } = theme;
+    const { colors } = baseTheme.app;
+    const { layout } = theme;
 
     const layoutItemCss = {
         display: 'flex',

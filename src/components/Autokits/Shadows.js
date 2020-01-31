@@ -4,6 +4,7 @@ import copyToClipboard from '../../scripts/copyToClipboard';
 import Dropdown from '../helpers/Dropdown';
 import typography from '../../scripts/customTypography';
 import scale from '../../scripts/scale';
+import baseTheme from '../../scripts/baseTheme';
 
 const Shadows = () => {
     const theme = useTheme();
@@ -25,8 +26,7 @@ const Shadows = () => {
 };
 
 const Shadow = ({ name, value }) => {
-    const theme = useTheme();
-    const { colors } = theme;
+    const { colors } = baseTheme.app;
 
     const buttonRef = useRef();
 

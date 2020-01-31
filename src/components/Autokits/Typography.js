@@ -3,17 +3,18 @@ import useTheme from '../../scripts/useTheme';
 import customTypography from '../../scripts/customTypography';
 import typography from '../../scripts/typography';
 import scale from '../../scripts/scale';
-
-// TODO Есть проблема с рендером шрифтов на Windows - прогнать
+import baseTheme from '../../scripts/baseTheme';
 
 const Typography = ({ text = 'Demo text 123' }) => {
     const theme = useTheme();
     const globalFontsTheme = theme.global && theme.global.fonts;
-    const fontStacksTheme = theme.typography && theme.typography.stacks;
+    const typographyTheme = theme.typography;
+    const fontStacksTheme = typographyTheme && typographyTheme.stacks;
+    const { colors } = baseTheme.app;
 
     const markCss = {
-        backgroundColor: theme.colors.grey90,
-        color: theme.colors.grey20,
+        backgroundColor: colors.grey90,
+        color: colors.grey20,
         padding: scale(1, true),
         borderRadius: 4,
         marginRight: scale(1),
@@ -23,29 +24,29 @@ const Typography = ({ text = 'Demo text 123' }) => {
     return (
         <div>
             <ul>
-                {Object.keys(theme.typography)
+                {Object.keys(typographyTheme)
                     .filter(name => !['breakpoints', 'stacks', 'fluid'].includes(name))
                     .sort(
                         (a, b) =>
-                            parseFloat(theme.typography[b].desktop.fontSize) -
-                            parseFloat(theme.typography[a].desktop.fontSize),
+                            parseFloat(typographyTheme[b].desktop.fontSize) -
+                            parseFloat(typographyTheme[a].desktop.fontSize),
                     )
                     .map(name => (
                         <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: scale(3) }}>
                             <div css={{ minWidth: scale(17), marginRight: scale(2) }}>
-                                {theme.typography[name].mobile && (
+                                {typographyTheme[name].mobile && (
                                     <span css={markCss}>
-                                        {theme.typography[name].fluid !== false && theme.typography.fluid !== false
+                                        {typographyTheme[name].fluid !== false && typographyTheme.fluid !== false
                                             ? 'F'
                                             : 'M'}
                                     </span>
                                 )}
-                                <span css={{ color: theme.colors.grey20, ...customTypography('body') }}>{name}</span>
+                                <span css={{ color: colors.grey20, ...customTypography('body') }}>{name}</span>
                             </div>
                             <div
                                 css={{
                                     ...typography(name, theme),
-                                    color: theme.colors.black,
+                                    color: colors.black,
                                 }}
                             >
                                 {text}
@@ -55,8 +56,8 @@ const Typography = ({ text = 'Demo text 123' }) => {
             </ul>
             <div>
                 <p>
-                    Breakpoints: <strong>{theme.typography.breakpoints[0]}</strong> and{' '}
-                    <strong>{theme.typography.breakpoints[1]}</strong>
+                    Breakpoints: <strong>{typographyTheme.breakpoints[0]}</strong> and{' '}
+                    <strong>{typographyTheme.breakpoints[1]}</strong>
                 </p>
                 <p>
                     <span css={markCss}>F</span> - &quot;F for fluid&quot;, style has adaptive variation with fluid

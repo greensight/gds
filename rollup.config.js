@@ -11,7 +11,7 @@ import pkg from './package.json';
 const getEntries = prefix =>
     fs
         .readdirSync(path.resolve(__dirname, prefix))
-        .filter(name => !['Storybook', 'helpers'].includes(name))
+        .filter(name => !['Autokits', 'helpers'].includes(name))
         .reduce(
             (acc, name) => ({
                 ...acc,
@@ -24,14 +24,12 @@ export default [
     {
         input: {
             index: 'src/index.js',
-            Storybook: 'src/components/Storybook/index.js',
+            Autokits: 'src/components/Autokits/index.js',
             ...getEntries('src/components/'),
+            scale: 'src/scripts/scale.js',
             typography: 'src/scripts/typography.js',
-            baseTheme: 'src/scripts/baseTheme.js',
             createTheme: 'src/scripts/createTheme.js',
             useTheme: 'src/scripts/useTheme.js',
-            major: 'src/scripts/major.js',
-            minor: 'src/scripts/minor.js',
         },
         output: [
             {
