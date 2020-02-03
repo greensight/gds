@@ -6,6 +6,9 @@ import themeDecorator from './decorators/themeDecorator';
 import baseTheme from '../src/scripts/baseTheme';
 
 addParameters({
+    options: {
+        showRoots: true,
+    },
     viewport: { viewports: INITIAL_VIEWPORTS },
     backgrounds: Object.entries(baseTheme.colors).map(([name, value]) => ({ name, value })),
 });
