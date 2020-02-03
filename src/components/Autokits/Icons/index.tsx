@@ -1,13 +1,15 @@
-import React, { useRef } from 'react';
-import deepMerge from '../../scripts/deepMerge';
-import copyToClipboard from '../../scripts/copyToClipboard';
-import Dropdown from '../helpers/Dropdown';
-import typography from '../../scripts/customTypography';
-import scale from '../../scripts/scale';
-import Layout from '../Layout';
-import baseTheme from '../../scripts/baseTheme';
+import * as React from 'react';
+import { useRef } from 'react';
+import deepMerge from '../../../scripts/deepMerge';
+import copyToClipboard from '../../../scripts/copyToClipboard';
+import Dropdown from '../../helpers/Dropdown';
+import typography from '../../../scripts/customTypography';
+import scale from '../../../scripts/scale';
+import Layout from '../../Layout';
+import baseTheme from '../../../scripts/baseTheme';
+import IIcons from './Icons';
 
-const Icons = ({ headingLevel = 2 }) => {
+const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
@@ -61,7 +63,7 @@ const Icons = ({ headingLevel = 2 }) => {
 };
 
 const Icon = ({ name, Component, path }) => {
-    const { colors } = baseTheme.app;
+    const { colors } = baseTheme;
 
     const buttonRef = useRef();
 

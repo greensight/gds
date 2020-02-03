@@ -1,8 +1,12 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Dev | Welcome" />
+<Meta title="Intro | Welcome" />
 
 # GDS
+
+<center>
+    <img src="https://raw.githubusercontent.com/greensight/gds/master/src/images/docs/logo.svg" />
+</center>
 
 **GDS** is a design system in [Greensight](https://greensight.pro/) company.
 
@@ -165,7 +169,7 @@ Helpers can be redefined with your `theme` object to simplify helper call. For e
 import typography from '@greensight/gds';
 import theme from '../../scripts/theme';
 
-const customTypography = name => typography(name, theme.app);
+const customTypography = name => typography(name, theme);
 
 export default customTypography;
 ```

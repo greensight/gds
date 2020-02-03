@@ -9,7 +9,7 @@ const Item = ({ children, bg, ...props }) => (
             alignItems: 'center',
             height: '100%',
             padding: scale(2),
-            backgroundColor: bg || theme.app.colors.grey90,
+            backgroundColor: bg || theme.colors.grey90,
         })}
         {...props}
     >

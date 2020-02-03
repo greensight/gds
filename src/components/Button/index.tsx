@@ -27,7 +27,7 @@ export const Button: React.FC<IButton> = (
     ref,
 ) => {
     const globalTheme = useTheme();
-    const usedTheme = globalTheme.components && globalTheme.components.Button ? globalTheme : baseTheme.app;
+    const usedTheme = globalTheme.components && globalTheme.components.Button ? globalTheme : baseTheme;
     const buttonTheme = themeObj || usedTheme.components.Button;
 
     if (!buttonTheme.themes[theme]) {
@@ -119,8 +119,8 @@ export const Button: React.FC<IButton> = (
     const padding = getRule('padding', scale(3));
     const iconSize = getRule('iconSize', scale(3));
     const iconOffset = getRule('iconOffset', scale(1));
-    const color = getRule('color', baseTheme.app.colors.white);
-    const bg = getRule('bg', baseTheme.app.colors.black);
+    const color = getRule('color', baseTheme.colors.white);
+    const bg = getRule('bg', baseTheme.colors.black);
     const shadow = getRule('shadow');
     const round = getRule('round');
     const half = getRule('half');

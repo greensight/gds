@@ -26,7 +26,7 @@ const Dropdown = ({ children, content, ...props }) => {
 };
 
 const DropdownContent = ({ children }) => {
-    const { colors } = baseTheme.app;
+    const { colors } = baseTheme;
 
     return (
         <>

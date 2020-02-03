@@ -1,16 +1,17 @@
-import React from 'react';
-import useTheme from '../../scripts/useTheme';
-import customTypography from '../../scripts/customTypography';
-import typography from '../../scripts/typography';
-import scale from '../../scripts/scale';
-import baseTheme from '../../scripts/baseTheme';
+import * as React from 'react';
+import useTheme from '../../../scripts/useTheme';
+import customTypography from '../../../scripts/customTypography';
+import typography from '../../../scripts/typography';
+import scale from '../../../scripts/scale';
+import baseTheme from '../../../scripts/baseTheme';
+import ITypography from './Typography';
 
-const Typography = ({ text = 'Demo text 123' }) => {
+const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
     const theme = useTheme();
     const globalFontsTheme = theme.global && theme.global.fonts;
     const typographyTheme = theme.typography;
     const fontStacksTheme = typographyTheme && typographyTheme.stacks;
-    const { colors } = baseTheme.app;
+    const { colors } = baseTheme;
 
     const markCss = {
         backgroundColor: colors.grey90,
@@ -23,37 +24,35 @@ const Typography = ({ text = 'Demo text 123' }) => {
 
     return (
         <div>
-            <ul>
-                {Object.keys(typographyTheme)
-                    .filter(name => !['breakpoints', 'stacks', 'fluid'].includes(name))
-                    .sort(
-                        (a, b) =>
-                            parseFloat(typographyTheme[b].desktop.fontSize) -
-                            parseFloat(typographyTheme[a].desktop.fontSize),
-                    )
-                    .map(name => (
-                        <li key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: scale(3) }}>
-                            <div css={{ minWidth: scale(17), marginRight: scale(2) }}>
-                                {typographyTheme[name].mobile && (
-                                    <span css={markCss}>
-                                        {typographyTheme[name].fluid !== false && typographyTheme.fluid !== false
-                                            ? 'F'
-                                            : 'M'}
-                                    </span>
-                                )}
-                                <span css={{ color: colors.grey20, ...customTypography('body') }}>{name}</span>
-                            </div>
-                            <div
-                                css={{
-                                    ...typography(name, theme),
-                                    color: colors.black,
-                                }}
-                            >
-                                {text}
-                            </div>
-                        </li>
-                    ))}
-            </ul>
+            {Object.keys(typographyTheme)
+                .filter(name => !['breakpoints', 'stacks', 'fluid'].includes(name))
+                .sort(
+                    (a, b) =>
+                        parseFloat(typographyTheme[b].desktop.fontSize) -
+                        parseFloat(typographyTheme[a].desktop.fontSize),
+                )
+                .map(name => (
+                    <div key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: scale(3) }}>
+                        <div css={{ minWidth: scale(17), marginRight: scale(2) }}>
+                            {typographyTheme[name].mobile && (
+                                <span css={markCss}>
+                                    {typographyTheme[name].fluid !== false && typographyTheme.fluid !== false
+                                        ? 'F'
+                                        : 'M'}
+                                </span>
+                            )}
+                            <span css={{ color: colors.grey20, ...customTypography('body') }}>{name}</span>
+                        </div>
+                        <div
+                            css={{
+                                ...typography(name, theme),
+                                color: colors.black,
+                            }}
+                        >
+                            {text}
+                        </div>
+                    </div>
+                ))}
             <div>
                 <p>
                     Breakpoints: <strong>{typographyTheme.breakpoints[0]}</strong> and{' '}

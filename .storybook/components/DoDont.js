@@ -1,5 +1,5 @@
 import React from 'react';
-import useTheme from '../../src/scripts/useTheme';
+import baseTheme from '../../src/scripts/baseTheme';
 import CheckCircle from '../../src/images/icons/tokens/medium/checkCircle.svg';
 import CrossCircle from '../../src/images/icons/tokens/medium/crossCircle.svg';
 
@@ -10,8 +10,7 @@ const DoDont = ({ children }) => (
 );
 
 const Item = ({ type, children }) => {
-    const theme = useTheme();
-    const { colors } = theme;
+    const { colors } = baseTheme;
     const color = type === 'do' ? colors.success : colors.error;
     const Icon = type === 'do' ? CheckCircle : CrossCircle;
     const heading = type === 'do' ? 'Do' : "Don't";

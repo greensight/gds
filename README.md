@@ -1,5 +1,9 @@
 # GDS
 
+<center>
+  <img src="https://raw.githubusercontent.com/greensight/gds/master/src/images/docs/logo.svg" />
+</center>
+
 **GDS** is a design system in [Greensight](https://greensight.pro/) company.
 
 ❗️ This system is supposed to be used only inside our company, at least for now.
@@ -161,7 +165,7 @@ Helpers can be redefined with your `theme` object to simplify helper call. For e
 import typography from '@greensight/gds';
 import theme from '../../scripts/theme';
 
-const customTypography = name => typography(name, theme.app);
+const customTypography = name => typography(name, theme);
 
 export default customTypography;
 ```

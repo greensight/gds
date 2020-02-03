@@ -11,9 +11,9 @@ import IThemeProvider from './ThemeProvider';
 // TODO Добавить интерфейсы токенов
 
 const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }) => {
-    const global = theme.app.global || baseTheme.app.global;
-    const fonts = global.fonts || baseTheme.app.global.fonts;
-    const { selection, focus, body } = global.base || baseTheme.app.global.base;
+    const global = theme.global || baseTheme.global;
+    const fonts = global.fonts || baseTheme.global.fonts;
+    const { selection, focus, body } = global.base || baseTheme.global.base;
     const { css } = global;
 
     const fontStyles = Object.entries(fonts).map(([family, types]) =>
@@ -66,7 +66,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }
                 ...(selection && selection.css),
             },
             ':focus': {
-                outline: focus && `${focus.width || 2}px solid ${focus.color || baseTheme.app.colors.black}`,
+                outline: focus && `${focus.width || 2}px solid ${focus.color || baseTheme.colors.black}`,
                 outlineOffset: focus && focus.offset,
                 ...(focus && focus.css),
             },
@@ -77,7 +77,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }
                 minHeight: '100%',
             },
             body: {
-                ...(body && typography(body.typography, theme.app && theme.app.typography ? theme.app : baseTheme.app)),
+                ...(body && typography(body.typography, theme && theme.typography ? theme : baseTheme)),
                 color: body && body.color,
                 backgroundColor: body && body.bg,
                 ...(body && body.css),

@@ -1,7 +1,7 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, object, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import CenteredContainer from '../../../.storybook/components/CenteredContainer';
+import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import scale from '../../scripts/scale';
 import theme from '../../scripts/baseTheme';
 import Button, { Button as ButtonProps } from '.';
@@ -9,21 +9,21 @@ import Button, { Button as ButtonProps } from '.';
 <Meta
     title="Components | Button"
     component={Button}
-    decorators={[storyFn => <CenteredContainer>{storyFn()}</CenteredContainer>]}
+    decorators={[centeredDecorator]}
 />
 
 # Button
 
 <Story name="Knobs">
     {() => {
-        const { colors, shadows } = theme.app;
+        const { colors, shadows } = theme;
         return (
             <Button
                 theme={radios('theme', ['primary', 'secondary'], 'primary')}
                 size={radios('size', ['lg', 'md', 'sm'], 'md')}
                 block={boolean('block', false)}
                 disabled={boolean('disabled', false)}
-                Icon={boolean('icon', false) && theme.app.placeholder}
+                Icon={boolean('icon', false) && theme.placeholder}
                 iconAfter={boolean('iconAfter', false)}
                 hidden={boolean('hidden', false)}
                 onClick={action('onClick')}
@@ -193,10 +193,10 @@ import Button, { Button as ButtonProps } from '.';
 
 <Preview>
     <Story name="With icon (before)">
-        <Button Icon={theme.app.placeholder}>Button</Button>
+        <Button Icon={theme.placeholder}>Button</Button>
     </Story>
     <Story name="With icon (after)">
-        <Button Icon={theme.app.placeholder} iconAfter>Button</Button>
+        <Button Icon={theme.placeholder} iconAfter>Button</Button>
     </Story>
 </Preview>
 
@@ -206,7 +206,7 @@ import Button, { Button as ButtonProps } from '.';
 
 <Preview>
     <Story name="Hidden mode">
-        <Button Icon={theme.app.placeholder} hidden>Button</Button>
+        <Button Icon={theme.placeholder} hidden>Button</Button>
     </Story>
 </Preview>
 
@@ -218,7 +218,7 @@ jsx используется в редких случаях, когда нужн
 
 <Preview>
     <Story name="Custom icon">
-        <Button Icon={<theme.app.placeholder fill={theme.app.colors.warning} />}>Button</Button>
+        <Button Icon={<theme.placeholder fill={theme.colors.warning} />}>Button</Button>
     </Story>
 </Preview>
 

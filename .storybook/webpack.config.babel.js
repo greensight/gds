@@ -74,7 +74,7 @@ module.exports = ({ config, mode }) => {
             ignoreOrder: true,
         }),
         new webpack.EnvironmentPlugin({
-            ICONS_DIR: resolve(__dirname, 'src/client/images/icons'),
+            ICONS_DIR: resolve(__dirname, '../src/images/icons'),
         }),
     ];
     config.devtool = mode === 'DEVELOPMENT' && 'source-map';

@@ -1,9 +1,8 @@
 import React from 'react';
-import useTheme from '../../src/scripts/useTheme';
+import baseTheme from '../../src/scripts/baseTheme';
 
 const Note = ({ icon, children }) => {
-    const theme = useTheme();
-    const { colors } = theme;
+    const { colors } = baseTheme;
 
     return (
         <div

@@ -1,16 +1,17 @@
 import React from 'react';
+import scale from '../../src/scripts/scale';
 
-const CenteredContainer = ({ children }) => (
+const themeDecorator = storyFn => (
     <div
         css={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 16,
+            padding: scale(2),
         }}
     >
-        {children}
+        {storyFn()}
     </div>
 );
 
-export default CenteredContainer;
+export default themeDecorator;
