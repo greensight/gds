@@ -11,7 +11,7 @@ import pkg from './package.json';
 const getEntries = prefix =>
     fs
         .readdirSync(path.resolve(__dirname, prefix))
-        .filter(name => !['Autokits', 'helpers'].includes(name))
+        .filter(name => !['autokits', 'helpers'].includes(name))
         .reduce(
             (acc, name) => ({
                 ...acc,
@@ -24,7 +24,7 @@ export default [
     {
         input: {
             index: 'src/index.js',
-            Autokits: 'src/components/Autokits/index.js',
+            Autokits: 'src/components/autokits/index.js',
             ...getEntries('src/components/'),
             scale: 'src/scripts/scale.js',
             typography: 'src/scripts/typography.js',
