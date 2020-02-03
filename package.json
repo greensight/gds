@@ -39,7 +39,7 @@
         "storybook": "start-storybook -s ./public -p 3000 --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 8080",
-        "storybook:deploy": "storybook-to-ghpages -o docs",
+        "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
         "tokens": "node bin/index.js",
         "eslint": "eslint . --ext js,jsx,ts,tsx --fix",
         "prepublishOnly": "yarn build"
