@@ -4,6 +4,9 @@
   <img src="https://raw.githubusercontent.com/greensight/gds/master/src/images/docs/logo.svg" />
 </center>
 
+![alt text](https://raw.githubusercontent.com/greensight/gds/master/src/images/docs/logo.svg)
+![alt text](src/images/docs/logo.svg)
+
 **GDS** is a design system in [Greensight](https://greensight.pro/) company.
 
 ❗️ This system is supposed to be used only inside our company, at least for now.
