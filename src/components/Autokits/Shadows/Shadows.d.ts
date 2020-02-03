@@ -1,1 +1,1 @@
-export interface IShadows {}
+export default interface IShadows {}

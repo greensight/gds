@@ -1,83 +1,36 @@
 import webpack from 'webpack';
 import { resolve } from 'path';
-import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 
-module.exports = ({ config, mode }) => {
-    const filteredRules = config.module.rules.filter(
-        rule =>
-            rule.test.toString() !== /\.(mjs|jsx?)$/.toString() &&
-            rule.test.toString() !== /\.css$/.toString() &&
-            rule.test.toString() !==
-                /\.(svg|ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/.toString(),
-    );
+module.exports = ({ config }) => {
+    const iconsDir = resolve(__dirname, '../src/images/icons');
+    const defaultSvgRule = config.module.rules.find(rule => rule.test.toString().includes('svg'));
+    defaultSvgRule.exclude = iconsDir;
 
     config.module.rules = [
-        ...filteredRules,
+        ...config.module.rules,
         {
-            test: /\.(j|t)sx?$/,
+            test: /\.tsx?$/,
             exclude: /node_modules/,
             use: ['babel-loader', 'react-docgen-typescript-loader'],
         },
         {
-            test: /\.css$/,
-            use: [ExtractCssChunksPlugin.loader, 'css-loader'],
-        },
-        {
             test: /\.svg$/,
-            include: resolve(__dirname, '../src/images'),
-            issuer: {
-                test: /\.(jsx?|tsx?|mdx)$/,
-            },
+            include: iconsDir,
             loader: '@svgr/webpack',
             options: {
                 svgo: false,
                 titleProp: true,
             },
         },
-        {
-            test: /\.svg$/,
-            include: resolve(__dirname, '../src/images'),
-            issuer: {
-                test: /\.css$/,
-            },
-            loader: 'svg-url-loader',
-            options: {
-                name: '[name].[ext]',
-                limit: 1024,
-                noquotes: true,
-            },
-        },
-        {
-            test: /\.(jpe?g|png)$/,
-            include: resolve(__dirname, '../src/images'),
-            loader: 'url-loader',
-            options: {
-                name: '[name].[ext]',
-                limit: 1024,
-            },
-        },
-        {
-            test: /\.woff2?$/,
-            include: resolve(__dirname, '../src/fonts'),
-            loader: 'url-loader',
-            options: {
-                name: '[name].[ext]',
-                limit: 1024,
-            },
-        },
     ];
 
     config.plugins = [
         ...config.plugins,
-        new ExtractCssChunksPlugin({
-            filename: '[name].css',
-            ignoreOrder: true,
-        }),
         new webpack.EnvironmentPlugin({
-            ICONS_DIR: resolve(__dirname, '../src/images/icons'),
+            ICONS_DIR: iconsDir,
         }),
     ];
-    config.devtool = mode === 'DEVELOPMENT' && 'source-map';
+
     config.resolve.extensions.push('.ts', '.tsx');
     config.performance = false;
 

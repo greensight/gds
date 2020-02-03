@@ -1,1 +1,1 @@
-export interface ILayout {}
+export default interface ILayout {}

@@ -1,1 +1,1 @@
-export interface IPalettes {}
+export default interface IPalettes {}
