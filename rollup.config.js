@@ -8,27 +8,24 @@ import json from '@rollup/plugin-json';
 import pkg from './package.json';
 
 const getEntries = prefix =>
-    fs
-        .readdirSync(path.resolve(__dirname, prefix))
-        .filter(name => !['autokits', 'helpers'].includes(name))
-        .reduce(
-            (acc, name) => ({
-                ...acc,
-                [name]: `${prefix}${name}/index.tsx`,
-            }),
-            {},
-        );
+    fs.readdirSync(path.resolve(__dirname, prefix)).reduce(
+        (acc, name) => ({
+            ...acc,
+            [name]: `${prefix}${name}/index.tsx`,
+        }),
+        {},
+    );
 
 export default [
     {
         input: {
             index: 'src/index.js',
-            Autokits: 'src/components/autokits/index.js',
             ...getEntries('src/components/'),
-            scale: 'src/scripts/scale.js',
-            typography: 'src/scripts/typography.js',
-            createTheme: 'src/scripts/createTheme.js',
-            useTheme: 'src/scripts/useTheme.js',
+            autokits: 'src/components/autokits/index.js',
+            createTheme: 'src/utils/createTheme.js',
+            useTheme: 'src/utils/useTheme.js',
+            typography: 'src/utils/typography.js',
+            scale: 'src/utils/scale.js',
         },
         output: [
             {

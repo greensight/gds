@@ -4,5 +4,5 @@ export default create({
     base: 'light',
     brandTitle: 'Greensight Design System',
     brandUrl: 'https://github.com/greensight/gds',
-    brandImage: 'logo_sm.svg',
+    brandImage: 'images/logo/logo_sm.svg',
 });

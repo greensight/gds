@@ -3,8 +3,8 @@ import { Global as EmotionGlobal } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
 import 'normalize.css';
-import baseTheme from '../../scripts/baseTheme';
-import typography from '../../scripts/typography';
+import typography from '../../utils/typography';
+import baseTheme from '../../helpers/baseTheme';
 import IThemeProvider from './ThemeProvider';
 
 // TODO Добавить интерфейсы тем в разделы

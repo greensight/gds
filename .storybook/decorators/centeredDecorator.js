@@ -1,5 +1,5 @@
 import React from 'react';
-import scale from '../../src/scripts/scale';
+import scale from '../../src/utils/scale';
 
 const themeDecorator = storyFn => (
     <div

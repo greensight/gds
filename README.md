@@ -1,6 +1,6 @@
 # GDS
 
-![Логотип](src/images/docs/logo.svg)
+![GDS Logo](public/images/logo/logo.svg)
 
 **GDS** is a design system in [Greensight](https://greensight.pro/) company.
 
@@ -172,9 +172,27 @@ export default customTypography;
 
 | `yarn <command>`  | Description                                     |
 | ----------------- | ----------------------------------------------- |
-| `build`           | Build package                                   |
 | `storybook`       | Starts a Storybook in dev mode                  |
 | `storybook:build` | Build static Storybook version in `docs` folder |
 | `storybook:serve` | Starts a static server for `docs` browsing      |
 | `tokens`          | Fetch design tokens from Figma                  |
+| `deploy`          | Build Storybook and publish it on Github Pages  |
+| `build`           | Build package                                   |
 | `eslint`          | Lint all `.js`, `.jsx`, `.ts` and `.tsx` files  |
+
+### Emojis usage
+
+-   ✅ - success, agreement, good points
+-   ⛔ - error, cancellation, bad points
+-   ⚠️ - warning
+-   ✨ - magic, autokits, design tokens
+-   🏆 - recommendations, best practices
+-   🔥 - top features
+-   📚 - articles
+-   🔨 - configs
+-   🔑 - private settings
+-   ♿️ - accessibility
+-   ⏱ - performance
+-   📝 - todo list
+-   🚧 - under construction
+-   🎯 - goals

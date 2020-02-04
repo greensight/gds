@@ -27,12 +27,12 @@
         "yarn": ">= 1.19.0"
     },
     "scripts": {
-        "build": "rimraf '{cjs,esm}' && rollup -c",
         "storybook": "start-storybook -s ./public -p 3000 --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 8080",
-        "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
         "tokens": "node bin/index.js",
+        "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
+        "build": "rimraf '{cjs,esm}' && rollup -c",
         "eslint": "eslint . --ext js,jsx,ts,tsx --fix",
         "prepublishOnly": "yarn build"
     },

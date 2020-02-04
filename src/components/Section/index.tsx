@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Container from '../Container';
-import useTheme from '../../scripts/useTheme';
-import useCSSProperty from '../../scripts/useCSSProperty';
+import useTheme from '../../utils/useTheme';
+import useCSSProperty from '../../helpers/useCSSProperty';
 import ISection from './Section';
 
 const Section: React.FC<ISection> = ({ children, container, mb, pv, pt, pb, bg, css, ...props }) => {

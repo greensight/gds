@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const { resolve } = require('path');
 
 module.exports = ({ config }) => {
-    const iconsDir = resolve(__dirname, '../src/images/icons');
+    const iconsDir = resolve(__dirname, '../src/icons');
     const defaultSvgRule = config.module.rules.find(rule => rule.test.toString().includes('svg'));
     defaultSvgRule.exclude = iconsDir;
 

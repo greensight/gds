@@ -5,6 +5,7 @@ module.exports = {
         './docs/design/**/*.stories.mdx',
         './docs/dev/**/*.stories.mdx',
         '../src/components/**/*.stories.mdx',
+        '../src/autokits/**/*.stories.mdx',
     ],
     addons: [
         '@storybook/addon-knobs',

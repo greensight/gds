@@ -3,7 +3,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import themeDecorator from './decorators/themeDecorator';
-import baseTheme from '../src/scripts/baseTheme';
+import baseTheme from '../src/helpers/baseTheme';
 
 addParameters({
     options: {
