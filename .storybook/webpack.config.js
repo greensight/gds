@@ -1,5 +1,5 @@
-import webpack from 'webpack';
-import { resolve } from 'path';
+const webpack = require('webpack');
+const { resolve } = require('path');
 
 module.exports = ({ config }) => {
     const iconsDir = resolve(__dirname, '../src/images/icons');

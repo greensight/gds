@@ -1,4 +1,3 @@
-// TODO Парсер для mdx некорректно работает, так что отключил линтинг mdx
 module.exports = {
     env: {
         browser: true,
@@ -12,7 +11,7 @@ module.exports = {
             jsx: true,
         },
     },
-    extends: ['airbnb', 'plugin:prettier/recommended', 'plugin:mdx/recommended'],
+    extends: ['airbnb', 'plugin:prettier/recommended'],
     plugins: ['@typescript-eslint', 'react-hooks'],
     rules: {
         camelcase: 0,
