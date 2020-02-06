@@ -1,13 +1,9 @@
 import * as React from 'react';
 import Container from '../Container';
-import useTheme from '../../utils/useTheme';
 import useCSSProperty from '../../helpers/useCSSProperty';
 import ISection from './Section';
 
-const Section: React.FC<ISection> = ({ children, container, mb, pv, pt, pb, bg, css, ...props }) => {
-    const { layout } = useTheme();
-    const hasContainer = container !== undefined ? container : !!layout.container;
-
+const Section: React.FC<ISection> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
     return (
         <section
             css={[
@@ -33,7 +29,7 @@ const Section: React.FC<ISection> = ({ children, container, mb, pv, pt, pb, bg, 
             ]}
             {...props}
         >
-            {hasContainer ? <Container>{children}</Container> : children}
+            {container ? <Container>{children}</Container> : children}
         </section>
     );
 };

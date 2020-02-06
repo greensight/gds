@@ -61,7 +61,102 @@ interface IGlobal {
     css?: object;
 }
 
-interface ITypography {}
+interface IPalettes {
+    /** Набор цветов палитры */
+    [name: string]: string[];
+}
+
+interface IColors {
+    /** Переменная цвета */
+    [name: string]: string;
+}
+interface ITypography {
+    /** Брейкпоинты, соответствующие desktop и mobile */
+    breakpoints: [number, number];
+    /** Набор фолбеков под отдельные шрифты. Не токенизируется */
+    stacks?: {
+        /** Список фолбеков */
+        [fontName: string]: string;
+    };
+    /** Флюидная типографика. Передайте false для отключения на всём проекте */
+    fluid?: boolean;
+    /** Стиль типографики */
+    [name: string]: {
+        /** Свойства десктопной вариации */
+        desktop: ITypographyProperties;
+        /** Свойства мобильной вариации */
+        mobile?: ITypographyProperties;
+        /** Флюидная типографика. Передайте false для отключения для этого стиля */
+        fluid?: boolean;
+    };
+}
+
+interface ITypographyProperties {
+    /** Название */
+    fontFamily: string;
+    /** Начертание */
+    fontWeight: number;
+    /** Размер кегля (rem) */
+    fontSize: string;
+    /** Высота строки (множитель) */
+    lineHeight: number;
+    /** Межбуквенное расстояние (em) */
+    letterSpacing?: string;
+    /** Стиль */
+    fontStyle?: 'italic';
+    /** Регистры */
+    textTransform?: 'uppercase' | 'lowercase' | 'capitalize';
+    /** Подчёркивания */
+    textDecoration?: 'underline' | 'line-through';
+    /** Равноширинные цифры */
+    fontVariantNumeric?: 'tabular-nums';
+}
+
+interface ILayout {
+    /** Брейкпоинты проекта */
+    breakpoints: {
+        xxxl: number;
+        xxl: number;
+        xl: number;
+        lg: number;
+        md: number;
+        sm: number;
+        xs: number;
+        xxs: number;
+        xxxs: number;
+    };
+    /** Число колонок */
+    cols: {
+        [bp: Breakpoint]: number;
+    };
+    /** Отступы между колонок */
+    gap: {
+        [bp: Breakpoint]: number;
+    };
+    /** Поля */
+    padding: {
+        [bp: Breakpoint]: number;
+    };
+    /** Ширина контейнера. 'none' на точке отключения */
+    container: {
+        [bp: Breakpoint]: number | 'none';
+    };
+    /** Левый отступ контейнера. 0 на точке отключения */
+    marginLeft: {
+        [bp: Breakpoint]: 'auto' | number;
+    };
+    /** Правый отступ контейнера. 0 на точке отключения */
+    marginRight: {
+        [bp: Breakpoint]: 'auto' | number;
+    };
+}
+
+type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs';
+
+interface IShadows {
+    /** Переменная тени */
+    [name: string]: string;
+}
 
 interface IButtonRules {
     /** Цвет текста и иконки */
@@ -133,11 +228,19 @@ interface IButton {
 }
 
 interface ITheme {
-    /** Глобальные стили (встроены в ThemeProvider) */
+    /** Глобальные стили */
     global?: IGlobal;
-    /** Настройки типографики (влияют на работу хелпера typography) */
+    /** Палитры */
+    palettes?: IPalettes;
+    /** Цвета */
+    colors?: IColors;
+    /** Типографика */
     typography?: ITypography;
-    /** Иконка-плейсхолдер (используется в автокитах) */
+    /** Сетки */
+    layout?: ILayout;
+    /** Тени */
+    shadows?: IShadows;
+    /** Иконка-плейсхолдер */
     placeholder?: React.ReactNode;
     /** Настройки компонентов */
     components?: {
@@ -148,7 +251,7 @@ interface ITheme {
 
 export default interface IThemeProvider {
     /** Объект темы */
-    theme: ITheme;
+    theme?: ITheme;
     /** Код с доступом к теме */
     children: React.ReactNode;
 }
