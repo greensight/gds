@@ -22,16 +22,14 @@ async function getToken(type, page, config) {
     let token;
     const frameName = `${type[0].toUpperCase()}${type.slice(1)}`;
     const frame = page.children.find(({ name }) => name === frameName);
-    if (frame) {
-        try {
-            token = await getters[type](frame, config);
-            console.log(`✅  ${frameName}`);
-        } catch (err) {
-            console.log(`❌  ${frameName}`);
-            console.error(red(err.message));
-        }
-    } else {
-        console.error(red(`Cannot find frame "${frameName}"`));
+    if (!frame) return;
+
+    try {
+        token = await getters[type](frame, config);
+        console.log(`✅  ${frameName}`);
+    } catch (err) {
+        console.log(`⛔️  ${frameName}`);
+        console.error(red(err.message));
     }
 
     return { [type]: token };

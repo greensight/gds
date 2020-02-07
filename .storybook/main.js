@@ -1,12 +1,9 @@
-// TODO Можно упростить preview-head, т.к. все компоненты вынесены в stories
-// TODO Вероятно стоит вынести информацию по неймингам на отдельную страницу - много повторений
-
 module.exports = {
     stories: [
-        './docs/welcome.stories.mdx',
-        './docs/changelog.stories.mdx',
-        './docs/design/**/*.stories.mdx',
-        './docs/dev/**/*.stories.mdx',
+        './docs/intro/welcome.stories.mdx',
+        './docs/intro/*.stories.mdx',
+        './docs/design/*.stories.mdx',
+        './docs/dev/*.stories.mdx',
         '../src/components/**/*.stories.mdx',
         '../src/autokits/**/*.stories.mdx',
     ],

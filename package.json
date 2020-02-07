@@ -33,7 +33,7 @@
         "tokens": "node bin/index.js",
         "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
         "build": "rimraf '{cjs,esm}' && rollup -c",
-        "eslint": "eslint . --ext js,jsx,ts,tsx --fix",
+        "eslint": "eslint . --ext js,ts,tsx --fix",
         "prepublishOnly": "yarn build"
     },
     "husky": {
@@ -42,7 +42,7 @@
         }
     },
     "lint-staged": {
-        "*.{js,jsx,ts,tsx}": [
+        "*.{js,ts,tsx}": [
             "eslint --fix",
             "git add"
         ]
@@ -55,8 +55,8 @@
         "!.*"
     ],
     "peerDependencies": {
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0"
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0"
     },
     "devDependencies": {
         "@babel/core": "^7.7.2",

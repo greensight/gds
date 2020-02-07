@@ -6,8 +6,6 @@ import baseTheme from '../../helpers/baseTheme';
 import customTypography from '../../helpers/customTypography';
 import ITypography from './Typography';
 
-// TODO Проверить тянутся ли шрифты (нет) в Storybook на ЭВМ без локального
-
 const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
     const theme = useTheme();
     const globalFontsTheme = theme.global && theme.global.fonts;

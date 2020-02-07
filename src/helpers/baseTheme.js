@@ -8,26 +8,26 @@ const { colors, shadows } = tokens;
 
 const baseTheme = createTheme({
     tokens,
-    theme: {
+    settings: {
         global: {
             fonts: {
                 'PT Root UI': [
                     {
-                        woff2: 'PTRootUI-Regular.woff2',
-                        woff: 'PTRootUI-Regular.woff',
+                        woff2: 'fonts/PTRootUI-Regular.woff2',
+                        woff: 'fonts/PTRootUI-Regular.woff',
                     },
                     {
-                        woff2: 'PTRootUI-Medium.woff2',
-                        woff: 'PTRootUI-Medium.woff',
+                        woff2: 'fonts/PTRootUI-Medium.woff2',
+                        woff: 'fonts/PTRootUI-Medium.woff',
                         weight: 500,
                     },
                     {
-                        woff2: 'PTRootUI-Bold.woff2',
-                        woff: 'PTRootUI-Bold.woff',
+                        woff2: 'fonts/PTRootUI-Bold.woff2',
+                        woff: 'fonts/PTRootUI-Bold.woff',
                         weight: 700,
                     },
                     {
-                        vf: 'PTRootUI-VF.woff2',
+                        vf: 'fonts/PTRootUI-VF.woff2',
                         weight: '300 700',
                     },
                 ],

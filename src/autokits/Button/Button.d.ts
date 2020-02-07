@@ -1,4 +1,4 @@
-export default interface IButtons {
+export default interface IButton {
     /** Используемый текст */
     text?: string;
     /** Используемая иконка */

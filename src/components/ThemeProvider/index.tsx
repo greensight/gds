@@ -7,9 +7,6 @@ import typography from '../../utils/typography';
 import baseTheme from '../../helpers/baseTheme';
 import IThemeProvider from './ThemeProvider';
 
-// TODO Добавить интерфейсы тем в разделы
-// TODO Добавить интерфейсы токенов
-
 const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }) => {
     const global = theme.global || baseTheme.global;
     const fonts = global.fonts || baseTheme.global.fonts;

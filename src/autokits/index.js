@@ -4,7 +4,7 @@ import Typography from './Typography';
 import Icons from './Icons';
 import Layout from './Layout';
 import Shadows from './Shadows';
-import Buttons from './Buttons';
+import Button from './Button';
 
 export default {
     Palettes,
@@ -13,5 +13,5 @@ export default {
     Icons,
     Layout,
     Shadows,
-    Buttons,
+    Button,
 };

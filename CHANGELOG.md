@@ -1,3 +1,3 @@
 # Changelog
 
-Not ready yet.
+Скоро релиз.

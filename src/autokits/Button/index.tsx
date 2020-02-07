@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Button from '../../components/Button';
+import ButtonComponent from '../../components/Button';
 import Layout from '../../components/Layout';
 import useTheme from '../../utils/useTheme';
 import scale from '../../utils/scale';
 import typography from '../../helpers/customTypography';
 import baseTheme from '../../helpers/baseTheme';
-import IButtons from './Buttons';
+import IButton from './Button';
 
-const Buttons: React.FC<IButtons> = ({ text = 'Button', Icon }) => {
+const Button: React.FC<IButton> = ({ text = 'Button', Icon }) => {
     const theme = useTheme();
     const buttonTheme = (theme.components && theme.components.Button) || baseTheme.components.Button;
     Icon = Icon || theme.placeholder || baseTheme.placeholder;
@@ -23,52 +23,58 @@ const Buttons: React.FC<IButtons> = ({ text = 'Button', Icon }) => {
                 css={{ marginBottom: scale(2) }}
             >
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <Button key={sizeName} theme={themeName} size={sizeName}>
+                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName}>
                         {text}
-                    </Button>
+                    </ButtonComponent>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <Button key={sizeName} theme={themeName} size={sizeName} disabled>
+                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} disabled>
                         {text}
-                    </Button>
+                    </ButtonComponent>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={Icon}>
+                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon}>
                         {text}
-                    </Button>
+                    </ButtonComponent>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={Icon} iconAfter>
+                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon} iconAfter>
                         {text}
-                    </Button>
+                    </ButtonComponent>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={Icon} hidden>
+                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon} hidden>
                         {text}
-                    </Button>
+                    </ButtonComponent>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <Button key={sizeName} theme={themeName} size={sizeName}>
+                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName}>
                         {text}
                         <br />
                         {text}
-                    </Button>
+                    </ButtonComponent>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={Icon}>
+                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon}>
                         {text}
                         <br />
                         {text}
-                    </Button>
+                    </ButtonComponent>
                 ))}
             </Layout>
             {Object.keys(buttonTheme.sizes).map(sizeName => (
-                <Button key={sizeName} theme={themeName} size={sizeName} block css={{ marginBottom: scale(2) }}>
+                <ButtonComponent
+                    key={sizeName}
+                    theme={themeName}
+                    size={sizeName}
+                    block
+                    css={{ marginBottom: scale(2) }}
+                >
                     {text}
-                </Button>
+                </ButtonComponent>
             ))}
         </div>
     ));
 };
 
-export default Buttons;
+export default Button;
