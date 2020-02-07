@@ -5,6 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import svgr from '@svgr/rollup';
 import json from '@rollup/plugin-json';
+import postcss from 'rollup-plugin-postcss';
 import pkg from './package.json';
 
 const getEntries = prefix =>
@@ -21,7 +22,7 @@ export default [
         input: {
             index: 'src/index.js',
             ...getEntries('src/components/'),
-            autokits: 'src/components/autokits/index.js',
+            autokits: 'src/autokits/index.js',
             createTheme: 'src/utils/createTheme.js',
             useTheme: 'src/utils/useTheme.js',
             typography: 'src/utils/typography.js',
@@ -51,6 +52,7 @@ export default [
                 titleProp: true,
             }),
             json(),
+            postcss(),
         ],
         external: Object.keys(pkg.peerDependencies),
     },
