@@ -1,7 +1,7 @@
 const defaults = {
     tokensDir: 'public',
     iconsDir: 'src/client/images/icons/tokens',
-    page: 'Storybook',
+    page: 'Tokens',
 };
 
 module.exports = defaults;
