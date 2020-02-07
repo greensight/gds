@@ -1,7 +1,7 @@
 import React from 'react';
 import scale from '../../src/utils/scale';
 
-const themeDecorator = storyFn => (
+const centeredDecorator = storyFn => (
     <div
         css={{
             display: 'flex',
@@ -14,4 +14,4 @@ const themeDecorator = storyFn => (
     </div>
 );
 
-export default themeDecorator;
+export default centeredDecorator;

@@ -1,7 +1,18 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
 import Typography from '.';
 
-<Meta title="Autokits / Typography" component={Typography} />
+<Meta
+    title="Autokits / Typography"
+    component={Typography}
+    decorators={[paddingDecorator]}
+    parameters={{
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1373%3A2361'
+        }
+    }}
+/>
 
 # Typography
 

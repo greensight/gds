@@ -1,7 +1,18 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
 import Palettes from '.';
 
-<Meta title="Autokits / Palettes" component={Palettes} />
+<Meta
+    title="Autokits / Palettes"
+    component={Palettes}
+    decorators={[paddingDecorator]}
+    parameters={{
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1305%3A24'
+        }
+    }}
+/>
 
 # Palettes
 
