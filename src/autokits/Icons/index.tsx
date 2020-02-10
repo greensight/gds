@@ -14,7 +14,7 @@ const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
-        const fullPath = `images/icons/${matchRes[0].slice(1)}`;
+        const fullPath = `images/icons${matchRes[0].slice(1)}`;
         const formattedName = matchRes[1];
         const nameParts = formattedName.split('/');
 

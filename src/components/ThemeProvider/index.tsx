@@ -76,10 +76,8 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
             body: {
                 ...(body && typography(body.typography, theme?.typography ? theme : baseTheme)),
                 color: body?.color,
-                ...body?.css,
-            },
-            'body:not(.sb-show-main)': {
                 backgroundColor: body?.bg,
+                ...body?.css,
             },
             img: {
                 maxWidth: '100%',
@@ -96,7 +94,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
             'ul li, ol li': {
                 listStyle: 'none',
             },
-            'button, [type="button"], [type="reset"], [type="submit"]': {
+            button: {
                 border: 'none',
                 background: 'none',
                 cursor: 'pointer',
@@ -107,6 +105,10 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
             'input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button': {
                 margin: 0,
                 appearance: 'none',
+            },
+            fieldset: {
+                padding: 0,
+                border: 'none',
             },
         },
     ];

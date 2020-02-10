@@ -53,8 +53,8 @@ const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
                         </div>
                     </div>
                 ))}
-            <div>
-                <p>
+            <div css={{ marginBottom: scale(2) }}>
+                <p css={{ marginBottom: scale(2) }}>
                     Breakpoints: <strong>{typographyTheme.breakpoints[0]}</strong> and{' '}
                     <strong>{typographyTheme.breakpoints[1]}</strong>
                 </p>
@@ -70,15 +70,15 @@ const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
             {globalFontsTheme &&
                 Object.entries(globalFontsTheme).map(([fontName, fontAssets]) => {
                     return (
-                        <dl>
+                        <dl css={{ marginBottom: scale(2) }}>
                             <dt css={{ ...customTypography('bodyBold') }}>Font family</dt>
-                            <dd css={{ ...customTypography('body') }}>{fontName}</dd>
+                            <dd css={{ ...customTypography('body'), marginLeft: scale(4) }}>{fontName}</dd>
                             <dt css={{ ...customTypography('bodyBold') }}>Variable font</dt>
-                            <dd css={{ ...customTypography('body') }}>
+                            <dd css={{ ...customTypography('body'), marginLeft: scale(4) }}>
                                 {fontAssets.some(({ vf }) => vf) ? 'true' : 'false'}
                             </dd>
                             <dt css={{ ...customTypography('bodyBold') }}>Font stack</dt>
-                            <dd css={{ ...customTypography('body') }}>
+                            <dd css={{ ...customTypography('body'), marginLeft: scale(4) }}>
                                 {fontStacksTheme?.[fontName] ? fontStacksTheme[fontName] : 'sans-serif'}
                             </dd>
                         </dl>
