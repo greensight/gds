@@ -4,10 +4,10 @@ import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
 import 'normalize.css';
 import typography from '../../utils/typography';
-import baseTheme from '../../helpers/baseTheme';
+import baseTheme from '../../utils/baseTheme';
 import IThemeProvider from './ThemeProvider';
 
-const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }) => {
+const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
     const global = theme.global || baseTheme.global;
     const fonts = global.fonts || baseTheme.global.fonts;
     const { selection, focus, body } = global.base || baseTheme.global.base;
@@ -76,8 +76,10 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }
             body: {
                 ...(body && typography(body.typography, theme?.typography ? theme : baseTheme)),
                 color: body?.color,
-                backgroundColor: body?.bg,
                 ...body?.css,
+            },
+            'body:not(.sb-show-main)': {
+                backgroundColor: body?.bg,
             },
             img: {
                 maxWidth: '100%',

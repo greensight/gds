@@ -8,5 +8,6 @@ export { default as autokits } from './autokits';
 
 export { default as createTheme } from './utils/createTheme';
 export { default as useTheme } from './utils/useTheme';
+export { default as baseTheme } from './utils/baseTheme';
 export { default as typography } from './utils/typography';
 export { default as scale } from './utils/scale';

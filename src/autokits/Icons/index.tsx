@@ -2,14 +2,15 @@ import * as React from 'react';
 import { useRef } from 'react';
 import Layout from '../../components/Layout';
 import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
 import Dropdown from '../../helpers/Dropdown';
-import baseTheme from '../../helpers/baseTheme';
 import typography from '../../helpers/customTypography';
 import deepMerge from '../../helpers/deepMerge';
 import copyToClipboard from '../../helpers/copyToClipboard';
 import IIcons from './Icons';
 
 const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {
+    console.log(process.env.ICONS_DIR);
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);

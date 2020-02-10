@@ -2,7 +2,7 @@ import * as React from 'react';
 import useTheme from '../../utils/useTheme';
 import typography from '../../utils/typography';
 import scale from '../../utils/scale';
-import baseTheme from '../../helpers/baseTheme';
+import baseTheme from '../../utils/baseTheme';
 import cloneElement from '../../helpers/cloneElement';
 import { IButton } from './Button';
 

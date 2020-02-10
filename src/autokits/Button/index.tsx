@@ -3,8 +3,8 @@ import ButtonComponent from '../../components/Button';
 import Layout from '../../components/Layout';
 import useTheme from '../../utils/useTheme';
 import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
 import typography from '../../helpers/customTypography';
-import baseTheme from '../../helpers/baseTheme';
 import IButton from './Button';
 
 const Button: React.FC<IButton> = ({ text = 'Button', Icon }) => {

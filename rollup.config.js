@@ -25,6 +25,7 @@ export default [
             autokits: 'src/autokits/index.js',
             createTheme: 'src/utils/createTheme.js',
             useTheme: 'src/utils/useTheme.js',
+            baseTheme: 'src/utils/baseTheme.js',
             typography: 'src/utils/typography.js',
             scale: 'src/utils/scale.js',
         },
