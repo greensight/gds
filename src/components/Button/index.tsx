@@ -27,7 +27,7 @@ export const Button: React.FC<IButton> = (
     ref,
 ) => {
     const globalTheme = useTheme();
-    const usedTheme = globalTheme.components && globalTheme.components.Button ? globalTheme : baseTheme;
+    const usedTheme = globalTheme.components?.Button ? globalTheme : baseTheme;
     const buttonTheme = themeObj || usedTheme.components.Button;
 
     if (!buttonTheme.themes[theme]) {
@@ -48,7 +48,7 @@ export const Button: React.FC<IButton> = (
         if (sizeStyles) sizeRule = sizeStyles[name];
 
         const baseStyles = buttonTheme.base;
-        const baseRule = baseStyles && baseStyles[name];
+        const baseRule = baseStyles?.[name];
 
         return themeRule || sizeRule || baseRule || defaultValue;
     };
@@ -163,9 +163,9 @@ export const Button: React.FC<IButton> = (
             }),
             ...getStateStyles('focus'),
         },
-        buttonTheme.base && buttonTheme.base.css,
-        buttonTheme.sizes[size] && buttonTheme.sizes[size].css,
-        buttonTheme.themes[theme] && buttonTheme.themes[theme].css,
+        buttonTheme.base?.css,
+        buttonTheme.sizes?.[size]?.css,
+        buttonTheme.themes?.[theme]?.css,
         block && blockStyles,
         hidden && hiddenStyles,
         css,

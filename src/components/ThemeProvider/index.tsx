@@ -58,14 +58,14 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }
                 margin: 0,
             },
             '::selection': {
-                color: selection && selection.color,
-                backgroundColor: selection && selection.bg,
-                ...(selection && selection.css),
+                color: selection?.color,
+                backgroundColor: selection?.bg,
+                ...selection?.css,
             },
             ':focus': {
-                outline: focus && `${focus.width || 2}px solid ${focus.color || baseTheme.colors.black}`,
-                outlineOffset: focus && focus.offset,
-                ...(focus && focus.css),
+                outline: `${focus?.width || 2}px solid ${focus?.color || baseTheme.colors.black}`,
+                outlineOffset: focus?.offset,
+                ...focus?.css,
             },
             '.js-focus-visible :focus:not(.focus-visible)': {
                 outline: 'none',
@@ -74,10 +74,10 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme = baseTheme, children }
                 minHeight: '100%',
             },
             body: {
-                ...(body && typography(body.typography, theme && theme.typography ? theme : baseTheme)),
-                color: body && body.color,
-                backgroundColor: body && body.bg,
-                ...(body && body.css),
+                ...(body && typography(body.typography, theme?.typography ? theme : baseTheme)),
+                color: body?.color,
+                backgroundColor: body?.bg,
+                ...body?.css,
             },
             img: {
                 maxWidth: '100%',

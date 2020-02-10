@@ -8,9 +8,9 @@ import ITypography from './Typography';
 
 const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
     const theme = useTheme();
-    const globalFontsTheme = theme.global && theme.global.fonts;
+    const globalFontsTheme = theme.global?.fonts;
     const typographyTheme = theme.typography;
-    const fontStacksTheme = typographyTheme && typographyTheme.stacks;
+    const fontStacksTheme = typographyTheme?.stacks;
     const { colors } = baseTheme;
 
     const markCss = {
@@ -79,9 +79,7 @@ const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
                             </dd>
                             <dt css={{ ...customTypography('bodyBold') }}>Font stack</dt>
                             <dd css={{ ...customTypography('body') }}>
-                                {fontStacksTheme && fontStacksTheme[fontName]
-                                    ? fontStacksTheme[fontName]
-                                    : 'sans-serif'}
+                                {fontStacksTheme?.[fontName] ? fontStacksTheme[fontName] : 'sans-serif'}
                             </dd>
                         </dl>
                     );

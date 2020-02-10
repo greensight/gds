@@ -9,7 +9,7 @@ import IButton from './Button';
 
 const Button: React.FC<IButton> = ({ text = 'Button', Icon }) => {
     const theme = useTheme();
-    const buttonTheme = (theme.components && theme.components.Button) || baseTheme.components.Button;
+    const buttonTheme = theme.components?.Button || baseTheme.components.Button;
     Icon = Icon || theme.placeholder || baseTheme.placeholder;
 
     return Object.keys(buttonTheme.themes).map(themeName => (

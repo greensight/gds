@@ -53,6 +53,9 @@ const baseTheme = createTheme({
             stacks: {
                 'PT Root UI': FONT_STACK,
             },
+            h2: {
+                fluid: false,
+            },
         },
         placeholder: PlaceholderIcon,
         components: {
