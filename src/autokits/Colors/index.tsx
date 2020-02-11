@@ -12,6 +12,8 @@ const Colors: React.FC<IColors> = () => {
     const theme = useTheme();
     const { colors } = theme;
 
+    if (!colors) return `⛔️ Colors are not defined. Use tokens or add "colors" property in theme settings manually`;
+
     return (
         <Layout auto={scale(20)} gap={scale(8)}>
             {Object.keys(colors).map(name => (

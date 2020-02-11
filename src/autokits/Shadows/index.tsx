@@ -13,6 +13,8 @@ const Shadows: React.FC<IShadows> = () => {
     const theme = useTheme();
     const { shadows } = theme;
 
+    if (!shadows) return `⛔️ Shadows are not defined. Use tokens or add "shadows" property in theme settings manually`;
+
     return (
         <Layout auto={scale(20)} gap={scale(8)}>
             {Object.keys(shadows).map(name => (

@@ -12,6 +12,9 @@ const Palettes: React.FC<IPalettes> = () => {
     const theme = useTheme();
     const { palettes } = theme;
 
+    if (!palettes)
+        return `⛔️ Palettes are not defined. Use tokens or add "palettes" property in theme settings manually`;
+
     return (
         <Layout auto={scale(30)} gap={scale(8)}>
             {Object.keys(palettes)

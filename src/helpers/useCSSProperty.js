@@ -1,18 +1,20 @@
 import useTheme from '../utils/useTheme';
+import baseTheme from '../utils/baseTheme';
 import isObject from './isObject';
 import toArray from './toArray';
 import { BREAKPOINTS_NAMES } from './constants';
 
 const useCSSProperty = ({ name, value, defaultProperty, condition, transform }) => {
     const { layout } = useTheme();
+    const layoutTheme = layout || baseTheme.layout;
 
     let arr = toArray(value);
 
     if (arr.some(value => value === undefined) && defaultProperty) {
         arr = arr.map((value, index) => {
             if (value !== undefined) return value;
-            if (!Array.isArray(defaultProperty)) return !index ? layout[defaultProperty] : value;
-            return defaultProperty[index] ? layout[defaultProperty[index]] : value;
+            if (!Array.isArray(defaultProperty)) return !index ? layoutTheme[defaultProperty] : value;
+            return defaultProperty[index] ? layoutTheme[defaultProperty[index]] : value;
         });
     }
 
@@ -31,7 +33,7 @@ const useCSSProperty = ({ name, value, defaultProperty, condition, transform }) 
             const rule = setValue(name, values, transform);
             return {
                 ...acc,
-                ...(nextBp ? { [`@media (max-width: ${layout.breakpoints[nextBp] - 1}px)`]: rule } : rule),
+                ...(nextBp ? { [`@media (max-width: ${layoutTheme.breakpoints[nextBp] - 1}px)`]: rule } : rule),
             };
         }, {});
 };

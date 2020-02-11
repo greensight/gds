@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createContext, useContext } from 'react';
 import useTheme from '../../utils/useTheme';
+import baseTheme from '../../utils/baseTheme';
 import useCSSProperty from '../../helpers/useCSSProperty';
 import toArray from '../../helpers/toArray';
 import { ILayout, ILayoutItem } from './Layout';
@@ -28,10 +29,11 @@ export const Layout: React.FC<ILayout> = ({
     ...props
 }) => {
     const { layout } = useTheme();
+    const layoutTheme = layout || baseTheme.layout;
 
     return (
         <LayoutContext.Provider
-            value={{ type, gap: gap !== undefined ? gap : layout.gap, cols: cols || layout.cols, auto }}
+            value={{ type, gap: gap !== undefined ? gap : layoutTheme.gap, cols: cols || layoutTheme.cols, auto }}
         >
             <div
                 css={[

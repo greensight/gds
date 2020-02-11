@@ -11,6 +11,8 @@ const Layout: React.FC<ILayout> = () => {
     const theme = useTheme();
     const { layout } = theme;
 
+    if (!layout) return `⛔️ Layout is not defined. Use tokens or add "layout" property in theme settings manually`;
+
     return (
         <LayoutComponent type="flex" direction="column" align="center">
             {Object.entries(layout.breakpoints).map(([name, value]) => (

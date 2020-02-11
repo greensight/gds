@@ -13,6 +13,9 @@ const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
     const fontStacksTheme = typographyTheme?.stacks;
     const { colors } = baseTheme;
 
+    if (!typographyTheme)
+        return `⛔️ Typography is not defined. Use tokens or add "typography" property in theme settings manually`;
+
     const markCss = {
         backgroundColor: colors.grey90,
         color: colors.grey20,

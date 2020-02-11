@@ -159,7 +159,7 @@ export interface IShadows {
     [name: string]: string;
 }
 
-export interface IButtonRules {
+export interface IButtonBaseRules {
     /** Цвет текста и иконки */
     color?: string;
     /** Цвет фона */
@@ -168,16 +168,6 @@ export interface IButtonRules {
     border?: string;
     /** Тень. Прежде всего для активного стейта */
     shadow?: string;
-    /** Высота кнопки */
-    height?: number;
-    /** Горизонтальные поля */
-    padding?: number;
-    /** Размер иконки */
-    iconSize?: number;
-    /** Отступ от иконки */
-    iconOffset?: number;
-    /** Имя типографического стиля */
-    typography?: string;
     /** Толщина обводки. Проставляется автоматически, если передан border */
     borderWidth?: number;
     /** Стиль обводки */
@@ -198,33 +188,48 @@ export interface IButtonRules {
     css?: Object;
 }
 
-export interface IButtonThemeRules extends IButtonRules {
+export interface IButtonThemeRules extends IButtonBaseRules {
     /** Правила на ховер */
-    hover: IButtonRules;
+    hover?: IButtonRules;
     /** Правила на клик */
-    active: IButtonRules;
+    active?: IButtonRules;
     /** Правила на блокирование */
-    disabled: IButtonRules;
+    disabled?: IButtonRules;
     /** Правила на фокус */
-    focus: IButtonRules;
+    focus?: IButtonRules;
+}
+
+export interface IButtonSizeRules {
+    /** Высота кнопки */
+    height?: number;
+    /** Горизонтальные поля */
+    padding?: number;
+    /** Имя типографического стиля */
+    typography?: string;
+    /** Размер иконки */
+    iconSize?: number;
+    /** Отступ от иконки */
+    iconOffset?: number;
+    /** Кастомный CSS */
+    css?: Object;
 }
 
 export interface IButton {
     /** Глобальные стили. Распространяются на все кнопки */
-    base?: IButtonRules;
-    /** Стили размеров */
-    sizes: {
-        /** Дефолтный размер */
-        md: IButtonRules;
-        /** Можно добавлять свои размеры */
-        [size: string]: IButtonRules;
-    };
+    base?: IButtonBaseRules;
     /** Стили тем */
     themes: {
         /** Дефолтная тема */
         primary: IButtonThemeRules;
         /** Можно добавлять свои темы */
         [theme: string]: IButtonThemeRules;
+    };
+    /** Стили размеров */
+    sizes: {
+        /** Дефолтный размер */
+        md: IButtonSizeRules;
+        /** Можно добавлять свои размеры */
+        [size: string]: IButtonSizeRules;
     };
 }
 
