@@ -13,7 +13,15 @@ const Shadows: React.FC<IShadows> = () => {
     const theme = useTheme();
     const { shadows } = theme;
 
-    if (!shadows) return `⛔️ Shadows are not defined. Use tokens or add "shadows" property in theme settings manually`;
+    if (!shadows)
+        return (
+            <div css={typography('body')}>
+                <span role="img" aria-label="Error">
+                    ⛔️
+                </span>{' '}
+                Shadows are not defined. Use tokens or add <strong>shadows</strong> property in theme settings manually
+            </div>
+        );
 
     return (
         <Layout auto={scale(20)} gap={scale(8)}>

@@ -14,7 +14,15 @@ const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
     const { colors } = baseTheme;
 
     if (!typographyTheme)
-        return `⛔️ Typography is not defined. Use tokens or add "typography" property in theme settings manually`;
+        return (
+            <div css={customTypography('body')}>
+                <span role="img" aria-label="Error">
+                    ⛔️
+                </span>{' '}
+                Typography is not defined. Use tokens or add <strong>typography</strong> property in theme settings
+                manually
+            </div>
+        );
 
     const markCss = {
         backgroundColor: colors.grey90,
@@ -26,7 +34,7 @@ const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
     };
 
     return (
-        <div>
+        <div css={customTypography('body')}>
             {Object.keys(typographyTheme)
                 .filter(name => !['breakpoints', 'stacks', 'fluid'].includes(name))
                 .sort(

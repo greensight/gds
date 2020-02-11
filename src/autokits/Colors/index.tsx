@@ -12,7 +12,15 @@ const Colors: React.FC<IColors> = () => {
     const theme = useTheme();
     const { colors } = theme;
 
-    if (!colors) return `⛔️ Colors are not defined. Use tokens or add "colors" property in theme settings manually`;
+    if (!colors)
+        return (
+            <div css={typography('body')}>
+                <span role="img" aria-label="Error">
+                    ⛔️
+                </span>{' '}
+                Colors are not defined. Use tokens or add <strong>colors</strong> property in theme settings manually
+            </div>
+        );
 
     return (
         <Layout auto={scale(20)} gap={scale(8)}>

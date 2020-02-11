@@ -13,7 +13,15 @@ const Palettes: React.FC<IPalettes> = () => {
     const { palettes } = theme;
 
     if (!palettes)
-        return `⛔️ Palettes are not defined. Use tokens or add "palettes" property in theme settings manually`;
+        return (
+            <div css={typography('body')}>
+                <span role="img" aria-label="Error">
+                    ⛔️
+                </span>{' '}
+                Palettes are not defined. Use tokens or add <strong>palettes</strong> property in theme settings
+                manually
+            </div>
+        );
 
     return (
         <Layout auto={scale(30)} gap={scale(8)}>

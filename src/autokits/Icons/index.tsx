@@ -59,7 +59,7 @@ const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {
         );
     }
 
-    return <div css={{ paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
+    return <div css={{ ...typography('body'), paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
 };
 
 const Icon = ({ name, Component, path }) => {

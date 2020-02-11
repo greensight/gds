@@ -11,7 +11,15 @@ const Layout: React.FC<ILayout> = () => {
     const theme = useTheme();
     const { layout } = theme;
 
-    if (!layout) return `⛔️ Layout is not defined. Use tokens or add "layout" property in theme settings manually`;
+    if (!layout)
+        return (
+            <div css={typography('body')}>
+                <span role="img" aria-label="Error">
+                    ⛔️
+                </span>{' '}
+                Layout is not defined. Use tokens or add <strong>layout</strong> property in theme settings manually
+            </div>
+        );
 
     return (
         <LayoutComponent type="flex" direction="column" align="center">
