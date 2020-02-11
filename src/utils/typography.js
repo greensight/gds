@@ -5,6 +5,12 @@ const typography = (name, theme) => {
     }
 
     const typography = theme.typography[name];
+
+    if (!typography) {
+        console.warn(`typography style ${name} is not defined`);
+        return;
+    }
+
     const fontName = typography.desktop.fontFamily;
     const stack = theme.typography.stacks?.[fontName] || 'sans-serif';
     let fontFamilyStyles = { fontFamily: `"${fontName}", ${stack}` };

@@ -10,7 +10,6 @@ import copyToClipboard from '../../helpers/copyToClipboard';
 import IIcons from './Icons';
 
 const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {
-    console.log(process.env.ICONS_DIR);
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
@@ -81,6 +80,7 @@ const Icon = ({ name, Component, path }) => {
                     borderRadius: 4,
                     ...typography('bodyBold'),
                     textAlign: 'center',
+                    color: colors.black,
                     transition: 'border-color ease 300ms',
                     ':hover, :focus.focus-visible': {
                         borderColor: colors.grey0,

@@ -28,7 +28,7 @@ const Color = ({ name, value }) => {
     const { colors } = theme;
     const buttonRef = useRef();
 
-    const boxCss = {
+    const markCss = {
         backgroundColor: colors.white,
         color: colors.grey0,
         padding: scale(1),
@@ -46,6 +46,7 @@ const Color = ({ name, value }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
+                    alignItems: 'flex-start',
                     width: '100%',
                     height: scale(28),
                     padding: scale(1),
@@ -58,8 +59,8 @@ const Color = ({ name, value }) => {
                     },
                 }}
             >
-                <span css={{ ...boxCss, marginBottom: scale(1) }}>{value}</span>
-                <span css={boxCss}>{name}</span>
+                <span css={{ ...markCss, marginBottom: scale(1) }}>{value}</span>
+                <span css={markCss}>{name}</span>
             </button>
         </Dropdown>
     );

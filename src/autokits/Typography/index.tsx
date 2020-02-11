@@ -70,7 +70,7 @@ const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {
             {globalFontsTheme &&
                 Object.entries(globalFontsTheme).map(([fontName, fontAssets]) => {
                     return (
-                        <dl css={{ marginBottom: scale(2) }}>
+                        <dl key={fontName} css={{ marginBottom: scale(2) }}>
                             <dt css={{ ...customTypography('bodyBold') }}>Font family</dt>
                             <dd css={{ ...customTypography('body'), marginLeft: scale(4) }}>{fontName}</dd>
                             <dt css={{ ...customTypography('bodyBold') }}>Variable font</dt>

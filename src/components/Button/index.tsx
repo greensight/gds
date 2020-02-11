@@ -4,6 +4,7 @@ import typography from '../../utils/typography';
 import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';
 import cloneElement from '../../helpers/cloneElement';
+import VisuallyHidden from '../VisuallyHidden';
 import { IButton } from './Button';
 
 export const Button: React.FC<IButton> = (
@@ -130,12 +131,9 @@ export const Button: React.FC<IButton> = (
 
     const blockStyles = { display: 'flex', width: '100%' };
 
-    const hiddenStyles = {
-        fontSize: 0,
-        ...(round && {
-            borderRadius: '50%',
-            padding: `${pv}px ${(height - iconSize - borderWidth) / 2}px`,
-        }),
+    const roundStyles = {
+        borderRadius: '50%',
+        padding: `${pv}px ${(height - iconSize - borderWidth) / 2}px`,
     };
 
     const styles = [
@@ -167,7 +165,7 @@ export const Button: React.FC<IButton> = (
         buttonTheme.sizes?.[size]?.css,
         buttonTheme.themes?.[theme]?.css,
         block && blockStyles,
-        hidden && hiddenStyles,
+        hidden && round && roundStyles,
         css,
     ];
 
@@ -201,7 +199,7 @@ export const Button: React.FC<IButton> = (
             {...props}
         >
             {Icon && !iconAfter && IconComponent}
-            {children}
+            {hidden ? <VisuallyHidden>{children}</VisuallyHidden> : children}
             {Icon && iconAfter && IconComponent}
         </Component>
     );

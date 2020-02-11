@@ -16,7 +16,7 @@ const Button: React.FC<IButton> = ({ text = 'Button', Icon }) => {
         <div key={themeName} css={{ marginBottom: scale(4) }}>
             <div css={{ ...typography('title'), marginBottom: scale(2) }}>{themeName}</div>
             <Layout
-                cols={{ xxxl: Object.keys(buttonTheme.sizes).length, sm: 1 }}
+                cols={{ xxxl: Object.keys(buttonTheme.sizes).length, xxs: 1 }}
                 gap={scale(2)}
                 justify="start"
                 align="end"

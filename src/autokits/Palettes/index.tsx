@@ -42,6 +42,15 @@ const PaletteColor = ({ color, index }) => {
     const { colors } = theme;
     const buttonRef = useRef();
 
+    const markCss = {
+        height: scale(4),
+        padding: `${scale(1, true)}px ${scale(1)}px`,
+        borderRadius: 4,
+        backgroundColor: colors.white,
+        color: colors.grey0,
+        ...typography('subheading'),
+    };
+
     return (
         <Dropdown content="Hex code is copied to the clipboard">
             <button
@@ -62,28 +71,8 @@ const PaletteColor = ({ color, index }) => {
                     },
                 }}
             >
-                <span
-                    css={{
-                        backgroundColor: colors.white,
-                        color: colors.grey0,
-                        padding: `${scale(1, true)}px ${scale(1)}px`,
-                        borderRadius: 4,
-                        ...typography('subheading'),
-                    }}
-                >
-                    {index}
-                </span>
-                <span
-                    css={{
-                        backgroundColor: colors.white,
-                        color: colors.grey0,
-                        padding: `${scale(1, true)}px ${scale(1)}px`,
-                        borderRadius: 4,
-                        ...typography('subheading'),
-                    }}
-                >
-                    {color}
-                </span>
+                <span css={markCss}>{index}</span>
+                <span css={markCss}>{color}</span>
             </button>
         </Dropdown>
     );
