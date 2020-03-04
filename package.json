@@ -1,41 +1,42 @@
 {
     "name": "@greensight/gds",
     "version": "1.0.0",
-    "repository": "https://github.com/greensight/gds",
     "description": "Greensight Design System",
-    "license": "MIT",
-    "main": "cjs/index.js",
-    "module": "esm/index.js",
-    "files": [
-        "cjs/*",
-        "esm/*",
-        "bin/*"
-    ],
-    "sideEffects": [
-        "*.css"
-    ],
-    "bin": {
-        "gds-tokens": "bin/index.js"
-    },
     "keywords": [
         "GDS",
         "Greensight",
         "Design System"
     ],
-    "engines": {
-        "node": ">= 11.7.0",
-        "yarn": ">= 1.19.0"
+    "repository": "https://github.com/greensight/gds",
+    "license": "MIT",
+    "sideEffects": [
+        "*.css"
+    ],
+    "main": "cjs/index.js",
+    "module": "esm/index.js",
+    "bin": {
+        "gds-tokens": "bin/index.js"
     },
+    "files": [
+        "cjs/*",
+        "esm/*",
+        "bin/*"
+    ],
     "scripts": {
+        "build": "rimraf '{cjs,esm}' && rollup -c",
+        "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
+        "eslint": "eslint . --ext js,ts,tsx --fix",
+        "prepublishOnly": "yarn build",
         "storybook": "start-storybook -s ./public -p 3000 --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 8080",
         "tokens": "node bin/index.js",
-        "tokens:dev": "node bin/index.js -c gds-dev.config.json",
-        "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
-        "build": "rimraf '{cjs,esm}' && rollup -c",
-        "eslint": "eslint . --ext js,ts,tsx --fix",
-        "prepublishOnly": "yarn build"
+        "tokens:dev": "node bin/index.js -c gds-dev.config.json"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     },
     "lint-staged": {
         "*.{js,ts,tsx}": [
@@ -50,9 +51,13 @@
         "docs",
         "!.*"
     ],
-    "peerDependencies": {
-        "react": "^16.8.0",
-        "react-dom": "^16.8.0"
+    "dependencies": {
+        "@emotion/core": "^10.0.28",
+        "@tippy.js/react": "^3.1.1",
+        "emotion-theming": "^10.0.27",
+        "focus-visible": "^5.0.2",
+        "normalize.css": "^8.0.1",
+        "tippy.js": "^5.2.0"
     },
     "devDependencies": {
         "@babel/core": "^7.8.6",
@@ -61,6 +66,9 @@
         "@babel/preset-typescript": "^7.8.3",
         "@babel/runtime": "^7.8.4",
         "@emotion/babel-preset-css-prop": "^10.0.27",
+        "@emotion/css": "^10.0.27",
+        "@mdx-js/loader": "^1.5.7",
+        "@mdx-js/react": "^1.5.7",
         "@rollup/plugin-json": "^4.0.2",
         "@rollup/plugin-node-resolve": "^7.1.1",
         "@storybook/addon-a11y": "^6.0.0-alpha.20",
@@ -70,6 +78,7 @@
         "@storybook/addon-knobs": "^6.0.0-alpha.20",
         "@storybook/addon-viewport": "^6.0.0-alpha.20",
         "@storybook/addons": "^6.0.0-alpha.20",
+        "@storybook/client-api": "^5.3.14",
         "@storybook/react": "^6.0.0-alpha.20",
         "@storybook/storybook-deployer": "^2.8.1",
         "@storybook/theming": "^6.0.0-alpha.20",
@@ -83,9 +92,11 @@
         "axios": "^0.19.2",
         "babel-loader": "^8.0.6",
         "chalk": "^3.0.0",
+        "core-js": "^3.6.4",
         "eslint": "^6.8.0",
         "eslint-config-airbnb": "^18.0.1",
         "eslint-config-prettier": "^6.10.0",
+        "eslint-import-resolver-node": "^0.3.3",
         "eslint-plugin-import": "^2.20.1",
         "eslint-plugin-jsx-a11y": "^6.2.3",
         "eslint-plugin-prettier": "^3.1.2",
@@ -97,6 +108,7 @@
         "react": "^16.13.0",
         "react-docgen-typescript-loader": "^3.6.0",
         "react-dom": "^16.13.0",
+        "react-is": "^16.13.0",
         "rimraf": "^3.0.2",
         "rollup": "^1.32.0",
         "rollup-plugin-babel": "^4.3.3",
@@ -106,14 +118,14 @@
         "serve": "^11.3.0",
         "storybook-addon-designs": "^5.2.0",
         "typescript": "^3.8.3",
-        "webpack": "^4.42.0"
+        "webpack": "^4.42.0",
+        "worker-loader": "^2.0.0"
     },
-    "dependencies": {
-        "@emotion/core": "^10.0.28",
-        "@tippy.js/react": "^3.1.1",
-        "emotion-theming": "^10.0.27",
-        "focus-visible": "^5.0.2",
-        "normalize.css": "^8.0.1",
-        "tippy.js": "^5.2.0"
+    "peerDependencies": {
+        "react": "^16.8.0",
+        "react-dom": "^16.8.0"
+    },
+    "engines": {
+        "node": ">= 11.7.0"
     }
 }
