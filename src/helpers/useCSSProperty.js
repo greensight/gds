@@ -1,8 +1,8 @@
-import useTheme from '../utils/useTheme';
-import baseTheme from '../utils/baseTheme';
-import isObject from './isObject';
-import toArray from './toArray';
-import { BREAKPOINTS_NAMES } from './constants';
+import useTheme from '@utils/useTheme';
+import baseTheme from '@utils/baseTheme';
+import isObject from '@helpers/isObject';
+import toArray from '@helpers/toArray';
+import { BREAKPOINTS_NAMES } from '@helpers/constants';
 
 const useCSSProperty = ({ name, value, defaultProperty, condition, transform }) => {
     const { layout } = useTheme();

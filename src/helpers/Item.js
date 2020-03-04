@@ -1,5 +1,5 @@
 import React from 'react';
-import scale from '../utils/scale';
+import scale from '@utils/scale';
 
 const Item = ({ children, bg, ...props }) => (
     <div

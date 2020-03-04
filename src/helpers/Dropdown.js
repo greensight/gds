@@ -2,9 +2,9 @@ import React from 'react';
 import Tippy from '@tippy.js/react';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/shift-away.css';
-import baseTheme from '../utils/baseTheme';
-import scale from '../utils/scale';
-import CheckCircle from '../icons/tokens/medium/checkCircle.svg';
+import baseTheme from '@utils/baseTheme';
+import scale from '@utils/scale';
+import CheckCircle from '@icons/tokens/medium/checkCircle.svg';
 
 const Dropdown = ({ children, content, ...props }) => {
     return (

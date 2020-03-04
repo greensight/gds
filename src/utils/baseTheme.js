@@ -1,8 +1,8 @@
+import PlaceholderIcon from '@icons/tokens/medium/placeholder.svg';
+import createTheme from '@utils/createTheme';
+import scale from '@utils/scale';
+import { FONT_STACK } from '@helpers/constants';
 import tokens from '../../public/tokens';
-import PlaceholderIcon from '../icons/tokens/medium/placeholder.svg';
-import createTheme from './createTheme';
-import scale from './scale';
-import { FONT_STACK } from '../helpers/constants';
 
 const { colors, shadows } = tokens;
 

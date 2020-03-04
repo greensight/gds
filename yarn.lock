@@ -1840,6 +1840,7 @@ __metadata:
     "@emotion/css": ^10.0.27
     "@mdx-js/loader": ^1.5.7
     "@mdx-js/react": ^1.5.7
+    "@rollup/plugin-alias": ^3.0.1
     "@rollup/plugin-json": ^4.0.2
     "@rollup/plugin-node-resolve": ^7.1.1
     "@storybook/addon-a11y": ^6.0.0-alpha.20
@@ -2271,6 +2272,17 @@ __metadata:
     react: 15.x || 16.x || 16.4.0-alpha.0911da3
     react-dom: 15.x || 16.x || 16.4.0-alpha.0911da3
   checksum: 2/4e073a6c010e50bacadbc84d11f5140bf31e1f56b551e41c87180ad9b845f303a039cda9737bf1eabe229a5abceaca34dccd009d282b0fba2e18b72757c1540b
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-alias@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@rollup/plugin-alias@npm:3.0.1"
+  dependencies:
+    slash: ^3.0.0
+  peerDependencies:
+    rollup: ^1.20.0
+  checksum: 2/eaf241db457c65d98a157aa8276949ce7fc95bc479b2fc2609e579db50d60a31b50009c65660c176e4e8a55f6205fdbe3f485abc8ae359f02ee689779f46a752
   languageName: node
   linkType: hard
 

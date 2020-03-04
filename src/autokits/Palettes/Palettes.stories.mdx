@@ -1,5 +1,5 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import paddingDecorator from '@decorators/paddingDecorator';
 import Palettes from '.';
 
 <Meta
@@ -9,8 +9,8 @@ import Palettes from '.';
     parameters={{
         design: {
             type: 'figma',
-            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1305%3A24'
-        }
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1305%3A24',
+        },
     }}
 />
 
@@ -21,7 +21,6 @@ import Palettes from '.';
         <Palettes />
     </Story>
 </Preview>
-
 
 Автокит для палитр проекта. Читает содержимое поля `palettes` объекта темы.
 

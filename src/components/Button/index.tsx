@@ -1,10 +1,10 @@
 import * as React from 'react';
-import useTheme from '../../utils/useTheme';
-import typography from '../../utils/typography';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import cloneElement from '../../helpers/cloneElement';
-import VisuallyHidden from '../VisuallyHidden';
+import useTheme from '@utils/useTheme';
+import typography from '@utils/typography';
+import scale from '@utils/scale';
+import baseTheme from '@utils/baseTheme';
+import cloneElement from '@helpers/cloneElement';
+import VisuallyHidden from '@components/VisuallyHidden';
 import { IButton } from './Button';
 
 export const Button: React.FC<IButton> = (

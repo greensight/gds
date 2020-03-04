@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import Layout from '../../components/Layout';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import Dropdown from '../../helpers/Dropdown';
-import typography from '../../helpers/customTypography';
-import deepMerge from '../../helpers/deepMerge';
-import copyToClipboard from '../../helpers/copyToClipboard';
+import Layout from '@components/Layout';
+import scale from '@utils/scale';
+import baseTheme from '@utils/baseTheme';
+import Dropdown from '@helpers/Dropdown';
+import typography from '@helpers/customTypography';
+import deepMerge from '@helpers/deepMerge';
+import copyToClipboard from '@helpers/copyToClipboard';
 import IIcons from './Icons';
 
 const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {

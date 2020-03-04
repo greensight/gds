@@ -39,7 +39,7 @@ module.exports = ({ config, mode }) => {
         '@utils': resolve(__dirname, '../src/utils'),
         '@helpers': resolve(__dirname, '../src/helpers'),
         '@icons': resolve(__dirname, '../src/icons'),
-        '@storybook-decorators': resolve(__dirname, './decorators'),
+        '@decorators': resolve(__dirname, './decorators'),
     };
     config.optimization.minimize = false;
     config.performance = false;

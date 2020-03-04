@@ -1,4 +1,4 @@
-import deepMerge from '../helpers/deepMerge';
+import deepMerge from '@helpers/deepMerge';
 
 const createTheme = ({ tokens = {}, settings = {} }) => deepMerge(tokens, settings);
 

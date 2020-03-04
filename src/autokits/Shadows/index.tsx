@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import Layout from '../../components/Layout';
-import useTheme from '../../utils/useTheme';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import Dropdown from '../../helpers/Dropdown';
-import typography from '../../helpers/customTypography';
-import copyToClipboard from '../../helpers/copyToClipboard';
+import Layout from '@components/Layout';
+import useTheme from '@utils/useTheme';
+import scale from '@utils/scale';
+import baseTheme from '@utils/baseTheme';
+import Dropdown from '@helpers/Dropdown';
+import typography from '@helpers/customTypography';
+import copyToClipboard from '@helpers/copyToClipboard';
 import IShadows from './Shadows';
 
 const Shadows: React.FC<IShadows> = () => {

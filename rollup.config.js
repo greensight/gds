@@ -5,6 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
 import svgr from '@svgr/rollup';
 import json from '@rollup/plugin-json';
+import alias from '@rollup/plugin-alias';
 import postcss from 'rollup-plugin-postcss';
 import pkg from './package.json';
 
@@ -54,6 +55,14 @@ export default [
             }),
             json(),
             postcss(),
+            alias({
+                entries: [
+                    { find: '@components', replacement: path.resolve(__dirname, './src/components') },
+                    { find: '@utils', replacement: path.resolve(__dirname, './src/utils') },
+                    { find: '@helpers', replacement: path.resolve(__dirname, './src/helpers') },
+                    { find: '@icons', replacement: path.resolve(__dirname, './src/icons') },
+                ],
+            }),
         ],
         external: Object.keys(pkg.peerDependencies),
     },

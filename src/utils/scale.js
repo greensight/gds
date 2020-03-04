@@ -1,4 +1,4 @@
-import { MAJOR_STEP_DEFAULT, MINOR_MAX } from '../helpers/constants';
+import { MAJOR_STEP_DEFAULT, MINOR_MAX } from '@helpers/constants';
 
 const scale = (multiplier, isMinor, customStep) => {
     const majorStep = customStep || MAJOR_STEP_DEFAULT;

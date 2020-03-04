@@ -3,8 +3,8 @@ import { Global as EmotionGlobal } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
 import 'normalize.css';
-import typography from '../../utils/typography';
-import baseTheme from '../../utils/baseTheme';
+import typography from '@utils/typography';
+import baseTheme from '@utils/baseTheme';
 import IThemeProvider from './ThemeProvider';
 
 const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {

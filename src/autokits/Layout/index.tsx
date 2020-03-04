@@ -1,10 +1,10 @@
 import * as React from 'react';
-import LayoutComponent from '../../components/Layout';
-import useTheme from '../../utils/useTheme';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import typography from '../../helpers/customTypography';
-import { BREAKPOINTS_NAMES } from '../../helpers/constants';
+import LayoutComponent from '@components/Layout';
+import useTheme from '@utils/useTheme';
+import scale from '@utils/scale';
+import baseTheme from '@utils/baseTheme';
+import typography from '@helpers/customTypography';
+import { BREAKPOINTS_NAMES } from '@helpers/constants';
 import ILayout from './Layout';
 
 const Layout: React.FC<ILayout> = () => {

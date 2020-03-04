@@ -1,9 +1,9 @@
 import * as React from 'react';
-import useTheme from '../../utils/useTheme';
-import typography from '../../utils/typography';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import customTypography from '../../helpers/customTypography';
+import useTheme from '@utils/useTheme';
+import typography from '@utils/typography';
+import scale from '@utils/scale';
+import baseTheme from '@utils/baseTheme';
+import customTypography from '@helpers/customTypography';
 import ITypography from './Typography';
 
 const Typography: React.FC<ITypography> = ({ text = 'Demo text 123' }) => {

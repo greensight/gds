@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Container from '../Container';
-import useCSSProperty from '../../helpers/useCSSProperty';
+import Container from '@components/Container';
+import useCSSProperty from '@helpers/useCSSProperty';
 import ISection from './Section';
 
 const Section: React.FC<ISection> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
