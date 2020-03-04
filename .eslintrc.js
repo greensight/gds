@@ -25,7 +25,7 @@ module.exports = {
         'import/no-duplicates': 0,
         'import/no-extraneous-dependencies': [2, { devDependencies: true }],
         'import/no-named-as-default': 0,
-        'import/no-unresolved': [2, { ignore: ['images/responsive'] }],
+        'import/no-unresolved': [2, { commonjs: true, ignore: ['images/responsive', 'build/', '@'] }],
         'import/prefer-default-export': 1,
         'jsx-a11y/anchor-is-valid': 0,
         'jsx-a11y/label-has-for': [

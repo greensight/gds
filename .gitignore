@@ -10,3 +10,7 @@
 yarn-error.log
 gds.config.json
 gds-dev.config.json
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
