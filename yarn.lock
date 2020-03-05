@@ -1482,6 +1482,7 @@ __metadata:
     axios: ^0.19.2
     babel-loader: ^8.0.6
     chalk: ^3.0.0
+    classnames: ^2.2.6
     core-js: ^3.6.4
     emotion-theming: ^10.0.27
     eslint: ^6.8.0
@@ -1494,6 +1495,7 @@ __metadata:
     eslint-plugin-react: ^7.18.3
     eslint-plugin-react-hooks: ^2.5.0
     focus-visible: ^5.0.2
+    formik: ^2.1.4
     husky: ^4.2.3
     lint-staged: ^10.0.8
     normalize.css: ^8.0.1
@@ -1513,6 +1515,7 @@ __metadata:
     typescript: ^3.8.3
     webpack: ^4.42.0
     worker-loader: ^2.0.0
+    yup: ^0.28.1
   peerDependencies:
     react: ^16.8.0
     react-dom: ^16.8.0
@@ -5397,7 +5400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.5":
+"classnames@npm:^2.2.5, classnames@npm:^2.2.6":
   version: 2.2.6
   resolution: "classnames@npm:2.2.6"
   checksum: 2/490eaeca5931846737ffd33e472a701d268d5b8bc5717dd4cf108a127b06e86e05350e06799abbbe763a0e4c945b4217f6700b7ae00ddc703505682c370e5cf2
@@ -6491,6 +6494,13 @@ __metadata:
   version: 1.1.0
   resolution: "deep-object-diff@npm:1.1.0"
   checksum: 2/2667c43932d14c908d03f813cd2846a626bda1d320f8f1dee3c7bd00ff8058713bb8f5d995fabd617e09229cf64bf16e53579233e29da870fd27bde23d5f5b20
+  languageName: node
+  linkType: hard
+
+"deepmerge@npm:^2.1.1":
+  version: 2.2.1
+  resolution: "deepmerge@npm:2.2.1"
+  checksum: 2/8394eb5ab19010e4e856e96ffb570528cad00e4af35e1e774898b52fd986fa6840dbce3e9217a7a1e38683c170cf0cbfe19c67323b89d329afad0ffa72db382e
   languageName: node
   linkType: hard
 
@@ -8091,6 +8101,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fn-name@npm:~2.0.1":
+  version: 2.0.1
+  resolution: "fn-name@npm:2.0.1"
+  checksum: 2/0b2a1df51618285ec80612795d539b0433733a6681b0a6c80eaaec68330d6d2e382ddb2caef67c7ae4d8bebdf7e423470bed9f5b151db48140bb7a97ff599936
+  languageName: node
+  linkType: hard
+
 "focus-lock@npm:^0.6.6":
   version: 0.6.6
   resolution: "focus-lock@npm:0.6.6"
@@ -8175,6 +8192,24 @@ __metadata:
   version: 0.2.2
   resolution: "format@npm:0.2.2"
   checksum: 2/0740f5212144e63dad4b3b2156d84a875c0649f4976ecfa91f21b086ad007e9af575e88cf782b202c5f5783fb6d4ee3cebcd357b79aa82d556f8401dc1762f55
+  languageName: node
+  linkType: hard
+
+"formik@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "formik@npm:2.1.4"
+  dependencies:
+    deepmerge: ^2.1.1
+    hoist-non-react-statics: ^3.3.0
+    lodash: ^4.17.14
+    lodash-es: ^4.17.14
+    react-fast-compare: ^2.0.1
+    scheduler: ^0.18.0
+    tiny-warning: ^1.0.2
+    tslib: ^1.10.0
+  peerDependencies:
+    react: ">=16.3.0"
+  checksum: 2/ff90492b85421182727bcae01f60851d53c66237c7afd0281d279ad978cc385920c7e764b07c7192d4d5384bdec0ba3a14ec4d0f9af438fe92d89b22b6b432d7
   languageName: node
   linkType: hard
 
@@ -11253,6 +11288,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.11, lodash-es@npm:^4.17.14":
+  version: 4.17.15
+  resolution: "lodash-es@npm:4.17.15"
+  checksum: 2/ee2871b76deefd1754527e659a8c8b688f2e427e67b30709296878e18ad9cb54b4f0fc16a7161298156b4e0ebc2a37dfe501a3ea8725f195763f9de8a7ba6da6
+  languageName: node
+  linkType: hard
+
 "lodash.camelcase@npm:^4.3.0":
   version: 4.3.0
   resolution: "lodash.camelcase@npm:4.3.0"
@@ -14081,6 +14123,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"property-expr@npm:^1.5.0":
+  version: 1.5.1
+  resolution: "property-expr@npm:1.5.1"
+  checksum: 2/957f1688252f6facc7e8ca2896b5966d5ac4b79a451008598ca3f3b062493711ac55ec9c20a3702844893cb0ea1fa314e263077b5647fef4235d94107ba17a90
+  languageName: node
+  linkType: hard
+
 "property-information@npm:^5.0.0, property-information@npm:^5.3.0":
   version: 5.4.0
   resolution: "property-information@npm:5.4.0"
@@ -14622,7 +14671,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-fast-compare@npm:^2.0.4":
+"react-fast-compare@npm:^2.0.1, react-fast-compare@npm:^2.0.4":
   version: 2.0.4
   resolution: "react-fast-compare@npm:2.0.4"
   checksum: 2/4e4bfc3597414a36ee35977259012fff30c4f13a0e5dcabf958e91991bef8e9a3faee9dd666cfbdb0c2a0f0ddaf242ac2912054caa956a793c4cdff274dc5aec
@@ -15746,6 +15795,16 @@ resolve@1.1.7:
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
   checksum: 2/9d7668d69105e89e2c1a4b2fdc12c72e1a2f78b825f7b4a8a2ea5cdfebf70920bd17715bed55264c3b3959616a0695f8ad2d098bf6944fbd0953ee9c695dceef
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.18.0":
+  version: 0.18.0
+  resolution: "scheduler@npm:0.18.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+  checksum: 2/007678c559669029a5f8a029022548c2f39258b8087d1da0a3f5c5360abf3aa2794a87f56998151432f48910eca53331206cd712b751188623ca3d1bcab38b9f
   languageName: node
   linkType: hard
 
@@ -16920,6 +16979,13 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"synchronous-promise@npm:^2.0.6":
+  version: 2.0.10
+  resolution: "synchronous-promise@npm:2.0.10"
+  checksum: 2/de9e3c9f72f8a0bcc92f65cf4e0ca130f5f3a6374e9640e60df6ac668036ecb9d2ebbe49992c2f8e1e652856b923481caf8b838876a9e2ae70f40cd713b25cbb
+  languageName: node
+  linkType: hard
+
 "table@npm:^5.2.3":
   version: 5.4.6
   resolution: "table@npm:5.4.6"
@@ -17137,6 +17203,13 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
+"tiny-warning@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "tiny-warning@npm:1.0.3"
+  checksum: 2/6cf9f66cb765b893976b8cd1c1310338861f30fb04d02ef2c8e0a748cbc2ed5acd8bb1954b78c15f640ad4116def67134d7d705f2a0c9bf27e6e2eb3e92bff29
+  languageName: node
+  linkType: hard
+
 "tinycolor2@npm:^1.4.1":
   version: 1.4.1
   resolution: "tinycolor2@npm:1.4.1"
@@ -17257,6 +17330,13 @@ resolve@1.1.7:
   version: 0.0.1
   resolution: "token-stream@npm:0.0.1"
   checksum: 2/aea8bb68b9abe8d82102268917016a0a6ba1a7234ee2685eecec0d74f2d31d6740d8456b01beaa73358616144506b0a0d6efded0ae78c83e907976f0046f96a0
+  languageName: node
+  linkType: hard
+
+"toposort@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "toposort@npm:2.0.2"
+  checksum: 2/9e70bf92de5e65e77e89065f34b642a9ae75be5cf4896152b5a131ca66c77c4d9edf056942e988e29b534a83643f38860e148aa939cd3c489d00abbf5639f54f
   languageName: node
   linkType: hard
 
@@ -18601,6 +18681,21 @@ typescript@^3.8.3:
     decamelize: ^1.0.0
     window-size: 0.1.0
   checksum: 2/bc127cb21a83f099ca5685d238bc61ab08fd09b327ae0a3987cfa7ddb331582818d789c3b370e483b01a2a9006e5f7abedc5e767783237d051e36874159519b3
+  languageName: node
+  linkType: hard
+
+"yup@npm:^0.28.1":
+  version: 0.28.1
+  resolution: "yup@npm:0.28.1"
+  dependencies:
+    "@babel/runtime": ^7.0.0
+    fn-name: ~2.0.1
+    lodash: ^4.17.11
+    lodash-es: ^4.17.11
+    property-expr: ^1.5.0
+    synchronous-promise: ^2.0.6
+    toposort: ^2.0.2
+  checksum: 2/b38067889a89e0d40e09b1694332e15d59485c1d485f265a2c394dac4cbc0bd1bbedf773db6e590408f0d6deaea93ad656e9da03853fa18c9aa30a744c7bdd8d
   languageName: node
   linkType: hard
 

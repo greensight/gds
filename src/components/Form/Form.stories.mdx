@@ -1,0 +1,27 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { action } from '@storybook/addon-actions';
+import * as Yup from 'yup';
+import Form from './';
+
+<Meta title="Components / Form" component={Form} />
+
+# Form 📃
+<Story name="Knobs">
+    {() => {
+        const initialValues = {};
+        const validationSchema = Yup.object().shape({
+            text: Yup.string().required('Текст что-то забыли'),
+        });
+        return(
+            <Form
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={action('Submit')}
+                style={{ width: '25vw', minWidth: '320px' }}
+            >
+                <label htmlFor="exampleInput">Лейбл</label>
+                <input type="text" id="exampleInput" value="" />
+            </Form>
+        );
+    }}
+</Story>
