@@ -1,16 +1,21 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
+import { text, boolean } from '@storybook/addon-knobs';
 import * as Yup from 'yup';
-import Form from './';
+import Form, { FormHint, FormField, FormError, FormGroup, FormLabel } from './';
+import Button from '@components/Button';
 
 <Meta title="Components / Form" component={Form} />
 
 # Form 📃
 <Story name="Knobs">
     {() => {
-        const initialValues = {};
+        const initialValues = {
+            exampleInput: 'Некое значение',
+            exampleInput2: '',
+        };
         const validationSchema = Yup.object().shape({
-            text: Yup.string().required('Текст что-то забыли'),
+            exampleInput2: Yup.string().required('Текст что-то забыли'),
         });
         return(
             <Form
@@ -19,8 +24,31 @@ import Form from './';
                 onSubmit={action('Submit')}
                 style={{ width: '25vw', minWidth: '320px' }}
             >
-                <label htmlFor="exampleInput">Лейбл</label>
-                <input type="text" id="exampleInput" value="" />
+                <FormGroup name="exampleInput" isRequired={false}>
+                    <FormLabel>
+                        Лейбл 1.
+                        <FormHint hint=" В этом поле уже есть какое-то значение" />
+                    </FormLabel>
+                    <Form.Field name="exampleInput" />
+                </FormGroup>
+                <br />
+                <FormGroup name="exampleInput2">
+                    <FormLabel>
+                        Лейбл 2
+                    </FormLabel>
+                    <Form.Field name="exampleInput2"/>
+                    <FormHint hint="Тут нужно что-то ввести самому." />
+                </FormGroup>
+                <br />
+                <FormGroup name="exampleInput3">
+                    <FormLabel hidden={true}>
+                        Лейбл 2
+                    </FormLabel>
+                    <Form.Field name="exampleInput3"/>
+                    <FormHint hint="Поле со скрытым лейблом" />
+                </FormGroup>
+                <br />
+                <Button type="submit">Submit</Button>
             </Form>
         );
     }}
