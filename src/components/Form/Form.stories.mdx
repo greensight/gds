@@ -1,8 +1,9 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { action } from '@storybook/addon-actions';
 import { text, boolean } from '@storybook/addon-knobs';
+import theme from '@utils/baseTheme';
 import * as Yup from 'yup';
-import Form, { FormHint, FormField, FormError, FormGroup, FormLabel } from './';
+import Form from './';
 import Button from '@components/Button';
 
 <Meta title="Components / Form" component={Form} />
@@ -24,30 +25,35 @@ import Button from '@components/Button';
                 onSubmit={action('Submit')}
                 style={{ width: '25vw', minWidth: '320px' }}
             >
-                <FormGroup name="exampleInput" isRequired={false}>
-                    <FormLabel>
-                        Лейбл 1.
-                        <FormHint hint=" В этом поле уже есть какое-то значение" />
-                    </FormLabel>
-                    <Form.Field name="exampleInput" />
-                </FormGroup>
+                <Form.Field controlId="exampleInput" optional={true}>
+                    <Form.Label hint="В этом поле уже есть какое-то значение" Icon={theme.placeholder} IconAfter={true}>
+                        Лейбл 1
+                    </Form.Label>
+                    <Form.Input Icon={theme.placeholder} />
+                </Form.Field>
                 <br />
-                <FormGroup name="exampleInput2">
-                    <FormLabel>
+                <Form.Field controlId="exampleInput2">
+                    <Form.Label>
                         Лейбл 2
-                    </FormLabel>
-                    <Form.Field name="exampleInput2"/>
-                    <FormHint hint="Тут нужно что-то ввести самому." />
-                </FormGroup>
+                    </Form.Label>
+                    <Form.Input />
+                    <Form.Hint hint="Тут нужно что-то ввести самому." />
+                </Form.Field>
                 <br />
-                <FormGroup name="exampleInput3">
-                    <FormLabel hidden={true}>
-                        Лейбл 2
-                    </FormLabel>
-                    <Form.Field name="exampleInput3"/>
-                    <FormHint hint="Поле со скрытым лейблом" />
-                </FormGroup>
+                <Form.Field controlId="exampleInput3">
+                    <Form.Label hidden={true}>
+                        Лейбл 3
+                    </Form.Label>
+                    <Form.Input />
+                    <Form.Hint hint="Поле со скрытым лейблом" />
+                </Form.Field>
                 <br />
+                {/* <div>
+                    <Form.Label name="exampleInput4" isOptional={true} hint="Для использования без FormField">
+                        Отдельный лейбл 4
+                    </Form.Label>
+                    <Form.Input name="exampleInput4" />
+                </div> */}
                 <Button type="submit">Submit</Button>
             </Form>
         );

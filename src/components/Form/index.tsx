@@ -1,9 +1,15 @@
 import * as React from 'react';
+import { useContext, createContext } from 'react';
+import useTheme from '@utils/useTheme';
 import cn from 'classnames';
 import { Formik, Form as FormikForm, useField, useFormikContext } from 'formik';
 import VisuallyHidden from '@components/VisuallyHidden';
-import { IForm, IFormField, IFormHint, IFormError } from './Form';
+import { IForm, IFormInput, IFormHint, IFormError, IFormField } from './Form';
 import ErrorIcon from '../../icons/tokens/medium/crossCircle.svg';
+import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
+import placeholderIcon from '../../icons/tokens/medium/placeholder.svg';
+
+export const FormFieldContext = createContext();
 
 export const Form: React.FC<IForm> = ({ initialValues, validationSchema, onSubmit, children, className, ...props }) => {
     const baseClass = 'form';
@@ -19,10 +25,18 @@ export const Form: React.FC<IForm> = ({ initialValues, validationSchema, onSubmi
         </Formik>
     );
 };
-
-export const FormField: React.FC<IFormField> = ({ name, children, className, required, ...props }) => {
-    const { values } = useFormikContext();
-    const [field, meta, helpers] = useField(name);
+export const FormInput: React.FC<IFormInput> = ({
+    name,
+    children,
+    className,
+    required = true,
+    Icon,
+    iconAfter = false,
+    ...props
+}) => {
+    const { controlId, optional } = useContext(FormFieldContext);
+    const fieldName = name || controlId;
+    const [field, meta, helpers] = useField(fieldName);
 
     const baseClass = 'form__field';
     const classes = cn(baseClass, className);
@@ -34,10 +48,19 @@ export const FormField: React.FC<IFormField> = ({ name, children, className, req
 
     const inputProps = {
         type: 'text',
-        name,
-        required,
+        name: name || controlId,
+        className: inputClasses,
+        required: !optional,
         ...props,
     };
+
+    const { values } = useFormikContext();
+    let IconComponent;
+    if (typeof Icon === 'function') {
+        IconComponent = <Icon />;
+    } else if (typeof Icon === 'object') {
+        IconComponent = cloneElement(Icon);
+    }
 
     return (
         <div className={classes}>
@@ -53,16 +76,19 @@ export const FormField: React.FC<IFormField> = ({ name, children, className, req
                     });
                 })
             ) : (
-                <input id={name} {...field} {...inputProps} className={inputClasses} />
+                <input id={fieldName} {...field} {...inputProps} className={inputClasses} />
             )}
+            {Icon && IconComponent}
         </div>
     );
 };
 export const FormHint: React.FC<IFormHint> = ({ Tag = 'span', hint, className, ...props }) => {
-    const baseClass = 'form__field-hint';
+    const baseClass = 'form__hint';
     const classes = cn(baseClass, className);
+    const { controlId } = useContext(FormFieldContext);
+
     return (
-        <Tag className={classes} {...props}>
+        <Tag className={classes} aria-describedby={controlId} {...props}>
             {hint}
         </Tag>
     );
@@ -78,39 +104,69 @@ export const FormError: React.FC<IFormError> = ({ err, className }) => {
         </span>
     );
 };
-
-export const FormGroup: React.FC<IFormGroup> = ({
+export const FormField: React.FC<IFormField> = ({
     Tag = 'div',
-    name,
-    isRequired = true,
-    errorIsTop = true,
+    Icon,
+    iconAfter = false,
+    controlId,
+    optional,
     children,
     className,
     ...props
 }) => {
-    const baseClass = 'form-group';
+    const baseClass = 'form-field';
     const classes = cn(baseClass, className);
+
     return (
-        <Tag className={classes} {...props}>
-            {children}
-        </Tag>
+        <FormFieldContext.Provider value={{ controlId, optional }}>
+            <Tag className={classes} {...props}>
+                {React.Children.map(children, child => React.cloneElement(child))}
+            </Tag>
+        </FormFieldContext.Provider>
     );
 };
-
-export const FormLabel: React.FC<IFormLabel> = ({ hidden = false, children, className, ...props }) => {
+export const FormLabel: React.FC<IFormLabel> = ({
+    hidden = false,
+    name,
+    isOptional = false,
+    hint,
+    Icon,
+    IconAfter = false,
+    children,
+    className,
+    ...props
+}) => {
     const baseClass = 'form__label';
     const classes = cn(baseClass, className);
 
+    const { controlId, optional } = useContext(FormFieldContext);
+    const labelProps = {
+        name: name || controlId,
+        isOptional: isOptional || optional,
+        ...props,
+    };
+
+    let IconComponent;
+    if (typeof Icon === 'function') {
+        IconComponent = <Icon />;
+    } else if (typeof Icon === 'object') {
+        IconComponent = cloneElement(Icon);
+    }
     return (
-        <label className={classes} htmlFor={name} {...props}>
-            {hidden ? <VisuallyHidden>{children}</VisuallyHidden> : children}
+        <label className={classes} htmlFor={labelProps.name} {...props}>
+            <span className={`${baseClass}-text`}>
+                {Icon && IconComponent}
+                {hidden ? <VisuallyHidden>{children}</VisuallyHidden> : children}
+                {labelProps.isOptional ? <span className={`${baseClass}-optional`}>(необязательное)</span> : ''}
+            </span>
+            {hint && <span className={`${baseClass}-hint`}>{hint}</span>}
         </label>
     );
 };
 
-Form.Field = FormField;
+Form.Input = FormInput;
 Form.Label = FormLabel;
-Form.Group = FormGroup;
+Form.Field = FormField;
 Form.Hint = FormHint;
 Form.Error = FormError;
 
