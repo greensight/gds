@@ -11,7 +11,9 @@ export interface IForm {
 
 export interface IFormField {
     Tag: string;
-    /** Устанававает id экомпонентам FormInput и FormLabel */
+    /** Размер. Выбирается из определённых в объекте темы */
+    size?: string;
+    /** Устанававает id компонентам FormInput и FormLabel */
     controlId: string;
     /** Размер. Выбирается из определённых в объекте темы */
     controlSize?: string;
@@ -24,52 +26,43 @@ export interface IFormField {
 export interface IFormLabel {
     /** Тема. Выбирается из определённых в объекте темы */
     theme?: string;
-    /** Размер. Выбирается из определённых в объекте темы */
-    size?: string;
     /** Визуально скрытый лейбл для скрин-ридеров */
     hidden: boolean;
-    /** Имя лейбла */
-    name: string;
-    /** Подсказка к полю */
+    /** Подсказка к полю внутри лейбла */
     hint: string;
-    /** Добавляет в лейбл текст о необязательности поля */
-    isOptional?: boolean;
+    /** Иконка */
+    Icon?: Function | React.Component;
+    /** Распологает иконку справа от лейбла */
+    iconAfter?: boolean;
+    /** Дополнительный класс */
+    className?: string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+export interface IFormInput {
+    /** Тема. Выбирается из определённых в объекте темы */
+    theme?: string;
     /** Иконка */
     Icon?: Function | React.Component;
     /** Распологает иконку в конце поля */
     iconAfter?: boolean;
     /** Дополнительный класс */
     className?: string;
-    /** Объект темы Лебла. Для теста в Storybook, перезаписывает глобальный */
-    themeObj?: IButtonTheme;
     /** Кастомный CSS */
     css?: Object;
 }
 
-export interface IFormInput {
+export interface IFormHint {
     /** Тема. Выбирается из определённых в объекте темы */
     theme?: string;
-    /** Размер. Выбирается из определённых в объекте темы */
-    size?: string;
-    /** Имя поля */
-    name: string;
-    /** Обязательное поле */
-    required?: boolean;
-    /** Иконка */
-    Icon?: Function | React.Component;
-    /** Распологает иконку в конце поля */
-    iconAfter?: boolean;
-    /** Дополнительный класс */
-    className?: string;
-}
-
-export interface IFormHint {
     /** Тег обертки подсказки */
     Tag: string;
     /** Текст подсказки */
     hint: string;
     /** Дополнительный класс */
     className?: string;
+    /** Кастомный CSS */
+    css?: Object;
 }
 
 export interface IFormError {

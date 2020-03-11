@@ -1,4 +1,6 @@
 import PlaceholderIcon from '@icons/tokens/medium/placeholder.svg';
+import PlaceholderIconSm from '@icons/tokens/small/placeholder.svg';
+import PlaceholderIconLg from '@icons/tokens/large/placeholder.svg';
 import createTheme from '@utils/createTheme';
 import scale from '@utils/scale';
 import { FONT_STACK } from '@helpers/constants';
@@ -43,7 +45,7 @@ const baseTheme = createTheme({
                     offset: 2,
                 },
                 body: {
-                    typography: 'body',
+                    typography: 'bodyMd',
                     color: colors.black,
                     bg: colors.white,
                 },
@@ -55,6 +57,8 @@ const baseTheme = createTheme({
             },
         },
         placeholder: PlaceholderIcon,
+        placeholderSm: PlaceholderIconSm,
+        placeholderLg: PlaceholderIconLg,
         components: {
             Button: {
                 base: {
@@ -116,6 +120,114 @@ const baseTheme = createTheme({
                         disabled: {
                             border: colors.grey60,
                             color: colors.grey40,
+                        },
+                    },
+                },
+            },
+            Form: {
+                Input: {
+                    themes: {
+                        primary: {
+                            color: colors.black,
+                            border: colors.grey20,
+                            bg: colors.white,
+                            hover: {
+                                color: colors.black,
+                                border: colors.brand,
+                                bg: colors.white,
+                            },
+                            focus: {
+                                border: colors.brand,
+                                bg: colors.white,
+                                shadow: `${shadows.focus}, inset 0 0 0 1px ${colors.brand}`,
+                            },
+                            error: {
+                                border: colors.error,
+                                bg: colors.white,
+                                shadow: `inset 0 0 0 1px ${colors.error}`,
+                            },
+                            success: {
+                                border: colors.success,
+                                bg: colors.white,
+                                shadow: `inset 0 0 0 1px ${colors.success}`,
+                            },
+                            disabled: {
+                                color: colors.grey20,
+                                border: colors.grey70,
+                                bg: colors.grey70,
+                            },
+                        },
+                    },
+                    sizes: {
+                        lg: {
+                            height: scale(7),
+                            padding: scale(1),
+                            iconSize: scale(4),
+                            typography: 'bodyLg',
+                        },
+                        md: {
+                            height: scale(5),
+                            padding: scale(1),
+                            iconSize: scale(3),
+                            typography: 'bodyMd',
+                        },
+                        sm: {
+                            height: scale(3),
+                            padding: scale(1),
+                            iconSize: scale(2),
+                            typography: 'bodySm',
+                        },
+                    },
+                },
+                Label: {
+                    sizes: {
+                        lg: {
+                            iconSize: scale(4),
+                            typography: 'labelLg',
+                        },
+                        md: {
+                            iconSize: scale(3),
+                            typography: 'labelMd',
+                        },
+                        sm: {
+                            iconSize: scale(2),
+                            typography: 'labelSm',
+                        },
+                    },
+                    state: {
+                        error: {
+                            color: colors.error,
+                        },
+                        success: {
+                            color: colors.success,
+                        },
+                    },
+                },
+                Hint: {
+                    color: colors.grey20,
+                    sizes: {
+                        lg: {
+                            typography: 'bodyLg',
+                        },
+                        md: {
+                            typography: 'bodyMd',
+                        },
+                        sm: {
+                            typography: 'bodySm',
+                        },
+                    },
+                },
+                Error: {
+                    color: colors.error,
+                    sizes: {
+                        lg: {
+                            typography: 'bodyLg',
+                        },
+                        md: {
+                            typography: 'bodyMd',
+                        },
+                        sm: {
+                            typography: 'bodySm',
                         },
                     },
                 },
