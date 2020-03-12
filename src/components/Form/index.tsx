@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, createContext } from 'react';
+import { useContext, createContext, useEffect } from 'react';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
@@ -15,19 +15,50 @@ import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 import placeholderIcon from '../../icons/tokens/medium/placeholder.svg';
 
 export const FormFieldContext = createContext();
+export const FormContext = createContext();
 
-export const Form: React.FC<IForm> = ({ initialValues, validationSchema, onSubmit, children, className, ...props }) => {
+const FocusError = () => {
+    const { errors, isSubmitting, isValidating } = useFormikContext();
+
+    useEffect(() => {
+        if (isSubmitting && !isValidating) {
+            const keys = Object.keys(errors);
+            if (keys.length > 0) {
+                const selector = `[name=${keys[0]}]`;
+                const errorElement = document.querySelector(selector) as HTMLElement;
+                if (errorElement) {
+                    errorElement.focus();
+                }
+            }
+        }
+    }, [errors, isSubmitting, isValidating]);
+
+    return null;
+};
+
+export const Form: React.FC<IForm> = ({
+    theme,
+    initialValues,
+    validationSchema,
+    onSubmit,
+    children,
+    className,
+    ...props
+}) => {
     const baseClass = 'form';
     const classes = cn(baseClass, className);
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-            {() => (
-                <FormikForm className={classes} noValidate {...props}>
-                    {children}
-                </FormikForm>
-            )}
-        </Formik>
+        <FormContext.Provider value={{ theme }}>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+                {() => (
+                    <FormikForm className={classes} noValidate {...props}>
+                        {children}
+                        <FocusError />
+                    </FormikForm>
+                )}
+            </Formik>
+        </FormContext.Provider>
     );
 };
 export const FormInput: React.FC<IFormInput> = ({
@@ -115,7 +146,7 @@ export const FormInput: React.FC<IFormInput> = ({
             borderRadius,
             height,
             padding: `${padding}px`,
-            [paddingRule]: Icon ? `${iconSize + MAJOR_STEP_DEFAULT}px` : `${padding}px`,
+            [paddingRule]: Icon ? `${height}px` : `${padding}px`,
             ...typographyStyles,
             color,
             fill: color,
@@ -143,8 +174,9 @@ export const FormInput: React.FC<IFormInput> = ({
     const iconProps = {
         css: {
             position: 'absolute',
-            top: 0,
-            [horizontalRule]: 0,
+            top: '50%',
+            marginTop: `-${iconSize / 2}px`,
+            [horizontalRule]: `${(height - iconSize) / 2}px`,
             width: iconSize,
             height: iconSize,
         },
@@ -178,28 +210,34 @@ export const FormInput: React.FC<IFormInput> = ({
         name: controlId,
         className: inputClasses,
         required: !optional,
+        'aria-required': !optional,
         ...props,
     };
 
     const { values } = useFormikContext();
 
     return (
-        <div className={classes} css={fieldStyles}>
-            {children ? (
-                React.Children.map(children, child => {
-                    return React.cloneElement(child, {
-                        values,
-                        field,
-                        meta,
-                        helpers,
-                        id: child?.type?.displayName !== 'Legend' ? controlId : '',
-                        ...inputProps,
-                    });
-                })
-            ) : (
-                <input id={controlId} {...field} {...inputProps} className={inputClasses} css={styles} />
+        <div>
+            <div className={classes} css={fieldStyles}>
+                {children ? (
+                    React.Children.map(children, child => {
+                        return React.cloneElement(child, {
+                            values,
+                            field,
+                            meta,
+                            helpers,
+                            id: child?.type?.displayName !== 'Legend' ? controlId : '',
+                            ...inputProps,
+                        });
+                    })
+                ) : (
+                    <input id={controlId} {...field} {...inputProps} className={inputClasses} css={styles} />
+                )}
+                {Icon && IconComponent}
+            </div>
+            {meta.error && meta.touched && !usedTheme.components.Form.themes?.[theme]?.errorIsTop && (
+                <FormError err={meta.error} aria-describedby={controlId} />
             )}
-            {Icon && IconComponent}
         </div>
     );
 };
@@ -246,7 +284,7 @@ export const FormHint: React.FC<IFormHint> = ({ Tag = 'span', hint, className, c
         </Tag>
     );
 };
-export const FormError: React.FC<IFormError> = ({ err, css, className }) => {
+const FormError: React.FC<IFormError> = ({ err, css, className, ...props }) => {
     const { controlId, size } = useContext(FormFieldContext);
     const baseClass = 'form__error';
     const classes = cn(baseClass, className);
@@ -282,7 +320,7 @@ export const FormError: React.FC<IFormError> = ({ err, css, className }) => {
     ];
 
     return (
-        <span className={classes} css={styles} aria-describedby={controlId}>
+        <span className={classes} css={styles} {...props}>
             {err}
         </span>
     );
@@ -300,12 +338,13 @@ export const FormField: React.FC<IFormField> = ({
     const classes = cn(baseClass, className);
 
     const [field, meta, helpers] = useField(controlId);
-
+    const { theme } = useContext(FormContext);
+    const globalTheme = useTheme();
+    const usedTheme = globalTheme.components?.Form ? globalTheme : baseTheme;
     return (
         <FormFieldContext.Provider value={{ controlId, optional, size }}>
             <Tag className={classes} {...props}>
                 {React.Children.map(children, child => React.cloneElement(child))}
-                {meta.error && meta.touched && <FormError err={meta.error} />}
             </Tag>
         </FormFieldContext.Provider>
     );
@@ -321,16 +360,22 @@ export const FormLabel: React.FC<IFormLabel> = ({
     ...props
 }) => {
     const { controlId, optional, size } = useContext(FormFieldContext);
-
+    const { theme } = useContext(FormContext);
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Form ? globalTheme : baseTheme;
     const labelTheme = usedTheme.components.Form.Label;
     const hintTheme = usedTheme.components.Form.Hint;
+    const optionalTheme = usedTheme.components.Form.Label.Optional;
+    const markTheme = usedTheme.components.Form.Label.Mark;
     if (!labelTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
 
     const getRule = (name, defaultValue) => {
+        // const themeStyles = labelTheme.themes[theme];
+        // let themeRule;
+        // if (themeStyles) themeRule = themeStyles[name];
+
         const sizeStyles = labelTheme.sizes[size];
         let sizeRule;
         if (sizeStyles) sizeRule = sizeStyles[name];
@@ -375,6 +420,9 @@ export const FormLabel: React.FC<IFormLabel> = ({
         },
     ];
 
+    const markStyles = [markTheme.css];
+    const optionalStyles = [optionalTheme.css];
+
     const iconHorizontalRule = `${!iconAfter ? 'left' : 'right'}`;
 
     const iconProps = {
@@ -408,17 +456,32 @@ export const FormLabel: React.FC<IFormLabel> = ({
     } else if (typeof Icon === 'object') {
         IconComponent = cloneElement(Icon, iconProps);
     }
+    console.log(usedTheme.components.Form.themes[theme]);
     return (
         <label className={classes} htmlFor={labelProps.name} css={styles} {...props}>
             <span className={`${baseClass}-text`} css={textStyles}>
-                {Icon && IconComponent}
+                {!hidden && Icon && IconComponent}
                 {hidden ? <VisuallyHidden>{children}</VisuallyHidden> : children}
-                {optional ? <span className={`${baseClass}-optional`}>(необязательное)</span> : ''}
+                {!hidden && '\u00A0'}
+                {optional && usedTheme.components.Form.themes?.[theme]?.optional && (
+                    <span className={`${baseClass}-optional`} css={optionalStyles}>
+                        {optional}
+                    </span>
+                )}
+                {!hidden && '\u00A0'}
+                {!optional && !usedTheme.components.Form.themes?.[theme]?.optional && !hidden && (
+                    <span className={`${baseClass}-mark`} css={markStyles} aria-hidden="true">
+                        *
+                    </span>
+                )}
             </span>
             {hint && (
                 <span className={`${baseClass}-hint`} css={hintStyles}>
-                    {hint}
+                    {hidden ? <VisuallyHidden>{hint}</VisuallyHidden> : hint}
                 </span>
+            )}
+            {meta.error && meta.touched && usedTheme.components.Form.themes?.[theme]?.errorIsTop && (
+                <FormError err={meta.error} />
             )}
         </label>
     );
@@ -428,6 +491,5 @@ Form.Input = FormInput;
 Form.Label = FormLabel;
 Form.Field = FormField;
 Form.Hint = FormHint;
-Form.Error = FormError;
 
 export default Form;

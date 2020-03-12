@@ -125,6 +125,24 @@ const baseTheme = createTheme({
                 },
             },
             Form: {
+                themes: {
+                    accessible: {
+                        optional: true,
+                        errorIsTop: true,
+                    },
+                    primary: {
+                        optional: false,
+                        errorIsTop: false,
+                    },
+                    optional: {
+                        optional: true,
+                        errorIsTop: false,
+                    },
+                    required: {
+                        optional: false,
+                        errorIsTop: true,
+                    },
+                },
                 Input: {
                     themes: {
                         primary: {
@@ -200,6 +218,19 @@ const baseTheme = createTheme({
                         },
                         success: {
                             color: colors.success,
+                        },
+                    },
+                    Optional: {
+                        css: {
+                            color: colors.grey30,
+                            fontStyle: 'italic',
+                            fontWeight: 400,
+                            fontSize: '0.8em',
+                        },
+                    },
+                    Mark: {
+                        css: {
+                            color: colors.error,
                         },
                     },
                 },

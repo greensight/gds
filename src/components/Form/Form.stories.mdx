@@ -1,5 +1,5 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { action } from '@storybook/addon-actions';
+import { action, radios } from '@storybook/addon-actions';
 import { text, boolean } from '@storybook/addon-knobs';
 import theme from '@utils/baseTheme';
 import * as Yup from 'yup';
@@ -10,60 +10,63 @@ import Button from '@components/Button';
 <Meta title="Components / Form" component={Form} decorators={[centeredDecorator]} />
 
 # Form 📃
-<Preview>
-    <Story name="basic">
-        {() => {
-            const initialValues = {
-                exampleInput: 'Некое значение',
-                exampleInput2: '',
-                exampleInput3: '',
-                exampleInput4: 'Неизменяемое значение',
-            };
-            const validationSchema = Yup.object().shape({
-                exampleInput2: Yup.string().required('Текст что-то забыли'),
-            });
-            return(
-                <Form
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={action('Submit')}
-                    style={{ width: '25vw', minWidth: '320px' }}
-                >
-                    <Form.Field controlId="exampleInput" optional={true} size="lg">
-                        <Form.Label hint="Подсказка к полю 1" Icon={theme.placeholderLg} iconAfter={true}>
-                            Лейбл 1
-                        </Form.Label>
-                        <Form.Input Icon={theme.placeholderLg} />
-                    </Form.Field>
-                    <br />
-                    <Form.Field controlId="exampleInput2">
-                        <Form.Label Icon={theme.placeholder} hint="Подсказка к полю 2">
-                            Лейбл 2
-                        </Form.Label>
-                        <Form.Input Icon={theme.placeholder} />
-                    </Form.Field>
-                    <br />
-                    <Form.Field controlId="exampleInput3" size="sm">
-                        <Form.Label Icon={theme.placeholderSm} hint="Подсказка к полю 3">
-                            Лейбл 3
-                        </Form.Label>
-                        <Form.Input Icon={theme.placeholderSm} />
-                    </Form.Field>
-                    <br />
-                    <Form.Field controlId="exampleInput4" optional={true}>
-                        <Form.Label>
-                            Лейбл 4
-                        </Form.Label>
-                        <Form.Input Icon={theme.placeholder} disabled />
-                        <Form.Hint hint="Подсказка: заблокированное поле" />
-                    </Form.Field>
-                    <br />
-                    <Button type="submit">Submit</Button>
-                </Form>
-            );
-        }}
-    </Story>
-</Preview>
+
+<Story name="Knobs">
+    {() => {
+        const { colors, shadows } = theme;
+        const initialValues = {
+            exampleInput: 'Некое значение',
+            exampleInput2: '',
+            exampleInput3: '',
+            exampleInput4: 'Неизменяемое значение',
+        };
+        const validationSchema = Yup.object().shape({
+            exampleInput2: Yup.string().required('Текст что-то забыли'),
+        });
+        return (
+            <Form
+                theme='primary'
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={action('Submit')}
+                style={{ width: '25vw', minWidth: '320px' }}
+                data-vadyan="{title: 'Это Вадян'}"
+            >
+                <p>Это Вадян.</p>
+                <Form.Field controlId="exampleInput" optional="(необязательное поле)" size="lg">
+                    <Form.Label hint="Подсказка к полю 1" Icon={theme.placeholderLg} iconAfter={true}>
+                        Лейбл 1
+                    </Form.Label>
+                    <Form.Input Icon={theme.placeholderLg} />
+                </Form.Field>
+                <br />
+                <Form.Field controlId="exampleInput2">
+                    <Form.Label Icon={theme.placeholder} hint="Подсказка к полю 2" hidden>
+                        Лейбл 2
+                    </Form.Label>
+                    <Form.Input Icon={theme.placeholder} />
+                </Form.Field>
+                <br />
+                <Form.Field controlId="exampleInput3" size="sm">
+                    <Form.Label Icon={theme.placeholderSm} hint="Подсказка к полю 3">
+                        Лейбл 3
+                    </Form.Label>
+                    <Form.Input Icon={theme.placeholderSm} />
+                </Form.Field>
+                <br />
+                <Form.Field controlId="exampleInput4" optional="(необязательное поле)">
+                    <Form.Label>
+                        Лейбл 4
+                    </Form.Label>
+                    <Form.Input Icon={theme.placeholder} disabled />
+                    <Form.Hint hint="Подсказка: заблокированное поле" />
+                </Form.Field>
+                <br />
+                <Button type="submit">Submit</Button>
+            </Form>
+        );
+    }}
+</Story>
 
 ## Форма
 
@@ -89,7 +92,6 @@ const validationSchema = Yup.object().shape({
 
 ☝🏿 Компонент `Form` не накладывает никакой стилизации на форму. Сетку вы можете задавать по месту через прокидывание своих классов.
 
-
 ## Поле ошибки
 
 Для полей ошибок используется `Form.Error`, который изнутри использует ErrorMessage (formik). Обычно его не нужно использовать напрямую: в полях `Form.Field` он вставляется изнутри, в остальных импортируется из компонента формы и также обрабатывается на уровне компонентов.
@@ -97,22 +99,25 @@ const validationSchema = Yup.object().shape({
 ## Props
 
 ### Form
+
 <Props of={Form} />
 
 ### Form.Field
+
 <Props of={Form.Field} />
 
 ### Form.Label
+
 <Props of={Form.Label} />
 
 ### Form.Input
+
 <Props of={Form.Input} />
 
 ### Form.Label
+
 <Props of={Form.Label} />
 
 ### Form.Hint
-<Props of={Form.Hint} />
 
-### Form.Error
-<Props of={Form.Error} />
+<Props of={Form.Hint} />
