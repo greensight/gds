@@ -1,6 +1,6 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { action, radios } from '@storybook/addon-actions';
-import { text, boolean } from '@storybook/addon-knobs';
+import { radios, boolean, object, text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import theme from '@utils/baseTheme';
 import * as Yup from 'yup';
 import centeredDecorator from '@decorators/centeredDecorator';
@@ -13,53 +13,38 @@ import Button from '@components/Button';
 
 <Story name="Knobs">
     {() => {
-        const { colors, shadows } = theme;
         const initialValues = {
             exampleInput: 'Некое значение',
             exampleInput2: '',
-            exampleInput3: '',
-            exampleInput4: 'Неизменяемое значение',
         };
         const validationSchema = Yup.object().shape({
             exampleInput2: Yup.string().required('Текст что-то забыли'),
         });
         return (
             <Form
-                theme='primary'
+                errorPosition={radios('errorPosition', ['top', 'bottom'], 'top')}
+                required={radios('required', ['optional', 'mark'], 'optional')}
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={action('Submit')}
                 style={{ width: '25vw', minWidth: '320px' }}
-                data-vadyan="{title: 'Это Вадян'}"
+                data-vadyan="{title: 'Это форма Вадяна'}"
             >
-                <p>Это Вадян.</p>
-                <Form.Field controlId="exampleInput" optional="(необязательное поле)" size="lg">
-                    <Form.Label hint="Подсказка к полю 1" Icon={theme.placeholderLg} iconAfter={true}>
+                <p>Это форма Вадяна.</p>
+                <br />
+                <Form.Field controlId="exampleInput" optional={text('optional text', '(необязательное поле)')} size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Label hint', true) ? text('Label hint text', 'Подсказка к полю 1') : undefined}>
+                    <Form.Label Icon={boolean('Label icon', true) && theme.placeholder}
+                iconAfter={boolean('Label iconAfter', true)}>
                         Лейбл 1
                     </Form.Label>
-                    <Form.Input Icon={theme.placeholderLg} />
+                    <Form.Input Icon={boolean('Input icon', true) && theme.placeholder} iconAfter={boolean('Input iconAfter', true)} disabled={boolean('disabled', false)} />
                 </Form.Field>
                 <br />
-                <Form.Field controlId="exampleInput2">
-                    <Form.Label Icon={theme.placeholder} hint="Подсказка к полю 2" hidden>
+                <Form.Field controlId="exampleInput2" size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Input hint', true) ? text('Input hint text', 'Подсказка к полю 2') : undefined} hintPosition={radios('hintPosition', ['top', 'bottom'], 'bottom')}>
+                    <Form.Label Icon={theme.placeholder}>
                         Лейбл 2
                     </Form.Label>
                     <Form.Input Icon={theme.placeholder} />
-                </Form.Field>
-                <br />
-                <Form.Field controlId="exampleInput3" size="sm">
-                    <Form.Label Icon={theme.placeholderSm} hint="Подсказка к полю 3">
-                        Лейбл 3
-                    </Form.Label>
-                    <Form.Input Icon={theme.placeholderSm} />
-                </Form.Field>
-                <br />
-                <Form.Field controlId="exampleInput4" optional="(необязательное поле)">
-                    <Form.Label>
-                        Лейбл 4
-                    </Form.Label>
-                    <Form.Input Icon={theme.placeholder} disabled />
-                    <Form.Hint hint="Подсказка: заблокированное поле" />
                 </Form.Field>
                 <br />
                 <Button type="submit">Submit</Button>
@@ -113,11 +98,3 @@ const validationSchema = Yup.object().shape({
 ### Form.Input
 
 <Props of={Form.Input} />
-
-### Form.Label
-
-<Props of={Form.Label} />
-
-### Form.Hint
-
-<Props of={Form.Hint} />

@@ -125,24 +125,6 @@ const baseTheme = createTheme({
                 },
             },
             Form: {
-                themes: {
-                    accessible: {
-                        optional: true,
-                        errorIsTop: true,
-                    },
-                    primary: {
-                        optional: false,
-                        errorIsTop: false,
-                    },
-                    optional: {
-                        optional: true,
-                        errorIsTop: false,
-                    },
-                    required: {
-                        optional: false,
-                        errorIsTop: true,
-                    },
-                },
                 Input: {
                     themes: {
                         primary: {
@@ -150,29 +132,32 @@ const baseTheme = createTheme({
                             border: colors.grey20,
                             bg: colors.white,
                             hover: {
-                                color: colors.black,
                                 border: colors.brand,
                                 bg: colors.white,
                             },
                             focus: {
                                 border: colors.brand,
                                 bg: colors.white,
-                                shadow: `${shadows.focus}, inset 0 0 0 1px ${colors.brand}`,
-                            },
-                            error: {
-                                border: colors.error,
-                                bg: colors.white,
-                                shadow: `inset 0 0 0 1px ${colors.error}`,
-                            },
-                            success: {
-                                border: colors.success,
-                                bg: colors.white,
-                                shadow: `inset 0 0 0 1px ${colors.success}`,
+                                shadow: `${shadows.focus}`,
                             },
                             disabled: {
                                 color: colors.grey20,
                                 border: colors.grey70,
                                 bg: colors.grey70,
+                            },
+                            validation: {
+                                error: {
+                                    css: {
+                                        border: `1px solid ${colors.error}`,
+                                        background: `${colors.white}`,
+                                    },
+                                },
+                                success: {
+                                    css: {
+                                        border: `1px solid ${colors.success}`,
+                                        background: `${colors.white}`,
+                                    },
+                                },
                             },
                         },
                     },
@@ -223,7 +208,6 @@ const baseTheme = createTheme({
                     Optional: {
                         css: {
                             color: colors.grey30,
-                            fontStyle: 'italic',
                             fontWeight: 400,
                             fontSize: '0.8em',
                         },
@@ -246,6 +230,10 @@ const baseTheme = createTheme({
                         sm: {
                             typography: 'bodySm',
                         },
+                    },
+                    css: {
+                        display: 'block',
+                        fontWeight: 'normal',
                     },
                 },
                 Error: {
