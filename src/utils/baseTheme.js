@@ -1,6 +1,6 @@
 import PlaceholderIcon from '@icons/tokens/medium/placeholder.svg';
-import PlaceholderIconSm from '@icons/tokens/small/placeholder.svg';
-import PlaceholderIconLg from '@icons/tokens/large/placeholder.svg';
+import ErorrIcon from '@icons/tokens/medium/errorTriangle.svg';
+import SuccessIcon from '@icons/tokens/medium/checkCircle.svg';
 import createTheme from '@utils/createTheme';
 import scale from '@utils/scale';
 import { FONT_STACK } from '@helpers/constants';
@@ -57,8 +57,6 @@ const baseTheme = createTheme({
             },
         },
         placeholder: PlaceholderIcon,
-        placeholderSm: PlaceholderIconSm,
-        placeholderLg: PlaceholderIconLg,
         components: {
             Button: {
                 base: {
@@ -125,6 +123,14 @@ const baseTheme = createTheme({
                 },
             },
             Form: {
+                errorIcon: {
+                    icon: ErorrIcon,
+                    fill: colors.error,
+                },
+                successIcon: {
+                    icon: SuccessIcon,
+                    fill: colors.success,
+                },
                 Input: {
                     themes: {
                         primary: {
@@ -155,7 +161,7 @@ const baseTheme = createTheme({
                                 success: {
                                     css: {
                                         border: `1px solid ${colors.success}`,
-                                        background: `${colors.white}`,
+                                        background: `${colors.success}`,
                                     },
                                 },
                             },
@@ -197,17 +203,21 @@ const baseTheme = createTheme({
                             typography: 'labelSm',
                         },
                     },
-                    state: {
+                    validation: {
                         error: {
-                            color: colors.error,
+                            css: {
+                                color: colors.error,
+                            },
                         },
                         success: {
-                            color: colors.success,
+                            css: {
+                                color: colors.success,
+                            },
                         },
                     },
                     Optional: {
                         css: {
-                            color: colors.grey30,
+                            color: colors.grey20,
                             fontWeight: 400,
                             fontSize: '0.8em',
                         },
@@ -234,6 +244,7 @@ const baseTheme = createTheme({
                     css: {
                         display: 'block',
                         fontWeight: 'normal',
+                        color: colors.grey20,
                     },
                 },
                 Error: {

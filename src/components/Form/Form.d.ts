@@ -3,6 +3,10 @@ export interface IForm {
     errorPosition: string;
     /** Переключение между обязательностью и опциональностью */
     required: string;
+    /** Иконка ошибки */
+    ErrorIcon?: Function | React.Component;
+    /** Иконка успешной валидации */
+    SuccessIcon?: Function | React.Component;
     /** Показ успешной валидации */
     showSuccess: boolean;
     /** Названия полей с начальными значениями */
@@ -11,8 +15,6 @@ export interface IForm {
     validationSchema?: Object;
     /** Обработчик сабмита */
     onSubmit?: (values: FormikValues) => void;
-    /** Дополнительный класс */
-    className?: string;
 }
 
 export interface IFormField {
@@ -27,6 +29,10 @@ export interface IFormField {
     hint: string;
     /** Устанававает id компонентам FormInput и FormLabel */
     controlId: string;
+    /** Визуально скрытый лейбл для скрин-ридеров */
+    hiddenLabel: boolean;
+    /** Расположение иконки валидации */
+    validationPosition: string;
     /** Устанавливает опциональное заполнение компоненту */
     optional?: boolean;
 }
@@ -34,8 +40,6 @@ export interface IFormField {
 export interface IFormLabel {
     /** Тема. Выбирается из определённых в объекте темы */
     theme?: string;
-    /** Визуально скрытый лейбл для скрин-ридеров */
-    hidden: boolean;
     /** Иконка */
     Icon?: Function | React.Component;
     /** Распологает иконку справа от лейбла */

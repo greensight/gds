@@ -29,22 +29,25 @@ import Button from '@components/Button';
                 onSubmit={action('Submit')}
                 style={{ width: '25vw', minWidth: '320px' }}
                 data-vadyan="{title: 'Это форма Вадяна'}"
+                showSuccess={true}
+                SuccessIcon={theme.components.Form.successIcon.icon}
+                ErrorIcon={theme.components.Form.errorIcon.icon}
             >
                 <p>Это форма Вадяна.</p>
                 <br />
                 <Form.Field controlId="exampleInput" optional={text('optional text', '(необязательное поле)')} size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Label hint', true) ? text('Label hint text', 'Подсказка к полю 1') : undefined}>
-                    <Form.Label Icon={boolean('Label icon', true) && theme.placeholder}
-                iconAfter={boolean('Label iconAfter', true)}>
+                    <Form.Label Icon={theme.placeholder} iconAfter={true}>
                         Лейбл 1
                     </Form.Label>
-                    <Form.Input Icon={boolean('Input icon', true) && theme.placeholder} iconAfter={boolean('Input iconAfter', true)} disabled={boolean('disabled', false)} />
+                    <Form.Input Icon={theme.placeholder} iconAfter={true} disabled={boolean('disabled', false)} />
                 </Form.Field>
                 <br />
-                <Form.Field controlId="exampleInput2" size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Input hint', true) ? text('Input hint text', 'Подсказка к полю 2') : undefined} hintPosition={radios('hintPosition', ['top', 'bottom'], 'bottom')}>
-                    <Form.Label Icon={theme.placeholder}>
+                <Form.Field controlId="exampleInput2" size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Input hint', true) ? text('Input hint text', 'Подсказка к полю 2') : undefined} hintPosition={radios('hintPosition', ['top', 'bottom'], 'bottom')} hiddenLabel={boolean('Hidden Label', false)} validationPosition={radios('validationPosition', ['labelLeft', 'labelRight', 'inputLeft', 'inputRight'], 'labelRight')}>
+                    <Form.Label Icon={boolean('Label icon', true) && theme.placeholder}
+                iconAfter={boolean('Label iconAfter', true)}>
                         Лейбл 2
                     </Form.Label>
-                    <Form.Input Icon={theme.placeholder} />
+                    <Form.Input Icon={boolean('Input icon', true) && theme.placeholder} iconAfter={boolean('Input iconAfter', true)} />
                 </Form.Field>
                 <br />
                 <Button type="submit">Submit</Button>
