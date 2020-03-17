@@ -29,25 +29,24 @@ import Button from '@components/Button';
                 onSubmit={action('Submit')}
                 style={{ width: '25vw', minWidth: '320px' }}
                 data-vadyan="{title: 'Это форма Вадяна'}"
-                showSuccess={true}
+                showSuccess={boolean('Show success status', true)}
                 SuccessIcon={theme.components.Form.successIcon.icon}
                 ErrorIcon={theme.components.Form.errorIcon.icon}
             >
                 <p>Это форма Вадяна.</p>
                 <br />
                 <Form.Field controlId="exampleInput" optional={text('optional text', '(необязательное поле)')} size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Label hint', true) ? text('Label hint text', 'Подсказка к полю 1') : undefined}>
-                    <Form.Label Icon={theme.placeholder} iconAfter={true}>
+                    <Form.Label>
                         Лейбл 1
                     </Form.Label>
-                    <Form.Input Icon={theme.placeholder} iconAfter={true} disabled={boolean('disabled', false)} />
+                    <Form.Input />
                 </Form.Field>
                 <br />
-                <Form.Field controlId="exampleInput2" size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Input hint', true) ? text('Input hint text', 'Подсказка к полю 2') : undefined} hintPosition={radios('hintPosition', ['top', 'bottom'], 'bottom')} hiddenLabel={boolean('Hidden Label', false)} validationPosition={radios('validationPosition', ['labelLeft', 'labelRight', 'inputLeft', 'inputRight'], 'labelRight')}>
-                    <Form.Label Icon={boolean('Label icon', true) && theme.placeholder}
-                iconAfter={boolean('Label iconAfter', true)}>
+                <Form.Field controlId="exampleInput2" size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Input hint', true) ? text('Input hint text', 'Подсказка к полю 2') : undefined} hintPosition={radios('hintPosition', ['top', 'bottom'], 'bottom')} hiddenLabel={boolean('Hidden Label', false)} validationPosition={radios('validationPosition', ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'], 'labelBefore')}>
+                    <Form.Label IconBefore={boolean('Label icon before', true) && theme.placeholder} IconAfter={boolean('Label icon after', true) && theme.placeholder}>
                         Лейбл 2
                     </Form.Label>
-                    <Form.Input Icon={boolean('Input icon', true) && theme.placeholder} iconAfter={boolean('Input iconAfter', true)} />
+                    <Form.Input IconBefore={boolean('Input icon before', true) && theme.placeholder} IconAfter={boolean('Input icon after', true) && theme.placeholder} />
                 </Form.Field>
                 <br />
                 <Button type="submit">Submit</Button>

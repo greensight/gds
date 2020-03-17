@@ -59,12 +59,12 @@ export const Form: React.FC<IForm> = ({
 export const FormInput: React.FC<IFormInput> = ({
     theme = 'primary',
     children,
-    Icon,
-    iconAfter = false,
+    IconBefore,
+    IconAfter,
     css,
     ...props
 }) => {
-    const { controlId, optional, size, hint, hintPosition, hiddenLabel } = useContext(FormFieldContext);
+    const { controlId, optional, size, hint, hintPosition, validationPosition } = useContext(FormFieldContext);
     const { errorPosition, showSuccess, ErrorIcon, SuccessIcon } = useContext(FormContext);
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Form.Input ? globalTheme : baseTheme;
@@ -132,7 +132,7 @@ export const FormInput: React.FC<IFormInput> = ({
     const shadow = getRule('shadow');
 
     const typographyStyles = typographyName && typography(typographyName, usedTheme);
-    const paddingRule = `padding${!iconAfter ? 'Left' : 'Right'}`;
+
     const [field, meta, helpers] = useField(controlId);
     const styles = [
         {
@@ -142,7 +142,12 @@ export const FormInput: React.FC<IFormInput> = ({
             borderRadius,
             height,
             padding: `${padding}px`,
-            [paddingRule]: Icon ? `${height}px` : `${padding}px`,
+            paddingRight: (IconAfter || validationPosition === 'inputAfter') && `${height}px`,
+            paddingLeft:
+                (IconBefore ||
+                    (validationPosition === 'inputBefore' && meta.touched && meta.error) ||
+                    (validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess)) &&
+                `${height}px`,
             ...typographyStyles,
             color,
             fill: color,
@@ -166,33 +171,59 @@ export const FormInput: React.FC<IFormInput> = ({
         css,
     ];
 
-    const horizontalRule = `${!iconAfter ? 'left' : 'right'}`;
-    const iconProps = {
+    const iconBeforeProps = {
         css: {
             position: 'absolute',
             top: '50%',
             marginTop: `-${iconSize / 2}px`,
-            [horizontalRule]: `${(height - iconSize) / 2}px`,
+            left: `${(height - iconSize) / 2}px`,
             width: iconSize,
             height: iconSize,
         },
     };
 
-    let IconComponent;
-    if (typeof Icon === 'function') {
-        IconComponent = <Icon {...iconProps} />;
+    const iconAfterProps = {
+        css: {
+            position: 'absolute',
+            top: '50%',
+            marginTop: `-${iconSize / 2}px`,
+            right: `${(height - iconSize) / 2}px`,
+            width: iconSize,
+            height: iconSize,
+        },
+    };
+
+    let IconBeforeComponent;
+    if (typeof IconBefore === 'function') {
+        IconBeforeComponent = <IconBefore {...iconBeforeProps} />;
     } else if (typeof Icon === 'object') {
-        IconComponent = cloneElement(Icon, iconProps);
+        IconBeforeComponent = cloneElement(IconBefore, iconBeforeProps);
     }
 
-    const validationHorizontalRule = `${!iconAfter ? 'right' : 'left'}`;
+    let IconAfterComponent;
+    if (typeof IconAfter === 'function') {
+        IconAfterComponent = <IconAfter {...iconAfterProps} />;
+    } else if (typeof IconAfter === 'object') {
+        IconAfterComponent = cloneElement(IconAfter, iconAfterProps);
+    }
+
+    // const validationIconHorizontalRule = `${Icon && iconAfter === false ? 'left' : 'right'}`;
+
+    let validationIconHorizontalRule;
+
+    if (validationPosition === 'inputBefore') {
+        validationIconHorizontalRule = 'left';
+    } else if (validationPosition === 'inputAfter') {
+        validationIconHorizontalRule = 'right';
+    }
+
     const iconErrorProps = {
         fill: globalTheme.components?.Form.errorIcon.fill,
         css: {
             position: 'absolute',
             top: '50%',
             marginTop: `${-(iconSize / 2)}px`,
-            [validationHorizontalRule]: `${(height - iconSize) / 2}px`,
+            [validationIconHorizontalRule]: `${(height - iconSize) / 2}px`,
             width: iconSize,
             height: iconSize,
         },
@@ -211,7 +242,7 @@ export const FormInput: React.FC<IFormInput> = ({
             position: 'absolute',
             top: '50%',
             marginTop: `${-(iconSize / 2)}px`,
-            [validationHorizontalRule]: `${(height - iconSize) / 2}px`,
+            [validationIconHorizontalRule]: `${(height - iconSize) / 2}px`,
             width: iconSize,
             height: iconSize,
         },
@@ -255,7 +286,8 @@ export const FormInput: React.FC<IFormInput> = ({
     };
 
     const { values } = useFormikContext();
-
+    const a = validationPosition === 'inputBefore' && meta.touched && meta.error;
+    console.log(a);
     return (
         <>
             <div css={fieldStyles}>
@@ -273,10 +305,30 @@ export const FormInput: React.FC<IFormInput> = ({
                 ) : (
                     <input id={controlId} {...field} {...inputProps} css={styles} />
                 )}
-                {!iconAfter && IconComponent}
-                {iconAfter && typeof meta.error === 'undefined' && !meta.touched && IconComponent}
-                {meta.touched && meta.error && hiddenLabel && IconErrorComponent}
-                {meta.touched && !meta.error && showSuccess && hiddenLabel && IconSuccessComponent}
+
+                {IconBefore &&
+                    !(validationPosition === 'inputBefore' && meta.touched && meta.error) &&
+                    !(validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess) &&
+                    IconBeforeComponent}
+
+                {IconAfter &&
+                    !(validationPosition === 'inputAfter' && meta.touched && meta.error) &&
+                    !(validationPosition === 'inputAfter' && meta.touched && !meta.error && showSuccess) &&
+                    IconAfterComponent}
+
+                {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
+                    meta.touched &&
+                    meta.error &&
+                    IconErrorComponent}
+                {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
+                    meta.touched &&
+                    meta.error &&
+                    IconErrorComponent}
+                {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
+                    meta.touched &&
+                    !meta.error &&
+                    showSuccess &&
+                    IconSuccessComponent}
             </div>
             {meta.error && meta.touched && errorPosition === 'bottom' && (
                 <FormError err={meta.error} id={`error-${controlId}`} />
@@ -335,7 +387,7 @@ export const FormField: React.FC<IFormField> = ({
     hint,
     controlId,
     hiddenLabel = false,
-    validationPosition = 'labelRight',
+    validationPosition = 'labelAfter',
     optional,
     children,
     ...props
@@ -348,7 +400,7 @@ export const FormField: React.FC<IFormField> = ({
         </FormFieldContext.Provider>
     );
 };
-export const FormLabel: React.FC<IFormLabel> = ({ Icon, iconAfter = false, children, css, ...props }) => {
+export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, children, css, ...props }) => {
     const { controlId, optional, size, hint, hintPosition, hiddenLabel, validationPosition } = useContext(
         FormFieldContext,
     );
@@ -393,13 +445,18 @@ export const FormLabel: React.FC<IFormLabel> = ({ Icon, iconAfter = false, child
         meta.touched && !meta.error && showSuccess && labelTheme?.validation.success.css,
         css,
     ];
+
     const textStyles = [
         {
             position: 'relative',
             display: 'block',
             marginBottom,
-            paddingRight: Icon && iconAfter ? `${iconSize + MAJOR_STEP_DEFAULT}px` : 0,
-            paddingLeft: Icon && !iconAfter ? `${iconSize + MAJOR_STEP_DEFAULT}px` : 0,
+            paddingRight: (IconAfter || validationPosition === 'labelAfter') && `${iconSize + MAJOR_STEP_DEFAULT}px`,
+            paddingLeft:
+                (IconBefore ||
+                    (validationPosition === 'labelBefore' && meta.touched && meta.error) ||
+                    (validationPosition === 'labelBefore' && meta.touched && !meta.error && showSuccess)) &&
+                `${iconSize + MAJOR_STEP_DEFAULT}px`,
         },
     ];
 
@@ -408,29 +465,43 @@ export const FormLabel: React.FC<IFormLabel> = ({ Icon, iconAfter = false, child
     const markStyles = [markTheme.css];
     const optionalStyles = [optionalTheme.css];
 
-    const iconHorizontalRule = `${!iconAfter ? 'left' : 'right'}`;
-
-    const iconProps = {
+    const iconAfterProps = {
         css: {
             position: 'absolute',
             top: '50%',
             marginTop: `${-(iconSize / 2)}px`,
-            [iconHorizontalRule]: 0,
+            right: 0,
             width: iconSize,
             height: iconSize,
         },
     };
 
-    const validationHorizontalRule = `${
-        validationPosition === 'labelLeft' ? 'left' : validationPosition === 'labelRight' ? 'right' : 0
-    }`;
+    const iconBeforeProps = {
+        css: {
+            position: 'absolute',
+            top: '50%',
+            marginTop: `${-(iconSize / 2)}px`,
+            left: 0,
+            width: iconSize,
+            height: iconSize,
+        },
+    };
+
+    let validationIconHorizontalRule;
+
+    if (validationPosition === 'labelBefore') {
+        validationIconHorizontalRule = 'left';
+    } else if (validationPosition === 'labelAfter') {
+        validationIconHorizontalRule = 'right';
+    }
+
     const iconErrorProps = {
         fill: labelTheme?.validation.error.css.color,
         css: {
             position: 'absolute',
             top: '50%',
             marginTop: `${-(iconSize / 2)}px`,
-            [validationHorizontalRule]: 0,
+            [validationIconHorizontalRule]: 0,
             width: iconSize,
             height: iconSize,
         },
@@ -442,7 +513,7 @@ export const FormLabel: React.FC<IFormLabel> = ({ Icon, iconAfter = false, child
             position: 'absolute',
             top: '50%',
             marginTop: `${-(iconSize / 2)}px`,
-            [validationHorizontalRule]: 0,
+            [validationIconHorizontalRule]: 0,
             width: iconSize,
             height: iconSize,
         },
@@ -453,11 +524,18 @@ export const FormLabel: React.FC<IFormLabel> = ({ Icon, iconAfter = false, child
         ...props,
     };
 
-    let IconComponent;
-    if (typeof Icon === 'function') {
-        IconComponent = <Icon {...iconProps} />;
+    let IconAfterComponent;
+    if (typeof IconAfter === 'function') {
+        IconAfterComponent = <IconAfter {...iconAfterProps} />;
     } else if (typeof Icon === 'object') {
-        IconComponent = cloneElement(Icon, iconProps);
+        IconAfterComponent = cloneElement(IconAfter, iconAfterProps);
+    }
+
+    let IconBeforeComponent;
+    if (typeof IconBefore === 'function') {
+        IconBeforeComponent = <IconBefore {...iconBeforeProps} />;
+    } else if (typeof IconBefore === 'object') {
+        IconBeforeComponent = cloneElement(IconBefore, iconBeforeProps);
     }
 
     let IconErrorComponent;
@@ -473,29 +551,33 @@ export const FormLabel: React.FC<IFormLabel> = ({ Icon, iconAfter = false, child
     } else if (typeof SuccessIcon === 'object') {
         IconSuccessComponent = cloneElement(SuccessIcon, iconSuccessProps);
     }
-    console.log(validationPosition === 'labelRight' || validationPosition === 'labelLeft');
+
     return (
         <label htmlFor={labelProps.name} css={styles} {...props}>
             <span css={textStyles}>
                 {hiddenLabel ? <VisuallyHidden>{children}</VisuallyHidden> : children}
-                {iconAfter &&
+                {IconBefore &&
                     !hiddenLabel &&
-                    !(meta.error && meta.touched && validationPosition === 'labelRight') &&
-                    IconComponent}
-                {!iconAfter &&
+                    !(validationPosition === 'labelBefore' && meta.touched && meta.error) &&
+                    !(validationPosition === 'labelBefore' && meta.touched && !meta.error && showSuccess) &&
+                    IconBeforeComponent}
+
+                {IconAfter &&
                     !hiddenLabel &&
-                    !(meta.error && meta.touched && validationPosition === 'labelLeft') &&
-                    IconComponent}
-                {meta.touched &&
+                    !(validationPosition === 'labelAfter' && meta.touched && meta.error) &&
+                    !(validationPosition === 'labelAfter' && meta.touched && !meta.error && showSuccess) &&
+                    IconAfterComponent}
+
+                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
+                    meta.touched &&
                     meta.error &&
                     !hiddenLabel &&
-                    (validationPosition === 'labelRight' || validationPosition === 'labelLeft') &&
                     IconErrorComponent}
-                {meta.touched &&
+                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
+                    meta.touched &&
                     !meta.error &&
                     showSuccess &&
                     !hiddenLabel &&
-                    (validationPosition === 'labelRight' || validationPosition === 'labelLeft') &&
                     IconSuccessComponent}
                 {optional && required === 'optional' && <span css={optionalStyles}>{optional}</span>}
                 {!optional && required === 'mark' && !hiddenLabel && (

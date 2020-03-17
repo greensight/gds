@@ -161,7 +161,6 @@ const baseTheme = createTheme({
                                 success: {
                                     css: {
                                         border: `1px solid ${colors.success}`,
-                                        background: `${colors.success}`,
                                     },
                                 },
                             },
@@ -225,6 +224,12 @@ const baseTheme = createTheme({
                     Mark: {
                         css: {
                             color: colors.error,
+                        },
+                    },
+                    css: {
+                        color: colors.brand,
+                        ':hover': {
+                            fill: colors.brand,
                         },
                     },
                 },
