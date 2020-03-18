@@ -1,8 +1,8 @@
 export interface IForm {
     /** Позиционирование ошибок валидации */
-    errorPosition: string;
+    errorPosition: 'top' | 'bottom';
     /** Переключение между обязательностью и опциональностью */
-    required: string;
+    required: 'optional' | 'mark';
     /** Иконка ошибки */
     ErrorIcon?: Function | React.Component;
     /** Иконка успешной валидации */
@@ -20,9 +20,9 @@ export interface IForm {
 export interface IFormField {
     Tag: string;
     /** Размер. Выбирается из определённых в объекте темы */
-    size?: string;
+    size?: 'sm' | 'md' | 'lg';
     /** Позиционирование подсказки к полю */
-    hintPosition: string;
+    hintPosition: 'top' | 'bottom';
     /** Показ успешной валидации */
     showSuccess: boolean;
     /** Текст подсказки */
@@ -32,28 +32,27 @@ export interface IFormField {
     /** Визуально скрытый лейбл для скрин-ридеров */
     hiddenLabel: boolean;
     /** Расположение иконки валидации */
-    validationPosition: string;
+    validationPosition: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
     /** Устанавливает опциональное заполнение компоненту */
     optional?: boolean;
 }
 
 export interface IFormLabel {
-    /** Тема. Выбирается из определённых в объекте темы */
-    theme?: string;
-    /** Иконка */
-    Icon?: Function | React.Component;
-    /** Распологает иконку справа от лейбла */
-    iconAfter?: boolean;
+    /** Иконка справа от лейбла */
+    iconAfter?: Function | React.Component;
+    /** Иконка слева от лейбла */
+    iconBefore?: Function | React.Component;
     /** Кастомный CSS */
     css?: Object;
 }
+
 export interface IFormInput {
     /** Тема. Выбирается из определённых в объекте темы */
     theme?: string;
-    /** Иконка */
-    Icon?: Function | React.Component;
-    /** Распологает иконку в конце поля */
-    iconAfter?: boolean;
+    /** Иконка в конце поля */
+    iconAfter?: Function | React.Component;
+    /** Иконка в начале поля */
+    iconBefore?: Function | React.Component;
     /** Кастомный CSS */
     css?: Object;
 }

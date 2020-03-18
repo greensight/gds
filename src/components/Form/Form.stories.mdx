@@ -35,14 +35,14 @@ import Button from '@components/Button';
             >
                 <p>Это форма Вадяна.</p>
                 <br />
-                <Form.Field controlId="exampleInput" optional={text('optional text', '(необязательное поле)')} size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Label hint', true) ? text('Label hint text', 'Подсказка к полю 1') : undefined}>
+                <Form.Field controlId="exampleInput" optional={text('optional text', '(необязательное поле)')} size={radios('size', ['lg', 'md', 'sm'], 'md')} hint="Подсказка к полю 1">
                     <Form.Label>
                         Лейбл 1
                     </Form.Label>
                     <Form.Input />
                 </Form.Field>
                 <br />
-                <Form.Field controlId="exampleInput2" size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Input hint', true) ? text('Input hint text', 'Подсказка к полю 2') : undefined} hintPosition={radios('hintPosition', ['top', 'bottom'], 'bottom')} hiddenLabel={boolean('Hidden Label', false)} validationPosition={radios('validationPosition', ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'], 'labelBefore')}>
+                <Form.Field controlId="exampleInput2" size={radios('size', ['lg', 'md', 'sm'], 'md')} hint={boolean('Hint', true) ? text('Hint text', 'Подсказка к полю 2') : undefined} hintPosition={radios('hintPosition', ['top', 'bottom'], 'bottom')} hiddenLabel={boolean('Hidden Label', false)} validationPosition={radios('validationPosition', ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'], 'labelBefore')}>
                     <Form.Label IconBefore={boolean('Label icon before', true) && theme.placeholder} IconAfter={boolean('Label icon after', true) && theme.placeholder}>
                         Лейбл 2
                     </Form.Label>
