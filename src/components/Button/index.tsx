@@ -1,13 +1,54 @@
-import * as React from 'react';
+import React from 'react';
 import useTheme from '@utils/useTheme';
 import typography from '@utils/typography';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
 import cloneElement from '@helpers/cloneElement';
 import VisuallyHidden from '@components/VisuallyHidden';
-import { IButton } from './Button';
+import { IButtonTheme } from '../../index.d';
 
-export const Button: React.FC<IButton> = (
+export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'as'> {
+    /** Содержимое кнопки */
+    children: React.ReactNode;
+    /** Тема. Выбирается из определённых в объекте темы */
+    theme?: string;
+    /** Размер. Выбирается из определённых в объекте темы */
+    size?: string;
+    /** Блочная кнопка. Занимает 100% ширины родителя */
+    block?: boolean;
+    /** Иконка */
+    Icon?: Function | React.Component;
+    /** Распологает иконку после текста */
+    iconAfter?: boolean;
+    /** Визуально скрытое содержимое. Для "иконочных" кнопок */
+    hidden?: boolean;
+    /** Заблокированная кнопка */
+    disabled?: boolean;
+    /** HTML тип кнопки */
+    type?: 'button' | 'submit' | 'reset';
+    /** Адрес ссылки. Вместо кнопки будет отрендерен <a/> */
+    href?: string;
+    /** Использовать свой тег для рендера. Нужен для передачи Link роутера */
+    as?: React.Component;
+    /** Открытие ссылки в новой вкладке */
+    external?: boolean;
+    /** Обработчик клика */
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
+    themeObj?: IButtonTheme;
+    /** Кастомный CSS */
+    css?: Record<string, any>;
+    /** ref. DOM node доступен через current */
+    ref?: HTMLButtonElement;
+}
+
+/** Button component
+ * @example
+ * ```js
+ * <Button>Click me</Button>
+ * ```
+ */
+export const Button = (
     {
         children,
         theme = 'primary',
@@ -24,8 +65,8 @@ export const Button: React.FC<IButton> = (
         themeObj,
         css,
         ...props
-    },
-    ref,
+    }: ButtonProps,
+    ref: HTMLButtonElement,
 ) => {
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Button ? globalTheme : baseTheme;
@@ -205,4 +246,4 @@ export const Button: React.FC<IButton> = (
     );
 };
 
-export default React.forwardRef(Button);
+export default React.forwardRef<HTMLButtonElement, ButtonProps>(Button);

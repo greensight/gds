@@ -57,10 +57,12 @@ export default [
             postcss(),
             alias({
                 entries: [
-                    { find: '@components', replacement: path.resolve(__dirname, './src/components') },
-                    { find: '@utils', replacement: path.resolve(__dirname, './src/utils') },
-                    { find: '@helpers', replacement: path.resolve(__dirname, './src/helpers') },
-                    { find: '@icons', replacement: path.resolve(__dirname, './src/icons') },
+                    { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
+                    { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
+                    { find: '@helpers', replacement: path.resolve(__dirname, 'src/helpers') },
+                    { find: '@autokits', replacement: path.resolve(__dirname, 'src/autokits') },
+                    { find: '@icons', replacement: path.resolve(__dirname, 'src/icons') },
+                    { find: '@decorators', replacement: path.resolve(__dirname, '.storybook/decorators') },
                 ],
             }),
         ],

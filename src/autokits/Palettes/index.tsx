@@ -1,14 +1,12 @@
-import * as React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import Dropdown from '@helpers/Dropdown';
 import typography from '@helpers/customTypography';
 import copyToClipboard from '@helpers/copyToClipboard';
-import IPalettes from './Palettes';
 
-const Palettes: React.FC<IPalettes> = () => {
+export const Palettes = () => {
     const theme = useTheme();
     const { palettes } = theme;
 
@@ -48,7 +46,7 @@ const Palettes: React.FC<IPalettes> = () => {
     );
 };
 
-const PaletteColor = ({ color, index }) => {
+const PaletteColor = ({ color, index }: { color: string; index: number }) => {
     const theme = useTheme();
     const { colors } = theme;
     const buttonRef = useRef();

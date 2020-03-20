@@ -1,7 +1,11 @@
-import * as React from 'react';
-import IVisuallyHidden from './VisuallyHidden';
+import React from 'react';
 
-const VisuallyHidden: React.FC<IVisuallyHidden> = ({ children }) => {
+export interface VisuallyHiddenProps {
+    /** Hidden content */
+    children: React.ReactNode;
+}
+
+const VisuallyHidden = ({ children }: VisuallyHiddenProps) => {
     return (
         <div
             css={{

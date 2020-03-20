@@ -1,4 +1,6 @@
-export interface IGlobalFontFamily {
+export { CSSObject } from '@emotion/core';
+
+interface IGlobalFontFamily {
     /** Путь до ассета шрифта (формат woff2) */
     woff2?: string;
     /** Путь до ассета шрифта (формат woff) */
@@ -10,15 +12,15 @@ export interface IGlobalFontFamily {
     /** Курсивное начертание */
     italic?: boolean;
     /** Кастомный CSS */
-    css?: Object;
+    css?: CSSObject;
 }
 
-export interface IGlobalFonts {
+interface IGlobalFonts {
     /** Список семейств шрифтов */
     [fontFamily: string]: IGlobalFontFamily[];
 }
 
-export interface IGlobalBase {
+interface IGlobalBase {
     /** Стили выделения */
     selection?: {
         /** Цвет текста */
@@ -26,7 +28,7 @@ export interface IGlobalBase {
         /** Цвет фона */
         bg?: string;
         /** Кастомный CSS */
-        css?: object;
+        css?: CSSObject;
     };
     /** Стили фокуса */
     focus?: {
@@ -37,7 +39,7 @@ export interface IGlobalBase {
         /** Отступ между обводкой и элементов */
         offset?: number;
         /** Кастомный CSS */
-        css?: object;
+        css?: CSSObject;
     };
     /** Стили body */
     body: {
@@ -48,30 +50,30 @@ export interface IGlobalBase {
         /** Цвет фона */
         bg: string;
         /** Кастомный CSS */
-        css: object;
+        css: CSSObject;
     };
 }
 
-export interface IGlobal {
+interface IGlobal {
     /** Подключения шрифтов */
     fonts?: IGlobalFonts;
     /** Базовые стили */
     base?: IGlobalBase;
     /** Кастомный CSS */
-    css?: object;
+    css?: CSSObject;
 }
 
-export interface IPalettes {
+interface IPalettes {
     /** Набор цветов палитры */
     [name: string]: string[];
 }
 
-export interface IColors {
+interface IColors {
     /** Переменная цвета */
     [name: string]: string;
 }
 
-export interface ITypography {
+interface ITypography {
     /** Брейкпоинты, соответствующие desktop и mobile */
     breakpoints: [number, number];
     /** Набор фолбеков под отдельные шрифты. Не токенизируется */
@@ -92,7 +94,7 @@ export interface ITypography {
     };
 }
 
-export interface ITypographyProperties {
+interface ITypographyProperties {
     /** Название */
     fontFamily: string;
     /** Начертание */
@@ -113,7 +115,7 @@ export interface ITypographyProperties {
     fontVariantNumeric?: 'tabular-nums';
 }
 
-export interface ILayout {
+interface ILayout {
     /** Брейкпоинты проекта */
     breakpoints: {
         xxxl: number;
@@ -127,39 +129,27 @@ export interface ILayout {
         xxxs: number;
     };
     /** Число колонок */
-    cols: {
-        [bp: Breakpoint]: number;
-    };
+    cols: Record<Breakpoint, number>;
     /** Отступы между колонок */
-    gap: {
-        [bp: Breakpoint]: number;
-    };
+    gap: Record<Breakpoint, number>;
     /** Поля */
-    padding: {
-        [bp: Breakpoint]: number;
-    };
+    padding: Record<Breakpoint, number>;
     /** Ширина контейнера. 'none' на точке отключения */
-    container: {
-        [bp: Breakpoint]: number | 'none';
-    };
+    container: Record<Breakpoint, number | 'none'>;
     /** Левый отступ контейнера. 0 на точке отключения */
-    marginLeft: {
-        [bp: Breakpoint]: 'auto' | number;
-    };
+    marginLeft: Record<Breakpoint, number | 'auto'>;
     /** Правый отступ контейнера. 0 на точке отключения */
-    marginRight: {
-        [bp: Breakpoint]: 'auto' | number;
-    };
+    marginRight: Record<Breakpoint, number | 'auto'>;
 }
 
-export type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs';
+type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs';
 
-export interface IShadows {
+interface IShadows {
     /** Переменная тени */
     [name: string]: string;
 }
 
-export interface IButtonBaseRules {
+interface IButtonBaseRules {
     /** Цвет текста и иконки */
     color?: string;
     /** Цвет фона */
@@ -185,21 +175,21 @@ export interface IButtonBaseRules {
     /** Функция анимации */
     easing?: string;
     /** Кастомный CSS */
-    css?: Object;
+    css?: CSSObject;
 }
 
-export interface IButtonThemeRules extends IButtonBaseRules {
+interface IButtonThemeRules extends IButtonBaseRules {
     /** Правила на ховер */
-    hover?: IButtonRules;
+    hover?: IButtonBaseRules;
     /** Правила на клик */
-    active?: IButtonRules;
+    active?: IButtonBaseRules;
     /** Правила на блокирование */
-    disabled?: IButtonRules;
+    disabled?: IButtonBaseRules;
     /** Правила на фокус */
-    focus?: IButtonRules;
+    focus?: IButtonBaseRules;
 }
 
-export interface IButtonSizeRules {
+interface IButtonSizeRules {
     /** Высота кнопки */
     height?: number;
     /** Горизонтальные поля */
@@ -211,10 +201,10 @@ export interface IButtonSizeRules {
     /** Отступ от иконки */
     iconOffset?: number;
     /** Кастомный CSS */
-    css?: Object;
+    css?: CSSObject;
 }
 
-export interface IButton {
+export interface IButtonTheme {
     /** Глобальные стили. Распространяются на все кнопки */
     base?: IButtonBaseRules;
     /** Стили тем */
@@ -250,10 +240,10 @@ export interface ITheme extends ITokens {
     /** Глобальные стили */
     global?: IGlobal;
     /** Иконка-плейсхолдер */
-    placeholder?: React.ReactNode;
+    placeholder?: ISvg;
     /** Настройки компонентов */
     components?: {
         /** Кнопка */
-        Button: IButton;
+        Button: IButtonTheme;
     };
 }

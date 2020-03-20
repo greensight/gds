@@ -1,9 +1,27 @@
-import * as React from 'react';
+import React from 'react';
 import Container from '@components/Container';
 import useCSSProperty from '@helpers/useCSSProperty';
-import ISection from './Section';
 
-const Section: React.FC<ISection> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
+export interface SectionProps {
+    /** Содержимое секции */
+    children: React.ReactNode;
+    /** Обёртка в контейнер */
+    container?: boolean;
+    /** Нижний отступ */
+    mb?: number;
+    /** Вертикальные поля */
+    pv?: number;
+    /** Верхнее поле */
+    pt?: number;
+    /** Нижнее поле */
+    pb?: number;
+    /** Фон */
+    bg?: string;
+    /** Кастомный CSS */
+    css?: Record<string, any>;
+}
+
+export const Section = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }: SectionProps) => {
     return (
         <section
             css={[

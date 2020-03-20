@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
@@ -7,9 +6,8 @@ import baseTheme from '@utils/baseTheme';
 import Dropdown from '@helpers/Dropdown';
 import typography from '@helpers/customTypography';
 import copyToClipboard from '@helpers/copyToClipboard';
-import IShadows from './Shadows';
 
-const Shadows: React.FC<IShadows> = () => {
+export const Shadows = () => {
     const theme = useTheme();
     const { shadows } = theme;
 
@@ -34,7 +32,7 @@ const Shadows: React.FC<IShadows> = () => {
     );
 };
 
-const Shadow = ({ name, value }) => {
+const Shadow = ({ name, value }: { name: string; value: string }) => {
     const { colors } = baseTheme;
     const buttonRef = useRef();
 

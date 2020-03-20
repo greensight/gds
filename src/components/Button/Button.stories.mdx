@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import centeredDecorator from '@decorators/centeredDecorator';
 import scale from '@utils/scale';
 import theme from '@utils/baseTheme';
-import Button, { Button as ButtonProps } from '.';
+import Button, { Button as ButtonProps } from '@components/Button';
 
 <Meta
     title="Components / Button"
@@ -13,8 +13,8 @@ import Button, { Button as ButtonProps } from '.';
     parameters={{
         design: {
             type: 'figma',
-            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1608%3A0'
-        }
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1608%3A0',
+        },
     }}
 />
 
@@ -33,78 +33,74 @@ import Button, { Button as ButtonProps } from '.';
                 iconAfter={boolean('iconAfter', false)}
                 hidden={boolean('hidden', false)}
                 onClick={action('onClick')}
-                themeObj={boolean('Use custom theme', false) ? object('themeObj', {
-                    base: {
-                        css: {
-                            ':focus': {
-                                outlineOffset: 2,
-                                outlineColor: colors.brand,
-                            },
-                        },
-                    },
-                    base: {
-                        round: true,
-                        half: true,
-                    },
-                    sizes: {
-                        lg: {
-                            height: scale(8),
-                            padding: scale(3),
-                            iconSize: scale(4),
-                            iconOffset: scale(1),
-                            typography: 'buttonLg',
-                        },
-                        md: {
-                            height: scale(6),
-                            padding: scale(3),
-                            iconSize: scale(3),
-                            iconOffset: scale(1),
-                            typography: 'buttonMd',
-                        },
-                        sm: {
-                            height: scale(5),
-                            padding: scale(2),
-                            iconSize: scale(2),
-                            iconOffset: scale(1),
-                            typography: 'buttonSm',
-                        },
-                    },
-                    themes: {
-                        primary: {
-                            color: colors.white,
-                            bg: colors.brand,
-                            hover: {
-                                bg: colors.brandHover,
-                            },
-                            active: {
-                                border: 'transparent',
-                                shadow: shadows.inner,
-                            },
-                            disabled: {
-                                bg: colors.grey70,
-                                color: colors.grey40,
-                            },
-                        },
-                        secondary: {
-                            color: colors.brand,
-                            border: colors.brand,
-                            bg: colors.white,
-                            hover: {
-                                color: colors.brandHover,
-                                border: colors.brandHover,
-                            },
-                            active: {
-                                bg: colors.grey90,
-                                border: 'transparent',
-                                shadow: shadows.inner,
-                            },
-                            disabled: {
-                                border: colors.grey60,
-                                color: colors.grey40,
-                            },
-                        },
-                    },
-                }) : undefined}
+                themeObj={
+                    boolean('Use custom theme', false)
+                        ? object('themeObj', {
+                              base: {
+                                  round: true,
+                                  half: true,
+                              },
+                              sizes: {
+                                  lg: {
+                                      height: scale(8),
+                                      padding: scale(3),
+                                      iconSize: scale(4),
+                                      iconOffset: scale(1),
+                                      typography: 'buttonLg',
+                                  },
+                                  md: {
+                                      height: scale(6),
+                                      padding: scale(3),
+                                      iconSize: scale(3),
+                                      iconOffset: scale(1),
+                                      typography: 'buttonMd',
+                                  },
+                                  sm: {
+                                      height: scale(5),
+                                      padding: scale(2),
+                                      iconSize: scale(2),
+                                      iconOffset: scale(1),
+                                      typography: 'buttonSm',
+                                  },
+                              },
+                              themes: {
+                                  primary: {
+                                      color: colors.white,
+                                      bg: colors.brand,
+                                      hover: {
+                                          bg: colors.brandHover,
+                                      },
+                                      active: {
+                                          border: 'transparent',
+                                          shadow: shadows.inner,
+                                      },
+                                      disabled: {
+                                          bg: colors.grey70,
+                                          color: colors.grey40,
+                                      },
+                                  },
+                                  secondary: {
+                                      color: colors.brand,
+                                      border: colors.brand,
+                                      bg: colors.white,
+                                      hover: {
+                                          color: colors.brandHover,
+                                          border: colors.brandHover,
+                                      },
+                                      active: {
+                                          bg: colors.grey90,
+                                          border: 'transparent',
+                                          shadow: shadows.inner,
+                                      },
+                                      disabled: {
+                                          border: colors.grey60,
+                                          color: colors.grey40,
+                                      },
+                                  },
+                              },
+                          })
+                        : undefined
+                }
             >
                 {text('children', 'Button')}
             </Button>
@@ -137,16 +133,16 @@ export interface IButton {
     /** Стили тем */
     themes: {
         /** Дефолтная тема */
-        primary: IButtonThemeRules;
+        primary: IButtonThemeRules,
         /** Можно добавлять свои темы */
-        [theme: string]: IButtonThemeRules;
+        [theme: string]: IButtonThemeRules,
     };
     /** Стили размеров */
     sizes: {
         /** Дефолтный размер */
-        md: IButtonSizeRules;
+        md: IButtonSizeRules,
         /** Можно добавлять свои размеры */
-        [size: string]: IButtonSizeRules;
+        [size: string]: IButtonSizeRules,
     };
 }
 
@@ -280,7 +276,9 @@ export interface IButtonSizeRules {
         <Button Icon={theme.placeholder}>Button</Button>
     </Story>
     <Story name="With icon (after)">
-        <Button Icon={theme.placeholder} iconAfter>Button</Button>
+        <Button Icon={theme.placeholder} iconAfter>
+            Button
+        </Button>
     </Story>
 </Preview>
 
@@ -292,7 +290,9 @@ export interface IButtonSizeRules {
 
 <Preview>
     <Story name="Hidden mode">
-        <Button Icon={theme.placeholder} hidden>Button</Button>
+        <Button Icon={theme.placeholder} hidden>
+            Button
+        </Button>
     </Story>
 </Preview>
 
@@ -321,7 +321,9 @@ jsx используется в редких случаях, когда нужн
         <Button href="http://greensight.pro">Button</Button>
     </Story>
     <Story name="External link">
-        <Button href="http://greensight.pro" external>Button</Button>
+        <Button href="http://greensight.pro" external>
+            Button
+        </Button>
     </Story>
 </Preview>
 
@@ -333,9 +335,13 @@ jsx используется в редких случаях, когда нужн
 
 <Preview>
     <Story name="Multiline mode (br)">
-        <Button>Multiline<br/>button</Button>
+        <Button>
+            Multiline
+            <br />
+            button
+        </Button>
     </Story>
     <Story name="Multiline mode (fixed width)">
-        <Button css={{width: scale(14)}}>Multiline button</Button>
+        <Button css={{ width: scale(14) }}>Multiline button</Button>
     </Story>
 </Preview>

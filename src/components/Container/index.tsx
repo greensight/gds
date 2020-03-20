@@ -1,8 +1,15 @@
-import * as React from 'react';
+import React from 'react';
+import { CSSObject } from '@emotion/core';
 import useCSSProperty from '@helpers/useCSSProperty';
-import IContainer from './Container';
 
-const Container: React.FC<IContainer> = ({ children, css, ...props }) => {
+export interface ContainerProps {
+    /** Container content */
+    children: React.ReactNode;
+    /** Custom CSS */
+    css?: CSSObject;
+}
+
+export const Container = ({ children, css, ...props }: ContainerProps) => {
     return (
         <div
             css={[

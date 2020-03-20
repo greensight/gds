@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import Layout from '@components/Layout';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
@@ -7,9 +6,13 @@ import Dropdown from '@helpers/Dropdown';
 import typography from '@helpers/customTypography';
 import deepMerge from '@helpers/deepMerge';
 import copyToClipboard from '@helpers/copyToClipboard';
-import IIcons from './Icons';
 
-const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {
+export interface IconsAutokitProps {
+    /** Starting heading level */
+    headingLevel?: number;
+}
+
+export const Icons = ({ headingLevel = 2 }: IconsAutokitProps) => {
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
@@ -62,7 +65,7 @@ const Icons: React.FC<IIcons> = ({ headingLevel = 2 }) => {
     return <div css={{ ...typography('body'), paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
 };
 
-const Icon = ({ name, Component, path }) => {
+const Icon = ({ name, Component, path }: { name: string; Component: ISvg; path: string }) => {
     const { colors } = baseTheme;
 
     const buttonRef = useRef();

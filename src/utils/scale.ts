@@ -1,6 +1,6 @@
 import { MAJOR_STEP_DEFAULT, MINOR_MAX } from '@helpers/constants';
 
-const scale = (multiplier, isMinor, customStep) => {
+const scale = (multiplier: number, isMinor?: boolean, customStep?: number) => {
     const majorStep = customStep || MAJOR_STEP_DEFAULT;
 
     const truncatedMultiplier = Math.trunc(multiplier);

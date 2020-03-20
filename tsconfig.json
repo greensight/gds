@@ -1,15 +1,21 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "allowJs": true,
+        "target": "ESNext",
+        "module": "CommonJS",
         "jsx": "react",
-        "isolatedModules": true,
         "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "esm"
+        "noEmit": true,
+        "outDir": "esm",
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["src/components/*"],
+            "@utils/*": ["src/utils/*"],
+            "@helpers/*": ["src/helpers/*"],
+            "@autokits/*": ["src/autokits/*"],
+            "@icons/*": ["src/icons/*"],
+            "@decorators/*": [".storybook/decorators/*"]
+        }
     },
-    "include": ["src"]
+    "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
 }

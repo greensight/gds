@@ -1,14 +1,67 @@
-import * as React from 'react';
-import { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import useTheme from '@utils/useTheme';
 import baseTheme from '@utils/baseTheme';
 import useCSSProperty from '@helpers/useCSSProperty';
 import toArray from '@helpers/toArray';
-import { ILayout, ILayoutItem } from './Layout';
+import LayoutItem, { LayoutItemProps } from './Item';
 
-const LayoutContext = createContext();
+export interface LayoutCompositionProps {
+    Item: React.FC<LayoutItemProps>;
+}
 
-export const Layout: React.FC<ILayout> = ({
+interface ILayoutContext {
+    /** Тип сетки */
+    type?: 'grid' | 'flex';
+    /** Колонки */
+    cols?: number | string | Array<number | string>;
+    /** Отступы */
+    gap?: number | string | Array<number | string>[2];
+    /** Минимальный размер элемента в авто-режиме */
+    auto?: number;
+}
+
+export interface LayoutProps extends ILayoutContext {
+    /** Содержимое сетки */
+    children: React.ReactNode;
+    /** Инлайн */
+    inline?: boolean;
+    /** Строки (type: 'grid') */
+    rows?: number | string | (number | string)[];
+    /** Зоны (type: 'grid') */
+    areas?: string | string[];
+    /** Выравнивание основной оси */
+    justify?: 'start' | 'end' | 'center' | 'stretch' | 'space-around' | 'space-between' | 'space-evenly';
+    /** Выравнивание побочной оси */
+    align?: 'start' | 'end' | 'center' | 'stretch';
+    /** Размер строк неявной сетки (type: 'grid') */
+    autoRows?: number | string | (number | string)[];
+    /** Размер колонок неявной сетки (type: 'grid') */
+    autoCols?: number | string | (number | string)[];
+    /** Направление основной оси */
+    direction?: 'row' | 'column';
+    /** Денс-денс (type: 'grid') */
+    dense?: boolean;
+    /** Обратное направление (type: 'flex') */
+    reverse?: boolean;
+    /** Многострочный режим (type: 'flex') */
+    wrap?: boolean;
+    /** Кастомный CSS */
+    css?: Record<string, any>;
+}
+
+const LayoutContext = createContext<ILayoutContext | undefined>(undefined);
+
+export const useLayout = (): ILayoutContext => {
+    const context = useContext(LayoutContext);
+
+    if (!context) {
+        throw new Error('This component must be used within a <Layout> component');
+    }
+
+    return context;
+};
+
+export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     children,
     type = 'grid',
     inline,
@@ -163,102 +216,6 @@ export const Layout: React.FC<ILayout> = ({
     );
 };
 
-export const Item: React.FC<ILayoutItem> = ({
-    children,
-    col,
-    row,
-    area,
-    justify,
-    align,
-    order,
-    grow,
-    css,
-    ...props
-}) => {
-    const { type, gap, cols, auto } = useContext(LayoutContext);
-
-    return (
-        <div
-            css={[
-                useCSSProperty({
-                    name: 'gridColumn',
-                    value: col,
-                    condition: type === 'grid',
-                    transform: value => {
-                        if (Array.isArray(value)) return `${value[0]} / ${value[1]}`;
-                        if (Number.isInteger(value)) return `span ${value}`;
-                        return value;
-                    },
-                }),
-                useCSSProperty({
-                    name: 'gridRow',
-                    value: row,
-                    condition: type === 'grid',
-                    transform: value => {
-                        if (Array.isArray(value)) return `${value[0]} / ${value[1]}`;
-                        if (Number.isInteger(value)) return `span ${value}`;
-                        return value;
-                    },
-                }),
-                useCSSProperty({
-                    name: 'gridArea',
-                    value: area,
-                    condition: type === 'grid',
-                }),
-                useCSSProperty({
-                    name: 'justifySelf',
-                    value: justify,
-                    condition: type === 'grid',
-                }),
-                useCSSProperty({
-                    name: 'alignSelf',
-                    value: align,
-                    transform: value => {
-                        if (type === 'flex' && (value === 'start' || value === 'end')) return `flex-${value}`;
-                        return value;
-                    },
-                }),
-                useCSSProperty({
-                    name: 'order',
-                    value: order,
-                }),
-                useCSSProperty({
-                    name: 'flexGrow',
-                    value: [grow, auto],
-                    condition: type === 'flex',
-                    transform: ([grow, auto]) => {
-                        if (auto) return 1;
-                        return !Number.isInteger(grow) ? Number(grow) : grow;
-                    },
-                }),
-                useCSSProperty({
-                    name: 'padding',
-                    value: gap,
-                    condition: type === 'flex',
-                    transform: value => {
-                        if (Array.isArray(value)) return `${value[0]}px 0 0 ${value[1]}px`;
-                        return `${value}px 0 0 ${value}px`;
-                    },
-                }),
-                useCSSProperty({
-                    name: 'flexBasis',
-                    value: [col, auto],
-                    condition: type === 'flex',
-                    transform: ([col, auto]) => {
-                        if (auto) return auto;
-                        if (Number.isInteger(Number(col))) return `${Math.floor((100 * col * 100) / cols) / 100}%`;
-                        return col;
-                    },
-                }),
-                css,
-            ]}
-            {...props}
-        >
-            {children}
-        </div>
-    );
-};
-
-Layout.Item = Item;
+Layout.Item = LayoutItem;
 
 export default Layout;

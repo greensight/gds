@@ -1,14 +1,12 @@
-import * as React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import Dropdown from '@helpers/Dropdown';
 import typography from '@helpers/customTypography';
 import copyToClipboard from '@helpers/copyToClipboard';
-import IColors from './Colors';
 
-const Colors: React.FC<IColors> = () => {
+export const Colors = () => {
     const theme = useTheme();
     const { colors } = theme;
 
@@ -33,7 +31,7 @@ const Colors: React.FC<IColors> = () => {
     );
 };
 
-const Color = ({ name, value }) => {
+const Color = ({ name, value }: { name: string; value: string }) => {
     const theme = useTheme();
     const { colors } = theme;
     const buttonRef = useRef();

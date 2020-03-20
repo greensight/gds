@@ -2,7 +2,7 @@ import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, text, array, select, number } from '@storybook/addon-knobs';
 import scale from '@utils/scale';
 import Item from '@helpers/Item';
-import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
+import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '@components/Layout';
 
 <Meta title="Components / Layout" component={Layout} />
 
@@ -68,7 +68,7 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
                 max: 400,
                 step: 8,
             },
-            'Layout'
+            'Layout',
         );
         const inline = boolean('inline', false, 'Layout (hardcore)');
         const colsHard = text('cols', '', 'Layout (hardcore)');
@@ -325,9 +325,9 @@ type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'x
 
 <Preview>
     <Story name="Media Queries">
-        <Layout cols={12} gap={{xxxl: scale(4), lg: scale(3), sm: scale(2), xs: scale(1)}}>
+        <Layout cols={12} gap={{ xxxl: scale(4), lg: scale(3), sm: scale(2), xs: scale(1) }}>
             {[1, 2, 3, 4, 5, 6].map(item => (
-                <Layout.Item key={item} col={{xxxl: 2, lg: 3, sm: 4, xs: 6, xxs: 12}}>
+                <Layout.Item key={item} col={{ xxxl: 2, lg: 3, sm: 4, xs: 6, xxs: 12 }}>
                     <Item>Item {item}</Item>
                 </Layout.Item>
             ))}
@@ -343,7 +343,7 @@ type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'x
 
 <Preview>
     <Story name="Alignment">
-        <Layout cols={3} justify="end" align="center" css={{height: scale(30)}}>
+        <Layout cols={3} justify="end" align="center" css={{ height: scale(30) }}>
             {[1, 2, 3, 4, 5, 6].map(item => (
                 <Layout.Item key={item}>
                     <Item>Item {item}</Item>

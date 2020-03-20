@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     stories: [
         './docs/intro/welcome.stories.mdx',
         './docs/intro/*.stories.mdx',

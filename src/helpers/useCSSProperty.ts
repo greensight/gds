@@ -1,10 +1,24 @@
+import { CSSObject } from '@emotion/core';
 import useTheme from '@utils/useTheme';
 import baseTheme from '@utils/baseTheme';
 import isObject from '@helpers/isObject';
 import toArray from '@helpers/toArray';
 import { BREAKPOINTS_NAMES } from '@helpers/constants';
 
-const useCSSProperty = ({ name, value, defaultProperty, condition, transform }) => {
+interface UseCSSPropertyArgs {
+    /** Css property name */
+    name: string;
+    /** CSS property value */
+    value?: any;
+    /** Default value. Applied if value is undefined */
+    defaultProperty?: string;
+    /** Add property only if condition equals `true` */
+    condition?: boolean;
+    /** Value transform function */
+    transform?: (value: string) => string;
+}
+
+const useCSSProperty = ({ name, value, defaultProperty, condition, transform }: UseCSSPropertyArgs): CSSObject => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
 
@@ -38,7 +52,11 @@ const useCSSProperty = ({ name, value, defaultProperty, condition, transform }) 
         }, {});
 };
 
-const setValue = (name, value, transform) => {
+const setValue = (
+    name: UseCSSPropertyArgs['name'],
+    value: UseCSSPropertyArgs['value'],
+    transform: UseCSSPropertyArgs['transform'],
+) => {
     if (value.length === 1) value = value[0];
 
     return {

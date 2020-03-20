@@ -1,13 +1,20 @@
-import * as React from 'react';
+import React from 'react';
 import { Global as EmotionGlobal } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
 import 'normalize.css';
 import typography from '@utils/typography';
 import baseTheme from '@utils/baseTheme';
-import IThemeProvider from './ThemeProvider';
+import { ITheme } from '../../index.d';
 
-const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
+export interface ThemeProviderProps {
+    /** Объект темы */
+    theme: ITheme;
+    /** Код с доступом к теме */
+    children: React.ReactNode;
+}
+
+const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
     const global = theme.global || baseTheme.global;
     const fonts = global.fonts || baseTheme.global.fonts;
     const { selection, focus, body } = global.base || baseTheme.global.base;

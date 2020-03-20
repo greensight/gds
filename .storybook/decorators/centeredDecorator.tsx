@@ -1,7 +1,8 @@
 import React from 'react';
-import scale from '../../src/utils/scale';
+import { DecoratorFn } from '@storybook/react';
+import scale from '@utils/scale';
 
-const centeredDecorator = storyFn => (
+const centeredDecorator: DecoratorFn = storyFn => (
     <div
         css={{
             display: 'flex',

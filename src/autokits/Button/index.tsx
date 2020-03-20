@@ -1,13 +1,20 @@
-import * as React from 'react';
+import React from 'react';
 import ButtonComponent from '@components/Button';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
 import typography from '@helpers/customTypography';
-import IButton from './Button';
 
-const Button: React.FC<IButton> = ({ text = 'Button', Icon }) => {
+export interface ButtonAutokitProps {
+    /** Placeholder text */
+    text?: string;
+    /** Placeholder icon (overrides placeholder from theme)
+     */
+    Icon?: ISvg;
+}
+
+export const Button = ({ text = 'Button', Icon }: ButtonAutokitProps) => {
     const theme = useTheme();
     const buttonTheme = theme.components?.Button || baseTheme.components.Button;
     Icon = Icon || theme.placeholder || baseTheme.placeholder;
