@@ -15,7 +15,7 @@ interface ILayoutContext {
     /** Колонки */
     cols?: number | string | Array<number | string>;
     /** Отступы */
-    gap?: number | string | Array<number | string>[2];
+    gap?: number | string | [number | string, number | string];
     /** Минимальный размер элемента в авто-режиме */
     auto?: number;
 }

@@ -1,5 +1,7 @@
-const deepMerge = (target, source) => {
-    const isObject = obj => obj && typeof obj === 'object';
+function deepMerge<T>(x: Partial<T>, y: Partial<T>): T;
+function deepMerge<T1, T2>(x: Partial<T1>, y: Partial<T2>): T1 & T2;
+function deepMerge(target: any, source: any) {
+    const isObject = (obj: any) => obj && typeof obj === 'object';
 
     if (!isObject(target) || !isObject(source)) return source;
 
@@ -17,6 +19,6 @@ const deepMerge = (target, source) => {
     });
 
     return target;
-};
+}
 
 export default deepMerge;

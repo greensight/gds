@@ -1,4 +1,4 @@
-type ISvg = React.FC<
+type SVGRIcon = React.FC<
     React.SVGProps<SVGSVGElement> & {
         /** Alternative text (a11y) */
         title?: string;
@@ -6,6 +6,6 @@ type ISvg = React.FC<
 >;
 
 declare module '*.svg' {
-    const value: ISvg;
+    const value: SVGRIcon;
     export default value;
 }

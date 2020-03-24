@@ -2,7 +2,7 @@ import PlaceholderIcon from '@icons/tokens/medium/placeholder.svg';
 import createTheme from '@utils/createTheme';
 import scale from '@utils/scale';
 import { FONT_STACK } from '@helpers/constants';
-import tokens from '../../public/tokens';
+import tokens from '../../public/tokens.json';
 
 const { colors, shadows } = tokens;
 
@@ -10,6 +10,7 @@ const baseTheme = createTheme({
     tokens,
     settings: {
         global: {
+            placeholder: PlaceholderIcon,
             fonts: {
                 'PT Root UI': [
                     {
@@ -54,12 +55,13 @@ const baseTheme = createTheme({
                 'PT Root UI': FONT_STACK,
             },
         },
-        placeholder: PlaceholderIcon,
         components: {
             Button: {
                 base: {
-                    round: true,
-                    half: true,
+                    default: {
+                        round: true,
+                        half: true,
+                    },
                 },
                 sizes: {
                     lg: {
@@ -86,8 +88,10 @@ const baseTheme = createTheme({
                 },
                 themes: {
                     primary: {
-                        color: colors.white,
-                        bg: colors.brand,
+                        default: {
+                            color: colors.white,
+                            bg: colors.brand,
+                        },
                         hover: {
                             bg: colors.brandHover,
                         },
@@ -101,9 +105,11 @@ const baseTheme = createTheme({
                         },
                     },
                     secondary: {
-                        color: colors.brand,
-                        border: colors.brand,
-                        bg: colors.white,
+                        default: {
+                            color: colors.brand,
+                            border: colors.brand,
+                            bg: colors.white,
+                        },
                         hover: {
                             color: colors.brandHover,
                             border: colors.brandHover,

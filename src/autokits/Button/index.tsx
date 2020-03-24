@@ -11,7 +11,7 @@ export interface ButtonAutokitProps {
     text?: string;
     /** Placeholder icon (overrides placeholder from theme)
      */
-    Icon?: ISvg;
+    Icon?: SVGRIcon;
 }
 
 export const Button = ({ text = 'Button', Icon }: ButtonAutokitProps) => {

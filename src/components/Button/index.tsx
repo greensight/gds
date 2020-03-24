@@ -1,11 +1,12 @@
 import React from 'react';
+import { CSSObject } from '@emotion/core';
 import useTheme from '@utils/useTheme';
 import typography from '@utils/typography';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
 import cloneElement from '@helpers/cloneElement';
 import VisuallyHidden from '@components/VisuallyHidden';
-import { IButtonTheme } from '../../index.d';
+import ButtonTheme from '../../typings/Button.d';
 
 export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'as'> {
     /** Содержимое кнопки */
@@ -35,7 +36,7 @@ export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'a
     /** Обработчик клика */
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
-    themeObj?: IButtonTheme;
+    themeObj?: ButtonTheme;
     /** Кастомный CSS */
     css?: Record<string, any>;
     /** ref. DOM node доступен через current */
@@ -80,7 +81,7 @@ export const Button = (
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
 
-    const getRule = (name, defaultValue) => {
+    const getRule = (name: string, defaultValue?: any) => {
         const themeStyles = buttonTheme.themes[theme];
         let themeRule;
         if (themeStyles) themeRule = themeStyles[name];
@@ -95,7 +96,7 @@ export const Button = (
         return themeRule || sizeRule || baseRule || defaultValue;
     };
 
-    const getStateStyles = (name, css) => {
+    const getStateStyles = (name: string, css?: CSSObject) => {
         const state = getRule(name);
         if (!state) return;
         const { color, bg, border, shadow, css: stateCss } = state;

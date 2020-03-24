@@ -65,7 +65,7 @@ export const Icons = ({ headingLevel = 2 }: IconsAutokitProps) => {
     return <div css={{ ...typography('body'), paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
 };
 
-const Icon = ({ name, Component, path }: { name: string; Component: ISvg; path: string }) => {
+const Icon = ({ name, Component, path }: { name: string; Component: SVGRIcon; path: string }) => {
     const { colors } = baseTheme;
 
     const buttonRef = useRef();

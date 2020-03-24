@@ -1,8 +1,8 @@
 import { useTheme as useEmotionTheme } from 'emotion-theming';
-import { ITheme } from '../index.d';
+import Theme from '../typings/Theme.d';
 
 const useTheme = () => {
-    const theme: ITheme = useEmotionTheme();
+    const theme: Theme = useEmotionTheme();
     return theme;
 };
 

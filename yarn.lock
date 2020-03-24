@@ -1549,6 +1549,7 @@ __metadata:
     "@types/babel__core": 7.1.6
     "@types/chalk": 2.2.0
     "@types/core-js": 2.5.3
+    "@types/deepmerge": 2.2.0
     "@types/eslint": 6.1.8
     "@types/eslint-plugin-prettier": 2.2.0
     "@types/mdx-js__react": 1.5.1
@@ -1567,6 +1568,7 @@ __metadata:
     babel-loader: ^8.1.0
     chalk: ^3.0.0
     core-js: ^3.6.4
+    deepmerge: ^4.2.2
     emotion-theming: ^10.0.27
     eslint: ^6.8.0
     eslint-config-prettier: ^6.10.0
@@ -2975,6 +2977,15 @@ __metadata:
   version: 2.5.3
   resolution: "@types/core-js@npm:2.5.3"
   checksum: 2/a6e54149dcfc7fb1c748ebdada16916c2ec488eeb37a6f539aa909d262cadf0492544f5016f0342cd9f5e2bf62de6c3877db3f679d6467c3a0fc3259c0459faa
+  languageName: node
+  linkType: hard
+
+"@types/deepmerge@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@types/deepmerge@npm:2.2.0"
+  dependencies:
+    deepmerge: "*"
+  checksum: 2/a2a38a7735ff7b560ba59ad35560e23e1c7fb366d64845fbfc2feef4827115cb280986fd0d11f674c6119e8bb4942fc5f764df2339895c325fd31df88ef2375a
   languageName: node
   linkType: hard
 
@@ -6798,6 +6809,13 @@ __metadata:
   version: 1.1.0
   resolution: "deep-object-diff@npm:1.1.0"
   checksum: 2/2667c43932d14c908d03f813cd2846a626bda1d320f8f1dee3c7bd00ff8058713bb8f5d995fabd617e09229cf64bf16e53579233e29da870fd27bde23d5f5b20
+  languageName: node
+  linkType: hard
+
+"deepmerge@npm:*, deepmerge@npm:^4.2.2":
+  version: 4.2.2
+  resolution: "deepmerge@npm:4.2.2"
+  checksum: 2/85abf8e0045ee280996e7d2396979c877ef0741e413b716e42441110e0a83ac08098b2a49cea035510060bf667c0eae3189b2a52349f5fa4b000c211041637b1
   languageName: node
   linkType: hard
 

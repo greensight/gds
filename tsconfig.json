@@ -5,6 +5,7 @@
         "jsx": "react",
         "moduleResolution": "node",
         "esModuleInterop": true,
+        "resolveJsonModule": true,
         "noEmit": true,
         "outDir": "esm",
         "baseUrl": ".",
