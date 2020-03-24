@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
-import Dropdown from '@helpers/Dropdown';
-import typography from '@helpers/customTypography';
+import Tooltip from '@helpers/Tooltip';
+import typography from '@helpers/typography';
 import copyToClipboard from '@helpers/copyToClipboard';
 
 export const Palettes = () => {
@@ -49,7 +49,7 @@ export const Palettes = () => {
 const PaletteColor = ({ color, index }: { color: string; index: number }) => {
     const theme = useTheme();
     const { colors } = theme;
-    const buttonRef = useRef();
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const markCss = {
         height: scale(4),
@@ -61,7 +61,7 @@ const PaletteColor = ({ color, index }: { color: string; index: number }) => {
     };
 
     return (
-        <Dropdown content="Hex code is copied to the clipboard">
+        <Tooltip content="Hex code is copied to the clipboard">
             <button
                 ref={buttonRef}
                 type="button"
@@ -83,7 +83,7 @@ const PaletteColor = ({ color, index }: { color: string; index: number }) => {
                 <span css={markCss}>{index}</span>
                 <span css={markCss}>{color}</span>
             </button>
-        </Dropdown>
+        </Tooltip>
     );
 };
 export default Palettes;

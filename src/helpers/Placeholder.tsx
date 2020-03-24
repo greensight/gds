@@ -1,7 +1,17 @@
 import React from 'react';
 import scale from '@utils/scale';
 
-const Item = ({ children, bg, ...props }) => (
+interface PlaceholderProps extends React.HTMLProps<HTMLDivElement> {
+    /** Placeholder content. */
+    children: React.ReactNode;
+    /** Background color. */
+    bg: string;
+}
+
+/**
+ * Helper component for visually show content blocks.
+ */
+const Placeholder = ({ children, bg, ...props }: PlaceholderProps) => (
     <div
         css={theme => ({
             display: 'flex',
@@ -17,4 +27,4 @@ const Item = ({ children, bg, ...props }) => (
     </div>
 );
 
-export default Item;
+export default Placeholder;

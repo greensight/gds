@@ -2,66 +2,60 @@ import { CSSObject } from '@emotion/core';
 import useTheme from '@utils/useTheme';
 import baseTheme from '@utils/baseTheme';
 import isObject from '@helpers/isObject';
-import toArray from '@helpers/toArray';
 import { BREAKPOINTS_NAMES } from '@helpers/constants';
+import { Breakpoint } from '../typings/Types.d';
 
-interface UseCSSPropertyArgs {
-    /** Css property name */
+/**
+ * Calculate CSS Object from component props with `AllowMedia` type (user can pass object with breakpoints through prop). CSS property can be calculated based on multiple props.
+ */
+const useCSSProperty = <T>({
+    name,
+    props,
+    condition,
+    transform,
+}: {
+    /** CSS property name. */
     name: string;
-    /** CSS property value */
-    value?: any;
-    /** Default value. Applied if value is undefined */
-    defaultProperty?: string;
-    /** Add property only if condition equals `true` */
+    /** Component prop or array of props. */
+    props: T;
+    /** Add property only if condition equals `true`. */
     condition?: boolean;
-    /** Value transform function */
-    transform?: (value: string) => string;
-}
-
-const useCSSProperty = ({ name, value, defaultProperty, condition, transform }: UseCSSPropertyArgs): CSSObject => {
+    /** Transform function. Applies before property value assignment. */
+    transform?: (props: Record<keyof T, any>) => string | number;
+}): CSSObject | undefined => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
+    const breakpoints = layoutTheme.breakpoints;
 
-    let arr = toArray(value);
-
-    if (arr.some(value => value === undefined) && defaultProperty) {
-        arr = arr.map((value, index) => {
-            if (value !== undefined) return value;
-            if (!Array.isArray(defaultProperty)) return !index ? layoutTheme[defaultProperty] : value;
-            return defaultProperty[index] ? layoutTheme[defaultProperty[index]] : value;
-        });
-    }
-
-    if (arr.every(value => value === undefined)) return;
     if (condition !== undefined && !condition) return;
 
-    const obj = arr.find(value => isObject(value));
-    if (!obj) return setValue(name, arr, transform);
+    const propsValues = Object.values(props);
+    const isUndefined = propsValues.every(value => value === undefined);
+    if (isUndefined) return;
 
-    return Object.keys(obj)
+    const mediaProp: Partial<Record<Breakpoint, any>> | undefined = propsValues.find(value => isObject(value));
+    if (!mediaProp) return setValue(name, props, transform);
+
+    return (Object.keys(mediaProp) as Breakpoint[])
         .sort((a, b) => BREAKPOINTS_NAMES.indexOf(a) - BREAKPOINTS_NAMES.indexOf(b))
         .reduce((acc, bp) => {
             const nameIndex = BREAKPOINTS_NAMES.indexOf(bp);
             const nextBp = nameIndex !== -1 && BREAKPOINTS_NAMES[nameIndex - 1];
-            const values = arr.map(value => (!isObject(value) ? value : value[bp]));
-            const rule = setValue(name, values, transform);
+            const breakpointProps = Object.fromEntries(
+                Object.entries(props).map(([, value]) => (!isObject(value) ? value : value[bp])),
+            ) as Record<keyof T, any>;
+            const rule = setValue(name, breakpointProps, transform);
             return {
                 ...acc,
-                ...(nextBp ? { [`@media (max-width: ${layoutTheme.breakpoints[nextBp] - 1}px)`]: rule } : rule),
+                ...(nextBp ? { [`@media (max-width: ${breakpoints[nextBp] - 1}px)`]: rule } : rule),
             };
         }, {});
 };
 
-const setValue = (
-    name: UseCSSPropertyArgs['name'],
-    value: UseCSSPropertyArgs['value'],
-    transform: UseCSSPropertyArgs['transform'],
-) => {
-    if (value.length === 1) value = value[0];
-
+const setValue = <T>(name: string, props: T, transform?: (props: T) => string | number) => {
     return {
-        [name]: transform ? transform(value) : value,
-    };
+        [name]: transform ? transform(props) : Object.values(props)[0],
+    } as CSSObject;
 };
 
 export default useCSSProperty;

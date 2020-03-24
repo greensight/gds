@@ -1,10 +1,13 @@
 import React from 'react';
 
 export interface VisuallyHiddenProps {
-    /** Hidden content */
+    /** Hidden content. */
     children: React.ReactNode;
 }
 
+/**
+ * Component to wrap components to make them visually hidden. These components still will be available for assistive technologies.
+ */
 const VisuallyHidden = ({ children }: VisuallyHiddenProps) => {
     return (
         <div

@@ -3,7 +3,7 @@ import useTheme from '@utils/useTheme';
 import typography from '@utils/typography';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
-import customTypography from '@helpers/customTypography';
+import baseThemeTypography from '@helpers/typography';
 
 export interface TypographyAutokitProps {
     /** Placeholder text */
@@ -19,7 +19,7 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
 
     if (!typographyTheme)
         return (
-            <div css={customTypography('body')}>
+            <div css={baseThemeTypography('body')}>
                 <span role="img" aria-label="Error">
                     ⛔️
                 </span>{' '}
@@ -34,11 +34,11 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
         padding: scale(1, true),
         borderRadius: 4,
         marginRight: scale(1),
-        ...customTypography('smallBold'),
+        ...baseThemeTypography('smallBold'),
     };
 
     return (
-        <div css={customTypography('body')}>
+        <div css={baseThemeTypography('body')}>
             {Object.keys(typographyTheme)
                 .filter(name => !['breakpoints', 'stacks', 'fluid'].includes(name))
                 .sort(
@@ -56,7 +56,7 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
                                         : 'M'}
                                 </span>
                             )}
-                            <span css={{ color: colors.grey20, ...customTypography('body') }}>{name}</span>
+                            <span css={{ color: colors.grey20, ...baseThemeTypography('body') }}>{name}</span>
                         </div>
                         <div
                             css={{
@@ -86,14 +86,14 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
                 Object.entries(globalFontsTheme).map(([fontName, fontAssets]) => {
                     return (
                         <dl key={fontName} css={{ marginBottom: scale(2) }}>
-                            <dt css={{ ...customTypography('bodyBold') }}>Font family</dt>
-                            <dd css={{ ...customTypography('body'), marginLeft: scale(4) }}>{fontName}</dd>
-                            <dt css={{ ...customTypography('bodyBold') }}>Variable font</dt>
-                            <dd css={{ ...customTypography('body'), marginLeft: scale(4) }}>
+                            <dt css={{ ...baseThemeTypography('bodyBold') }}>Font family</dt>
+                            <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>{fontName}</dd>
+                            <dt css={{ ...baseThemeTypography('bodyBold') }}>Variable font</dt>
+                            <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>
                                 {fontAssets.some(({ vf }) => vf) ? 'true' : 'false'}
                             </dd>
-                            <dt css={{ ...customTypography('bodyBold') }}>Font stack</dt>
-                            <dd css={{ ...customTypography('body'), marginLeft: scale(4) }}>
+                            <dt css={{ ...baseThemeTypography('bodyBold') }}>Font stack</dt>
+                            <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>
                                 {fontStacksTheme?.[fontName] ? fontStacksTheme[fontName] : 'sans-serif'}
                             </dd>
                         </dl>

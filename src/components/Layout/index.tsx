@@ -1,52 +1,54 @@
 import React, { createContext, useContext } from 'react';
+import { CSSObject } from '@emotion/core';
 import useTheme from '@utils/useTheme';
 import baseTheme from '@utils/baseTheme';
 import useCSSProperty from '@helpers/useCSSProperty';
 import toArray from '@helpers/toArray';
 import LayoutItem, { LayoutItemProps } from './Item';
+import { AllowMedia } from '../../typings/Types.d';
 
 export interface LayoutCompositionProps {
     Item: React.FC<LayoutItemProps>;
 }
 
 interface ILayoutContext {
-    /** Тип сетки */
-    type?: 'grid' | 'flex';
-    /** Колонки */
-    cols?: number | string | Array<number | string>;
-    /** Отступы */
-    gap?: number | string | [number | string, number | string];
-    /** Минимальный размер элемента в авто-режиме */
-    auto?: number;
+    /** Layout type. Some properties are available only for one or another type. */
+    type?: AllowMedia<'grid' | 'flex'>;
+    /** Columns settings. */
+    cols?: AllowMedia<number | string | Array<number | string>>;
+    /** Gaps settings. */
+    gap?: AllowMedia<number | string | [number | string, number | string]>;
+    /** Minimum column size in auto mode. Auto mode allows to create columns of equal size without media queries. */
+    auto?: AllowMedia<number>;
 }
 
 export interface LayoutProps extends ILayoutContext {
-    /** Содержимое сетки */
+    /** Layout items list. */
     children: React.ReactNode;
-    /** Инлайн */
-    inline?: boolean;
-    /** Строки (type: 'grid') */
-    rows?: number | string | (number | string)[];
-    /** Зоны (type: 'grid') */
-    areas?: string | string[];
-    /** Выравнивание основной оси */
-    justify?: 'start' | 'end' | 'center' | 'stretch' | 'space-around' | 'space-between' | 'space-evenly';
-    /** Выравнивание побочной оси */
-    align?: 'start' | 'end' | 'center' | 'stretch';
-    /** Размер строк неявной сетки (type: 'grid') */
-    autoRows?: number | string | (number | string)[];
-    /** Размер колонок неявной сетки (type: 'grid') */
-    autoCols?: number | string | (number | string)[];
-    /** Направление основной оси */
-    direction?: 'row' | 'column';
-    /** Денс-денс (type: 'grid') */
-    dense?: boolean;
-    /** Обратное направление (type: 'flex') */
-    reverse?: boolean;
-    /** Многострочный режим (type: 'flex') */
-    wrap?: boolean;
-    /** Кастомный CSS */
-    css?: Record<string, any>;
+    /** Inline mode. Changes `display` type.*/
+    inline?: AllowMedia<boolean>;
+    /** Rows. For grids only. */
+    rows?: AllowMedia<number | string | (number | string)[]>;
+    /** Areas. For grids only. */
+    areas?: AllowMedia<string | string[]>;
+    /** Main axis alignment. */
+    justify?: AllowMedia<'start' | 'end' | 'center' | 'stretch' | 'space-around' | 'space-between' | 'space-evenly'>;
+    /** Cross axis alignment. */
+    align?: AllowMedia<'start' | 'end' | 'center' | 'stretch'>;
+    /** Auto rows size. For grids only. */
+    autoRows?: AllowMedia<number | string | (number | string)[]>;
+    /** Auto cols size. For grids only. */
+    autoCols?: AllowMedia<number | string | (number | string)[]>;
+    /** Main axis direction. */
+    direction?: AllowMedia<'row' | 'column'>;
+    /** Dense mode. For grids only. */
+    dense?: AllowMedia<boolean>;
+    /** Reverse directions. For flex only. */
+    reverse?: AllowMedia<boolean>;
+    /** Multiline mode. For flex only. */
+    wrap?: AllowMedia<boolean>;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
 const LayoutContext = createContext<ILayoutContext | undefined>(undefined);
@@ -83,6 +85,8 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
 }) => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
+    gap = gap || layoutTheme.gap;
+    cols = cols || layoutTheme.cols;
 
     return (
         <LayoutContext.Provider
@@ -92,15 +96,14 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                 css={[
                     useCSSProperty({
                         name: 'display',
-                        value: [type, inline],
-                        transform: ([type, inline]) => (inline ? `inline-${type}` : type),
+                        props: { type, inline },
+                        transform: ({ type, inline }) => (inline ? `inline-${type}` : type),
                     }),
                     useCSSProperty({
                         name: 'gridTemplateColumns',
-                        value: [cols, auto],
-                        defaultProperty: 'cols',
+                        props: { cols, auto },
                         condition: type === 'grid' && !areas,
-                        transform: ([cols, auto]) => {
+                        transform: ({ cols, auto }) => {
                             if (auto) return `repeat(auto-fill, minmax(${auto}px, 1fr))`;
                             if (Number.isInteger(cols)) return `repeat(${cols}, 1fr)`;
                             const arr = toArray(cols);
@@ -109,102 +112,96 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                     }),
                     useCSSProperty({
                         name: 'gridTemplateRows',
-                        value: rows,
+                        props: { rows },
                         condition: type === 'grid' && !areas,
-                        transform: value => {
-                            if (Number.isInteger(value)) return `repeat(${value}, 1fr)`;
-                            const arr = toArray(value);
+                        transform: ({ rows }) => {
+                            if (Number.isInteger(rows)) return `repeat(${rows}, 1fr)`;
+                            const arr = toArray(rows);
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
                     useCSSProperty({
                         name: 'gridTemplateAreas',
-                        value: areas,
+                        props: { areas },
                         condition: type === 'grid',
-                        transform: value => {
-                            const arr = toArray(value);
+                        transform: ({ areas }) => {
+                            const arr = toArray(areas);
                             return arr.map(val => `"${val}"`).join(' ');
                         },
                     }),
                     useCSSProperty({
                         name: 'gridGap',
-                        value: gap,
-                        defaultProperty: 'gap',
+                        props: { gap },
                         condition: type === 'grid',
-                        transform: value => {
-                            if (Array.isArray(value)) return `${value[0]}px ${value[1]}px`;
-                            return value;
+                        transform: ({ gap }) => {
+                            if (Array.isArray(gap)) return `${gap[0]}px ${gap[1]}px`;
+                            return gap;
                         },
                     }),
                     useCSSProperty({
                         name: 'margin',
-                        value: gap,
-                        defaultProperty: 'gap',
+                        props: { gap },
                         condition: type === 'flex',
-                        transform: value => {
-                            if (Array.isArray(value)) return `-${value[0]}px 0 0 -${value[1]}px`;
-                            return `-${value}px 0 0 -${value}px`;
+                        transform: ({ gap }) => {
+                            if (Array.isArray(gap)) return `-${gap[0]}px 0 0 -${gap[1]}px`;
+                            return `-${gap}px 0 0 -${gap}px`;
                         },
                     }),
-                    useCSSProperty({
-                        name: 'justifyItems',
-                        value: justify,
-                        condition: type === 'grid',
-                    }),
+                    useCSSProperty({ name: 'justifyItems', props: { justify }, condition: type === 'grid' }),
                     useCSSProperty({
                         name: 'justifyContent',
-                        value: justify,
+                        props: { justify },
                         condition: type === 'flex',
-                        transform: value => {
-                            if (value === 'start' || value === 'end') return `flex-${value}`;
-                            return value;
+                        transform: ({ justify }) => {
+                            if (justify === 'start' || justify === 'end') return `flex-${justify}`;
+                            return justify;
                         },
                     }),
                     useCSSProperty({
                         name: 'alignItems',
-                        value: align,
-                        transform: value => {
-                            if (type === 'flex' && (value === 'start' || value === 'end')) return `flex-${value}`;
-                            return value;
+                        props: { align },
+                        transform: ({ align }) => {
+                            if (type === 'flex' && (align === 'start' || align === 'end')) return `flex-${align}`;
+                            return align;
                         },
                     }),
                     useCSSProperty({
                         name: 'gridAutoRows',
-                        value: autoRows,
+                        props: { autoRows },
                         condition: type === 'grid',
-                        transform: value => {
-                            const arr = toArray(value);
+                        transform: ({ autoRows }) => {
+                            const arr = toArray(autoRows);
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
                     useCSSProperty({
                         name: 'gridAutoColumns',
-                        value: autoCols,
+                        props: { autoCols },
                         condition: type === 'grid',
-                        transform: value => {
-                            const arr = toArray(value);
+                        transform: ({ autoCols }) => {
+                            const arr = toArray(autoCols);
                             return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
                     useCSSProperty({
                         name: 'gridAutoFlow',
-                        value: [direction, dense],
-                        condition: type === 'grid' && (direction === 'column' || dense),
-                        transform: ([direction, dense]) =>
+                        props: { direction, dense },
+                        condition: type === 'grid' && (direction === 'column' || !!dense),
+                        transform: ({ direction, dense }) =>
                             `${direction === 'column' ? 'column' : ''}${dense ? ' dense' : ''}`.trim(),
                     }),
                     useCSSProperty({
                         name: 'flexDirection',
-                        value: [direction, reverse],
-                        condition: type === 'flex' && (direction === 'column' || reverse),
-                        transform: ([direction, reverse]) =>
+                        props: { direction, reverse },
+                        condition: type === 'flex' && (direction === 'column' || !!reverse),
+                        transform: ({ direction, reverse }) =>
                             `${direction === 'column' ? 'column' : 'row'}${reverse ? '-reverse' : ''}`,
                     }),
                     useCSSProperty({
                         name: 'flexWrap',
-                        value: wrap,
+                        props: { wrap },
                         condition: type === 'flex',
-                        transform: value => (value ? 'wrap' : 'nowrap'),
+                        transform: ({ wrap }) => (wrap ? 'wrap' : 'nowrap'),
                     }),
                     css,
                 ]}

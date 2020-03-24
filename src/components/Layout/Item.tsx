@@ -1,26 +1,28 @@
 import React from 'react';
+import { CSSObject } from '@emotion/core';
 import useCSSProperty from '@helpers/useCSSProperty';
 import { useLayout } from '.';
+import { AllowMedia } from '../../typings/Types.d';
 
 export interface LayoutItemProps {
-    /** Содержимое элемента сетки */
+    /** Item content. */
     children: React.ReactNode;
-    /** Колонки */
-    col?: number | number[2] | string;
-    /** Строки (type: 'grid') */
-    row?: number | number[2] | string;
-    /** Имя зоны (type: 'grid') */
-    area?: string;
-    /** Выравнивание основной оси (type: 'grid') */
-    justify?: 'start' | 'end' | 'center' | 'stretch';
-    /** Выравнивание побочной оси */
-    align?: 'start' | 'end' | 'center' | 'stretch';
-    /** Порядок */
-    order?: number;
-    /** grow (type: 'flex')  */
-    grow?: boolean | number;
-    /** Кастомный CSS */
-    css?: Record<string, any>;
+    /** Column settings. */
+    col?: AllowMedia<number | [number, number] | string>;
+    /** Row settings. For grids only. */
+    row?: AllowMedia<number | [number, number] | string>;
+    /** Area name. For grids only. */
+    area?: AllowMedia<string>;
+    /** Main axis self alignment. For grids only. */
+    justify?: AllowMedia<'start' | 'end' | 'center' | 'stretch'>;
+    /** Cross axis self alignment. */
+    align?: AllowMedia<'start' | 'end' | 'center' | 'stretch'>;
+    /** Order. */
+    order?: AllowMedia<number>;
+    /** Expand on all available space. For flex only.  */
+    grow?: AllowMedia<boolean | number>;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
 export const Item = ({ children, col, row, area, justify, align, order, grow, css, ...props }: LayoutItemProps) => {
@@ -31,71 +33,61 @@ export const Item = ({ children, col, row, area, justify, align, order, grow, cs
             css={[
                 useCSSProperty({
                     name: 'gridColumn',
-                    value: col,
+                    props: { col },
                     condition: type === 'grid',
-                    transform: value => {
-                        if (Array.isArray(value)) return `${value[0]} / ${value[1]}`;
-                        if (Number.isInteger(value)) return `span ${value}`;
-                        return value;
+                    transform: ({ col }) => {
+                        if (Array.isArray(col)) return `${col[0]} / ${col[1]}`;
+                        if (Number.isInteger(col)) return `span ${col}`;
+                        return col;
                     },
                 }),
                 useCSSProperty({
                     name: 'gridRow',
-                    value: row,
+                    props: { row },
                     condition: type === 'grid',
-                    transform: value => {
-                        if (Array.isArray(value)) return `${value[0]} / ${value[1]}`;
-                        if (Number.isInteger(value)) return `span ${value}`;
-                        return value;
+                    transform: ({ row }) => {
+                        if (Array.isArray(row)) return `${row[0]} / ${row[1]}`;
+                        if (Number.isInteger(row)) return `span ${row}`;
+                        return row;
                     },
                 }),
-                useCSSProperty({
-                    name: 'gridArea',
-                    value: area,
-                    condition: type === 'grid',
-                }),
-                useCSSProperty({
-                    name: 'justifySelf',
-                    value: justify,
-                    condition: type === 'grid',
-                }),
+                useCSSProperty({ name: 'gridArea', props: { area }, condition: type === 'grid' }),
+                useCSSProperty({ name: 'justifySelf', props: { justify }, condition: type === 'grid' }),
                 useCSSProperty({
                     name: 'alignSelf',
-                    value: align,
-                    transform: value => {
-                        if (type === 'flex' && (value === 'start' || value === 'end')) return `flex-${value}`;
-                        return value;
+                    props: { align },
+                    transform: ({ align }) => {
+                        if (type === 'flex' && (align === 'start' || align === 'end')) return `flex-${align}`;
+                        return align;
                     },
                 }),
-                useCSSProperty({
-                    name: 'order',
-                    value: order,
-                }),
+                useCSSProperty({ name: 'order', props: { order } }),
                 useCSSProperty({
                     name: 'flexGrow',
-                    value: [grow, auto],
+                    props: { grow, auto },
                     condition: type === 'flex',
-                    transform: ([grow, auto]) => {
+                    transform: ({ grow, auto }) => {
                         if (auto) return 1;
                         return !Number.isInteger(grow) ? Number(grow) : grow;
                     },
                 }),
                 useCSSProperty({
                     name: 'padding',
-                    value: gap,
+                    props: { gap },
                     condition: type === 'flex',
-                    transform: value => {
-                        if (Array.isArray(value)) return `${value[0]}px 0 0 ${value[1]}px`;
-                        return `${value}px 0 0 ${value}px`;
+                    transform: ({ gap }) => {
+                        if (Array.isArray(gap)) return `${gap[0]}px 0 0 ${gap[1]}px`;
+                        return `${gap}px 0 0 ${gap}px`;
                     },
                 }),
                 useCSSProperty({
                     name: 'flexBasis',
-                    value: [col, auto],
+                    props: { col, auto },
                     condition: type === 'flex',
-                    transform: ([col, auto]) => {
+                    transform: ({ col, auto }) => {
                         if (auto) return auto;
-                        if (Number.isInteger(Number(col))) return `${Math.floor((100 * col * 100) / cols) / 100}%`;
+                        if (typeof cols === 'number' && Number.isInteger(Number(col)))
+                            return `${Math.floor((100 * col * 100) / cols) / 100}%`;
                         return col;
                     },
                 }),

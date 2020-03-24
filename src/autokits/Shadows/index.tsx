@@ -3,8 +3,8 @@ import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
-import Dropdown from '@helpers/Dropdown';
-import typography from '@helpers/customTypography';
+import Tooltip from '@helpers/Tooltip';
+import typography from '@helpers/typography';
 import copyToClipboard from '@helpers/copyToClipboard';
 
 export const Shadows = () => {
@@ -34,10 +34,10 @@ export const Shadows = () => {
 
 const Shadow = ({ name, value }: { name: string; value: string }) => {
     const { colors } = baseTheme;
-    const buttonRef = useRef();
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     return (
-        <Dropdown content="Variable name is copied to the clipboard">
+        <Tooltip content="Variable name is copied to the clipboard">
             <button
                 ref={buttonRef}
                 type="button"
@@ -71,7 +71,7 @@ const Shadow = ({ name, value }: { name: string; value: string }) => {
                     {name}
                 </span>
             </button>
-        </Dropdown>
+        </Tooltip>
     );
 };
 

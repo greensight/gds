@@ -4,7 +4,9 @@ import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
-import typography from '@helpers/customTypography';
+import typography from '@helpers/typography';
+import VisuallyHidden from '@components/VisuallyHidden';
+import Container from '@components/Container';
 
 export interface ButtonAutokitProps {
     /** Placeholder text */

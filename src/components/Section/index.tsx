@@ -1,48 +1,39 @@
 import React from 'react';
+import { CSSObject } from '@emotion/core';
 import Container from '@components/Container';
 import useCSSProperty from '@helpers/useCSSProperty';
+import { AllowMedia } from '../../typings/Types.d';
 
-export interface SectionProps {
-    /** Содержимое секции */
+export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
+    /** Section content. */
     children: React.ReactNode;
-    /** Обёртка в контейнер */
+    /** Wrap content in container. */
     container?: boolean;
-    /** Нижний отступ */
-    mb?: number;
-    /** Вертикальные поля */
-    pv?: number;
-    /** Верхнее поле */
-    pt?: number;
-    /** Нижнее поле */
-    pb?: number;
-    /** Фон */
-    bg?: string;
-    /** Кастомный CSS */
-    css?: Record<string, any>;
+    /** Bottom offset. */
+    mb?: AllowMedia<number>;
+    /** Vertical paddings. */
+    pv?: AllowMedia<number>;
+    /** Top padding. */
+    pt?: AllowMedia<number>;
+    /** Bottom padding. */
+    pb?: AllowMedia<number>;
+    /** Background color. */
+    bg?: AllowMedia<string>;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
+/**
+ * Component for page sections.
+ */
 export const Section = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }: SectionProps) => {
     return (
         <section
             css={[
-                useCSSProperty({
-                    name: 'marginBottom',
-                    value: mb,
-                }),
-                useCSSProperty({
-                    name: 'paddingTop',
-                    value: [pv, pt],
-                    transform: ([pv, pt]) => pv || pt,
-                }),
-                useCSSProperty({
-                    name: 'paddingBottom',
-                    value: [pv, pb],
-                    transform: ([pv, pb]) => pv || pb,
-                }),
-                useCSSProperty({
-                    name: 'background',
-                    value: bg,
-                }),
+                useCSSProperty({ name: 'marginBottom', props: { mb } }),
+                useCSSProperty({ name: 'paddingTop', props: { pv, pt }, transform: ({ pv, pt }) => pv || pt }),
+                useCSSProperty({ name: 'paddingBottom', props: { pv, pb }, transform: ({ pv, pb }) => pv || pb }),
+                useCSSProperty({ name: 'background', props: { bg } }),
                 css,
             ]}
             {...props}

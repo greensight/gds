@@ -1,35 +1,34 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
 import useCSSProperty from '@helpers/useCSSProperty';
+import useTheme from '@utils/useTheme';
+import baseTheme from '@utils/baseTheme';
 
-export interface ContainerProps {
-    /** Container content */
+export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
+    /** Container content. */
     children: React.ReactNode;
-    /** Custom CSS */
+    /** Additional CSS. */
     css?: CSSObject;
 }
 
+/**
+ * Component for creating main page container with `layout` theme parameters. Uses `maxWidth`, `padding`,`marginLeft`, `marginRight`.
+ */
 export const Container = ({ children, css, ...props }: ContainerProps) => {
+    const { layout } = useTheme();
+    const layoutTheme = layout || baseTheme.layout;
+
     return (
         <div
             css={[
-                useCSSProperty({
-                    name: 'maxWidth',
-                    defaultProperty: 'container',
-                }),
+                useCSSProperty({ name: 'maxWidth', props: { value: layoutTheme.container } }),
                 useCSSProperty({
                     name: 'padding',
-                    defaultProperty: 'padding',
-                    transform: value => `0 ${value}px`,
+                    props: { value: layoutTheme.padding },
+                    transform: ({ value }) => `0 ${value}px`,
                 }),
-                useCSSProperty({
-                    name: 'marginLeft',
-                    defaultProperty: 'marginLeft',
-                }),
-                useCSSProperty({
-                    name: 'marginRight',
-                    defaultProperty: 'marginRight',
-                }),
+                useCSSProperty({ name: 'marginLeft', props: { value: layoutTheme.marginLeft } }),
+                useCSSProperty({ name: 'marginRight', props: { value: layoutTheme.marginRight } }),
                 css,
             ]}
             {...props}

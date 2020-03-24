@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
-import Dropdown from '@helpers/Dropdown';
-import typography from '@helpers/customTypography';
+import Tooltip from '@helpers/Tooltip';
+import typography from '@helpers/typography';
 import copyToClipboard from '@helpers/copyToClipboard';
 
 export const Colors = () => {
@@ -34,7 +34,7 @@ export const Colors = () => {
 const Color = ({ name, value }: { name: string; value: string }) => {
     const theme = useTheme();
     const { colors } = theme;
-    const buttonRef = useRef();
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const markCss = {
         backgroundColor: colors.white,
@@ -45,7 +45,7 @@ const Color = ({ name, value }: { name: string; value: string }) => {
     };
 
     return (
-        <Dropdown content="Variable name is copied to the clipboard">
+        <Tooltip content="Variable name is copied to the clipboard">
             <button
                 ref={buttonRef}
                 type="button"
@@ -70,7 +70,7 @@ const Color = ({ name, value }: { name: string; value: string }) => {
                 <span css={{ ...markCss, marginBottom: scale(1) }}>{value}</span>
                 <span css={markCss}>{name}</span>
             </button>
-        </Dropdown>
+        </Tooltip>
     );
 };
 

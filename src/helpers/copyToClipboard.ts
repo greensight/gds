@@ -1,19 +1,24 @@
-const copyToClipboard = (str, ref) => {
+/**
+ * Copy text to user clipboard.
+ */
+const copyToClipboard = (text: string, focusRef?: React.RefObject<HTMLElement>) => {
+    const selection = document.getSelection();
+    if (!selection) return;
     const el = document.createElement('textarea');
-    el.value = str;
+    el.value = text;
     el.setAttribute('readonly', '');
     el.style.position = 'absolute';
     el.style.left = '-9999px';
     document.body.appendChild(el);
-    const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+    const selected = selection.rangeCount > 0 ? selection.getRangeAt(0) : false;
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
     if (selected) {
-        document.getSelection().removeAllRanges();
-        document.getSelection().addRange(selected);
+        selection.removeAllRanges();
+        selection.addRange(selected);
     }
-    ref.current.focus();
+    if (focusRef && focusRef.current) focusRef.current.focus();
 };
 
 export default copyToClipboard;

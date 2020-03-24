@@ -8,46 +8,39 @@ import cloneElement from '@helpers/cloneElement';
 import VisuallyHidden from '@components/VisuallyHidden';
 import ButtonTheme from '../../typings/Button.d';
 
-export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'as'> {
-    /** Содержимое кнопки */
+export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'as' | 'size'> {
+    /** Button content. */
     children: React.ReactNode;
-    /** Тема. Выбирается из определённых в объекте темы */
+    /** Theme name from list of themes defined in theme object at `components.Button.themes`. */
     theme?: string;
-    /** Размер. Выбирается из определённых в объекте темы */
+    /** Size name from list of sizes defined in theme object at `components.Button.sizes`. */
     size?: string;
-    /** Блочная кнопка. Занимает 100% ширины родителя */
+    /** Block type. Use 100% of parent width. */
     block?: boolean;
-    /** Иконка */
-    Icon?: Function | React.Component;
-    /** Распологает иконку после текста */
+    /** Icon. Accepts SVGR icon or custom JSX. */
+    Icon?: SVGRIcon | React.ReactNode;
+    /** Place icon after text. */
     iconAfter?: boolean;
-    /** Визуально скрытое содержимое. Для "иконочных" кнопок */
+    /** Visually hidden text. Keeps text accessible but visually shows only icons. Doesn't make sense without `Icon` prop. */
     hidden?: boolean;
-    /** Заблокированная кнопка */
-    disabled?: boolean;
-    /** HTML тип кнопки */
-    type?: 'button' | 'submit' | 'reset';
-    /** Адрес ссылки. Вместо кнопки будет отрендерен <a/> */
+    /** Link address. If passed renders anchor element instead of button. */
     href?: string;
-    /** Использовать свой тег для рендера. Нужен для передачи Link роутера */
-    as?: React.Component;
-    /** Открытие ссылки в новой вкладке */
+    /** Use your own React component for render. Main usage: pass `Link` from `react-router` for routes management. */
+    as?: React.ReactNode;
+    /** Open link in another browser tab. Additionaly adds `rel="nofollow noopener"`. */
     external?: boolean;
-    /** Обработчик клика */
-    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
-    themeObj?: ButtonTheme;
-    /** Кастомный CSS */
-    css?: Record<string, any>;
-    /** ref. DOM node доступен через current */
-    ref?: HTMLButtonElement;
+    /** Button theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __theme?: ButtonTheme;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
-/** Button component
- * @example
- * ```js
- * <Button>Click me</Button>
- * ```
+/**
+ * Button component.
+ *
+ * Renders <button /> or <a /> (pass `href`) or any custom element (pass `as`).
+ *
+ * Define themes and sizes in theme object (`components.Button`) and use them as `theme` / `size` prop values.
  */
 export const Button = (
     {
@@ -58,12 +51,12 @@ export const Button = (
         Icon,
         iconAfter = false,
         hidden = false,
-        type = 'button',
+        type = 'button' as const,
         href,
         as,
         external = false,
         onClick,
-        themeObj,
+        __theme,
         css,
         ...props
     }: ButtonProps,
@@ -71,7 +64,7 @@ export const Button = (
 ) => {
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Button ? globalTheme : baseTheme;
-    const buttonTheme = themeObj || usedTheme.components.Button;
+    const buttonTheme = __theme || usedTheme.components.Button;
 
     if (!buttonTheme.themes[theme]) {
         console.warn(`Specify "${theme}" theme. Default values are used instead`);
@@ -211,7 +204,7 @@ export const Button = (
         css,
     ];
 
-    const Component = href ? 'a' : as || 'button';
+    const Component: any = href ? 'a' : as || 'button';
 
     const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
     const iconProps = {
@@ -222,7 +215,7 @@ export const Button = (
         },
     };
 
-    let IconComponent;
+    let IconComponent = null;
     if (typeof Icon === 'function') {
         IconComponent = <Icon {...iconProps} />;
     } else if (typeof Icon === 'object') {
