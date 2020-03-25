@@ -1,18 +1,16 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import deepmerge from 'deepmerge';
+import Icon from './Icon';
 import Layout from '@components/Layout';
 import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import Tooltip from '@helpers/Tooltip';
 import typography from '@helpers/typography';
-import copyToClipboard from '@helpers/copyToClipboard';
 
 export interface IconsAutokitProps {
     /** Starting heading level */
     headingLevel?: number;
 }
 
-export const Icons = ({ headingLevel = 2 }: IconsAutokitProps) => {
+export const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
@@ -65,38 +63,4 @@ export const Icons = ({ headingLevel = 2 }: IconsAutokitProps) => {
     return <div css={{ ...typography('body'), paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
 };
 
-const Icon = ({ name, Component, path }: { name: string; Component: SVGRIcon; path: string }) => {
-    const { colors } = baseTheme;
-
-    const buttonRef = useRef<HTMLButtonElement>(null);
-
-    return (
-        <Tooltip content="Path to icon is copied to the clipboard">
-            <button
-                ref={buttonRef}
-                type="button"
-                css={{
-                    width: '100%',
-                    height: '100%',
-                    padding: scale(2),
-                    border: `2px solid ${colors.grey70}`,
-                    borderRadius: 4,
-                    ...typography('bodyBold'),
-                    textAlign: 'center',
-                    color: colors.black,
-                    transition: 'border-color ease 300ms',
-                    ':hover, :focus.focus-visible': {
-                        borderColor: colors.grey0,
-                        outline: 'none',
-                    },
-                }}
-                onClick={() => copyToClipboard(path)}
-            >
-                <Component css={{ marginBottom: scale(1) }} />
-                <div>{name}</div>
-            </button>
-        </Tooltip>
-    );
-};
-
-export default Icons;
+export default IconsAutokit;

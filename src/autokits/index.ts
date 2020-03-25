@@ -1,17 +1,17 @@
-import Palettes from './Palettes';
-import Colors from './Colors';
-import Typography from './Typography';
-import Icons from './Icons';
-import Layout from './Layout';
-import Shadows from './Shadows';
-import Button from './Button';
+import PalettesAutokit from './Palettes';
+import ColorsAutokit from './Colors';
+import TypographyAutokit from './Typography';
+import IconsAutokit from './Icons';
+import LayoutAutokit from './Layout';
+import ShadowsAutokit from './Shadows';
+import ButtonAutokit from './Button';
 
 export default {
-    Palettes,
-    Colors,
-    Typography,
-    Icons,
-    Layout,
-    Shadows,
-    Button,
+    Palettes: PalettesAutokit,
+    Colors: ColorsAutokit,
+    Typography: TypographyAutokit,
+    Icons: IconsAutokit,
+    Layout: LayoutAutokit,
+    Shadows: ShadowsAutokit,
+    Button: ButtonAutokit,
 };

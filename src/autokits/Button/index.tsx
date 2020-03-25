@@ -1,25 +1,28 @@
 import React from 'react';
-import ButtonComponent from '@components/Button';
+import Button from '@components/Button';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
 import typography from '@helpers/typography';
-import VisuallyHidden from '@components/VisuallyHidden';
-import Container from '@components/Container';
+import useComponentTheme from '@helpers/useComponentTheme';
+import ButtonTheme from '../../typings/Button';
 
 export interface ButtonAutokitProps {
-    /** Placeholder text */
+    /** Placeholder text. */
     text?: string;
-    /** Placeholder icon (overrides placeholder from theme)
-     */
+    /** Placeholder icon (overrides placeholder from theme). */
     Icon?: SVGRIcon;
 }
 
-export const Button = ({ text = 'Button', Icon }: ButtonAutokitProps) => {
+/**
+ * Autokit for `Button` component.
+ */
+export const ButtonAutokit = ({ text = 'Button', Icon }: ButtonAutokitProps) => {
     const theme = useTheme();
-    const buttonTheme = theme.components?.Button || baseTheme.components.Button;
-    Icon = Icon || theme.placeholder || baseTheme.placeholder;
+    const { componentTheme } = useComponentTheme('Button');
+    const buttonTheme = componentTheme as ButtonTheme;
+    const PlaceholderIcon = Icon || theme.global?.placeholder || baseTheme.global?.placeholder;
 
     return Object.keys(buttonTheme.themes).map(themeName => (
         <div key={themeName} css={{ marginBottom: scale(4) }}>
@@ -32,58 +35,52 @@ export const Button = ({ text = 'Button', Icon }: ButtonAutokitProps) => {
                 css={{ marginBottom: scale(2) }}
             >
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName}>
+                    <Button key={sizeName} theme={themeName} size={sizeName}>
                         {text}
-                    </ButtonComponent>
+                    </Button>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} disabled>
+                    <Button key={sizeName} theme={themeName} size={sizeName} disabled>
                         {text}
-                    </ButtonComponent>
+                    </Button>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon}>
+                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon}>
                         {text}
-                    </ButtonComponent>
+                    </Button>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon} iconAfter>
+                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon} iconAfter>
                         {text}
-                    </ButtonComponent>
+                    </Button>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon} hidden>
+                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon} hidden>
                         {text}
-                    </ButtonComponent>
+                    </Button>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName}>
+                    <Button key={sizeName} theme={themeName} size={sizeName}>
                         {text}
                         <br />
                         {text}
-                    </ButtonComponent>
+                    </Button>
                 ))}
                 {Object.keys(buttonTheme.sizes).map(sizeName => (
-                    <ButtonComponent key={sizeName} theme={themeName} size={sizeName} Icon={Icon}>
+                    <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon}>
                         {text}
                         <br />
                         {text}
-                    </ButtonComponent>
+                    </Button>
                 ))}
             </Layout>
             {Object.keys(buttonTheme.sizes).map(sizeName => (
-                <ButtonComponent
-                    key={sizeName}
-                    theme={themeName}
-                    size={sizeName}
-                    block
-                    css={{ marginBottom: scale(2) }}
-                >
+                <Button key={sizeName} theme={themeName} size={sizeName} block css={{ marginBottom: scale(2) }}>
                     {text}
-                </ButtonComponent>
+                </Button>
             ))}
         </div>
     ));
 };
 
-export default Button;
+export default ButtonAutokit;

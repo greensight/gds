@@ -6,14 +6,13 @@ import baseTheme from '@utils/baseTheme';
 import baseThemeTypography from '@helpers/typography';
 
 export interface TypographyAutokitProps {
-    /** Placeholder text */
+    /** Placeholder text. */
     text?: string;
 }
 
-export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
+export const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
     const theme = useTheme();
     const globalFontsTheme = theme.global?.fonts;
-    const fontStacksTheme = globalFontsTheme?.stacks;
     const typographyTheme = theme.typography;
     const { colors } = baseTheme;
 
@@ -40,34 +39,37 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
     return (
         <div css={baseThemeTypography('body')}>
             {Object.keys(typographyTheme)
-                .filter(name => !['breakpoints', 'stacks', 'fluid'].includes(name))
+                .filter(name => name !== 'breakpoints')
                 .sort(
                     (a, b) =>
-                        parseFloat(typographyTheme[b].desktop.fontSize) -
-                        parseFloat(typographyTheme[a].desktop.fontSize),
+                        parseFloat(typographyTheme.styles[b].desktop.fontSize) -
+                        parseFloat(typographyTheme.styles[a].desktop.fontSize),
                 )
-                .map(name => (
-                    <div key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: scale(3) }}>
-                        <div css={{ minWidth: scale(17), marginRight: scale(2) }}>
-                            {typographyTheme[name].mobile && (
-                                <span css={markCss}>
-                                    {typographyTheme[name].fluid !== false && typographyTheme.fluid !== false
-                                        ? 'F'
-                                        : 'M'}
-                                </span>
-                            )}
-                            <span css={{ color: colors.grey20, ...baseThemeTypography('body') }}>{name}</span>
+                .map(name => {
+                    let isFluid = true;
+                    const fluidSettings = globalFontsTheme?.fluid;
+                    if (fluidSettings !== undefined) {
+                        isFluid = Array.isArray(fluidSettings) ? !fluidSettings.includes(name) : fluidSettings;
+                    }
+                    return (
+                        <div key={name} css={{ display: 'flex', alignItems: 'flex-end', marginBottom: scale(3) }}>
+                            <div css={{ minWidth: scale(17), marginRight: scale(2) }}>
+                                {typographyTheme.styles[name].mobile && (
+                                    <span css={markCss}>{isFluid ? 'F' : 'M'}</span>
+                                )}
+                                <span css={{ color: colors.grey20, ...baseThemeTypography('body') }}>{name}</span>
+                            </div>
+                            <div
+                                css={{
+                                    ...typography(name, theme),
+                                    color: colors.black,
+                                }}
+                            >
+                                {text}
+                            </div>
                         </div>
-                        <div
-                            css={{
-                                ...typography(name, theme),
-                                color: colors.black,
-                            }}
-                        >
-                            {text}
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
             <div css={{ marginBottom: scale(2) }}>
                 <p css={{ marginBottom: scale(2) }}>
                     Breakpoints: <strong>{typographyTheme.breakpoints[0]}</strong> and{' '}
@@ -83,7 +85,7 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
                 </p>
             </div>
             {globalFontsTheme &&
-                Object.entries(globalFontsTheme).map(([fontName, fontAssets]) => {
+                Object.entries(globalFontsTheme.fontFace).map(([fontName, fontAssets]) => {
                     return (
                         <dl key={fontName} css={{ marginBottom: scale(2) }}>
                             <dt css={{ ...baseThemeTypography('bodyBold') }}>Font family</dt>
@@ -94,7 +96,7 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
                             </dd>
                             <dt css={{ ...baseThemeTypography('bodyBold') }}>Font stack</dt>
                             <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>
-                                {fontStacksTheme?.[fontName] ? fontStacksTheme[fontName] : 'sans-serif'}
+                                {globalFontsTheme?.stacks?.[fontName] || 'sans-serif'}
                             </dd>
                         </dl>
                     );
@@ -103,4 +105,4 @@ export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
     );
 };
 
-export default Typography;
+export default TypographyAutokit;

@@ -6,7 +6,7 @@ import { AllowMedia } from '../../typings/Types.d';
 
 export interface LayoutItemProps {
     /** Item content. */
-    children: React.ReactNode;
+    children?: React.ReactNode;
     /** Column settings. */
     col?: AllowMedia<number | [number, number] | string>;
     /** Row settings. For grids only. */
