@@ -1,13 +1,20 @@
 import { CSSObject } from '@emotion/core';
 import { ComponentStates } from './Types';
 
-export interface ButtonThemeProperties {
+export interface ButtonStateProperties {
     /** Text and icon color. */
     color?: string;
     /** Background color. */
     bg?: string;
     /** Border color. */
     border?: string;
+    /** Shadow. Mostly for `active` state. */
+    shadow?: string;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export interface ButtonThemeProperties extends ButtonStateProperties {
     /** Border width. Equals `1` by default if `border` property is defined. */
     borderWidth?: number;
     /** Border style. `'solid'` by default. */
@@ -18,19 +25,17 @@ export interface ButtonThemeProperties {
     half?: boolean;
     /** Round mode. Redefines `border-radius` with `'50%'` value for `hidden` mode. Doesn't affect buttons with visible text. */
     round?: boolean;
-    /** Shadow. Mostly for `active` state. */
-    shadow?: string;
     /** Transition duration. Equals `200` by default. */
     time?: number;
     /** Transition enter duration for hover state. Uses with `time` property to differ enter/exit transition durations. */
     timeIn?: number;
     /** Transition easing function. Equals `'ease'` by default. */
     easing?: string;
-    /** Additional CSS. */
-    css?: CSSObject;
 }
 
-export type ButtonStates = Partial<Record<ComponentStates, ButtonThemeProperties>>;
+export interface ButtonStates extends Partial<Record<ComponentStates, ButtonStateProperties>> {
+    default: ButtonThemeProperties;
+}
 
 export interface ButtonSizeProperties {
     /** Height. Equals `scale(6)` by default. */

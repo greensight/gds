@@ -17,7 +17,7 @@ import baseTheme from '@utils/baseTheme';
  * export default typography;
  * ```
  */
-const typography = (name: string, theme: Theme = baseTheme): CSSObject | undefined => {
+const typography = (name: string | undefined, theme: Theme = baseTheme as Theme): CSSObject | undefined => {
     if (!name) {
         console.warn('"name" argument is not defined.');
         return;

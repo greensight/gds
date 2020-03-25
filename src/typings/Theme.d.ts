@@ -4,6 +4,11 @@ import LayoutTheme from './Layout';
 import GlobalTheme from './Global';
 import ButtonTheme from './Button';
 
+export interface ComponentsTheme {
+    /** `Button` component theme settings. */
+    Button?: ButtonTheme;
+}
+
 export default interface Theme {
     /** Global theme settings. */
     global?: GlobalTheme;
@@ -18,8 +23,5 @@ export default interface Theme {
     /** Layout theme settings. */
     layout?: LayoutTheme;
     /** Components theme settings. */
-    components?: {
-        /** `Button` component theme settings. */
-        Button?: ButtonTheme;
-    };
+    components?: ComponentsTheme;
 }

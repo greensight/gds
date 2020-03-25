@@ -1,12 +1,18 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
-import useTheme from '@utils/useTheme';
 import typography from '@utils/typography';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
+import useComponentTheme from '@helpers/useComponentTheme';
 import cloneElement from '@helpers/cloneElement';
 import VisuallyHidden from '@components/VisuallyHidden';
-import ButtonTheme from '../../typings/Button.d';
+import ButtonTheme, {
+    ButtonThemeProperties,
+    ButtonSizeProperties,
+    ButtonStateProperties,
+} from '../../typings/Button.d';
+import { ComponentStates } from '../../typings/Types.d';
+import { TypographyProperties } from '../../typings/Typography.d';
 
 export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'as' | 'size'> {
     /** Button content. */
@@ -62,159 +68,116 @@ export const Button = (
     }: ButtonProps,
     ref: HTMLButtonElement,
 ) => {
-    const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Button ? globalTheme : baseTheme;
-    const buttonTheme = __theme || usedTheme.components.Button;
+    /* Get theme objects. */
+    const { componentTheme, usedTheme } = useComponentTheme('Button', __theme);
+    const buttonTheme = componentTheme as ButtonTheme;
+    if (!buttonTheme.themes[theme]) console.warn(`Specify "${theme}" theme. Default values are used instead`);
+    if (!buttonTheme.sizes[size]) console.warn(`Specify "${size}" size. Default values are used instead`);
 
-    if (!buttonTheme.themes[theme]) {
-        console.warn(`Specify "${theme}" theme. Default values are used instead`);
-    }
+    /* Get theme properties. */
+    const themeProperties = getThemeProperties(buttonTheme, theme, 'default');
+    const sizeProperties = buttonTheme.sizes[size];
 
-    if (!buttonTheme.sizes[size]) {
-        console.warn(`Specify "${size}" size. Default values are used instead`);
-    }
-
-    const getRule = (name: string, defaultValue?: any) => {
-        const themeStyles = buttonTheme.themes[theme];
-        let themeRule;
-        if (themeStyles) themeRule = themeStyles[name];
-
-        const sizeStyles = buttonTheme.sizes[size];
-        let sizeRule;
-        if (sizeStyles) sizeRule = sizeStyles[name];
-
-        const baseStyles = buttonTheme.base;
-        const baseRule = baseStyles?.[name];
-
-        return themeRule || sizeRule || baseRule || defaultValue;
+    /* Merge theme properties with default values. */
+    const themeDefaults = {
+        borderWidth: themeProperties.border ? 1 : 0,
+        time: 200,
+        easing: 'ease',
+        color: baseTheme.colors.white,
+        bg: baseTheme.colors.black,
+    };
+    const themePropertiesWithDefaults: RequiredBy<ButtonThemeProperties, keyof typeof themeDefaults> = {
+        ...themeDefaults,
+        ...themeProperties,
+    };
+    const sizeDefaults = {
+        height: scale(6),
+        padding: scale(3),
+        iconSize: scale(3),
+        iconOffset: scale(1),
+    };
+    const sizePropertiesWithDefaults: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = {
+        ...sizeDefaults,
+        ...sizeProperties,
     };
 
-    const getStateStyles = (name: string, css?: CSSObject) => {
-        const state = getRule(name);
-        if (!state) return;
-        const { color, bg, border, shadow, css: stateCss } = state;
-        return {
-            [`:${name}`]: {
-                color,
-                fill: color,
-                background: bg,
-                borderColor: border,
-                boxShadow: shadow,
-                ...stateCss,
-                ...css,
-            },
-        };
+    /* Define CSS rules from theme properties for default state. */
+    const typographyName = sizePropertiesWithDefaults.typography;
+    const typographyCSS = typography(typographyName, usedTheme);
+    const pv = getVerticalPaddings(
+        typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
+        sizePropertiesWithDefaults,
+        themePropertiesWithDefaults,
+        !!Icon,
+    );
+    const borderRadius = !themePropertiesWithDefaults.half
+        ? themePropertiesWithDefaults.borderRadius
+        : sizePropertiesWithDefaults.height / 2;
+    const padding = `${pv}px ${sizePropertiesWithDefaults.padding}px`;
+    const transition = getTransition(themePropertiesWithDefaults.time, themePropertiesWithDefaults.easing);
+    const defaultCSS: CSSObject = {
+        display: 'inline-flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: themePropertiesWithDefaults.borderWidth,
+        borderStyle: themePropertiesWithDefaults.borderStyle,
+        ...typographyCSS,
+        borderRadius,
+        padding,
+        transition,
+        ...getStateCSS(themePropertiesWithDefaults),
+        ...sizePropertiesWithDefaults.css,
     };
 
-    const getPv = typographyStyles => {
-        let fontSize = '1rem';
-        let lineHeight = 1.4;
-
-        const cssRule = buttonTheme.sizes[size].css;
-
-        if (typographyStyles) {
-            fontSize = parseFloat(typographyStyles.fontSize) * 16;
-            lineHeight = typographyStyles.lineHeight;
-        } else if (cssRule) {
-            if (cssRule.fontSize) {
-                if (typeof cssRule.fontSize === 'number') {
-                    fontSize = cssRule.fontSize;
-                } else if (typeof cssRule.fontSize === 'string') {
-                    if (cssRule.fontSize.endsWith('rem')) {
-                        fontSize = parseFloat(cssRule.fontSize) * 16;
-                    } else {
-                        fontSize = parseFloat(cssRule.fontSize);
-                    }
-                }
-            }
-
-            if (cssRule.lineHeight) lineHeight = cssRule.lineHeight;
-        }
-
-        const textHeight = Math.floor(fontSize * lineHeight);
-        const maxHeight = Math.max(textHeight, Icon ? iconSize : 0);
-        const pv = (height - maxHeight - borderWidth * 2) / 2;
-
-        return pv;
-    };
-
-    const transition = time =>
-        ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
-            .map(name => `${name} ${easing} ${time}ms`)
-            .join(', ');
-
-    const border = getRule('border');
-    const borderWidth = getRule('borderWidth', border ? 1 : 0);
-    const borderStyle = getRule('borderStyle', 'solid');
-    const borderRadius = getRule('borderRadius');
-    const time = getRule('time', 200);
-    const timeIn = getRule('timeIn');
-    const easing = getRule('easing', 'ease');
-    const typographyName = getRule('typography');
-    const height = getRule('height', scale(6));
-    const padding = getRule('padding', scale(3));
-    const iconSize = getRule('iconSize', scale(3));
-    const iconOffset = getRule('iconOffset', scale(1));
-    const color = getRule('color', baseTheme.colors.white);
-    const bg = getRule('bg', baseTheme.colors.black);
-    const shadow = getRule('shadow');
-    const round = getRule('round');
-    const half = getRule('half');
-
-    const typographyStyles = typographyName && typography(typographyName, usedTheme);
-    const pv = getPv(typographyStyles);
-
-    const blockStyles = { display: 'flex', width: '100%' };
-
-    const roundStyles = {
-        borderRadius: '50%',
-        padding: `${pv}px ${(height - iconSize - borderWidth) / 2}px`,
-    };
-
-    const styles = [
-        {
-            display: 'inline-flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderWidth,
-            borderStyle,
-            borderRadius: !half ? borderRadius : height / 2,
-            padding: `${pv}px ${padding}px`,
-            ...typographyStyles,
-            color,
-            fill: color,
-            background: bg,
-            borderColor: border,
-            boxShadow: shadow,
-            transition: transition(time),
-            ...getStateStyles('hover', {
-                ...(timeIn && { transition: transition(timeIn) }),
+    /* Define CSS rules from theme properties for other states. */
+    const themeHoverProperties = getThemeProperties(buttonTheme, theme, 'hover');
+    const themeActiveProperties = getThemeProperties(buttonTheme, theme, 'active');
+    const themeDisabledProperties = getThemeProperties(buttonTheme, theme, 'disabled');
+    const themeFocusProperties = getThemeProperties(buttonTheme, theme, 'focus');
+    const statesCSS: CSSObject = {
+        ':hover': {
+            ...getStateCSS(themeHoverProperties),
+            ...(themePropertiesWithDefaults.timeIn && {
+                transition: getTransition(themePropertiesWithDefaults.timeIn, themePropertiesWithDefaults.easing),
             }),
-            ...getStateStyles('active'),
-            ...getStateStyles('disabled', {
-                cursor: 'not-allowed',
-            }),
-            ...getStateStyles('focus'),
         },
-        buttonTheme.base?.css,
-        buttonTheme.sizes?.[size]?.css,
-        buttonTheme.themes?.[theme]?.css,
+        ':active': getStateCSS(themeActiveProperties),
+        ':disabled': {
+            ...getStateCSS(themeDisabledProperties),
+            cursor: 'not-allowed',
+        },
+        ':focus': getStateCSS(themeFocusProperties),
+    };
+
+    /* Build CSS object combined with rules from props. */
+    const blockStyles = { display: 'flex', width: '100%' };
+    const hiddenRoundStyles = {
+        borderRadius: '50%',
+        padding: `${pv}px ${
+            (sizePropertiesWithDefaults.height -
+                sizePropertiesWithDefaults.iconSize -
+                themePropertiesWithDefaults.borderWidth) /
+            2
+        }px`,
+    };
+    const styles = [
+        defaultCSS,
+        statesCSS,
         block && blockStyles,
-        hidden && round && roundStyles,
+        hidden && themePropertiesWithDefaults.round && hiddenRoundStyles,
         css,
     ];
 
+    /* Define component and icon component tags. */
     const Component: any = href ? 'a' : as || 'button';
-
     const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
     const iconProps = {
         css: {
-            [marginRule]: !hidden ? iconOffset : undefined,
-            width: iconSize,
-            height: iconSize,
+            [marginRule]: !hidden ? sizePropertiesWithDefaults.iconOffset : undefined,
+            width: sizePropertiesWithDefaults.iconSize,
+            height: sizePropertiesWithDefaults.iconSize,
         },
     };
-
     let IconComponent = null;
     if (typeof Icon === 'function') {
         IconComponent = <Icon {...iconProps} />;
@@ -239,5 +202,67 @@ export const Button = (
         </Component>
     );
 };
+
+const getStateCSS = ({ color, bg, border, shadow, css }: ButtonStateProperties) => ({
+    color,
+    fill: color,
+    background: bg,
+    borderColor: border,
+    boxShadow: shadow,
+    ...css,
+});
+
+const getThemeProperties = (
+    buttonTheme: ButtonTheme,
+    theme: string,
+    state: ComponentStates | 'default',
+): ButtonThemeProperties | ButtonStateProperties => {
+    const themeProperties = buttonTheme.themes[theme][state];
+    const baseProperties = buttonTheme.base?.[state];
+    return { ...baseProperties, ...themeProperties };
+};
+
+const getVerticalPaddings = (
+    typographyProperties: TypographyProperties | undefined,
+    sizeProperties: ButtonSizeProperties,
+    themeProperties: ButtonThemeProperties,
+    isIcon: boolean,
+) => {
+    const cssRule = sizeProperties.css;
+    let fontSize = 16;
+    let lineHeight = 1.4;
+
+    if (typographyProperties) {
+        fontSize = parseFloat(typographyProperties.fontSize) * 16;
+        lineHeight = typographyProperties.lineHeight;
+    } else if (cssRule) {
+        if (cssRule.fontSize) {
+            if (typeof cssRule.fontSize === 'number') {
+                fontSize = cssRule.fontSize;
+            } else if (typeof cssRule.fontSize === 'string') {
+                if (cssRule.fontSize.endsWith('rem')) {
+                    fontSize = parseFloat(cssRule.fontSize) * 16;
+                } else {
+                    fontSize = parseFloat(cssRule.fontSize);
+                }
+            }
+        }
+        if (cssRule.lineHeight && typeof cssRule.lineHeight === 'number') lineHeight = cssRule.lineHeight;
+    }
+
+    const textHeight = Math.floor(fontSize * lineHeight);
+    const iconSize = sizeProperties.iconSize as number;
+    const height = sizeProperties.height as number;
+    const borderWidth = themeProperties.borderWidth as number;
+    const maxHeight = Math.max(textHeight, isIcon ? iconSize : 0);
+    const verticalPaddings = (height - maxHeight - borderWidth * 2) / 2;
+
+    return verticalPaddings;
+};
+
+const getTransition = (time: number, easing: string) =>
+    ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
+        .map(name => `${name} ${easing} ${time}ms`)
+        .join(', ');
 
 export default React.forwardRef<HTMLButtonElement, ButtonProps>(Button);
