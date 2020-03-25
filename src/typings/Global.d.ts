@@ -15,6 +15,15 @@ export interface FontFaceProperties {
     css?: CSSObject;
 }
 
+export interface FontsProperties {
+    /** Font-face settings for defined fonts styles. */
+    fontFace: Record<string, FontFaceProperties[]>;
+    /** Fallback fonts for specified font family. */
+    stacks?: Record<string, string>;
+    /** Fluid typography settings. Active by default. Pass `false` to disable completely or array of fonts to disable. */
+    fluid?: boolean | string[];
+}
+
 export interface BaseProperties {
     /** Selection styles. */
     selection?: {
@@ -54,8 +63,8 @@ export interface BaseProperties {
 export default interface GlobalTheme {
     /** Custom placeholder icon for autokits. Icon must be in `SVGR` format (React component). */
     placeholder?: SVGRIcon;
-    /** Font-face settings for defined fonts styles. */
-    fonts?: Record<string, FontFaceProperties[]>;
+    /** Fonts settings. */
+    fonts?: FontsProperties;
     /** Global styles. */
     base?: BaseProperties;
 }

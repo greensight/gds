@@ -1,5 +1,5 @@
 import { PalettesTheme, ColorsTheme, ShadowsTheme } from './Types';
-import { TypographyTokens } from './Typography';
+import TypographyTheme from './Typography';
 import LayoutTheme from './Layout';
 
 export default interface Tokens {
@@ -10,7 +10,7 @@ export default interface Tokens {
     /** Tokens from `Shadows` frame. */
     shadows?: ShadowsTheme;
     /** Tokens from `Typography` frame. */
-    typography?: TypographyTokens;
+    typography?: TypographyTheme;
     /** Tokens from `Layout` frame. */
     layout?: LayoutTheme;
 }

@@ -6,32 +6,40 @@ import tokens from '../../public/tokens.json';
 
 const { colors, shadows } = tokens;
 
+/**
+ * Default GDS theme.
+ */
 const baseTheme = createTheme({
     tokens,
     settings: {
         global: {
             placeholder: PlaceholderIcon,
             fonts: {
-                'PT Root UI': [
-                    {
-                        woff2: 'fonts/PTRootUI-Regular.woff2',
-                        woff: 'fonts/PTRootUI-Regular.woff',
-                    },
-                    {
-                        woff2: 'fonts/PTRootUI-Medium.woff2',
-                        woff: 'fonts/PTRootUI-Medium.woff',
-                        weight: 500,
-                    },
-                    {
-                        woff2: 'fonts/PTRootUI-Bold.woff2',
-                        woff: 'fonts/PTRootUI-Bold.woff',
-                        weight: 700,
-                    },
-                    {
-                        vf: 'fonts/PTRootUI-VF.woff2',
-                        weight: '300 700',
-                    },
-                ],
+                fontFace: {
+                    'PT Root UI': [
+                        {
+                            woff2: 'fonts/PTRootUI-Regular.woff2',
+                            woff: 'fonts/PTRootUI-Regular.woff',
+                        },
+                        {
+                            woff2: 'fonts/PTRootUI-Medium.woff2',
+                            woff: 'fonts/PTRootUI-Medium.woff',
+                            weight: 500,
+                        },
+                        {
+                            woff2: 'fonts/PTRootUI-Bold.woff2',
+                            woff: 'fonts/PTRootUI-Bold.woff',
+                            weight: 700,
+                        },
+                        {
+                            vf: 'fonts/PTRootUI-VF.woff2',
+                            weight: '300 700',
+                        },
+                    ],
+                },
+                stacks: {
+                    'PT Root UI': FONT_STACK,
+                },
             },
             base: {
                 selection: {
@@ -48,11 +56,6 @@ const baseTheme = createTheme({
                     color: colors.black,
                     bg: colors.white,
                 },
-            },
-        },
-        typography: {
-            stacks: {
-                'PT Root UI': FONT_STACK,
             },
         },
         components: {

@@ -1,5 +1,5 @@
 export interface TypographyProperties {
-    /** `font-family` CSS property specifies a font family name. Specify only main font (Example: `'PT Root UI'`). Fallback fonts are defined separately in `stacks` setting. */
+    /** `font-family` CSS property specifies a font family name. Specify only main font (Example: `'PT Root UI'`). Fallback fonts are defined separately in `global.fonts.stacks` setting. */
     fontFamily: string;
     /** `font-weight` CSS property specifies the weight of the font. Specify value in numbers (Example: `400`). */
     fontWeight: number;
@@ -24,20 +24,11 @@ export interface TypographyStyle {
     desktop: TypographyProperties;
     /** Mobile typography properties. */
     mobile?: TypographyProperties;
-    /** Fluid typography for this style. `true` by default. */
-    fluid?: boolean;
 }
 
-export interface TypographyTokens {
+export default interface TypographyTheme {
     /** Breakpoint for desktop and mobile styles. */
     breakpoints: number[];
     /** Named typography styles. */
     styles: Record<string, TypographyStyle>;
-}
-
-export default interface TypographyTheme extends DeepPartial<TypographyTokens> {
-    /** Fallback fonts for specified font family. */
-    stacks?: Record<string, string>;
-    /** Fluid typography for all styles. `true` by default. */
-    fluid?: boolean;
 }

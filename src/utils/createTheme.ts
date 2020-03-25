@@ -1,6 +1,10 @@
 import deepmerge from 'deepmerge';
 import Theme from '../typings/Theme.d';
 
-const createTheme = ({ tokens, settings }: { tokens: any; settings: Theme }): Theme => deepmerge(tokens, settings);
+/**
+ * Helper for creating custom theme. Makes deep merge of tokens and theme settings.
+ */
+const createTheme = ({ tokens = {}, settings = {} }: { tokens?: any; settings?: Theme }): Theme =>
+    deepmerge(tokens, settings);
 
 export default createTheme;

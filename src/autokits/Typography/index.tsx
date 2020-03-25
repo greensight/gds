@@ -13,8 +13,8 @@ export interface TypographyAutokitProps {
 export const Typography = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
     const theme = useTheme();
     const globalFontsTheme = theme.global?.fonts;
+    const fontStacksTheme = globalFontsTheme?.stacks;
     const typographyTheme = theme.typography;
-    const fontStacksTheme = typographyTheme?.stacks;
     const { colors } = baseTheme;
 
     if (!typographyTheme)
