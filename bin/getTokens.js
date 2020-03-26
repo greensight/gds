@@ -58,7 +58,7 @@ async function getTokens(config) {
         process.exit(1);
     }
 
-    const tokenGetters = config.tokens.map(token => getToken(token, page, config));
+    const tokenGetters = config.tokens.map((token) => getToken(token, page, config));
     const tokensArr = await Promise.all(tokenGetters);
     const tokensObj = tokensArr.reduce((acc, item) => ({ ...acc, ...item }), {});
 

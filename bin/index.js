@@ -24,7 +24,7 @@ async function loadTokens() {
 
         let tokens = [];
         const tokensFullList = ['palettes', 'colors', 'typography', 'icons', 'layout', 'shadows'];
-        tokensFullList.forEach(token => {
+        tokensFullList.forEach((token) => {
             if (process.argv.includes(`--${token}`)) tokens.push(token);
         });
         if (!tokens.length) tokens = config.tokens;

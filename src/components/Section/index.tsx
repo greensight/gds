@@ -2,7 +2,7 @@ import React from 'react';
 import { CSSObject } from '@emotion/core';
 import Container from '@components/Container';
 import useCSSProperty from '@helpers/useCSSProperty';
-import { AllowMedia } from '@typings/Types.d';
+import { AllowMedia } from '@typings/Types';
 
 export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
     /** Section content. */
@@ -31,8 +31,8 @@ export const Section = ({ children, container = true, mb, pv, pt, pb, bg, css, .
         <section
             css={[
                 useCSSProperty({ name: 'marginBottom', props: { mb } }),
-                useCSSProperty({ name: 'paddingTop', props: { pv, pt }, transform: ({ pv, pt }) => pv || pt }),
-                useCSSProperty({ name: 'paddingBottom', props: { pv, pb }, transform: ({ pv, pb }) => pv || pb }),
+                useCSSProperty({ name: 'paddingTop', props: { pv, pt }, transform: ({ pv, pt }) => pv ?? pt }),
+                useCSSProperty({ name: 'paddingBottom', props: { pv, pb }, transform: ({ pv, pb }) => pv ?? pb }),
                 useCSSProperty({ name: 'background', props: { bg } }),
                 css,
             ]}

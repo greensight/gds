@@ -1,4 +1,4 @@
-const getShadows = frame => {
+const getShadows = (frame) => {
     const tokens = frame.children
         .filter(({ type }) => type === 'FRAME')
         .reduce((acc, shadow) => {
@@ -12,7 +12,7 @@ const getShadows = frame => {
                     const rgbaValues = Object.entries(color).map(([name, value]) =>
                         name !== 'a' ? Math.round(value * 255) : Math.round(value * 100) / 100,
                     );
-                    const sizes = [offset.x, offset.y, radius].map(size => (size ? `${size}px` : size)).join(' ');
+                    const sizes = [offset.x, offset.y, radius].map((size) => (size ? `${size}px` : size)).join(' ');
                     const rgba = ` rgba(${rgbaValues[0]}, ${rgbaValues[1]}, ${rgbaValues[2]}, ${rgbaValues[3]})`;
                     return `${inset}${sizes}${rgba}`;
                 })

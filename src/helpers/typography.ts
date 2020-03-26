@@ -1,6 +1,6 @@
 import typographyHelper from '@utils/typography';
 import baseTheme from '@utils/baseTheme';
-import Theme from '@typings/Theme.d';
+import Theme from '@typings/Theme';
 
 /**
  * `typography` helper with baseTheme. For use with inner components styling (such autokits).

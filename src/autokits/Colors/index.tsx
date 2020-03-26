@@ -21,7 +21,7 @@ export const ColorsAutokit = () => {
 
     return (
         <Layout auto={scale(20)} gap={scale(8)}>
-            {Object.keys(colors).map(name => (
+            {Object.keys(colors).map((name) => (
                 <Layout.Item key={name}>
                     <Color name={name} value={colors[name]} />
                 </Layout.Item>

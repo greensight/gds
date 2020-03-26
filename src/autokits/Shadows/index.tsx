@@ -21,7 +21,7 @@ export const ShadowsAutokit = () => {
 
     return (
         <Layout auto={scale(20)} gap={scale(8)}>
-            {Object.keys(shadows).map(name => (
+            {Object.keys(shadows).map((name) => (
                 <Layout.Item key={name}>
                     <Shadow name={name} value={shadows[name]} />
                 </Layout.Item>

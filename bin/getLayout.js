@@ -1,6 +1,6 @@
 const BREAKPOINTS_NAMES = ['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs', 'xxxs'];
 
-const getBpWidth = frame =>
+const getBpWidth = (frame) =>
     parseInt(
         frame.children
             .filter(({ type }) => type === 'INSTANCE' || type === 'COMPONENT')
@@ -8,9 +8,9 @@ const getBpWidth = frame =>
         10,
     );
 
-const isAuto = padding => Number.isNaN(parseInt(padding.children[0].characters, 10));
+const isAuto = (padding) => Number.isNaN(parseInt(padding.children[0].characters, 10));
 
-const getMaxFixedBp = frames => {
+const getMaxFixedBp = (frames) => {
     let maxFixedBp;
     frames.some((frame, index) => {
         const paddings = frame.children.filter(({ name }) => name === 'padding');
@@ -23,7 +23,7 @@ const getMaxFixedBp = frames => {
     return maxFixedBp;
 };
 
-const getCols = frames =>
+const getCols = (frames) =>
     frames.reduce((acc, frame, index) => {
         const value = frame.children.filter(({ name }) => name === 'col').length;
         const prev = Object.values(acc)[Object.values(acc).length - 1];
@@ -35,7 +35,7 @@ const getCols = frames =>
         };
     }, {});
 
-const getContainer = frames => {
+const getContainer = (frames) => {
     const maxBpFrame = frames[0];
     const maxBpWidth = getBpWidth(maxBpFrame);
     const paddings = maxBpFrame.children.filter(({ name }) => name === 'padding');
@@ -48,7 +48,7 @@ const getContainer = frames => {
     };
 };
 
-const getMarginLeft = frames => {
+const getMarginLeft = (frames) => {
     const maxBpFrame = frames[0];
     const paddings = maxBpFrame.children.filter(({ name }) => name === 'padding');
     if (!isAuto(paddings[0]) && !isAuto(paddings[1])) return;
@@ -65,7 +65,7 @@ const getMarginLeft = frames => {
     };
 };
 
-const getMarginRight = frames => {
+const getMarginRight = (frames) => {
     const maxBpFrame = frames[0];
     const paddings = maxBpFrame.children.filter(({ name }) => name === 'padding');
     if (!isAuto(paddings[0]) && !isAuto(paddings[1])) return;
@@ -76,7 +76,7 @@ const getMarginRight = frames => {
     };
 };
 
-const getBreakpoints = frames =>
+const getBreakpoints = (frames) =>
     frames.reduce(
         (acc, frame, index) => ({
             ...acc,
@@ -85,7 +85,7 @@ const getBreakpoints = frames =>
         {},
     );
 
-const getGap = frames =>
+const getGap = (frames) =>
     frames.reduce((acc, frame, index) => {
         const value = frame.children.find(({ name }) => name === 'gap').absoluteBoundingBox.width;
         const prev = Object.values(acc)[Object.values(acc).length - 1];
@@ -97,7 +97,7 @@ const getGap = frames =>
         };
     }, {});
 
-const getPadding = frames =>
+const getPadding = (frames) =>
     frames.reduce((acc, frame, index) => {
         const padding = frame.children.filter(({ name }) => name === 'padding')[1];
         if (isAuto(padding)) return acc;
@@ -112,7 +112,7 @@ const getPadding = frames =>
         };
     }, {});
 
-const getLayout = frame => {
+const getLayout = (frame) => {
     const frames = frame.children.filter(({ type }) => type === 'FRAME').sort((a, b) => getBpWidth(b) - getBpWidth(a));
     const tokens = {
         cols: getCols(frames),

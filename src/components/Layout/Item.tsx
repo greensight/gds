@@ -2,7 +2,7 @@ import React from 'react';
 import { CSSObject } from '@emotion/core';
 import useCSSProperty from '@helpers/useCSSProperty';
 import { useLayout } from '.';
-import { AllowMedia } from '@typings/Types.d';
+import { AllowMedia } from '@typings/Types';
 
 export interface LayoutItemProps {
     /** Item content. */

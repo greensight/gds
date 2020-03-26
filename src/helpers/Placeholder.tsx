@@ -13,7 +13,7 @@ interface PlaceholderProps extends React.HTMLProps<HTMLDivElement> {
  */
 const Placeholder = ({ children, bg, ...props }: PlaceholderProps) => (
     <div
-        css={theme => ({
+        css={(theme) => ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

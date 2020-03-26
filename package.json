@@ -60,7 +60,7 @@
         "emotion-theming": "^10.0.27",
         "focus-visible": "^5.0.2",
         "normalize.css": "^8.0.1",
-        "tippy.js": "^6.1.0"
+        "tippy.js": "^5.2.1"
     },
     "devDependencies": {
         "@babel/core": "^7.9.0",
@@ -106,6 +106,7 @@
         "@types/webpack": "4.41.8",
         "@typescript-eslint/eslint-plugin": "^2.25.0",
         "@typescript-eslint/parser": "^2.25.0",
+        "@typescript-eslint/typescript-estree": "^2.25.0",
         "@yarnpkg/pnpify": "^2.0.0-rc.20",
         "axios": "^0.19.2",
         "babel-loader": "^8.1.0",

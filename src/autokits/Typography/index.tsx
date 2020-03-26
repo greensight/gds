@@ -38,14 +38,13 @@ export const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitP
 
     return (
         <div css={baseThemeTypography('body')}>
-            {Object.keys(typographyTheme)
-                .filter(name => name !== 'breakpoints')
+            {Object.keys(typographyTheme.styles)
                 .sort(
                     (a, b) =>
                         parseFloat(typographyTheme.styles[b].desktop.fontSize) -
                         parseFloat(typographyTheme.styles[a].desktop.fontSize),
                 )
-                .map(name => {
+                .map((name) => {
                     let isFluid = true;
                     const fluidSettings = globalFontsTheme?.fluid;
                     if (fluidSettings !== undefined) {

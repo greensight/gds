@@ -1619,6 +1619,7 @@ __metadata:
     "@types/webpack": 4.41.8
     "@typescript-eslint/eslint-plugin": ^2.25.0
     "@typescript-eslint/parser": ^2.25.0
+    "@typescript-eslint/typescript-estree": ^2.25.0
     "@yarnpkg/pnpify": ^2.0.0-rc.20
     axios: ^0.19.2
     babel-loader: ^8.1.0
@@ -1651,7 +1652,7 @@ __metadata:
     rollup-plugin-postcss: ^2.5.0
     serve: ^11.3.0
     storybook-addon-designs: ^5.2.0
-    tippy.js: ^6.1.0
+    tippy.js: ^5.2.1
     ts-node: ^8.8.1
     typescript: ^3.8.3
     webpack: ^4.42.1
@@ -1997,13 +1998,6 @@ __metadata:
     "@nodelib/fs.scandir": 2.1.3
     fastq: ^1.6.0
   checksum: 2/f4bffba16cc5d527fa594e120065e6d2376e274fb5df42cc744fcd28805fe23844590db74b20e102805280794208438b574e6e7fc25c6c245896909992a65e83
-  languageName: node
-  linkType: hard
-
-"@popperjs/core@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@popperjs/core@npm:2.1.1"
-  checksum: 2/5464dcdf35a51eff88f9a03b01559717fd248faf17106bfbff3c7ca4baea610598ddaa7c5252d3576025e72e533ed57f65dda029ff7f32b60420e3adfc06486b
   languageName: node
   linkType: hard
 
@@ -3496,7 +3490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:2.25.0":
+"@typescript-eslint/typescript-estree@npm:2.25.0, @typescript-eslint/typescript-estree@npm:^2.25.0":
   version: 2.25.0
   resolution: "@typescript-eslint/typescript-estree@npm:2.25.0"
   dependencies:
@@ -9540,8 +9534,8 @@ fsevents@^1.2.7:
   linkType: hard
 
 "html-webpack-plugin@npm:^4.0.0-beta.2":
-  version: 4.0.1
-  resolution: "html-webpack-plugin@npm:4.0.1"
+  version: 4.0.2
+  resolution: "html-webpack-plugin@npm:4.0.2"
   dependencies:
     html-minifier-terser: ^5.0.1
     loader-utils: ^1.2.3
@@ -9551,7 +9545,7 @@ fsevents@^1.2.7:
     util.promisify: 1.0.0
   peerDependencies:
     webpack: ^4.0.0
-  checksum: 2/f7be8b5b75ce0aee318b552ed43888d92b10f3d3a08efb142b35dac8c7443117ac1284d3ee8024e7430cb3cfa22d2cc989ba56e5116f4249b3e0069ab0882642
+  checksum: 2/47be607471cbe6f46369f30d2ef6fe325781c08759c02e520ffe273998026d03b30d4ebf7f378ad2b7dfb5f1a7791dd4028cf20c7d18ab513158e6eccae6fd48
   languageName: node
   linkType: hard
 
@@ -17791,21 +17785,12 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"tippy.js@npm:^5.1.1":
+"tippy.js@npm:^5.1.1, tippy.js@npm:^5.2.1":
   version: 5.2.1
   resolution: "tippy.js@npm:5.2.1"
   dependencies:
     popper.js: ^1.16.0
   checksum: 2/20390fe01e4e002b5ed099b9b87d81f4865c3788f16e5b6e42af797a5628ae5cf636924c20f6b0672041d3ffbfa1bc63a65067311b12ca9cb6f841c55096dea9
-  languageName: node
-  linkType: hard
-
-"tippy.js@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "tippy.js@npm:6.1.0"
-  dependencies:
-    "@popperjs/core": ^2.1.1
-  checksum: 2/ef7e3643165d7e7f0a01e4e0de8b083c9da5da89fdd9a76c33f80412e02398fd996273647d49fe299f3373b0599a8442591caf739f2aa33f67eb7b95aca511ad
   languageName: node
   linkType: hard
 

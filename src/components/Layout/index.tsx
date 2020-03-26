@@ -5,7 +5,7 @@ import baseTheme from '@utils/baseTheme';
 import useCSSProperty from '@helpers/useCSSProperty';
 import toArray from '@helpers/toArray';
 import LayoutItem, { LayoutItemProps } from './Item';
-import { AllowMedia } from '@typings/Types.d';
+import { AllowMedia } from '@typings/Types';
 
 export interface LayoutCompositionProps {
     Item: React.FC<LayoutItemProps>;
@@ -84,14 +84,12 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     ...props
 }) => {
     const { layout } = useTheme();
-    const layoutTheme = layout || baseTheme.layout;
-    gap = gap || layoutTheme.gap;
-    cols = cols || layoutTheme.cols;
+    const layoutTheme = layout ?? baseTheme.layout;
+    gap = gap ?? layoutTheme.gap;
+    cols = cols ?? layoutTheme.cols;
 
     return (
-        <LayoutContext.Provider
-            value={{ type, gap: gap !== undefined ? gap : layoutTheme.gap, cols: cols || layoutTheme.cols, auto }}
-        >
+        <LayoutContext.Provider value={{ type, gap, cols, auto }}>
             <div
                 css={[
                     useCSSProperty({

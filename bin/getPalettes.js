@@ -1,12 +1,12 @@
 const colorToToken = require('./colorToToken');
 
-const getPalettes = frame => {
+const getPalettes = (frame) => {
     const tokens = frame.children
         .filter(({ type }) => type === 'FRAME')
         .reduce(
             (acc, palette) => ({
                 ...acc,
-                [palette.name]: palette.children.map(color => colorToToken(color)),
+                [palette.name]: palette.children.map((color) => colorToToken(color)),
             }),
             {},
         );

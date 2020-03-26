@@ -23,8 +23,8 @@ export const PalettesAutokit = () => {
     return (
         <Layout auto={scale(30)} gap={scale(8)}>
             {Object.keys(palettes)
-                .filter(name => Array.isArray(palettes[name]))
-                .map(name => (
+                .filter((name) => Array.isArray(palettes[name]))
+                .map((name) => (
                     <Layout.Item key={name}>
                         <div
                             css={{

@@ -1,6 +1,5 @@
 import deepmerge from 'deepmerge';
 import PlaceholderIcon from '@icons/tokens/medium/placeholder.svg';
-import createTheme from '@utils/createTheme';
 import scale from '@utils/scale';
 import { FONT_STACK } from '@helpers/constants';
 import tokens from '../../public/tokens.json';

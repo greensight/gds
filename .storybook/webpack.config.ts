@@ -19,6 +19,7 @@ export default ({ config, mode }: { config: webpack.Configuration; mode: 'DEVELO
                         loader: 'react-docgen-typescript-loader',
                         options: {
                             tsconfigPath: resolve(__dirname, '../tsconfig.json'),
+                            propFilter: (prop: any) => !(prop.parent && prop.parent.fileName.includes('.yarn')),
                         },
                     },
                 ],

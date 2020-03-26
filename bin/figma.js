@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const figmaAxios = figmaToken =>
+const figmaAxios = (figmaToken) =>
     axios.create({
         baseURL: 'https://api.figma.com/v1/',
         headers: {

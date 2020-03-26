@@ -1,6 +1,6 @@
 import { CSSObject } from '@emotion/core';
-import { TypographyProperties } from '@typings/Typography.d';
-import Theme from '@typings/Theme.d';
+import { TypographyProperties } from '@typings/Typography';
+import Theme from '@typings/Theme';
 import baseTheme from '@utils/baseTheme';
 
 /**
