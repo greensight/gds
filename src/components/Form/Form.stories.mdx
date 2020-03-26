@@ -83,6 +83,644 @@ const validationSchema = Yup.object().shape({
 
 Для полей ошибок используется `Form.Error`, который изнутри использует ErrorMessage (formik). Обычно его не нужно использовать напрямую: в полях `Form.Field` он вставляется изнутри, в остальных импортируется из компонента формы и также обрабатывается на уровне компонентов.
 
+
+### Show Success
+
+Показ успешной валидации для полей формы задается через проп `showSuccess` компонента `Form`. 
+По умолчанию статус успеха показан.
+
+❗️ Если вы используете показ успеха, то вместе с иконкой для ошибки вы должны передать `Form` иконку для успеха -- проп `SuccessIcon`.
+<Preview>
+    <Story name="Show Success">
+        {() => {
+            const initialValues = {
+                successLabel1: '',
+            };
+            const validationSchema = Yup.object().shape({
+                successLabel1: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="successLabel1">
+                        <Form.Label>
+                            Лейбл
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Hide Success">
+        {() => {
+            const initialValues = {
+                successLabel2: '',
+            };
+            const validationSchema = Yup.object().shape({
+                successLabel2: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    showSuccess={false}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="successLabel2">
+                        <Form.Label>
+                            Лейбл
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+</Preview>
+
+### Error Position
+🏆 Ошибки валидации предпочтительно выводить над полями. 📚[Avoid Messages Under Fields](http://adrianroselli.com/2017/01/avoid-messages-under-fields.html)
+
+♿️ Для ошибок, расположенных вне лейбла, реализована связь с полем через `id` ошибки и `aria-describedby` у поля.
+
+♿️ При наличии ошибки полю добавляется `aria-invalid` для скринридеров.
+
+<Preview>
+    <Story name="Error Top">
+        {() => {
+            const initialValues = {
+                errorLabel1: '',
+            };
+            const validationSchema = Yup.object().shape({
+                errorLabel1: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                    showSuccess={false}
+                >
+                    <Form.Field controlId="errorLabel1">
+                        <Form.Label>
+                            Лейбл
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Error Bottom">
+        {() => {
+            const initialValues = {
+                errorLabel2: '',
+            };
+            const validationSchema = Yup.object().shape({
+                errorLabel2: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                    showSuccess={false}
+                    errorPosition="bottom"
+                >
+                    <Form.Field controlId="errorLabel2">
+                        <Form.Label>
+                            Лейбл
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+</Preview>
+
+
+### Validation Icons
+Иконки успешной и неуспешной валидации задаются компоненту `Form` через пропы `SuccessIcon` и `ErrorIcon` соответственно.
+
+❗️ Если вы отключили показ успеха, то проп `SuccessIcon` можно не указывать.
+
+Позиционирование иконки валидации задается пропсом `Form.Field` `validationPosition`. Доступно 4 варианта:
+в лейбле до или после текста, в поле до или после значения. По умолчанию иконка расположена в лейбле после текста.
+
+🏆 Иконки валидации лучше не размещать слева от текста, так как при их появлении произойдет скачок текста по горизонтали.
+
+♿️🏆 Иконки валидации привлекают внимание пользователя, что особенно актуально для людей с нарушением цветового
+восприятия. Пользватель может не заметить красного текста об ошибке, в то время как иконка валидации даст понять статус валидации.
+
+<Preview>
+    <Story name="Validation icons in Label After">
+        {() => {
+            const initialValues = {
+                validationIcon1: '',
+            };
+            const validationSchema = Yup.object().shape({
+                validationIcon1: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="validationIcon1">
+                        <Form.Label>
+                            Иконка валидации после текста
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Validation icons in Label Before">
+        {() => {
+            const initialValues = {
+                validationIcon2: '',
+            };
+            const validationSchema = Yup.object().shape({
+                validationIcon2: Yup.string().required('Тут тоже нужно заполнить'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="validationIcon2" validationPosition="labelBefore">
+                        <Form.Label>
+                            Иконка валидации до текста
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Validation icons in Input Before">
+        {() => {
+            const initialValues = {
+                validationIcon3: '',
+            };
+            const validationSchema = Yup.object().shape({
+                validationIcon3: Yup.string().required('Тут тоже нужно заполнить'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="validationIcon3" validationPosition="inputAfter">
+                        <Form.Label>
+                            Иконка валидации в поле после значения
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Validation icons in Input After">
+        {() => {
+            const initialValues = {
+                validationIcon4: '',
+            };
+            const validationSchema = Yup.object().shape({
+                validationIcon4: Yup.string().required('Тут тоже нужно заполнить'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="validationIcon4" validationPosition="inputBefore">
+                        <Form.Label>
+                            Иконка валидации в поле до значения
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+</Preview>
+
+### Sizes
+Размеры для `Form.Field` определяются в объекте темы в полях `form.input.sizes` и `form.label.sizes`.
+Для них заведены разные поля, так как может различаться типографика.
+Присвоенные имена становятся доступны через проп `size`.
+
+**Рекомендуемые имена:** 'lg', 'md', 'sm'.
+
+<Preview>
+    <Story name="Large size">
+        <Form showSuccess={false}>
+            <Form.Field controlId="sizeLg" size='lg'>
+                <Form.Label>
+                    Поле Lg
+                </Form.Label>
+                <Form.Input />
+            </Form.Field>
+        </Form>
+    </Story>
+    <Story name="Medium size">
+        <Form showSuccess={false}>
+            <Form.Field controlId="sizeMd" size='md'>
+                <Form.Label>
+                    Поле Mg
+                </Form.Label>
+                <Form.Input />
+            </Form.Field>
+        </Form>
+    </Story>
+    <Story name="Small size">
+        <Form showSuccess={false}>
+            <Form.Field controlId="sizeSm" size='sm'>
+                <Form.Label>
+                    Поле Sm
+                </Form.Label>
+                <Form.Input />
+            </Form.Field>
+        </Form>
+    </Story>
+</Preview>
+
+### Hint и Hint's Position
+Добавление текста подсказки к полю `Form.Field` доступно через проп `hint`.
+
+Позиционирование подсказки доступно через проп `hintPosition` и может располагаться в `Form.Label` или в `Form.Input`.
+
+🏆 По умолчанию подсказка позиционируется внутри лейбла. Это создает большую область кликабельности,
+подсказка в лейбле не закрывается блоками с автозаполнением, нет необходимости связывать 
+подсказку с полем через дополнительные ARIA-атрибуты.
+
+♿️ Для подсказок, размещённых вне лейбла, реализована связь с полем через `id` подсказки и `aria-describedby` у поля
+
+<Preview>
+    <Story name="Hint Top">
+        <Form showSuccess={false}>
+            <Form.Field controlId="hintTop" hint='Текст подсказки сверху'>
+                <Form.Label>
+                    Поле с подсказкой
+                </Form.Label>
+                <Form.Input />
+            </Form.Field>
+        </Form>
+    </Story>
+    <Story name="Hint Bottom">
+        <Form showSuccess={false}>
+            <Form.Field controlId="hintBottom" hint="Текст подсказки снизу" hintPosition="bottom">
+                <Form.Label>
+                    Поле с подсказкой
+                </Form.Label>
+                <Form.Input />
+            </Form.Field>
+        </Form>
+    </Story>
+</Preview>
+
+### Optional
+Определение на уровне `Form` отметки об обязательности или опциональности полей через проп `required`.
+По умолчанию выбрана опциональное заполнение `required="optional"`.
+
+🏆 Предпочтительнее использовать пометки _(optional)_ (менее контрастным курсивом) вместо астерисков у обязательных полей,
+т.к.:
+
+1. Форма должна быть выстроена так, что большая часть вопросов должна быть обязательна,
+так что обязательность рассматривается как дефолтное поведение.
+
+2. Астериски требуют добавления сноски, что это обязательное поле (которое к тому же зачастую забывают).
+
+3. ♿️ Астериски не так очевидны, как текст опциональности.
+При этом и для скринридеров - он прочтёт "звёздочка" или "опциональное" - есть разница.
+
+❗️ Если вы используете паттерн с опциональным текстом,
+то для указания текста компоненту `Form.Field` нужно передать проп `optional="Ваш текст"`.
+
+❗️ Если вы используете паттерн с астерисками, 
+то для отключения обязательности поля передайте `Form.Field` проп `optional={true}`
+
+♿️ Обязательным полям добавляются атрибуты `required` и `aria-required`
+<Preview>
+    <Story name="Optional">
+        <Form showSuccess={false}>
+            <Form.Field controlId="requiredField1" optional="(необязательное поле)">
+                <Form.Label>
+                    Лейбл
+                </Form.Label>
+                <Form.Input />
+            </Form.Field>
+        </Form>
+    </Story>
+    <Story name="Mark">
+        <Form required="mark" showSuccess={false}>
+            <Form.Field controlId="requiredField2">
+                <Form.Label>
+                    Лейбл
+                </Form.Label>
+                <Form.Input />
+            </Form.Field>
+        </Form>
+    </Story>
+</Preview>
+
+### Label Icons
+В лейбле могут располагаться 2 иконки: до текста и после текста. Они добавляются `Form.Label` через проп `IconBefore`
+и `iconAfter`. Под иконку бронируется место, зависящее от текущего пропа `size`.
+
+❗️ Если расположение иконки лейбла совпадает с расположением иконки валидации, то иконка валидации заменит иконку лейбла.
+Чтобы этого не случилось, не рекомендуется располагать эти иконки в одном и том же месте.
+
+<Preview>
+    <Story name="Label Icon Before">
+        {() => {
+            const initialValues = {
+                labelIcon1: '',
+            };
+            const validationSchema = Yup.object().shape({
+                labelIcon1: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="labelIcon1" validationPosition="labelAfter">
+                        <Form.Label IconAfter={theme.placeholder}>
+                            Лейбл с иконкой после текста
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Label Icon After">
+        {() => {
+            const initialValues = {
+                labelIcon2: '',
+            };
+            const validationSchema = Yup.object().shape({
+                labelIcon2: Yup.string().required('Тут тоже нужно заполнить'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
+                        <Form.Label IconBefore={theme.placeholder}>
+                            Лейбл с иконкой до текста
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Label Icon Both">
+        {() => {
+            const initialValues = {
+                labelIcon3: '',
+            };
+            const validationSchema = Yup.object().shape({
+                labelIcon3: Yup.string().required('Тут тоже нужно заполнить'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
+                        <Form.Label IconAfter={theme.placeholder} IconBefore={theme.placeholder}>
+                            Лейбл с двумя иконками
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+</Preview>
+
+### Input Icons
+В поле могут располагаться 2 иконки: до значения и после значения. Они добавляются `Form.Input` через проп `IconBefore`
+и `iconAfter`. Под иконку забирается место, зависящее от текущего пропа `size`. 
+
+❗️ Если расположение иконки поля совпадает с расположением иконки валидации, то иконка валидации заменит иконку поля.
+Чтобы этого не случилось, не рекомендуется располагать эти иконки в одном и том же месте.
+
+<Preview>
+    <Story name="Input Icon Before">
+        {() => {
+            const initialValues = {
+                inputIcon1: '',
+                inputIcon2: '',
+                inputIcon3: '',
+            };
+            const validationSchema = Yup.object().shape({
+                inputIcon1: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="inputIcon1" validationPosition="inputAfter">
+                        <Form.Label>
+                            Поле с иконкой до текста
+                        </Form.Label>
+                        <Form.Input IconBefore={theme.placeholder}/>
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Input Icon After">
+        {() => {
+            const initialValues = {
+                inputIcon2: '',
+            };
+            const validationSchema = Yup.object().shape({
+                inputIcon2: Yup.string().required('Тут тоже нужно заполнить'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="inputIcon2" validationPosition="inputBefore">
+                        <Form.Label>
+                            Поле с иконкой после текста
+                        </Form.Label>
+                        <Form.Input IconAfter={theme.placeholder} />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Input Icon Both">
+        {() => {
+            const initialValues = {
+                inputIcon3: '',
+            };
+            const validationSchema = Yup.object().shape({
+                inputIcon3: Yup.string().required('Тут тоже нужно заполнить'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="inputIcon3" validationPosition="inputAfter">
+                        <Form.Label>
+                            Поле с двумя иконками
+                        </Form.Label>
+                        <Form.Input IconAfter={theme.placeholder} IconBefore={theme.placeholder} />
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+</Preview>
+
+### Hidden label
+Доступно поле со скрытым лейблом через проп `Form.Field` `hiddenLabel={true}`.
+
+♿️ Текст лейбла, а также его прочее содержимое (иконка, подсказка, текст опциональности, звездочка обязательности) 
+визуально скрываются. При этом текст лейбла остается доступен для скринридеров.
+
+❗️ Текст об ошибке, расположенный в скрытом лейбле, будет показан.
+
+❗️ Иконки валидации в скрытом лейбле не отображаются. В случае скрытого лейбла иконки валидации лучше располагать в поле ввода.
+
+<Preview>
+    <Story name="Hidden label">
+        {() => {
+            const initialValues = {
+                hiddenLabel: '',
+            };
+            const validationSchema = Yup.object().shape({
+                hiddenLabel: Yup.string().required('Текст что-то забыли'),
+            });
+            return (
+                <Form
+                    errorPosition="top"
+                    required="optional"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    SuccessIcon={theme.components.Form.successIcon.icon}
+                    ErrorIcon={theme.components.Form.errorIcon.icon}
+                >
+                    <Form.Field controlId="hiddenLabel" hiddenLabel={true} validationPosition="inputAfter">
+                        <Form.Label>
+                            Визуально скрытый лейбл
+                        </Form.Label>
+                        <Form.Input/>
+                    </Form.Field>
+                    <br />
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
+    </Story>
+</Preview>
+
 ## Props
 
 ### Form

@@ -23,8 +23,6 @@ export interface IFormField {
     size?: 'sm' | 'md' | 'lg';
     /** Позиционирование подсказки к полю */
     hintPosition: 'top' | 'bottom';
-    /** Показ успешной валидации */
-    showSuccess: boolean;
     /** Текст подсказки */
     hint: string;
     /** Устанававает id компонентам FormInput и FormLabel */
