@@ -3,7 +3,7 @@ import Item from './Item';
 import Layout from '@components/Layout';
 import useTheme from '@utils/useTheme';
 import typography from '@helpers/typography';
-import { Breakpoint } from '../../typings/Types';
+import { Breakpoint } from '@typings/Types';
 
 export const LayoutAutokit = () => {
     const theme = useTheme();

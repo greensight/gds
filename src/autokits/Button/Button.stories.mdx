@@ -1,10 +1,10 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import paddingDecorator from '@decorators/paddingDecorator';
-import Button from '@autokits/Button';
+import ButtonAutokit from '@autokits/Button';
 
 <Meta
     title="Autokits / Button"
-    component={Button}
+    component={ButtonAutokit}
     decorators={[paddingDecorator]}
     parameters={{
         design: {
@@ -18,12 +18,12 @@ import Button from '@autokits/Button';
 
 <Preview>
     <Story name="basic">
-        <Button />
+        <ButtonAutokit />
     </Story>
 </Preview>
 
-Автокит для компонента `Button`. Читает содержимое поля `components.button` объекта темы.
+Автокит для компонента `Button`. Читает содержимое поля `components.Button` объекта темы.
 
 ## Props
 
-<Props of={Button} />
+<Props of={ButtonAutokit} />

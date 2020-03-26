@@ -5,8 +5,8 @@ import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
 import typography from '@helpers/typography';
 import { BREAKPOINTS_NAMES } from '@helpers/constants';
-import { Breakpoint } from '../../typings/Types';
-import LayoutTheme from '../../typings/Layout';
+import { Breakpoint } from '@typings/Types';
+import LayoutTheme from '@typings/Layout';
 
 export interface ItemProps {
     /** Breakpoint name. */
@@ -81,7 +81,7 @@ export const Item = ({ breakpointName, breakpointValue }: ItemProps) => {
 const getLayoutValue = (param: LayoutTheme[keyof LayoutTheme], name: Breakpoint) => {
     const breakpointsAbove = BREAKPOINTS_NAMES.slice(0, BREAKPOINTS_NAMES.indexOf(name) + 1);
     let value: any;
-    breakpointsAbove.reverse().some(name => {
+    breakpointsAbove.reverse().some((name) => {
         if (param[name] === undefined) return false;
         value = param[name];
         return true;

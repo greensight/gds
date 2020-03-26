@@ -5,11 +5,11 @@ import 'focus-visible';
 import 'normalize.css';
 import typography from '@utils/typography';
 import baseTheme from '@utils/baseTheme';
-import Theme from '../../typings/Theme';
+import Theme from '@typings/Theme';
 
 export interface ThemeProviderProps {
     /** Theme object. */
-    theme: Theme;
+    theme: Theme | typeof baseTheme;
     /** Project code with access to provided theme. */
     children: React.ReactNode;
 }
@@ -80,7 +80,7 @@ const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
                 minHeight: '100%',
             },
             body: {
-                ...(body && typography(body.typography, theme.typography ? theme : (baseTheme as Theme))),
+                ...(body && typography(body.typography, theme.typography ? (theme as Theme) : (baseTheme as Theme))),
                 color: body?.color,
                 backgroundColor: body?.bg,
                 ...body?.css,
@@ -120,7 +120,7 @@ const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
     ];
 
     return (
-        <EmotionThemeProvider theme={theme}>
+        <EmotionThemeProvider theme={theme as Theme}>
             <EmotionGlobal styles={[fontStyles, baseStyles, css]} />
             {children}
         </EmotionThemeProvider>

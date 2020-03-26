@@ -9,7 +9,7 @@ import alias from '@rollup/plugin-alias';
 import postcss from 'rollup-plugin-postcss';
 import pkg from './package.json';
 
-const getEntries = prefix =>
+const getEntries = (prefix) =>
     fs.readdirSync(path.resolve(__dirname, prefix)).reduce(
         (acc, name) => ({
             ...acc,
@@ -62,6 +62,7 @@ export default [
                     { find: '@helpers', replacement: path.resolve(__dirname, 'src/helpers') },
                     { find: '@autokits', replacement: path.resolve(__dirname, 'src/autokits') },
                     { find: '@icons', replacement: path.resolve(__dirname, 'src/icons') },
+                    { find: '@typings', replacement: path.resolve(__dirname, 'src/typings') },
                     { find: '@decorators', replacement: path.resolve(__dirname, '.storybook/decorators') },
                 ],
             }),

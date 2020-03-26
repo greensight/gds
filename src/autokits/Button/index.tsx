@@ -6,7 +6,7 @@ import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
 import typography from '@helpers/typography';
 import useComponentTheme from '@helpers/useComponentTheme';
-import ButtonTheme from '../../typings/Button';
+import ButtonTheme from '@typings/Button';
 
 export interface ButtonAutokitProps {
     /** Placeholder text. */
@@ -24,7 +24,7 @@ export const ButtonAutokit = ({ text = 'Button', Icon }: ButtonAutokitProps) => 
     const buttonTheme = componentTheme as ButtonTheme;
     const PlaceholderIcon = Icon || theme.global?.placeholder || baseTheme.global?.placeholder;
 
-    return Object.keys(buttonTheme.themes).map(themeName => (
+    return Object.keys(buttonTheme.themes).map((themeName) => (
         <div key={themeName} css={{ marginBottom: scale(4) }}>
             <div css={{ ...typography('title'), marginBottom: scale(2) }}>{themeName}</div>
             <Layout
@@ -34,39 +34,39 @@ export const ButtonAutokit = ({ text = 'Button', Icon }: ButtonAutokitProps) => 
                 align="end"
                 css={{ marginBottom: scale(2) }}
             >
-                {Object.keys(buttonTheme.sizes).map(sizeName => (
+                {Object.keys(buttonTheme.sizes).map((sizeName) => (
                     <Button key={sizeName} theme={themeName} size={sizeName}>
                         {text}
                     </Button>
                 ))}
-                {Object.keys(buttonTheme.sizes).map(sizeName => (
+                {Object.keys(buttonTheme.sizes).map((sizeName) => (
                     <Button key={sizeName} theme={themeName} size={sizeName} disabled>
                         {text}
                     </Button>
                 ))}
-                {Object.keys(buttonTheme.sizes).map(sizeName => (
+                {Object.keys(buttonTheme.sizes).map((sizeName) => (
                     <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon}>
                         {text}
                     </Button>
                 ))}
-                {Object.keys(buttonTheme.sizes).map(sizeName => (
+                {Object.keys(buttonTheme.sizes).map((sizeName) => (
                     <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon} iconAfter>
                         {text}
                     </Button>
                 ))}
-                {Object.keys(buttonTheme.sizes).map(sizeName => (
+                {Object.keys(buttonTheme.sizes).map((sizeName) => (
                     <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon} hidden>
                         {text}
                     </Button>
                 ))}
-                {Object.keys(buttonTheme.sizes).map(sizeName => (
+                {Object.keys(buttonTheme.sizes).map((sizeName) => (
                     <Button key={sizeName} theme={themeName} size={sizeName}>
                         {text}
                         <br />
                         {text}
                     </Button>
                 ))}
-                {Object.keys(buttonTheme.sizes).map(sizeName => (
+                {Object.keys(buttonTheme.sizes).map((sizeName) => (
                     <Button key={sizeName} theme={themeName} size={sizeName} Icon={PlaceholderIcon}>
                         {text}
                         <br />
@@ -74,7 +74,7 @@ export const ButtonAutokit = ({ text = 'Button', Icon }: ButtonAutokitProps) => 
                     </Button>
                 ))}
             </Layout>
-            {Object.keys(buttonTheme.sizes).map(sizeName => (
+            {Object.keys(buttonTheme.sizes).map((sizeName) => (
                 <Button key={sizeName} theme={themeName} size={sizeName} block css={{ marginBottom: scale(2) }}>
                     {text}
                 </Button>

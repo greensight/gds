@@ -5,7 +5,7 @@ import baseTheme from '@utils/baseTheme';
 import useCSSProperty from '@helpers/useCSSProperty';
 import toArray from '@helpers/toArray';
 import LayoutItem, { LayoutItemProps } from './Item';
-import { AllowMedia } from '../../typings/Types.d';
+import { AllowMedia } from '@typings/Types.d';
 
 export interface LayoutCompositionProps {
     Item: React.FC<LayoutItemProps>;
@@ -107,7 +107,7 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                             if (auto) return `repeat(auto-fill, minmax(${auto}px, 1fr))`;
                             if (Number.isInteger(cols)) return `repeat(${cols}, 1fr)`;
                             const arr = toArray(cols);
-                            return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
+                            return arr.map((val) => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
                     useCSSProperty({
@@ -117,7 +117,7 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                         transform: ({ rows }) => {
                             if (Number.isInteger(rows)) return `repeat(${rows}, 1fr)`;
                             const arr = toArray(rows);
-                            return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
+                            return arr.map((val) => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
                     useCSSProperty({
@@ -126,7 +126,7 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                         condition: type === 'grid',
                         transform: ({ areas }) => {
                             const arr = toArray(areas);
-                            return arr.map(val => `"${val}"`).join(' ');
+                            return arr.map((val) => `"${val}"`).join(' ');
                         },
                     }),
                     useCSSProperty({
@@ -171,7 +171,7 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                         condition: type === 'grid',
                         transform: ({ autoRows }) => {
                             const arr = toArray(autoRows);
-                            return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
+                            return arr.map((val) => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
                     useCSSProperty({
@@ -180,7 +180,7 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                         condition: type === 'grid',
                         transform: ({ autoCols }) => {
                             const arr = toArray(autoCols);
-                            return arr.map(val => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
+                            return arr.map((val) => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
                         },
                     }),
                     useCSSProperty({

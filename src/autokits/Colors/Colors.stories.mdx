@@ -1,10 +1,10 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import paddingDecorator from '@decorators/paddingDecorator';
-import Colors from '@autokits/Colors';
+import ColorsAutokit from '@autokits/Colors';
 
 <Meta
     title="Autokits / Colors"
-    component={Colors}
+    component={ColorsAutokit}
     decorators={[paddingDecorator]}
     parameters={{
         design: {
@@ -18,7 +18,7 @@ import Colors from '@autokits/Colors';
 
 <Preview>
     <Story name="basic">
-        <Colors />
+        <ColorsAutokit />
     </Story>
 </Preview>
 
@@ -26,4 +26,4 @@ import Colors from '@autokits/Colors';
 
 ## Props
 
-<Props of={Colors} />
+<Props of={ColorsAutokit} />

@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import Theme from '../typings/Theme.d';
+import Theme from '@typings/Theme.d';
 
 /**
  * Helper for creating custom theme. Makes deep merge of tokens and theme settings.

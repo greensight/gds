@@ -1,6 +1,6 @@
 import { CSSObject } from '@emotion/core';
-import { TypographyProperties } from '../typings/Typography.d';
-import Theme from '../typings/Theme.d';
+import { TypographyProperties } from '@typings/Typography.d';
+import Theme from '@typings/Theme.d';
 import baseTheme from '@utils/baseTheme';
 
 /**
@@ -49,7 +49,7 @@ const typography = (name: string | undefined, theme: Theme = baseTheme as Theme)
     let fluidStyles: CSSObject = {};
     let mainStyles: PartialBy<TypographyProperties, 'fontSize' | 'fontFamily'> | undefined = desktopStyles;
     const [maxVw, minVw] = theme.typography.breakpoints;
-    const mq = [maxVw, minVw].map(bp => `@media (max-width: ${bp}px)`);
+    const mq = [maxVw, minVw].map((bp) => `@media (max-width: ${bp}px)`);
 
     if (typographyStyle.mobile) {
         const mobileStyles = removeFontFamily(typographyStyle.mobile);

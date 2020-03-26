@@ -3,7 +3,7 @@ import useTheme from '@utils/useTheme';
 import baseTheme from '@utils/baseTheme';
 import isObject from '@helpers/isObject';
 import { BREAKPOINTS_NAMES } from '@helpers/constants';
-import { Breakpoint } from '../typings/Types.d';
+import { Breakpoint } from '@typings/Types.d';
 
 /**
  * Calculate CSS Object from component props with `AllowMedia` type (user can pass object with breakpoints through prop). CSS property can be calculated based on multiple props.
@@ -30,10 +30,10 @@ const useCSSProperty = <T>({
     if (condition !== undefined && !condition) return;
 
     const propsValues = Object.values(props);
-    const isUndefined = propsValues.every(value => value === undefined);
+    const isUndefined = propsValues.every((value) => value === undefined);
     if (isUndefined) return;
 
-    const mediaProp: Partial<Record<Breakpoint, any>> | undefined = propsValues.find(value => isObject(value));
+    const mediaProp: Partial<Record<Breakpoint, any>> | undefined = propsValues.find((value) => isObject(value));
     if (!mediaProp) return setValue(name, props, transform);
 
     return (Object.keys(mediaProp) as Breakpoint[])

@@ -1,10 +1,10 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import paddingDecorator from '@decorators/paddingDecorator';
-import Icons from '@autokits/Icons';
+import IconsAutokit from '@autokits/Icons';
 
 <Meta
     title="Autokits / Icons"
-    component={Icons}
+    component={IconsAutokit}
     decorators={[paddingDecorator]}
     parameters={{
         design: {
@@ -18,7 +18,7 @@ import Icons from '@autokits/Icons';
 
 <Preview>
     <Story name="basic">
-        <Icons />
+        <IconsAutokit />
     </Story>
 </Preview>
 
@@ -36,4 +36,4 @@ new webpack.EnvironmentPlugin({ ICONS_DIR: '../../images/icons' }),
 
 ## Props
 
-<Props of={Icons} />
+<Props of={IconsAutokit} />

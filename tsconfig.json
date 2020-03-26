@@ -16,6 +16,7 @@
             "@helpers/*": ["src/helpers/*"],
             "@autokits/*": ["src/autokits/*"],
             "@icons/*": ["src/icons/*"],
+            "@typings/*": ["src/typings/*"],
             "@decorators/*": [".storybook/decorators/*"]
         }
     },
