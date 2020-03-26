@@ -22,7 +22,6 @@ const Tooltip = ({ children, content, ...props }: TippyProps) => {
             }
             trigger="click"
             arrow={false}
-            theme="default"
             animation="shift-away"
             onShow={(instance) => {
                 setTimeout(() => {

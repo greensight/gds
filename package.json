@@ -26,6 +26,7 @@
         "build": "rimraf '{cjs,esm}' && rollup -c",
         "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
         "eslint": "eslint . --ext .js,.ts,.tsx,.mdx --fix",
+        "lint-staged": "lint-staged",
         "prepublishOnly": "yarn build",
         "storybook": "start-storybook -s ./public -p 3000 --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
@@ -36,7 +37,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "run-p lint-staged tsc"
         }
     },
     "lint-staged": {
@@ -123,6 +124,7 @@
         "eslint-plugin-react-hooks": "^2.5.1",
         "husky": "^4.2.3",
         "lint-staged": "^10.0.9",
+        "npm-run-all": "^4.1.5",
         "prettier": "prettier/prettier",
         "react": "^16.13.1",
         "react-docgen-typescript-loader": "^3.7.1",

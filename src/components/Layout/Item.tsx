@@ -4,7 +4,7 @@ import useCSSProperty from '@helpers/useCSSProperty';
 import { useLayout } from '.';
 import { AllowMedia } from '@typings/Types';
 
-export interface LayoutItemProps {
+export interface LayoutItemProps extends React.HTMLProps<HTMLDivElement> {
     /** Item content. */
     children?: React.ReactNode;
     /** Column settings. */

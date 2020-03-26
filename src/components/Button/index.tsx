@@ -52,7 +52,7 @@ export const Button = (
         Icon,
         iconAfter = false,
         hidden = false,
-        type = 'button' as const,
+        type = 'button',
         href,
         as,
         external = false,
@@ -69,11 +69,9 @@ export const Button = (
     if (!buttonTheme.themes[theme]) console.warn(`Specify "${theme}" theme. Default values are used instead`);
     if (!buttonTheme.sizes[size]) console.warn(`Specify "${size}" size. Default values are used instead`);
 
-    /* Get theme properties. */
+    /* Get theme default state properties and merge them with default values. */
     const themeProperties = getThemeProperties(buttonTheme, theme, 'default');
     const sizeProperties = buttonTheme.sizes[size];
-
-    /* Merge theme properties with default values. */
     const themeDefaults = {
         borderWidth: themeProperties.border ? 1 : 0,
         borderStyle: 'solid',
@@ -82,7 +80,7 @@ export const Button = (
         color: baseTheme.colors.white,
         bg: baseTheme.colors.black,
     };
-    const themePropertiesWithDefaults: RequiredBy<ButtonThemeProperties, keyof typeof themeDefaults> = {
+    const tp: RequiredBy<ButtonThemeProperties, keyof typeof themeDefaults> = {
         ...themeDefaults,
         ...themeProperties,
     };
@@ -92,37 +90,35 @@ export const Button = (
         iconSize: scale(3),
         iconOffset: scale(1),
     };
-    const sizePropertiesWithDefaults: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = {
+    const sp: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = {
         ...sizeDefaults,
         ...sizeProperties,
     };
 
     /* Define CSS rules from theme properties for default state. */
-    const typographyName = sizePropertiesWithDefaults.typography;
+    const typographyName = sp.typography;
     const typographyCSS = typography(typographyName, usedTheme);
     const pv = getVerticalPaddings(
         typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
-        sizePropertiesWithDefaults,
-        themePropertiesWithDefaults,
+        sp,
+        tp,
         !!Icon,
     );
-    const borderRadius = !themePropertiesWithDefaults.half
-        ? themePropertiesWithDefaults.borderRadius
-        : sizePropertiesWithDefaults.height / 2;
-    const padding = `${pv}px ${sizePropertiesWithDefaults.padding}px`;
-    const transition = getTransition(themePropertiesWithDefaults.time, themePropertiesWithDefaults.easing);
+    const borderRadius = !tp.half ? tp.borderRadius : sp.height / 2;
+    const padding = `${pv}px ${sp.padding}px`;
+    const transition = getTransition(tp.time, tp.easing);
     const defaultCSS: CSSObject = {
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: themePropertiesWithDefaults.borderWidth,
-        borderStyle: themePropertiesWithDefaults.borderStyle,
+        borderWidth: tp.borderWidth,
+        borderStyle: tp.borderStyle,
         ...typographyCSS,
         borderRadius,
         padding,
         transition,
-        ...getStateCSS(themePropertiesWithDefaults),
-        ...sizePropertiesWithDefaults.css,
+        ...getStateCSS(tp),
+        ...sp.css,
     };
 
     /* Define CSS rules from theme properties for other states. */
@@ -133,8 +129,8 @@ export const Button = (
     const statesCSS: CSSObject = {
         ':hover': {
             ...getStateCSS(themeHoverProperties),
-            ...(themePropertiesWithDefaults.timeIn && {
-                transition: getTransition(themePropertiesWithDefaults.timeIn, themePropertiesWithDefaults.easing),
+            ...(tp.timeIn && {
+                transition: getTransition(tp.timeIn, tp.easing),
             }),
         },
         ':active': getStateCSS(themeActiveProperties),
@@ -149,28 +145,17 @@ export const Button = (
     const blockStyles = { display: 'flex', width: '100%' };
     const hiddenRoundStyles = {
         borderRadius: '50%',
-        padding: `${pv}px ${
-            (sizePropertiesWithDefaults.height -
-                sizePropertiesWithDefaults.iconSize -
-                themePropertiesWithDefaults.borderWidth) /
-            2
-        }px`,
+        padding: `${pv}px ${(sp.height - sp.iconSize - tp.borderWidth) / 2}px`,
     };
-    const styles = [
-        defaultCSS,
-        statesCSS,
-        block && blockStyles,
-        hidden && themePropertiesWithDefaults.round && hiddenRoundStyles,
-        css,
-    ];
+    const styles = [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css];
 
     /* Define component and icon component tags. */
     const Component: any = href ? 'a' : as || 'button';
     const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
     const iconCSS = {
-        [marginRule]: !hidden ? sizePropertiesWithDefaults.iconOffset : undefined,
-        width: sizePropertiesWithDefaults.iconSize,
-        height: sizePropertiesWithDefaults.iconSize,
+        [marginRule]: !hidden ? sp.iconOffset : undefined,
+        width: sp.iconSize,
+        height: sp.iconSize,
     };
 
     return (

@@ -11,7 +11,7 @@ export interface LayoutCompositionProps {
     Item: React.FC<LayoutItemProps>;
 }
 
-interface ILayoutContext {
+interface LayoutContext {
     /** Layout type. Some properties are available only for one or another type. */
     type?: AllowMedia<'grid' | 'flex'>;
     /** Columns settings. */
@@ -22,7 +22,9 @@ interface ILayoutContext {
     auto?: AllowMedia<number>;
 }
 
-export interface LayoutProps extends ILayoutContext {
+export interface LayoutProps
+    extends LayoutContext,
+        Omit<React.HTMLProps<HTMLDivElement>, 'cols' | 'rows' | 'type' | 'wrap'> {
     /** Layout items list. */
     children: React.ReactNode;
     /** Inline mode. Changes `display` type.*/
@@ -51,9 +53,9 @@ export interface LayoutProps extends ILayoutContext {
     css?: CSSObject;
 }
 
-const LayoutContext = createContext<ILayoutContext | undefined>(undefined);
+const LayoutContext = createContext<LayoutContext | undefined>(undefined);
 
-export const useLayout = (): ILayoutContext => {
+export const useLayout = (): LayoutContext => {
     const context = useContext(LayoutContext);
 
     if (!context) {
@@ -84,7 +86,7 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     ...props
 }) => {
     const { layout } = useTheme();
-    const layoutTheme = layout ?? baseTheme.layout;
+    const layoutTheme = layout || baseTheme.layout;
     gap = gap ?? layoutTheme.gap;
     cols = cols ?? layoutTheme.cols;
 

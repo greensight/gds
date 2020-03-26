@@ -42,7 +42,6 @@ module.exports = {
         '@typescript-eslint/no-explicit-any': 0,
         '@typescript-eslint/no-var-requires': 0,
         '@typescript-eslint/no-use-before-define': 0,
-        '@typescript-eslint/interface-name-prefix': 0,
         'import/no-named-as-default': 0,
         'import/no-unresolved': [2, { ignore: ['@'] }],
         'react/prop-types': 0,

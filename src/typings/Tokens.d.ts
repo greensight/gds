@@ -3,14 +3,14 @@ import TypographyTheme from './Typography';
 import LayoutTheme from './Layout';
 
 export default interface Tokens {
-    /** Tokens from `Palettes` frame. */
+    /** Palettes theme settings. You can get these settings via tokens from `Palettes` frame. */
     palettes?: PalettesTheme;
-    /** Tokens from `Colors` frame. */
+    /** Colors theme settings. You can get these settings via tokens from `Colors` frame. */
     colors?: ColorsTheme;
-    /** Tokens from `Shadows` frame. */
+    /** Shadows theme settings. You can get these settings via tokens from `Shadows` frame. */
     shadows?: ShadowsTheme;
-    /** Tokens from `Typography` frame. */
+    /** Typography theme settings. You can get these settings via tokens from `Typography` frame. */
     typography?: TypographyTheme;
-    /** Tokens from `Layout` frame. */
+    /** Layout theme settings. You can get these settings via tokens from `Layout` frame. */
     layout?: LayoutTheme;
 }
