@@ -10,16 +10,16 @@ import { useField } from 'formik';
 import { FormError, useForm } from '.';
 import { useFormField } from './Field';
 import { IFormLabel } from './Form';
+import { FormHint } from './Hint';
 
 export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, children, css, ...props }) => {
     const { controlId, optional, size, hint, hintPosition, hiddenLabel, validationPosition } = useFormField();
-    const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon } = useForm();
+    const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon, themeObj } = useForm();
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Form ? globalTheme : baseTheme;
-    const labelTheme = usedTheme.components.Form.Label;
-    const hintTheme = usedTheme.components.Form.Hint;
-    const optionalTheme = usedTheme.components.Form.Label.Optional;
-    const markTheme = usedTheme.components.Form.Label.Mark;
+    const labelTheme = themeObj?.Form?.Label ? themeObj.Form.Label : usedTheme.components.Form.Label;
+    const optionalTheme = usedTheme.components.Form.Label.optional;
+    const markTheme = usedTheme.components.Form.Label.mark;
 
     const [, meta] = useField(controlId);
 
@@ -38,20 +38,60 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
         return sizeRule || baseRule || defaultValue;
     };
 
+    const getStateStyles = (name, css) => {
+        const state = getRule(name);
+        if (!state) return;
+        const { color, fill, bg, border, shadow, css: stateCss } = state;
+        return {
+            [`:${name}`]: {
+                color,
+                fill: fill,
+                background: bg,
+                borderColor: border,
+                boxShadow: shadow,
+                ...stateCss,
+                ...css,
+            },
+        };
+    };
+    const getValidationStyles = (name, css) => {
+        const state = getRule(name);
+        if (!state) return;
+        const { color, fill, bg, border, shadow, css: stateCss } = state;
+        return {
+            color,
+            fill: fill,
+            background: bg,
+            borderColor: border,
+            boxShadow: shadow,
+            ...stateCss,
+            ...css,
+        };
+    };
+
     const iconSize = getRule('iconSize', scale(3));
+    const color = getRule('color', baseTheme.colors.black);
+    const fill = getRule('fill', baseTheme.colors.black);
     const typographyName = getRule('typography');
     const marginBottom = getRule('marginBottom', scale(1));
+    const time = getRule('time', 200);
+    const timeIn = getRule('timeIn');
     const typographyStyles = typographyName && typography(typographyName, usedTheme);
     const styles = [
         {
             display: 'block',
             ...typographyStyles,
             marginBottom,
+            color,
+            fill,
+            ...getStateStyles('hover', {
+                ...(timeIn && { transition: transition(timeIn) }),
+            }),
         },
         labelTheme.base?.css,
         labelTheme.sizes?.[size]?.css,
-        meta.touched && meta.error && labelTheme?.validation.error.css,
-        meta.touched && !meta.error && showSuccess && labelTheme?.validation.success.css,
+        meta.touched && meta.error && { ...getValidationStyles('error') },
+        meta.touched && !meta.error && showSuccess && { ...getValidationStyles('success') },
         css,
     ];
 
@@ -69,9 +109,15 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
         },
     ];
 
-    const hintStyles = [hintTheme.css];
-    const markStyles = [markTheme.css];
-    const optionalStyles = [optionalTheme.css];
+    const markStyles = [markTheme, markTheme?.css];
+    const optionalStyles = [
+        {
+            fontWeight: 400,
+            fontSize: '0.8em',
+        },
+        optionalTheme,
+        optionalTheme?.css,
+    ];
 
     const iconAfterProps = {
         css: {
@@ -104,7 +150,7 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     }
 
     const iconErrorProps = {
-        fill: labelTheme?.validation.error.css.color,
+        //fill: labelTheme?.validation.error.css.color,
         css: {
             position: 'absolute',
             top: '50%',
@@ -116,7 +162,7 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     };
 
     const iconSuccessProps = {
-        fill: labelTheme?.validation.success.css.color,
+        // fill: labelTheme?.validation.success.css.color,
         css: {
             position: 'absolute',
             top: '50%',
@@ -187,16 +233,15 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
                     showSuccess &&
                     !hiddenLabel &&
                     IconSuccessComponent}
-                {optional && required === 'optional' && <span css={optionalStyles}>{optional}</span>}
+                {optional && required === 'optional' && !hiddenLabel && <span css={optionalStyles}>{optional}</span>}
+                {optional && required === 'optional' && hiddenLabel && <VisuallyHidden>{optional}</VisuallyHidden>}
                 {!optional && required === 'mark' && !hiddenLabel && (
                     <span css={markStyles} aria-hidden="true">
                         *
                     </span>
                 )}
             </span>
-            {hint && hintPosition === 'top' && (
-                <span css={hintStyles}>{hiddenLabel ? <VisuallyHidden>{hint}</VisuallyHidden> : hint}</span>
-            )}
+            {hint && hintPosition === 'top' && (hiddenLabel ? <VisuallyHidden>{hint}</VisuallyHidden> : <FormHint />)}
             {meta.error && meta.touched && errorPosition === 'top' && <FormError err={meta.error} />}
         </label>
     );

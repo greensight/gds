@@ -13,7 +13,6 @@ export const useFormField = (): IFormField => {
     return context;
 };
 export const FormField: React.FC<IFormField> = ({
-    Tag = 'div',
     size = 'md',
     hintPosition = 'top',
     hint,
@@ -28,7 +27,7 @@ export const FormField: React.FC<IFormField> = ({
         <FormFieldContext.Provider
             value={{ controlId, optional, size, hintPosition, hint, hiddenLabel, validationPosition }}
         >
-            <Tag {...props}>{React.Children.map(children, child => React.cloneElement(child))}</Tag>
+            <div {...props}>{React.Children.map(children, child => React.cloneElement(child))}</div>
         </FormFieldContext.Provider>
     );
 };

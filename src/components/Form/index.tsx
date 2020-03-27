@@ -49,11 +49,12 @@ export const Form: React.FC<IForm> = ({
     initialValues,
     validationSchema,
     onSubmit,
+    themeObj,
     children,
     ...props
 }) => {
     return (
-        <FormContext.Provider value={{ errorPosition, required, showSuccess, ErrorIcon, SuccessIcon }}>
+        <FormContext.Provider value={{ errorPosition, required, showSuccess, ErrorIcon, SuccessIcon, themeObj }}>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                 {() => (
                     <FormikForm noValidate {...props}>

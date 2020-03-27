@@ -13,12 +13,13 @@ export interface IForm {
     initialValues: Object;
     /** Валидация через Yup */
     validationSchema?: Object;
+    /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
+    themeObj?: IFormTheme;
     /** Обработчик сабмита */
     onSubmit?: (values: FormikValues) => void;
 }
 
 export interface IFormField {
-    Tag: string;
     /** Размер. Выбирается из определённых в объекте темы */
     size?: 'sm' | 'md' | 'lg';
     /** Позиционирование подсказки к полю */
@@ -45,8 +46,6 @@ export interface IFormLabel {
 }
 
 export interface IFormInput {
-    /** Тема. Выбирается из определённых в объекте темы */
-    theme?: string;
     /** Иконка в конце поля */
     iconAfter?: Function | React.Component;
     /** Иконка в начале поля */

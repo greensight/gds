@@ -8,35 +8,20 @@ import cloneElement from '@helpers/cloneElement';
 import { useFormField } from './Field';
 import { FormError, useForm } from '.';
 import { IFormInput } from './Form';
+import { FormHint } from './Hint';
 
-export const FormInput: React.FC<IFormInput> = ({
-    theme = 'primary',
-    children,
-    IconBefore,
-    IconAfter,
-    css,
-    ...props
-}) => {
+export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfter, css, ...props }) => {
     const { controlId, optional, size, hint, hintPosition, validationPosition } = useFormField();
-    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon } = useForm();
+    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Form.Input ? globalTheme : baseTheme;
-    const inputTheme = usedTheme.components.Form.Input;
-    const hintTheme = usedTheme.components.Form.Hint;
-
-    if (!inputTheme.themes[theme]) {
-        console.warn(`Specify "${theme}" theme. Default values are used instead`);
-    }
+    const inputTheme = themeObj?.Form?.Input ? themeObj.Form.Input : usedTheme.components.Form.Input;
 
     if (!inputTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
 
     const getRule = (name, defaultValue) => {
-        const themeStyles = inputTheme.themes[theme];
-        let themeRule;
-        if (themeStyles) themeRule = themeStyles[name];
-
         const sizeStyles = inputTheme.sizes[size];
         let sizeRule;
         if (sizeStyles) sizeRule = sizeStyles[name];
@@ -44,23 +29,36 @@ export const FormInput: React.FC<IFormInput> = ({
         const baseStyles = inputTheme.base;
         const baseRule = baseStyles?.[name];
 
-        return themeRule || sizeRule || baseRule || defaultValue;
+        return sizeRule || baseRule || defaultValue;
     };
 
     const getStateStyles = (name, css) => {
         const state = getRule(name);
         if (!state) return;
-        const { color, bg, border, shadow, css: stateCss } = state;
+        const { color, fill, bg, border, shadow, css: stateCss } = state;
         return {
             [`:${name}`]: {
                 color,
-                fill: color,
+                fill,
                 background: bg,
                 borderColor: border,
                 boxShadow: shadow,
                 ...stateCss,
                 ...css,
             },
+        };
+    };
+    const getValidationStyles = (name, css) => {
+        const state = getRule(name);
+        if (!state) return;
+        const { color, bg, border, shadow, css: stateCss } = state;
+        return {
+            color,
+            background: bg,
+            borderColor: border,
+            boxShadow: shadow,
+            ...stateCss,
+            ...css,
         };
     };
 
@@ -72,7 +70,7 @@ export const FormInput: React.FC<IFormInput> = ({
     const border = getRule('border');
     const borderWidth = getRule('borderWidth', border ? 1 : 0);
     const borderStyle = getRule('borderStyle', 'solid');
-    const borderRadius = getRule('borderRadius', 4);
+    const borderRadius = getRule('borderRadius');
     const time = getRule('time', 200);
     const timeIn = getRule('timeIn');
     const easing = getRule('easing', 'ease');
@@ -80,7 +78,8 @@ export const FormInput: React.FC<IFormInput> = ({
     const height = getRule('height', scale(5));
     const padding = getRule('padding', scale(3));
     const iconSize = getRule('iconSize', scale(3));
-    const color = getRule('color', baseTheme.colors.white);
+    const color = getRule('color', baseTheme.colors.black);
+    const fill = getRule('fill', baseTheme.colors.black);
     const bg = getRule('bg', baseTheme.colors.black);
     const shadow = getRule('shadow');
 
@@ -103,7 +102,6 @@ export const FormInput: React.FC<IFormInput> = ({
                 `${height}px`,
             ...typographyStyles,
             color,
-            fill: color,
             background: bg,
             borderColor: border,
             boxShadow: shadow,
@@ -116,11 +114,18 @@ export const FormInput: React.FC<IFormInput> = ({
             }),
             ...getStateStyles('focus'),
         },
+
+        meta.touched &&
+            meta.error && {
+                ...getValidationStyles('error'),
+            },
+        meta.touched &&
+            !meta.error &&
+            showSuccess && {
+                ...getValidationStyles('success'),
+            },
         inputTheme.base?.css,
         inputTheme.sizes?.[size]?.css,
-        inputTheme.themes?.[theme]?.css,
-        meta.touched && meta.error && inputTheme.themes?.[theme]?.validation.error.css,
-        meta.touched && !meta.error && showSuccess && inputTheme.themes?.[theme]?.validation.success.css,
         css,
     ];
 
@@ -132,6 +137,7 @@ export const FormInput: React.FC<IFormInput> = ({
             left: `${(height - iconSize) / 2}px`,
             width: iconSize,
             height: iconSize,
+            fill: 'inherit',
         },
     };
 
@@ -143,6 +149,7 @@ export const FormInput: React.FC<IFormInput> = ({
             right: `${(height - iconSize) / 2}px`,
             width: iconSize,
             height: iconSize,
+            fill: 'inherit',
         },
     };
 
@@ -159,8 +166,6 @@ export const FormInput: React.FC<IFormInput> = ({
     } else if (typeof IconAfter === 'object') {
         IconAfterComponent = cloneElement(IconAfter, iconAfterProps);
     }
-
-    // const validationIconHorizontalRule = `${Icon && iconAfter === false ? 'left' : 'right'}`;
 
     let validationIconHorizontalRule;
 
@@ -211,15 +216,10 @@ export const FormInput: React.FC<IFormInput> = ({
     const fieldStyles = [
         {
             position: 'relative',
+            ...getStateStyles('hover', {
+                ...(timeIn && { transition: transition(timeIn) }),
+            }),
         },
-    ];
-
-    const hintStyles = [
-        {
-            color: hintTheme.color,
-            ...typographyStyles,
-        },
-        hintTheme.css,
     ];
 
     const getDescribedByList = () => {
@@ -240,7 +240,7 @@ export const FormInput: React.FC<IFormInput> = ({
 
     const { values } = useFormikContext();
     const a = validationPosition === 'inputBefore' && meta.touched && meta.error;
-    console.log(a);
+
     return (
         <>
             <div css={fieldStyles}>
@@ -286,11 +286,7 @@ export const FormInput: React.FC<IFormInput> = ({
             {meta.error && meta.touched && errorPosition === 'bottom' && (
                 <FormError err={meta.error} id={`error-${controlId}`} />
             )}
-            {hint && hintPosition === 'bottom' && (
-                <span id={`hint-${controlId}`} css={hintStyles}>
-                    {hint}
-                </span>
-            )}
+            {hint && hintPosition === 'bottom' && <FormHint id={`hint-${controlId}`} />}
         </>
     );
 };

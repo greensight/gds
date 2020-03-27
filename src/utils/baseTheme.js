@@ -132,38 +132,32 @@ const baseTheme = createTheme({
                     fill: colors.success,
                 },
                 Input: {
-                    themes: {
-                        primary: {
-                            color: colors.black,
-                            border: colors.grey20,
-                            bg: colors.white,
-                            hover: {
-                                border: colors.brand,
-                                bg: colors.white,
-                            },
-                            focus: {
-                                border: colors.brand,
-                                bg: colors.white,
-                                shadow: `${shadows.focus}`,
-                            },
-                            disabled: {
-                                color: colors.grey20,
-                                border: colors.grey70,
-                                bg: colors.grey70,
-                            },
-                            validation: {
-                                error: {
-                                    css: {
-                                        border: `1px solid ${colors.error}`,
-                                        background: `${colors.white}`,
-                                    },
-                                },
-                                success: {
-                                    css: {
-                                        border: `1px solid ${colors.success}`,
-                                    },
-                                },
-                            },
+                    base: {
+                        color: colors.black,
+                        fill: colors.black,
+                        border: colors.grey20,
+                        bg: colors.white,
+                        borderRadius: 4,
+                        hover: {
+                            border: colors.brand,
+                            fill: colors.brand,
+                        },
+                        focus: {
+                            border: colors.brand,
+                            fill: colors.brand,
+                            shadow: shadows.focus,
+                        },
+                        disabled: {
+                            color: colors.grey20,
+                            border: colors.grey70,
+                            fill: colors.grey20,
+                            bg: colors.grey70,
+                        },
+                        error: {
+                            border: colors.error,
+                        },
+                        success: {
+                            border: colors.success,
                         },
                     },
                     sizes: {
@@ -188,6 +182,22 @@ const baseTheme = createTheme({
                     },
                 },
                 Label: {
+                    base: {
+                        color: colors.black,
+                        fill: colors.black,
+                        hover: {
+                            color: colors.black,
+                            fill: colors.brand,
+                        },
+                        error: {
+                            color: colors.error,
+                            fill: colors.error,
+                        },
+                        success: {
+                            color: colors.success,
+                            fill: colors.black,
+                        },
+                    },
                     sizes: {
                         lg: {
                             iconSize: scale(4),
@@ -202,39 +212,19 @@ const baseTheme = createTheme({
                             typography: 'labelSm',
                         },
                     },
-                    validation: {
-                        error: {
-                            css: {
-                                color: colors.error,
-                            },
-                        },
-                        success: {
-                            css: {
-                                color: colors.success,
-                            },
-                        },
+                    optional: {
+                        color: colors.grey20,
                     },
-                    Optional: {
-                        css: {
-                            color: colors.grey20,
-                            fontWeight: 400,
-                            fontSize: '0.8em',
-                        },
-                    },
-                    Mark: {
-                        css: {
-                            color: colors.error,
-                        },
-                    },
-                    css: {
-                        color: colors.brand,
-                        ':hover': {
-                            fill: colors.brand,
-                        },
+                    mark: {
+                        color: colors.error,
                     },
                 },
                 Hint: {
-                    color: colors.grey20,
+                    base: {
+                        bg: 'transparent',
+                        border: 0,
+                        color: colors.grey20,
+                    },
                     sizes: {
                         lg: {
                             typography: 'bodyLg',
@@ -245,11 +235,6 @@ const baseTheme = createTheme({
                         sm: {
                             typography: 'bodySm',
                         },
-                    },
-                    css: {
-                        display: 'block',
-                        fontWeight: 'normal',
-                        color: colors.grey20,
                     },
                 },
                 Error: {

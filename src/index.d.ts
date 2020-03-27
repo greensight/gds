@@ -233,6 +233,139 @@ export interface IButton {
     };
 }
 
+export interface IFormInputBaseRules {
+    /** Цвет текста */
+    color?: string;
+    /** Цвет иконок */
+    fill?: string;
+    /** Цвет фона */
+    bg?: string;
+    /** Цвет обводки */
+    border?: string;
+    /** Тень */
+    shadow?: string;
+    /** Толщина обводки. Проставляется автоматически, если передан border */
+    borderWidth?: number;
+    /** Стиль обводки */
+    borderStyle?: string;
+    /** Скругление Поля */
+    borderRadius?: number | string;
+    /** Время анимации ховера */
+    time?: number;
+    /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
+    timeIn?: number;
+    /** Функция анимации */
+    easing?: string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormInputThemeRules extends IFormInputBaseRules {
+    /** Правила на ховер */
+    hover?: IFormInputRules;
+    /** Правила на блокирование */
+    disabled?: IFormInputRules;
+    /** Правила на фокус */
+    focus?: IFormInputRules;
+}
+
+export interface IFormInputValidationRules extends IFormInputBaseRules {
+    /** Правила для ошибки */
+    error?: IFormInputRules;
+    /** Правила для успеха  */
+    success?: IFormInputRules;
+}
+
+export interface IFormInputSizeRules {
+    /** Высота поля */
+    height?: number;
+    /** Внутренние отступы */
+    padding?: number;
+    /** Имя типографического стиля */
+    typography?: string;
+    /** Размер иконки */
+    iconSize?: number;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormInput {
+    /** Глобальные стили. Распространяются на все поля */
+    base?: IFormInputBaseRules;
+    /** Стили размеров */
+    sizes: {
+        /** Дефолтный размер */
+        md: IFormInputSizeRules;
+        /** Можно добавлять свои размеры */
+        [size: string]: IFormInputSizeRules;
+    };
+}
+
+export interface IFormLabelBaseRules {
+    /** Цвет текста */
+    color?: string;
+    /** Цвет иконок */
+    fill?: string;
+    /** Время анимации ховера */
+    time?: number;
+    /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
+    timeIn?: number;
+    /** Функция анимации */
+    easing?: string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormLabelThemeRules extends IFormLabelBaseRules {
+    /** Правила на ховер */
+    hover?: IFormLabelRules;
+}
+
+export interface IFormLabelValidationRules extends IFormLabelBaseRules {
+    /** Правила для ошибки */
+    error?: IFormLabelRules;
+    /** Правила для успеха  */
+    success?: IFormLabelRules;
+}
+
+export interface IFormLabelSizeRules {
+    /** Имя типографического стиля */
+    typography?: string;
+    /** Размер иконки */
+    iconSize?: number;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormLabelOptionalRules {
+    /** Цвет опционального текста */
+    color?: string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormLabelMarkRules {
+    /** Цвет астериска */
+    color?: string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+export interface IFormLabel {
+    /** Глобальные стили. Распространяются на все лейблы */
+    base?: IFormLabelBaseRules;
+    /** Стили размеров */
+    sizes: {
+        /** Дефолтный размер */
+        md: IFormLabelBaseRules;
+        /** Можно добавлять свои размеры */
+        [size: string]: IFormLabelBaseRules;
+    };
+    /** Стили опционального текста */
+    optional?: IFormLabelOptionalRules;
+    /** Стили астерисков */
+    mark?: IFormLabelMarkRules;
+}
+
 export interface ITokens {
     /** Палитры */
     palettes?: IPalettes;
