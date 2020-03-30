@@ -14,6 +14,9 @@ export interface ThemeProviderProps {
     children: React.ReactNode;
 }
 
+/**
+ * Component for providing theme context for app.
+ */
 const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
     const global = theme.global || baseTheme.global;
     const fonts = global.fonts || baseTheme.global.fonts;

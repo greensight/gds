@@ -18,3 +18,5 @@ export { default as createTheme } from './utils/createTheme';
 export { default as useTheme } from './utils/useTheme';
 export { default as scale } from './utils/scale';
 export { default as typography } from './utils/typography';
+
+export { default as Theme } from './types/Theme';

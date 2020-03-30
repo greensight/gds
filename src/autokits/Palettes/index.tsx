@@ -5,6 +5,9 @@ import useTheme from '../../utils/useTheme';
 import scale from '../../utils/scale';
 import typography from '../../helpers/typography';
 
+/**
+ * Autokit for palettes tokens `theme.palettes`.
+ */
 export const PalettesAutokit = () => {
     const theme = useTheme();
     const { palettes } = theme;

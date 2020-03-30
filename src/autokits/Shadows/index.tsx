@@ -5,6 +5,9 @@ import useTheme from '../../utils/useTheme';
 import scale from '../../utils/scale';
 import typography from '../../helpers/typography';
 
+/**
+ * Autokit for shadows tokens `theme.shadows`.
+ */
 export const ShadowsAutokit = () => {
     const theme = useTheme();
     const { shadows } = theme;

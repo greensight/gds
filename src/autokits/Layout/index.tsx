@@ -5,6 +5,9 @@ import useTheme from '../../utils/useTheme';
 import typography from '../../helpers/typography';
 import { Breakpoint } from '../../types/Types';
 
+/**
+ * Autokit for layout tokens `theme.layout`.
+ */
 export const LayoutAutokit = () => {
     const theme = useTheme();
     const { layout } = theme;

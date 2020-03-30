@@ -43,6 +43,9 @@ export interface LayoutProps
     css?: CSSObject;
 }
 
+/**
+ * Component for creating typical grid and flex layouts.
+ */
 export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     children,
     type = 'grid',

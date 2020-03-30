@@ -5,6 +5,9 @@ import useTheme from '../../utils/useTheme';
 import scale from '../../utils/scale';
 import typography from '../../helpers/typography';
 
+/**
+ * Autokit for colors tokens `theme.colors`.
+ */
 export const ColorsAutokit = () => {
     const theme = useTheme();
     const { colors } = theme;
