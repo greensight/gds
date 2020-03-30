@@ -15,7 +15,7 @@ export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfte
     const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Form.Input ? globalTheme : baseTheme;
-    const inputTheme = themeObj?.Form?.Input ? themeObj.Form.Input : usedTheme.components.Form.Input;
+    const inputTheme = themeObj?.Input ? themeObj.Input : usedTheme.components.Form.Input;
 
     if (!inputTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);

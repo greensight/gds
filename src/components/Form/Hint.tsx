@@ -10,10 +10,10 @@ import { FormError, useForm } from '.';
 
 export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
     const { controlId, hint, size } = useFormField();
-    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon } = useForm();
+    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
     const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Form.Hint ? globalTheme : baseTheme;
-    const hintTheme = usedTheme.components.Form.Hint;
+    const usedTheme = globalTheme.components?.Hint ? globalTheme : baseTheme;
+    const hintTheme = themeObj?.Hint ? themeObj.Hint : usedTheme.components.Form.Hint;
 
     if (!hintTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);

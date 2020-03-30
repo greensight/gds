@@ -17,9 +17,9 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon, themeObj } = useForm();
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Form ? globalTheme : baseTheme;
-    const labelTheme = themeObj?.Form?.Label ? themeObj.Form.Label : usedTheme.components.Form.Label;
-    const optionalTheme = usedTheme.components.Form.Label.optional;
-    const markTheme = usedTheme.components.Form.Label.mark;
+    const labelTheme = themeObj?.Label ? themeObj.Label : usedTheme.components.Form.Label;
+    const optionalTheme = labelTheme.optional;
+    const markTheme = labelTheme.mark;
 
     const [, meta] = useField(controlId);
 

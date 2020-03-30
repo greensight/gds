@@ -366,6 +366,42 @@ export interface IFormLabel {
     mark?: IFormLabelMarkRules;
 }
 
+export interface IFormHintBaseRules {
+    /** Цвет текста */
+    color?: string;
+    /** Цвет фона */
+    bg?: string;
+    /** Цвет обводки */
+    border?: string;
+    /** Толщина обводки. Проставляется автоматически, если передан border */
+    borderWidth?: number;
+    /** Стиль обводки */
+    borderStyle?: string;
+    /** Скругление */
+    borderRadius?: number | string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormHintSizeRules {
+    /** Имя типографического стиля */
+    typography?: string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormHint {
+    /** Глобальные стили. Распространяются на все хинты */
+    base?: IFormHintBaseRules;
+    /** Стили размеров */
+    sizes: {
+        /** Дефолтный размер */
+        md: IFormHintSizeRules;
+        /** Можно добавлять свои размеры */
+        [size: string]: IFormHintSizeRules;
+    };
+}
+
 export interface ITokens {
     /** Палитры */
     palettes?: IPalettes;
