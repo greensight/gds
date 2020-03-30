@@ -5,8 +5,7 @@ import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';
 import typography from '../../helpers/typography';
 import { BREAKPOINTS_NAMES } from '../../helpers/constants';
-import { Breakpoint } from '../../types/Types';
-import LayoutTheme from '../../types/Layout';
+import LayoutTheme, { Breakpoint } from '../../types/Layout';
 
 export interface ItemProps {
     /** Breakpoint name. */

@@ -1,4 +1,5 @@
-import { Breakpoint } from './Types';
+export type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs';
+export type AllowMedia<T> = T | Partial<Record<Breakpoint, T>>;
 
 export default interface LayoutTheme {
     /** Project breakpoints. */

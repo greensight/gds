@@ -6,10 +6,10 @@ import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import VisuallyHidden from '../../components/VisuallyHidden';
 import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
-import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Types';
+import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Helpers';
 import { TypographyProperties } from '../../types/Typography';
 
-export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'as' | 'size'> {
+export interface BaseButtonProps {
     /** Button content. */
     children: React.ReactNode;
     /** Theme name from list of themes defined in theme object at `components.Button.themes`. */
@@ -24,8 +24,6 @@ export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'a
     iconAfter?: boolean;
     /** Visually hidden text. Keeps text accessible but visually shows only icons. Doesn't make sense without `Icon` prop. */
     hidden?: boolean;
-    /** Link address. If passed renders anchor element instead of button. */
-    href?: string;
     /** Use your own React component for render. Main usage: pass `Link` from `react-router` for routes management. */
     as?: React.ReactNode;
     /** Open link in another browser tab. Additionaly adds `rel="nofollow noopener"`. */
@@ -35,6 +33,11 @@ export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'a
     /** Additional CSS. */
     css?: CSSObject;
 }
+
+export type ButtonProps<P extends React.ElementType = 'button'> = {
+    /** Use your own React component for render. Main usage: pass `a` for external links or pass `Link` from `react-router` for routes management. */
+    as?: P;
+} & MergeElementProps<P, BaseButtonProps>;
 
 /**
  * Button component.

@@ -1,6 +1,6 @@
 /** Импорт React нужен для tsc. */
 import React, { createContext, useContext } from 'react';
-import { AllowMedia } from '../../types/Types';
+import { AllowMedia } from '../../types/Layout';
 
 export interface LayoutContextProps {
     /** Layout type. Some properties are available only for one or another type. */

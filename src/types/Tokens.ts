@@ -1,6 +1,9 @@
-import { PalettesTheme, ColorsTheme, ShadowsTheme } from './Types';
 import TypographyTheme from './Typography';
 import LayoutTheme from './Layout';
+
+export type PalettesTheme = Record<string, string[]>;
+export type ColorsTheme = Record<string, string>;
+export type ShadowsTheme = Record<string, string>;
 
 export default interface Tokens {
     /** Palettes theme settings. You can get these settings via tokens from `Palettes` frame. */

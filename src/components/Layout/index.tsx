@@ -6,7 +6,7 @@ import useCSSProperty from '../../helpers/useCSSProperty';
 import toArray from '../../helpers/toArray';
 import { LayoutContext, LayoutContextProps } from './useLayout';
 import LayoutItem, { LayoutItemProps } from './Item';
-import { AllowMedia } from '../../types/Types';
+import { AllowMedia } from '../../types/Layout';
 
 export interface LayoutCompositionProps {
     Item: React.FC<LayoutItemProps>;

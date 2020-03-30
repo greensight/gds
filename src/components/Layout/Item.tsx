@@ -2,7 +2,7 @@ import React from 'react';
 import { CSSObject } from '@emotion/core';
 import useCSSProperty from '../../helpers/useCSSProperty';
 import useLayout from './useLayout';
-import { AllowMedia } from '../../types/Types';
+import { AllowMedia } from '../../types/Layout';
 
 export interface LayoutItemProps extends React.HTMLProps<HTMLDivElement> {
     /** Item content. */
@@ -25,6 +25,9 @@ export interface LayoutItemProps extends React.HTMLProps<HTMLDivElement> {
     css?: CSSObject;
 }
 
+/**
+ * Inner `Layout` component for creating layout cells.
+ */
 export const Item = ({ children, col, row, area, justify, align, order, grow, css, ...props }: LayoutItemProps) => {
     const { type, gap, cols, auto } = useLayout();
 

@@ -3,7 +3,7 @@ import useTheme from '../utils/useTheme';
 import baseTheme from '../utils/baseTheme';
 import isObject from './isObject';
 import { BREAKPOINTS_NAMES } from './constants';
-import { Breakpoint } from '../types/Types';
+import { Breakpoint } from '../types/Layout';
 
 /**
  * Calculate CSS Object from component props with `AllowMedia` type (user can pass object with breakpoints through prop). CSS property can be calculated based on multiple props.

@@ -30,9 +30,7 @@ const getTypography = (frame) => {
     const breakpointsFrame = frame.children.find((item) => item.name === 'breakpoints');
     const firstPoint = Number(breakpointsFrame.children[0].name);
     const secondPoint = Number(breakpointsFrame.children[1].name);
-    const breakpointsTokens = {
-        breakpoints: [Math.max(firstPoint, secondPoint), Math.min(firstPoint, secondPoint)],
-    };
+    const breakpointsTokens = [Math.max(firstPoint, secondPoint), Math.min(firstPoint, secondPoint)];
 
     const desktopFrame = frame.children.find((item) => item.name === 'desktop');
     const mobileFrame = frame.children.find((item) => item.name === 'mobile');
@@ -48,8 +46,8 @@ const getTypography = (frame) => {
     }, {});
 
     const tokens = {
-        ...breakpointsTokens,
-        ...textTokens,
+        breakpoints: breakpointsTokens,
+        styles: textTokens,
     };
 
     return tokens;

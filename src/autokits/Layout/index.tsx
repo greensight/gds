@@ -3,7 +3,7 @@ import Item from './Item';
 import Layout from '../../components/Layout';
 import useTheme from '../../utils/useTheme';
 import typography from '../../helpers/typography';
-import { Breakpoint } from '../../types/Types';
+import { Breakpoint } from '../../types/Layout';
 
 /**
  * Autokit for layout tokens `theme.layout`.
