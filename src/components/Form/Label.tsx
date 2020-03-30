@@ -7,9 +7,10 @@ import typography from '@helpers/customTypography';
 import VisuallyHidden from '@components/VisuallyHidden';
 import { MAJOR_STEP_DEFAULT } from '@helpers/constants';
 import { useField } from 'formik';
-import { FormError, useForm } from '.';
+import { useForm } from '.';
 import { useFormField } from './Field';
 import { IFormLabel } from './Form';
+import { FormError } from './Error';
 import { FormHint } from './Hint';
 
 export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, children, css, ...props }) => {
@@ -148,9 +149,8 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     } else if (validationPosition === 'labelAfter') {
         validationIconHorizontalRule = 'right';
     }
-
     const iconErrorProps = {
-        //fill: labelTheme?.validation.error.css.color,
+        fill: usedTheme.components.Form.errorIcon.fill,
         css: {
             position: 'absolute',
             top: '50%',
@@ -162,7 +162,7 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     };
 
     const iconSuccessProps = {
-        // fill: labelTheme?.validation.success.css.color,
+        fill: usedTheme.components.Form.successIcon.fill,
         css: {
             position: 'absolute',
             top: '50%',

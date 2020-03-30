@@ -3,48 +3,43 @@ import useTheme from '@utils/useTheme';
 import scale from '@utils/scale';
 import baseTheme from '@utils/baseTheme';
 import typography from '@helpers/customTypography';
-import { useField, useFormikContext } from 'formik';
-import cloneElement from '@helpers/cloneElement';
 import { useFormField } from './Field';
-import { FormError, useForm } from '.';
+import { useForm } from '.';
 
-export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
-    const { controlId, hint, size } = useFormField();
-    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
+export const FormError: React.FC<IFormError> = ({ err, css, ...props }) => {
+    const { size } = useFormField();
+    const { themeObj } = useForm();
     const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Hint ? globalTheme : baseTheme;
-    const hintTheme = themeObj?.Hint ? themeObj.Hint : usedTheme.components.Form.Hint;
+    const usedTheme = globalTheme.components?.Form.Error ? globalTheme : baseTheme;
+    const errorTheme = themeObj?.Error ? themeObj.Error : usedTheme.components.Form.Error;
 
-    if (!hintTheme.sizes[size]) {
+    if (!errorTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
-
     const getRule = (name, defaultValue) => {
-        const sizeStyles = hintTheme.sizes[size];
+        const sizeStyles = errorTheme.sizes[size];
         let sizeRule;
         if (sizeStyles) sizeRule = sizeStyles[name];
 
-        const baseStyles = hintTheme.base;
+        const baseStyles = errorTheme.base;
         const baseRule = baseStyles?.[name];
 
         return sizeRule || baseRule || defaultValue;
     };
-
     const border = getRule('border');
     const borderWidth = getRule('borderWidth', border ? 1 : 0);
     const borderStyle = getRule('borderStyle', 'solid');
     const borderRadius = getRule('borderRadius');
     const typographyName = getRule('typography');
-
-    //const padding = getRule('padding', scale(3));
+    const typographyStyles = typographyName && typography(typographyName, usedTheme);
+    const marginTop = getRule('marginTop', scale(1));
     const color = getRule('color', baseTheme.colors.black);
     const bg = getRule('bg', baseTheme.colors.white);
-
-    const typographyStyles = typographyName && typography(typographyName, usedTheme);
-
     const styles = [
         {
             display: 'block',
+            color: errorTheme.color,
+            marginTop,
             borderWidth,
             borderStyle,
             borderRadius,
@@ -53,15 +48,15 @@ export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
             background: bg,
             borderColor: border,
         },
-        hintTheme.base?.css,
-        hintTheme.sizes?.[size]?.css,
+        errorTheme.sizes?.[size]?.css,
+        css,
     ];
 
     return (
         <span css={styles} {...props}>
-            {hint}
+            {err}
         </span>
     );
 };
 
-export default FormHint;
+export default FormError;

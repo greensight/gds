@@ -9,7 +9,6 @@ import FormLabel from './Label';
 import FormField, { useFormField } from './Field';
 import FormInput from './Input';
 import { IForm } from './Form';
-
 const FormContext = createContext();
 
 export const useForm = (): IForm => {
@@ -67,47 +66,7 @@ export const Form: React.FC<IForm> = ({
     );
 };
 
-export const FormError: React.FC<IFormError> = ({ err, css, ...props }) => {
-    const { size } = useFormField();
-    const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Form.Error ? globalTheme : baseTheme;
-    const errorTheme = usedTheme.components.Form.Error;
-
-    if (!errorTheme.sizes[size]) {
-        console.warn(`Specify "${size}" size. Default values are used instead`);
-    }
-    const getRule = (name, defaultValue) => {
-        const sizeStyles = errorTheme.sizes[size];
-        let sizeRule;
-        if (sizeStyles) sizeRule = sizeStyles[name];
-
-        const baseStyles = errorTheme.base;
-        const baseRule = baseStyles?.[name];
-
-        return sizeRule || baseRule || defaultValue;
-    };
-    const typographyName = getRule('typography');
-    const typographyStyles = typographyName && typography(typographyName, usedTheme);
-    const marginTop = getRule('marginTop', scale(1));
-    const styles = [
-        {
-            display: 'block',
-            color: errorTheme.color,
-            marginTop,
-            ...typographyStyles,
-        },
-        errorTheme.sizes?.[size]?.css,
-        css,
-    ];
-
-    return (
-        <span css={styles} {...props}>
-            {err}
-        </span>
-    );
-};
-
-Form.Error = FormError;
+//Form.Error = FormError;
 Form.Input = FormInput;
 Form.Label = FormLabel;
 Form.Field = FormField;

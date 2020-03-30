@@ -1,5 +1,5 @@
 import PlaceholderIcon from '@icons/tokens/medium/placeholder.svg';
-import ErorrIcon from '@icons/tokens/medium/errorTriangle.svg';
+import ErrorIcon from '@icons/tokens/medium/errorTriangle.svg';
 import SuccessIcon from '@icons/tokens/medium/checkCircle.svg';
 import createTheme from '@utils/createTheme';
 import scale from '@utils/scale';
@@ -57,6 +57,8 @@ const baseTheme = createTheme({
             },
         },
         placeholder: PlaceholderIcon,
+        error: ErrorIcon,
+        success: SuccessIcon,
         components: {
             Button: {
                 base: {
@@ -124,11 +126,9 @@ const baseTheme = createTheme({
             },
             Form: {
                 errorIcon: {
-                    icon: ErorrIcon,
                     fill: colors.error,
                 },
                 successIcon: {
-                    icon: SuccessIcon,
                     fill: colors.success,
                 },
                 Input: {
@@ -222,7 +222,6 @@ const baseTheme = createTheme({
                 Hint: {
                     base: {
                         bg: 'transparent',
-                        border: 0,
                         color: colors.grey20,
                     },
                     sizes: {
@@ -238,7 +237,10 @@ const baseTheme = createTheme({
                     },
                 },
                 Error: {
-                    color: colors.error,
+                    base: {
+                        bg: 'transparent',
+                        color: colors.error,
+                    },
                     sizes: {
                         lg: {
                             typography: 'bodyLg',

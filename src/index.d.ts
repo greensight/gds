@@ -402,6 +402,42 @@ export interface IFormHint {
     };
 }
 
+export interface IFormErrorBaseRules {
+    /** Цвет текста */
+    color?: string;
+    /** Цвет фона */
+    bg?: string;
+    /** Цвет обводки */
+    border?: string;
+    /** Толщина обводки. Проставляется автоматически, если передан border */
+    borderWidth?: number;
+    /** Стиль обводки */
+    borderStyle?: string;
+    /** Скругление */
+    borderRadius?: number | string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormErrorSizeRules {
+    /** Имя типографического стиля */
+    typography?: string;
+    /** Кастомный CSS */
+    css?: Object;
+}
+
+export interface IFormError {
+    /** Глобальные стили. Распространяются на все ошибки */
+    base?: IFormErrorBaseRules;
+    /** Стили размеров */
+    sizes: {
+        /** Дефолтный размер */
+        md: IFormErrorSizeRules;
+        /** Можно добавлять свои размеры */
+        [size: string]: IFormErrorSizeRules;
+    };
+}
+
 export interface ITokens {
     /** Палитры */
     palettes?: IPalettes;

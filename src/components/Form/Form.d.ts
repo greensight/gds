@@ -38,18 +38,20 @@ export interface IFormField {
 
 export interface IFormLabel {
     /** Иконка справа от лейбла */
-    iconAfter?: Function | React.Component;
+    IconAfter?: Function | React.Component;
     /** Иконка слева от лейбла */
-    iconBefore?: Function | React.Component;
+    IconBefore?: Function | React.Component;
     /** Кастомный CSS */
     css?: Object;
 }
 
 export interface IFormInput {
     /** Иконка в конце поля */
-    iconAfter?: Function | React.Component;
+    IconAfter?: Function | React.Component;
     /** Иконка в начале поля */
-    iconBefore?: Function | React.Component;
+    IconBefore?: Function | React.Component;
     /** Кастомный CSS */
     css?: Object;
+    /** ref. DOM node доступен через current */
+    ref?: HTMLInputElement;
 }

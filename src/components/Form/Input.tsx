@@ -6,16 +6,19 @@ import typography from '@helpers/customTypography';
 import { useField, useFormikContext } from 'formik';
 import cloneElement from '@helpers/cloneElement';
 import { useFormField } from './Field';
-import { FormError, useForm } from '.';
+import { useForm } from '.';
 import { IFormInput } from './Form';
+import { FormError } from './Error';
 import { FormHint } from './Hint';
 
-export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfter, css, ...props }) => {
+export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ...props }, ref) => {
     const { controlId, optional, size, hint, hintPosition, validationPosition } = useFormField();
     const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Form.Input ? globalTheme : baseTheme;
     const inputTheme = themeObj?.Input ? themeObj.Input : usedTheme.components.Form.Input;
+    const iconErrorTheme = themeObj?.errorIcon ? themeObj.errorIcon : usedTheme.components.Form.errorIcon;
+    const iconSuccessTheme = themeObj?.successIcon ? themeObj.successIcon : usedTheme.components.Form.successIcon;
 
     if (!inputTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
@@ -80,7 +83,7 @@ export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfte
     const iconSize = getRule('iconSize', scale(3));
     const color = getRule('color', baseTheme.colors.black);
     const fill = getRule('fill', baseTheme.colors.black);
-    const bg = getRule('bg', baseTheme.colors.black);
+    const bg = getRule('bg', baseTheme.colors.white);
     const shadow = getRule('shadow');
 
     const typographyStyles = typographyName && typography(typographyName, usedTheme);
@@ -176,7 +179,7 @@ export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfte
     }
 
     const iconErrorProps = {
-        fill: globalTheme.components?.Form.errorIcon.fill,
+        fill: iconErrorTheme.fill,
         css: {
             position: 'absolute',
             top: '50%',
@@ -195,7 +198,7 @@ export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfte
     }
 
     const iconSuccessProps = {
-        fill: globalTheme.components?.Form.successIcon.fill,
+        fill: iconSuccessTheme.fill,
         css: {
             position: 'absolute',
             top: '50%',
@@ -244,20 +247,7 @@ export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfte
     return (
         <>
             <div css={fieldStyles}>
-                {children ? (
-                    React.Children.map(children, child => {
-                        return React.cloneElement(child, {
-                            values,
-                            field,
-                            meta,
-                            helpers,
-                            id: child?.type?.displayName !== 'Legend' ? controlId : '',
-                            ...inputProps,
-                        });
-                    })
-                ) : (
-                    <input id={controlId} {...field} {...inputProps} css={styles} />
-                )}
+                <input id={controlId} {...field} {...inputProps} ref={ref} css={styles} />
 
                 {IconBefore &&
                     !(validationPosition === 'inputBefore' && meta.touched && meta.error) &&
@@ -291,4 +281,5 @@ export const FormInput: React.FC<IFormInput> = ({ children, IconBefore, IconAfte
     );
 };
 
-export default FormInput;
+// export default FormInput;
+export default React.forwardRef(FormInput);
