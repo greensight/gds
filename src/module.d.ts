@@ -1,6 +1,6 @@
 type SVGRIcon = React.FC<
     React.SVGProps<SVGSVGElement> & {
-        /** Alternative text (a11y) */
+        /** Alternative text in title tag. */
         title?: string;
     }
 >;

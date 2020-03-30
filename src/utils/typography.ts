@@ -1,7 +1,8 @@
 import { CSSObject } from '@emotion/core';
-import { TypographyProperties } from '@typings/Typography';
-import Theme from '@typings/Theme';
-import baseTheme from '@utils/baseTheme';
+import { TypographyProperties } from '../types/Typography';
+import Theme from '../types/Theme';
+import { PartialBy } from '../types/Types';
+import baseTheme from './baseTheme';
 
 /**
  * Helper for typography styles usage. Generate typography CSS rules by style name included mobile version, fluid typography and variable fonts support.

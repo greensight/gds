@@ -1,4 +1,4 @@
-import { MAJOR_STEP, MINOR_MAX } from '@helpers/constants';
+import { MAJOR_STEP, MINOR_MAX } from '../helpers/constants';
 
 /**
  * Helper for scaling system usage. Pass `multiplier` to use major scale: values multiple 8. Pass `multiplier` and `isMinor` flag to use minor scale: values less than 40 multiple 4.

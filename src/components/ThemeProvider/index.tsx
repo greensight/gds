@@ -3,9 +3,9 @@ import { Global as EmotionGlobal, CSSObject } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
 import 'normalize.css';
-import typography from '@utils/typography';
-import baseTheme from '@utils/baseTheme';
-import Theme from '@typings/Theme';
+import typography from '../../utils/typography';
+import baseTheme from '../../utils/baseTheme';
+import Theme from '../../types/Theme';
 
 export interface ThemeProviderProps {
     /** Theme object. */

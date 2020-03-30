@@ -46,18 +46,8 @@ export default ({ config, mode }: { config: webpack.Configuration; mode: 'DEVELO
     config.devtool = mode === 'DEVELOPMENT' && 'source-map';
     config.performance = false;
 
-    if (config.resolve) {
-        if (config.resolve.extensions) config.resolve.extensions.push('.ts', '.tsx');
-        config.resolve.alias = {
-            ...config.resolve.alias,
-            '@components': resolve(__dirname, '../src/components'),
-            '@utils': resolve(__dirname, '../src/utils'),
-            '@helpers': resolve(__dirname, '../src/helpers'),
-            '@autokits': resolve(__dirname, '../src/autokits'),
-            '@icons': resolve(__dirname, '../src/icons'),
-            '@typings': resolve(__dirname, '../src/typings'),
-            '@decorators': resolve(__dirname, 'decorators'),
-        };
+    if (config.resolve && config.resolve.extensions) {
+        config.resolve.extensions.push('.ts', '.tsx');
     }
 
     if (config.optimization) config.optimization.minimize = false;

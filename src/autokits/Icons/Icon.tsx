@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import Tooltip from '@helpers/Tooltip';
-import typography from '@helpers/typography';
-import copyToClipboard from '@helpers/copyToClipboard';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import Tooltip from '../../helpers/Tooltip';
+import typography from '../../helpers/typography';
+import copyToClipboard from '../../helpers/copyToClipboard';
+import { SVGRIcon } from '../../types/Types';
 
 export interface IconProps {
     /** Icon variable name. */

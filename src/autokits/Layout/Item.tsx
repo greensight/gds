@@ -1,12 +1,12 @@
 import React from 'react';
-import Layout from '@components/Layout';
-import useTheme from '@utils/useTheme';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import typography from '@helpers/typography';
-import { BREAKPOINTS_NAMES } from '@helpers/constants';
-import { Breakpoint } from '@typings/Types';
-import LayoutTheme from '@typings/Layout';
+import Layout from '../../components/Layout';
+import useTheme from '../../utils/useTheme';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import typography from '../../helpers/typography';
+import { BREAKPOINTS_NAMES } from '../../helpers/constants';
+import { Breakpoint } from '../../types/Types';
+import LayoutTheme from '../../types/Layout';
 
 export interface ItemProps {
     /** Breakpoint name. */

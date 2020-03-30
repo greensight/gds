@@ -1,5 +1,5 @@
 import { CSSObject } from '@emotion/core';
-import { ComponentStates } from './Types';
+import { ComponentStates, RequireAtLeastOne } from './Types';
 
 export interface ButtonStateProperties {
     /** Text and icon color. */

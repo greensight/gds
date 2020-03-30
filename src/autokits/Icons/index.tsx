@@ -1,12 +1,12 @@
 import React from 'react';
 import deepmerge from 'deepmerge';
 import Icon from './Icon';
-import Layout from '@components/Layout';
-import scale from '@utils/scale';
-import typography from '@helpers/typography';
+import Layout from '../../components/Layout';
+import scale from '../../utils/scale';
+import typography from '../../helpers/typography';
 
 export interface IconsAutokitProps {
-    /** Starting heading level */
+    /** Starting heading level. */
     headingLevel?: number;
 }
 

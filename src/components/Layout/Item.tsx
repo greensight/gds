@@ -1,8 +1,8 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
-import useCSSProperty from '@helpers/useCSSProperty';
-import { useLayout } from '.';
-import { AllowMedia } from '@typings/Types';
+import useCSSProperty from '../../helpers/useCSSProperty';
+import useLayout from './useLayout';
+import { AllowMedia } from '../../types/Types';
 
 export interface LayoutItemProps extends React.HTMLProps<HTMLDivElement> {
     /** Item content. */

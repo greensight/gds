@@ -1,29 +1,19 @@
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import { CSSObject } from '@emotion/core';
-import useTheme from '@utils/useTheme';
-import baseTheme from '@utils/baseTheme';
-import useCSSProperty from '@helpers/useCSSProperty';
-import toArray from '@helpers/toArray';
+import useTheme from '../../utils/useTheme';
+import baseTheme from '../../utils/baseTheme';
+import useCSSProperty from '../../helpers/useCSSProperty';
+import toArray from '../../helpers/toArray';
+import { LayoutContext, LayoutContextProps } from './useLayout';
 import LayoutItem, { LayoutItemProps } from './Item';
-import { AllowMedia } from '@typings/Types';
+import { AllowMedia } from '../../types/Types';
 
 export interface LayoutCompositionProps {
     Item: React.FC<LayoutItemProps>;
 }
 
-interface LayoutContext {
-    /** Layout type. Some properties are available only for one or another type. */
-    type?: AllowMedia<'grid' | 'flex'>;
-    /** Columns settings. */
-    cols?: AllowMedia<number | string | Array<number | string>>;
-    /** Gaps settings. */
-    gap?: AllowMedia<number | string | [number | string, number | string]>;
-    /** Minimum column size in auto mode. Auto mode allows to create columns of equal size without media queries. */
-    auto?: AllowMedia<number>;
-}
-
 export interface LayoutProps
-    extends LayoutContext,
+    extends LayoutContextProps,
         Omit<React.HTMLProps<HTMLDivElement>, 'cols' | 'rows' | 'type' | 'wrap'> {
     /** Layout items list. */
     children: React.ReactNode;
@@ -52,18 +42,6 @@ export interface LayoutProps
     /** Additional CSS. */
     css?: CSSObject;
 }
-
-const LayoutContext = createContext<LayoutContext | undefined>(undefined);
-
-export const useLayout = (): LayoutContext => {
-    const context = useContext(LayoutContext);
-
-    if (!context) {
-        throw new Error('This component must be used within a <Layout> component');
-    }
-
-    return context;
-};
 
 export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     children,

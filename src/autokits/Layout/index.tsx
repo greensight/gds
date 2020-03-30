@@ -1,9 +1,9 @@
 import React from 'react';
 import Item from './Item';
-import Layout from '@components/Layout';
-import useTheme from '@utils/useTheme';
-import typography from '@helpers/typography';
-import { Breakpoint } from '@typings/Types';
+import Layout from '../../components/Layout';
+import useTheme from '../../utils/useTheme';
+import typography from '../../helpers/typography';
+import { Breakpoint } from '../../types/Types';
 
 export const LayoutAutokit = () => {
     const theme = useTheme();

@@ -1,13 +1,13 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
-import typography from '@utils/typography';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import useComponentTheme from '@helpers/useComponentTheme';
-import VisuallyHidden from '@components/VisuallyHidden';
-import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '@typings/Button';
-import { ComponentStates } from '@typings/Types';
-import { TypographyProperties } from '@typings/Typography';
+import typography from '../../utils/typography';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import useComponentTheme from '../../helpers/useComponentTheme';
+import VisuallyHidden from '../../components/VisuallyHidden';
+import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
+import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Types';
+import { TypographyProperties } from '../../types/Typography';
 
 export interface ButtonProps extends Omit<React.HTMLProps<HTMLButtonElement>, 'as' | 'size'> {
     /** Button content. */
@@ -149,7 +149,7 @@ export const Button = (
     };
     const styles = [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css];
 
-    /* Define component and icon component tags. */
+    /* Setup button and icon components. */
     const Component: any = href ? 'a' : as || 'button';
     const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
     const iconCSS = {

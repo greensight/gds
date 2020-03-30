@@ -1,4 +1,5 @@
 import { CSSObject } from '@emotion/core';
+import { SVGRIcon } from './Types';
 
 export interface FontFaceProperties {
     /** Relative path to font asset in `woff2` format. */

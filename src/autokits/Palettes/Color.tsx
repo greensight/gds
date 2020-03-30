@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import baseTheme from '@utils/baseTheme';
-import scale from '@utils/scale';
-import Tooltip from '@helpers/Tooltip';
-import typography from '@helpers/typography';
-import copyToClipboard from '@helpers/copyToClipboard';
+import baseTheme from '../../utils/baseTheme';
+import scale from '../../utils/scale';
+import Tooltip from '../../helpers/Tooltip';
+import typography from '../../helpers/typography';
+import copyToClipboard from '../../helpers/copyToClipboard';
 
 export interface ColorProps {
     /** Color hex value. */

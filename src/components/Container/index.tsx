@@ -1,8 +1,8 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
-import useCSSProperty from '@helpers/useCSSProperty';
-import useTheme from '@utils/useTheme';
-import baseTheme from '@utils/baseTheme';
+import useCSSProperty from '../../helpers/useCSSProperty';
+import useTheme from '../../utils/useTheme';
+import baseTheme from '../../utils/baseTheme';
 
 export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
     /** Container content. */

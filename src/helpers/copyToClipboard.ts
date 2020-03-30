@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * Copy text to user clipboard.
  */

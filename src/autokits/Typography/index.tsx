@@ -1,9 +1,9 @@
 import React from 'react';
-import useTheme from '@utils/useTheme';
-import typography from '@utils/typography';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import baseThemeTypography from '@helpers/typography';
+import useTheme from '../../utils/useTheme';
+import typography from '../../utils/typography';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import baseThemeTypography from '../../helpers/typography';
 
 export interface TypographyAutokitProps {
     /** Placeholder text. */

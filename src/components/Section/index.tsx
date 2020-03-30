@@ -1,8 +1,8 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
-import Container from '@components/Container';
-import useCSSProperty from '@helpers/useCSSProperty';
-import { AllowMedia } from '@typings/Types';
+import Container from '../../components/Container';
+import useCSSProperty from '../../helpers/useCSSProperty';
+import { AllowMedia } from '../../types/Types';
 
 export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
     /** Section content. */

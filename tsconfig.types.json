@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
+        "declaration": true,
+        "declarationDir": "dist/types",
+        "target": "ES5",
+        "lib": ["ESNext", "DOM"],
         "jsx": "react",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "resolveJsonModule": true,
-        "noEmit": true,
         "strict": true
     },
-    "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
+    "include": ["src"]
 }
