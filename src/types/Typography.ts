@@ -27,7 +27,7 @@ export interface TypographyStyle {
 }
 
 export default interface TypographyTheme {
-    /** Breakpoint for desktop and mobile styles. */
+    /** Breakpoint for desktop and mobile styles. Accept 2 numbers in format: [desktop, mobile].*/
     breakpoints: number[];
     /** Named typography styles. */
     styles: Record<string, TypographyStyle>;

@@ -7,7 +7,7 @@ import baseTheme from '../../utils/baseTheme';
 import typography from '../../helpers/typography';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import ButtonTheme from '../../types/Button';
-import { SVGRIcon } from '../../types/Helpers';
+import { SVGRIcon } from '../../types/Utils';
 
 export interface ButtonAutokitProps {
     /** Placeholder text. */

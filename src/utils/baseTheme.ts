@@ -68,29 +68,6 @@ const baseTheme = deepmerge(tokens, {
                     half: true,
                 },
             },
-            sizes: {
-                lg: {
-                    height: scale(8),
-                    padding: scale(3),
-                    iconSize: scale(4),
-                    iconOffset: scale(1),
-                    typography: 'buttonLg',
-                },
-                md: {
-                    height: scale(6),
-                    padding: scale(3),
-                    iconSize: scale(3),
-                    iconOffset: scale(1),
-                    typography: 'buttonMd',
-                },
-                sm: {
-                    height: scale(5),
-                    padding: scale(2),
-                    iconSize: scale(2),
-                    iconOffset: scale(1),
-                    typography: 'buttonSm',
-                },
-            },
             themes: {
                 primary: {
                     default: {
@@ -128,6 +105,29 @@ const baseTheme = deepmerge(tokens, {
                         border: colors.grey60,
                         color: colors.grey40,
                     },
+                },
+            },
+            sizes: {
+                lg: {
+                    height: scale(8),
+                    padding: scale(3),
+                    iconSize: scale(4),
+                    iconOffset: scale(1),
+                    typography: 'buttonLg',
+                },
+                md: {
+                    height: scale(6),
+                    padding: scale(3),
+                    iconSize: scale(3),
+                    iconOffset: scale(1),
+                    typography: 'buttonMd',
+                },
+                sm: {
+                    height: scale(5),
+                    padding: scale(2),
+                    iconSize: scale(2),
+                    iconOffset: scale(1),
+                    typography: 'buttonSm',
                 },
             },
         },

@@ -3,8 +3,9 @@ import { radios, boolean, text, array, select, number } from '@storybook/addon-k
 import scale from '../../utils/scale';
 import Placeholder from '../../helpers/Placeholder';
 import Layout from '.';
+import { LayoutProps } from '../../../.storybook/docgen/Layout';
 
-<Meta title="Components / Layout" component={Layout} />
+<Meta title="Components / Helpers / Layout" component={Layout} />
 
 # Layout
 
@@ -173,15 +174,9 @@ import Layout from '.';
 
 ## Props
 
-### Layout
+<Props components={{ Layout: LayoutProps, 'Layout.Item': Layout.Item }} />
 
-<Props of={Layout} />
-
-### Layout.Item
-
-<Props of={Layout.Item} />
-
-## Use Cases
+## Use cases
 
 ### Basic
 
@@ -313,7 +308,7 @@ CSS Grid делает возможным задавать two-dimensional grids,
 
 ### Media Queries
 
-Для задания адаптивной сетки, нужно указать пропсы в формате объектов.
+Практически все пропсы `Layout` принимают формат объекта с брейкпоинтами. Таким образом можно задать изменения сетки на адаптиве.
 
 В качестве полей объекта используются имена брейкпоинтов. Для всех проектов, использующих GDS они одинаковы, меняться могут только их значения, которые тянутся из макета Figma.
 

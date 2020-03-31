@@ -1,5 +1,47 @@
 import { CSSObject } from '@emotion/core';
-import { SVGRIcon } from './Helpers';
+import { SVGRIcon } from './Utils';
+
+export interface BodyProperties {
+    /** Typography style. */
+    typography?: string;
+    /** Text color. */
+    color?: string;
+    /** Background color. */
+    bg?: string;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export interface FocusProperties {
+    /** Outline width. */
+    width?: number;
+    /** Outline color. */
+    color?: string;
+    /** Outline offset. */
+    offset?: number;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export interface SelectionProperties {
+    /** Text color. */
+    color?: string;
+    /** Background color. */
+    bg?: string;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export interface BaseProperties {
+    /** Body styles. */
+    body?: BodyProperties;
+    /** Focus styles. GDS uses outline styles with `focus-visible` polyfill.  */
+    focus?: FocusProperties;
+    /** Selection styles. */
+    selection?: SelectionProperties;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
 
 export interface FontFaceProperties {
     /** Relative path to font asset in `woff2` format. */
@@ -25,47 +67,11 @@ export interface FontsProperties {
     fluid?: boolean | string[];
 }
 
-export interface BaseProperties {
-    /** Selection styles. */
-    selection?: {
-        /** Text color. */
-        color?: string;
-        /** Background color. */
-        bg?: string;
-        /** Additional CSS. */
-        css?: CSSObject;
-    };
-    /** Focus styles. GDS uses outline styles with `focus-visible` polyfill.  */
-    focus?: {
-        /** Outline width. */
-        width?: number;
-        /** Outline color. */
-        color?: string;
-        /** Outline offset. */
-        offset?: number;
-        /** Additional CSS. */
-        css?: CSSObject;
-    };
-    /** Body styles. */
-    body?: {
-        /** Typography style. */
-        typography?: string;
-        /** Text color. */
-        color?: string;
-        /** Background color. */
-        bg?: string;
-        /** Additional CSS. */
-        css?: CSSObject;
-    };
-    /** Additional CSS. */
-    css?: CSSObject;
-}
-
 export default interface GlobalTheme {
     /** Custom placeholder icon for autokits. Icon must be in `SVGR` format (React component). */
     placeholder?: SVGRIcon;
-    /** Fonts settings. */
-    fonts?: FontsProperties;
     /** Global styles. */
     base?: BaseProperties;
+    /** Fonts settings. */
+    fonts?: FontsProperties;
 }

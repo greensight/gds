@@ -1,12 +1,12 @@
 import React from 'react';
-import { CSSObject } from '@emotion/core';
+import { jsx, CSSObject } from '@emotion/core';
 import typography from '../../utils/typography';
 import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import VisuallyHidden from '../../components/VisuallyHidden';
 import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
-import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Helpers';
+import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
 import { TypographyProperties } from '../../types/Typography';
 
 export interface ButtonBaseProps {
@@ -54,10 +54,8 @@ export const Button = <T extends React.ElementType = 'button'>(
         iconAfter = false,
         hidden = false,
         type = 'button',
-        href,
         as,
         external = false,
-        onClick,
         __theme,
         css,
         ...props
@@ -150,8 +148,7 @@ export const Button = <T extends React.ElementType = 'button'>(
     };
     const styles = [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css];
 
-    /* Setup button and icon components. */
-    const Component: any = href ? 'a' : as || 'button';
+    /* Define CSS rules for icon. */
     const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
     const iconCSS = {
         [marginRule]: !hidden ? sp.iconOffset : undefined,
@@ -159,21 +156,21 @@ export const Button = <T extends React.ElementType = 'button'>(
         height: sp.iconSize,
     };
 
-    return (
-        <Component
-            type={!href && !as ? type : null}
-            href={href}
-            target={external ? '_blank' : null}
-            rel={external ? 'nofollow noopener' : null}
-            onClick={onClick}
-            css={styles}
-            ref={ref}
-            {...props}
-        >
+    return jsx(
+        as || 'button',
+        {
+            ref,
+            type: !as || as === 'button' ? type : null,
+            target: external ? '_blank' : null,
+            rel: external ? 'nofollow noopener' : null,
+            css: styles,
+            ...props,
+        },
+        <>
             {Icon && !iconAfter && <Icon css={iconCSS} />}
             {hidden ? <VisuallyHidden>{children}</VisuallyHidden> : children}
             {Icon && iconAfter && <Icon css={iconCSS} />}
-        </Component>
+        </>,
     );
 };
 
