@@ -4,7 +4,15 @@ import { action } from '@storybook/addon-actions';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';
-import Button, { Button as ButtonProps } from '../../components/Button';
+import Button from '.';
+import {
+    ButtonProps,
+    ButtonTheme,
+    ButtonStates,
+    ButtonThemeProperties,
+    ButtonStateProperties,
+    ButtonSizeProperties,
+} from '../../../.storybook/docgen/Button';
 
 <Meta
     title="Components / Button"
@@ -60,83 +68,7 @@ import Button, { Button as ButtonProps } from '../../components/Button';
 
 ## Theme
 
-```js
-export interface IButton {
-    /** Глобальные стили. Распространяются на все кнопки */
-    base?: IButtonBaseRules;
-    /** Стили тем */
-    themes: {
-        /** Дефолтная тема */
-        primary: IButtonThemeRules,
-        /** Можно добавлять свои темы */
-        [theme: string]: IButtonThemeRules,
-    };
-    /** Стили размеров */
-    sizes: {
-        /** Дефолтный размер */
-        md: IButtonSizeRules,
-        /** Можно добавлять свои размеры */
-        [size: string]: IButtonSizeRules,
-    };
-}
-
-export interface IButtonBaseRules {
-    /** Цвет текста и иконки */
-    color?: string;
-    /** Цвет фона */
-    bg?: string;
-    /** Цвет обводки */
-    border?: string;
-    /** Тень. Прежде всего для активного стейта */
-    shadow?: string;
-    /** Толщина обводки. Проставляется автоматически, если передан border */
-    borderWidth?: number;
-    /** Стиль обводки */
-    borderStyle?: string;
-    /** Скругление кнопки */
-    borderRadius?: number | string;
-    /** Режим половинчатого скругления. border-radius в половину высоты */
-    half?: boolean;
-    /** Режим полного скругления. border-radius в 50% для hidden режима */
-    round?: boolean;
-    /** Время анимации ховера */
-    time?: number;
-    /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
-    timeIn?: number;
-    /** Функция анимации */
-    easing?: string;
-    /** Кастомный CSS */
-    css?: Object;
-}
-
-export interface IButtonThemeRules extends IButtonBaseRules {
-    /** Правила на ховер */
-    hover?: IButtonRules;
-    /** Правила на клик */
-    active?: IButtonRules;
-    /** Правила на блокирование */
-    disabled?: IButtonRules;
-    /** Правила на фокус */
-    focus?: IButtonRules;
-}
-
-export interface IButtonSizeRules {
-    /** Высота кнопки */
-    height?: number;
-    /** Горизонтальные поля */
-    padding?: number;
-    /** Имя типографического стиля */
-    typography?: string;
-    /** Размер иконки */
-    iconSize?: number;
-    /** Отступ от иконки */
-    iconOffset?: number;
-    /** Кастомный CSS */
-    css?: Object;
-}
-```
-
-💬 Технически возможно переопределение любых параметров из списка в любом разделе. То есть ничто не мешает переопределить `color` внутри `sizes` за исключением, разве что, здравого смысла. В интерфейсе поля разбиты на группы `IButtonBaseRules` и `IButtonThemeRules` для лучшего понимания, хотя строго говоря такого ограничения в коде нет.
+<Props components={{ ButtonTheme, ButtonStates, ButtonThemeProperties, ButtonStateProperties, ButtonSizeProperties }} />
 
 ## Use Cases
 

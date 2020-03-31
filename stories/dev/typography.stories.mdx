@@ -1,4 +1,5 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Props } from '@storybook/addon-docs/blocks';
+import { TypographyTheme, TypographyProperties, TypographyStyle } from '../../.storybook/docgen/Typography';
 
 <Meta title="Dev / Typography" />
 
@@ -12,53 +13,11 @@ _Параметры стиля Figma_
 
 Все эти параметры загружаются на проект в формате токенов. В дальнейшем мы работаем на уровне имён стилей, передавая их в хелпер `typography`, который вернёт весь необходимый CSS.
 
-**Интерфейс:**
-
-```js
-interface ITypography {
-    /** Брейкпоинты, соответствующие desktop и mobile */
-    breakpoints: [number, number];
-    /** Набор фолбеков под отдельные шрифты. Не токенизируется */
-    stacks?: {
-        /** Список фолбеков */
-        [fontName: string]: string;
-    };
-    /** Флюидная типографика. Передайте false для отключения на всём проекте */
-    fluid?: boolean;
-    /** Стиль типографики */
-    [name: string]: {
-        /** Свойства десктопной вариации */
-        desktop: ITypographyProperties;
-        /** Свойства мобильной вариации */
-        mobile?: ITypographyProperties;
-        /** Флюидная типографика. Передайте false для отключения для этого стиля */
-        fluid?: boolean;
-    };
-}
-
-interface ITypographyProperties {
-    /** Название */
-    fontFamily: string;
-    /** Начертание */
-    fontWeight: number;
-    /** Размер кегля (rem) */
-    fontSize: string;
-    /** Высота строки (множитель) */
-    lineHeight: number;
-    /** Межбуквенное расстояние (em) */
-    letterSpacing?: string;
-    /** Стиль */
-    fontStyle?: 'italic';
-    /** Регистры */
-    textTransform?: 'uppercase' | 'lowercase' | 'capitalize';
-    /** Подчёркивания */
-    textDecoration?: 'underline' | 'line-through';
-    /** Равноширинные цифры */
-    fontVariantNumeric?: 'tabular-nums';
-}
-```
-
 ❗️ Чтобы использовать веб-шрифты, их нужно сначала подключить через **@font-face**. Это делается в глобальных стилях – смотрите документацию `ThemeProvider`.
+
+## Theme
+
+<Props components={{ TypographyTheme, TypographyProperties, TypographyStyle }} />
 
 ## Флюидная типографика
 
@@ -104,7 +63,7 @@ _Формула fluid typography_
 import { typography as gdsTypography } from '@greensight/gds';
 import theme from './theme';
 
-const typography = name => gdsTypography(name, theme);
+const typography = (name) => gdsTypography(name, theme);
 
 export default typography;
 ```

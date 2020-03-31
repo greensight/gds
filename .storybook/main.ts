@@ -1,9 +1,9 @@
 export default {
     stories: [
-        './docs/intro/welcome.stories.mdx',
-        './docs/intro/*.stories.mdx',
-        './docs/design/*.stories.mdx',
-        './docs/dev/*.stories.mdx',
+        '../stories/intro/welcome.stories.mdx',
+        '../stories/intro/*.stories.mdx',
+        '../stories/design/*.stories.mdx',
+        '../stories/dev/*.stories.mdx',
         '../src/components/**/*.stories.mdx',
         '../src/autokits/**/*.stories.mdx',
     ],

@@ -1,4 +1,5 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Props } from '@storybook/addon-docs/blocks';
+import { GlobalTheme, FontFaceProperties, BaseProperties, FontsProperties } from '../../.storybook/docgen/Global';
 
 <Meta title="Dev / Global" />
 
@@ -14,18 +15,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 Помимо этого вы можете передать любой CSS, который должен быть применён глобально.
 
-**Интерфейс:**
+## Theme
 
-```js
-interface IGlobal {
-    /** Подключения шрифтов */
-    fonts?: IGlobalFonts;
-    /** Базовые стили */
-    base?: IGlobalBase;
-    /** Кастомный CSS */
-    css?: object;
-}
-```
+<Props components={{ GlobalTheme, FontFaceProperties, BaseProperties, FontsProperties }} />
 
 ## Fonts
 
@@ -43,70 +35,8 @@ GDS поддерживает обычные и вариативные шрифт
 
 ⏱ Во все правила прописывается `font-display: swap` для избежания FOIT.
 
-**Интерфейс:**
-
-```js
-interface IGlobalFontsTheme {
-    /** Список семейств шрифтов */
-    [fontFamily: string]: IGlobalFontFamilyRules[];
-}
-
-interface IGlobalFontFamilyRules {
-    /** Путь до ассета шрифта (формат woff2) */
-    woff2?: string;
-    /** Путь до ассета шрифта (формат woff) */
-    woff?: string;
-    /** Путь до ассета шрифта (формат woff2) */
-    vf?: string;
-    /** Толщина шрифта */
-    weight?: number | string;
-    /** Курсивное начертание */
-    italic?: boolean;
-    /** Кастомный CSS */
-    css?: Object;
-}
-```
-
 ## Base
 
 Глобальные стили проекта могут быть заданы через `global.base`. `ThemeProvider` вставляет базовые переопределения стилей для тегов и некоторые из них доступны для параметризации: стили выделения, фокуса и основная типографика/цвета (body).
 
 ♿️ GDS подключает полифилл [focus-visible](https://github.com/WICG/focus-visible), что позволяет отключить стилизацию обычных фокусов и оставить стилизацию только для фокуса с клавиатуры, т.о. фокусы появляются только тогда, когда они действительно нужны.
-
-**Интерфейс:**
-
-```js
-interface IGlobalBase {
-    /** Стили выделения */
-    selection?: {
-        /** Цвет текста */
-        color?: string,
-        /** Цвет фона */
-        bg?: string,
-        /** Кастомный CSS */
-        css?: object,
-    };
-    /** Стили фокуса */
-    focus?: {
-        /** Толщина линии обводки */
-        width?: number,
-        /** Цвет обводки */
-        color?: string,
-        /** Отступ между обводкой и элементов */
-        offset?: number,
-        /** Кастомный CSS */
-        css?: object,
-    };
-    /** Стили body */
-    body: {
-        /** Типографический стиль */
-        typography: string,
-        /** Цвет текста */
-        color?: string,
-        /** Цвет фона */
-        bg: string,
-        /** Кастомный CSS */
-        css: object,
-    };
-}
-```

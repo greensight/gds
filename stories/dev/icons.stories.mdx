@@ -33,7 +33,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 ```js
 import CheckCircle from '@icons/tokens/medium/checkCircle.svg';
 
-const Example = () => <div><CheckCircle /> Done!</div>;
+const Example = () => (
+    <div>
+        <CheckCircle /> Done!
+    </div>
+);
 ```
 
 🏆 Т.к. каждая иконка является компонентом, то её имя должно начинаться с заглавной буквы.

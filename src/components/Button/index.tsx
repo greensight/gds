@@ -9,7 +9,7 @@ import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStatePr
 import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Helpers';
 import { TypographyProperties } from '../../types/Typography';
 
-export interface BaseButtonProps {
+export interface ButtonBaseProps {
     /** Button content. */
     children: React.ReactNode;
     /** Theme name from list of themes defined in theme object at `components.Button.themes`. */
@@ -24,8 +24,6 @@ export interface BaseButtonProps {
     iconAfter?: boolean;
     /** Visually hidden text. Keeps text accessible but visually shows only icons. Doesn't make sense without `Icon` prop. */
     hidden?: boolean;
-    /** Use your own React component for render. Main usage: pass `Link` from `react-router` for routes management. */
-    as?: React.ReactNode;
     /** Open link in another browser tab. Additionaly adds `rel="nofollow noopener"`. */
     external?: boolean;
     /** Button theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
@@ -37,7 +35,7 @@ export interface BaseButtonProps {
 export type ButtonProps<P extends React.ElementType = 'button'> = {
     /** Use your own React component for render. Main usage: pass `a` for external links or pass `Link` from `react-router` for routes management. */
     as?: P;
-} & MergeElementProps<P, BaseButtonProps>;
+} & MergeElementProps<P, ButtonBaseProps>;
 
 /**
  * Button component.
@@ -46,7 +44,7 @@ export type ButtonProps<P extends React.ElementType = 'button'> = {
  *
  * Define themes and sizes in theme object (`components.Button`) and use them as `theme` / `size` prop values.
  */
-export const Button = (
+export const Button = <T extends React.ElementType = 'button'>(
     {
         children,
         theme = 'primary',
@@ -63,7 +61,7 @@ export const Button = (
         __theme,
         css,
         ...props
-    }: ButtonProps,
+    }: ButtonProps<T>,
     ref: React.Ref<HTMLButtonElement>,
 ) => {
     /* Get theme objects. */
@@ -241,4 +239,4 @@ const getTransition = (time: number, easing: string) =>
         .map((name) => `${name} ${easing} ${time}ms`)
         .join(', ');
 
-export default React.forwardRef(Button);
+export default React.forwardRef(Button) as typeof Button;
