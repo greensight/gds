@@ -28,7 +28,7 @@ export interface LayoutItemProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Inner `Layout` component for creating layout cells.
  */
-export const Item = ({ children, col, row, area, justify, align, order, grow, css, ...props }: LayoutItemProps) => {
+const Item = ({ children, col, row, area, justify, align, order, grow, css, ...props }: LayoutItemProps) => {
     const { type, gap, cols, auto } = useLayout();
 
     return (

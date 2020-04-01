@@ -12,7 +12,7 @@ export interface ShadowProps {
     value: string;
 }
 
-export const Shadow = ({ name, value }: ShadowProps) => {
+const Shadow = ({ name, value }: ShadowProps) => {
     const { colors } = baseTheme;
     const buttonRef = useRef<HTMLButtonElement>(null);
 

@@ -12,7 +12,7 @@ export interface ColorProps {
     index: number;
 }
 
-export const Color = ({ color, index }: ColorProps) => {
+const Color = ({ color, index }: ColorProps) => {
     const { colors } = baseTheme;
     const buttonRef = useRef<HTMLButtonElement>(null);
 

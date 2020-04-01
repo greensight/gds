@@ -44,7 +44,7 @@ export type ButtonProps<P extends React.ElementType = 'button'> = {
  *
  * Define themes and sizes in theme object (`components.Button`) and use them as `theme` / `size` prop values.
  */
-export const Button = <T extends React.ElementType = 'button'>(
+const Button = <T extends React.ElementType = 'button'>(
     {
         children,
         theme = 'primary',

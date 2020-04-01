@@ -1,36 +1,36 @@
 import React from 'react';
-import Shadow from './Shadow';
+import Color from './Color';
 import Layout from '../../components/Layout';
 import useTheme from '../../utils/useTheme';
 import scale from '../../utils/scale';
 import typography from '../../helpers/typography';
 
 /**
- * Autokit for shadows tokens `theme.shadows`.
+ * Autokit for colors tokens `theme.colors`.
  */
-export const ShadowsAutokit = () => {
+const ColorsAutokit = () => {
     const theme = useTheme();
-    const { shadows } = theme;
+    const { colors } = theme;
 
-    if (!shadows)
+    if (!colors)
         return (
             <div css={typography('body')}>
                 <span role="img" aria-label="Error">
                     ⛔️
                 </span>{' '}
-                Shadows are not defined. Use tokens or add <strong>shadows</strong> property in theme settings manually
+                Colors are not defined. Use tokens or add <strong>colors</strong> property in theme settings manually
             </div>
         );
 
     return (
         <Layout auto={scale(20)} gap={scale(8)}>
-            {Object.keys(shadows).map((name) => (
+            {Object.keys(colors).map((name) => (
                 <Layout.Item key={name}>
-                    <Shadow name={name} value={shadows[name]} />
+                    <Color name={name} value={colors[name]} />
                 </Layout.Item>
             ))}
         </Layout>
     );
 };
 
-export default ShadowsAutokit;
+export default ColorsAutokit;

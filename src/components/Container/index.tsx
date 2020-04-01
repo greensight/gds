@@ -14,7 +14,7 @@ export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Component for creating main page container with `layout` theme parameters. Uses `maxWidth`, `padding`,`marginLeft`, `marginRight`.
  */
-export const Container = ({ children, css, ...props }: ContainerProps) => {
+const Container = ({ children, css, ...props }: ContainerProps) => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
 

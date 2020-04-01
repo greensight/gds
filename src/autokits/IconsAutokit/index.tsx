@@ -13,7 +13,7 @@ export interface IconsAutokitProps {
 /**
  * Autokit for icons assets from `@icons` directory.
  */
-export const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
+const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);

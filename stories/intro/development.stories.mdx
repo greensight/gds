@@ -8,17 +8,23 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 ## Scripts
 
-| `yarn <command>`  | Описание                                          |
-| ----------------- | ------------------------------------------------- |
-| `storybook`       | Запускает Storybook в dev режиме                  |
-| `storybook:build` | Собирает статическую версию Storybook в `docs`    |
-| `storybook:serve` | Запускает сервер для просмотра статической версии |
-| `tokens`          | Обновляет токены Figma из основного проекта       |
-| `tokens:dev`      | Обновляет токены Figma из development проекта     |
-| `deploy`          | Собирает Storybook и выгружает на Github Pages    |
-| `build`           | Собирает пакет через rollup                       |
-| `eslint`          | Линтинг `.js`, `.ts`, `.tsx` и `.mdx` файлов      |
-| `tsc`             | Проверка Typescript (noEmit)                      |
+| `yarn <command>`  | Описание                                                           |
+| ----------------- | ------------------------------------------------------------------ |
+| `build`           | Выполняет полную сборку пакета с очисткой, сборкой бандлов и типов |
+| `build:main`      | Параллельно собирает бандлы и типы. Используется в `build`         |
+| `build:rollup`    | Собирает бандл через rollup. Используется в `build:main`           |
+| `build:types`     | Собирает типы через tsc. Используется в `build:main`               |
+| `clear`           | Очищает директории сборки                                          |
+| `deploy`          | Собирает Storybook и выгружает на Github Pages                     |
+| `eslint`          | Линтинг `.js`, `.ts`, `.tsx` и `.mdx` файлов                       |
+| `lint-staged`     | `lint-staged` добавлен в скрипты для использования с `run-p`       |
+| `prepublishOnly`  | Хук, выполняющий сборку при публикации через `npm publish`         |
+| `storybook`       | Запускает Storybook в dev режиме                                   |
+| `storybook:build` | Собирает статическую версию Storybook в `docs`                     |
+| `storybook:serve` | Запускает сервер для просмотра статической версии                  |
+| `tokens`          | Обновляет токены Figma из основного проекта                        |
+| `tokens:dev`      | Обновляет токены Figma из development проекта                      |
+| `tsc`             | Проверка Typescript (noEmit)                                       |
 
 ## Docs
 

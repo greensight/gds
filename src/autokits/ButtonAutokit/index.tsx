@@ -19,7 +19,7 @@ export interface ButtonAutokitProps {
 /**
  * Autokit for `Button` component.
  */
-export const ButtonAutokit = ({ text = 'Button', Icon }: ButtonAutokitProps) => {
+const ButtonAutokit = ({ text = 'Button', Icon }: ButtonAutokitProps) => {
     const theme = useTheme();
     const { componentTheme } = useComponentTheme('Button');
     const buttonTheme = componentTheme as ButtonTheme;

@@ -26,7 +26,7 @@ export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Component for creating page sections.
  */
-export const Section: React.FC<SectionProps> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
+const Section: React.FC<SectionProps> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
     return (
         <section
             css={[

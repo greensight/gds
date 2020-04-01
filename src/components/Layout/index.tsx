@@ -46,7 +46,7 @@ export interface LayoutProps
 /**
  * Component for creating typical grid and flex layouts.
  */
-export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
+const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     children,
     type = 'grid',
     inline,

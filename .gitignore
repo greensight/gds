@@ -1,5 +1,7 @@
 /node_modules
-/dist
+/esm
+/cjs
+/types
 /docs
 .env
 .vscode

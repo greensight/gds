@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
@@ -11,18 +11,24 @@
     "homepage": "https://github.com/greensight/gds",
     "license": "MIT",
     "sideEffects": false,
-    "main": "dist/index.cjs.js",
-    "module": "dist/index.esm.js",
-    "types": "dist/types/src",
+    "main": "cjs/index.js",
+    "module": "esm/index.js",
+    "types": "types/src",
     "files": [
-        "dist/*",
+        "esm/*",
+        "cjs/*",
+        "types/*",
         "bin/*"
     ],
     "bin": {
         "gds-tokens": "bin/index.js"
     },
     "scripts": {
-        "build": "rimraf dist && rollup -c",
+        "build": "run-s clear build:main",
+        "build:main": "run-p build:types build:rollup",
+        "build:rollup": "rollup -c",
+        "build:types": "yarn pnpify tsc -p tsconfig.types.json",
+        "clear": "rimraf '{esm,cjs,types}'",
         "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
         "eslint": "eslint . --ext .js,.ts,.tsx,.mdx --fix",
         "lint-staged": "lint-staged",
@@ -48,7 +54,9 @@
     "eslintIgnore": [
         "node_modules",
         "public",
-        "dist",
+        "esm",
+        "cjs",
+        "types",
         "docs",
         "!/.storybook"
     ],
@@ -91,7 +99,6 @@
         "@types/babel__core": "7.1.7",
         "@types/chalk": "2.2.0",
         "@types/core-js": "2.5.3",
-        "@types/deepmerge": "2.2.0",
         "@types/eslint": "6.1.9",
         "@types/eslint-plugin-prettier": "2.2.0",
         "@types/mdx-js__react": "1.5.1",
@@ -132,11 +139,9 @@
         "rollup-plugin-babel": "^4.4.0",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-postcss": "^2.5.0",
-        "rollup-plugin-typescript2": "^0.27.0",
         "serve": "^11.3.0",
         "storybook-addon-designs": "^5.2.0",
         "ts-node": "^8.8.1",
-        "tslib": "^1.11.1",
         "typescript": "^3.8.3",
         "webpack": "^4.42.1",
         "worker-loader": "^2.0.0"

@@ -14,7 +14,7 @@ export interface ItemProps {
     breakpointValue: number;
 }
 
-export const Item = ({ breakpointName, breakpointValue }: ItemProps) => {
+const Item = ({ breakpointName, breakpointValue }: ItemProps) => {
     const { colors } = baseTheme;
     const theme = useTheme();
     const layout = theme.layout as LayoutTheme;

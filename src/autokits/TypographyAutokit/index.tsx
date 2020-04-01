@@ -13,7 +13,7 @@ export interface TypographyAutokitProps {
 /**
  * Autokit for typography tokens `theme.typography` and fonts settings `theme.global.fonts`.
  */
-export const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
+const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
     const theme = useTheme();
     const globalFontsTheme = theme.global?.fonts;
     const typographyTheme = theme.typography;

@@ -8,7 +8,7 @@ import { Breakpoint } from '../../types/Layout';
 /**
  * Autokit for layout tokens `theme.layout`.
  */
-export const LayoutAutokit = () => {
+const LayoutAutokit = () => {
     const theme = useTheme();
     const { layout } = theme;
 

@@ -8,7 +8,7 @@ import typography from '../../helpers/typography';
 /**
  * Autokit for palettes tokens `theme.palettes`.
  */
-export const PalettesAutokit = () => {
+const PalettesAutokit = () => {
     const theme = useTheme();
     const { palettes } = theme;
 

@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "declaration": true,
-        "declarationDir": "dist/types",
-        "target": "ES5",
-        "lib": ["ESNext", "DOM"],
+        "declarationDir": "types",
+        "emitDeclarationOnly": true,
+        "target": "ESNext",
         "jsx": "react",
         "moduleResolution": "node",
         "esModuleInterop": true,

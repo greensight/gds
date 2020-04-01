@@ -6,7 +6,7 @@ import Theme from '../types/Theme';
 /**
  * Helper for creating custom theme. Makes deep merge of tokens and theme settings.
  */
-const createTheme = ({ tokens = {}, settings = {} }: { tokens?: any; settings?: Theme }): Theme =>
+const createTheme = ({ tokens = {}, settings = {} }: { tokens?: any; settings?: Theme } = {}): Theme =>
     deepmerge(tokens, settings);
 
 export default createTheme;

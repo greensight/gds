@@ -15,7 +15,7 @@ export interface IconProps {
     path: string;
 }
 
-export const Icon = ({ name, Component, path }: IconProps) => {
+const Icon = ({ name, Component, path }: IconProps) => {
     const { colors } = baseTheme;
     const buttonRef = useRef<HTMLButtonElement>(null);
 
