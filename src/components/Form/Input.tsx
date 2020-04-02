@@ -1,10 +1,10 @@
 import * as React from 'react';
-import useTheme from '@utils/useTheme';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import typography from '@helpers/customTypography';
-import { useField, useFormikContext } from 'formik';
-import cloneElement from '@helpers/cloneElement';
+import useTheme from '../../utils/useTheme';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import typography from '../../utils/typography';
+import { useField } from 'formik';
+/*import cloneElement from '@helpers/cloneElement';*/
 import { useFormField } from './Field';
 import { useForm } from '.';
 import { IFormInput } from './Form';
@@ -65,9 +65,9 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
         };
     };
 
-    const transition = time =>
+    const transition = (time) =>
         ['color', 'fill', 'background-color', 'border-color', 'border-width', 'box-shadow']
-            .map(name => `${name} ${easing} ${time}ms`)
+            .map((name) => `${name} ${easing} ${time}ms`)
             .join(', ');
 
     const border = getRule('border');
@@ -82,13 +82,12 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
     const padding = getRule('padding', scale(3));
     const iconSize = getRule('iconSize', scale(3));
     const color = getRule('color', baseTheme.colors.black);
-    const fill = getRule('fill', baseTheme.colors.black);
     const bg = getRule('bg', baseTheme.colors.white);
     const shadow = getRule('shadow');
 
     const typographyStyles = typographyName && typography(typographyName, usedTheme);
 
-    const [field, meta, helpers] = useField(controlId);
+    const [field, meta] = useField(controlId);
     const styles = [
         {
             width: '100%',
@@ -240,9 +239,6 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
         'aria-describedby': getDescribedByList(),
         ...props,
     };
-
-    const { values } = useFormikContext();
-    const a = validationPosition === 'inputBefore' && meta.touched && meta.error;
 
     return (
         <>

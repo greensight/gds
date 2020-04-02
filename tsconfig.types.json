@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "declarationDir": "types",
+        "emitDeclarationOnly": true,
+        "target": "ESNext",
+        "jsx": "react",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "strict": true
+    }
+}

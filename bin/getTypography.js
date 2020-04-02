@@ -1,20 +1,20 @@
-const convertFontSize = px => `${px / 16}rem`;
-const convertLineHeight = percents => Math.trunc(percents) / 100;
+const convertFontSize = (px) => `${px / 16}rem`;
+const convertLineHeight = (percents) => Math.trunc(percents) / 100;
 const convertLetterSpacing = (px, fontSize) => (px !== 0 ? `${(px / fontSize).toFixed(2)}em` : undefined);
-const convertTextTransform = figmaValue => {
+const convertTextTransform = (figmaValue) => {
     if (!figmaValue) return undefined;
     const CssValues = ['uppercase', 'lowercase', 'capitalize'];
     const FigmaValues = ['UPPER', 'LOWER', 'TITLE'];
-    return CssValues[FigmaValues.findIndex(value => figmaValue === value)];
+    return CssValues[FigmaValues.findIndex((value) => figmaValue === value)];
 };
-const convertTextDecoration = figmaValue => {
+const convertTextDecoration = (figmaValue) => {
     if (!figmaValue) return undefined;
     const CssValues = ['underline', 'line-through'];
     const FigmaValues = ['UNDERLINE', 'STRIKETHROUGH'];
-    return CssValues[FigmaValues.findIndex(value => figmaValue === value)];
+    return CssValues[FigmaValues.findIndex((value) => figmaValue === value)];
 };
 
-const getStyles = text => ({
+const getStyles = (text) => ({
     fontFamily: text.style.fontFamily,
     fontWeight: text.style.fontWeight,
     fontSize: convertFontSize(text.style.fontSize),
@@ -26,18 +26,16 @@ const getStyles = text => ({
     fontVariantNumeric: text.style.opentypeFlags && text.style.opentypeFlags.TNUM && 'tabular-nums',
 });
 
-const getTypography = frame => {
-    const breakpointsFrame = frame.children.find(item => item.name === 'breakpoints');
+const getTypography = (frame) => {
+    const breakpointsFrame = frame.children.find((item) => item.name === 'breakpoints');
     const firstPoint = Number(breakpointsFrame.children[0].name);
     const secondPoint = Number(breakpointsFrame.children[1].name);
-    const breakpointsTokens = {
-        breakpoints: [Math.max(firstPoint, secondPoint), Math.min(firstPoint, secondPoint)],
-    };
+    const breakpointsTokens = [Math.max(firstPoint, secondPoint), Math.min(firstPoint, secondPoint)];
 
-    const desktopFrame = frame.children.find(item => item.name === 'desktop');
-    const mobileFrame = frame.children.find(item => item.name === 'mobile');
+    const desktopFrame = frame.children.find((item) => item.name === 'desktop');
+    const mobileFrame = frame.children.find((item) => item.name === 'mobile');
     const textTokens = desktopFrame.children.reduce((acc, text) => {
-        const mobileText = mobileFrame.children.find(mobileText => mobileText.name === text.name);
+        const mobileText = mobileFrame.children.find((mobileText) => mobileText.name === text.name);
         return {
             ...acc,
             [text.name]: {
@@ -48,8 +46,8 @@ const getTypography = frame => {
     }, {});
 
     const tokens = {
-        ...breakpointsTokens,
-        ...textTokens,
+        breakpoints: breakpointsTokens,
+        styles: textTokens,
     };
 
     return tokens;

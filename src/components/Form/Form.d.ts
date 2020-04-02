@@ -10,9 +10,9 @@ export interface IForm {
     /** Показ успешной валидации */
     showSuccess: boolean;
     /** Названия полей с начальными значениями */
-    initialValues: Object;
+    initialValues: Record<string, any>;
     /** Валидация через Yup */
-    validationSchema?: Object;
+    validationSchema?: Record<string, any>;
     /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
     themeObj?: IFormTheme;
     /** Обработчик сабмита */
@@ -42,7 +42,7 @@ export interface IFormLabel {
     /** Иконка слева от лейбла */
     IconBefore?: Function | React.Component;
     /** Кастомный CSS */
-    css?: Object;
+    css?: Record<string, any>;
 }
 
 export interface IFormInput {
@@ -51,7 +51,7 @@ export interface IFormInput {
     /** Иконка в начале поля */
     IconBefore?: Function | React.Component;
     /** Кастомный CSS */
-    css?: Object;
+    css?: Record<string, any>;
     /** ref. DOM node доступен через current */
     ref?: HTMLInputElement;
 }

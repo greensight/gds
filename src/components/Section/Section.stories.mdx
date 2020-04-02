@@ -1,11 +1,11 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { boolean, number, color } from '@storybook/addon-knobs';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import Item from '@helpers/Item';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import Placeholder from '../../helpers/Placeholder';
 import Section from '.';
 
-<Meta title="Components / Section" component={Section} />
+<Meta title="Components / Helpers / Section" component={Section} />
 
 # Section
 
@@ -29,19 +29,19 @@ import Section from '.';
         })}
         bg={color('bg', '#fff')}
     >
-        <Item>Here goes section content</Item>
+        <Placeholder>Here goes section content</Placeholder>
     </Section>
 </Story>
 
 Обычно при разметке основного контента страницы он делится на разделы через тег section. Для упрощения этого процесса предусмотрен компонент `Section`.
 
-💬 В документации используется компонент `Item` чисто в демонстративных целях – визуально показать бокс контента. Это вспомогательный компонент GDS и на проекте его не будет.
+💬 В документации используется компонент `Placeholder` чисто в демонстративных целях – визуально показать бокс контента. Это вспомогательный компонент GDS и на проекте его не будет.
 
 ## Props
 
 <Props of={Section} />
 
-## Use Cases
+## Use cases
 
 ### Container
 
@@ -53,10 +53,10 @@ import Section from '.';
     <Story name="Container">
         <>
             <Section mb={scale(2)}>
-                <Item>Section with container</Item>
+                <Placeholder>Section with container</Placeholder>
             </Section>
             <Section container={false}>
-                <Item>Section without container</Item>
+                <Placeholder>Section without container</Placeholder>
             </Section>
         </>
     </Story>
@@ -70,13 +70,13 @@ import Section from '.';
     <Story name="Margins & Paddings">
         <>
             <Section mb={scale(2)}>
-                <Item>Section with margin</Item>
+                <Placeholder>Section with margin</Placeholder>
             </Section>
             <Section mb={scale(2)} pv={scale(2)}>
-                <Item>Section with margin and equal paddings</Item>
+                <Placeholder>Section with margin and equal paddings</Placeholder>
             </Section>
             <Section pt={scale(4)} pb={scale(2)}>
-                <Item>Section with different paddings</Item>
+                <Placeholder>Section with different paddings</Placeholder>
             </Section>
         </>
     </Story>
@@ -92,13 +92,13 @@ import Section from '.';
     <Story name="Backgrounds">
         <>
             <Section mb={scale(2)}>
-                <Item>Simple section</Item>
+                <Placeholder>Simple section</Placeholder>
             </Section>
             <Section mb={scale(2)} pv={scale(2)} bg={baseTheme.colors.grey20}>
-                <Item>Section with background</Item>
+                <Placeholder>Section with background</Placeholder>
             </Section>
             <Section>
-                <Item>Simple section</Item>
+                <Placeholder>Simple section</Placeholder>
             </Section>
         </>
     </Story>

@@ -1,16 +1,13 @@
 import * as React from 'react';
-import useTheme from '@utils/useTheme';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import typography from '@helpers/customTypography';
-import { useField, useFormikContext } from 'formik';
-import cloneElement from '@helpers/cloneElement';
+import useTheme from '../../utils/useTheme';
+import baseTheme from '../../utils/baseTheme';
+import typography from '../../utils/typography';
 import { useFormField } from './Field';
-import { FormError, useForm } from '.';
+import { useForm } from '.';
 
 export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
-    const { controlId, hint, size } = useFormField();
-    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
+    const { hint, size } = useFormField();
+    const { themeObj } = useForm();
     const globalTheme = useTheme();
     const usedTheme = globalTheme.components?.Hint ? globalTheme : baseTheme;
     const hintTheme = themeObj?.Hint ? themeObj.Hint : usedTheme.components.Form.Hint;
@@ -23,7 +20,6 @@ export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
         const sizeStyles = hintTheme.sizes[size];
         let sizeRule;
         if (sizeStyles) sizeRule = sizeStyles[name];
-
         const baseStyles = hintTheme.base;
         const baseRule = baseStyles?.[name];
 
@@ -35,8 +31,6 @@ export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
     const borderStyle = getRule('borderStyle', 'solid');
     const borderRadius = getRule('borderRadius');
     const typographyName = getRule('typography');
-
-    //const padding = getRule('padding', scale(3));
     const color = getRule('color', baseTheme.colors.black);
     const bg = getRule('bg', baseTheme.colors.white);
 

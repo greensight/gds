@@ -1,19 +1,28 @@
-import * as React from 'react';
-import { Global as EmotionGlobal } from '@emotion/core';
+import React from 'react';
+import { Global as EmotionGlobal, CSSObject } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
 import 'normalize.css';
-import typography from '@utils/typography';
-import baseTheme from '@utils/baseTheme';
-import IThemeProvider from './ThemeProvider';
+import typography from '../../utils/typography';
+import baseTheme from '../../utils/baseTheme';
+import Theme from '../../types/Theme';
 
-const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
+export interface ThemeProviderProps {
+    /** Theme object. */
+    theme: Theme | typeof baseTheme;
+    /** Project code with access to provided theme. */
+    children: React.ReactNode;
+}
+
+/**
+ * Component for providing theme context for app.
+ */
+const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
     const global = theme.global || baseTheme.global;
     const fonts = global.fonts || baseTheme.global.fonts;
-    const { selection, focus, body } = global.base || baseTheme.global.base;
-    const { css } = global;
+    const { selection, focus, body, css } = global.base || baseTheme.global.base;
 
-    const fontStyles = Object.entries(fonts).map(([family, types]) =>
+    const fontStyles = Object.entries(fonts.fontFace).map(([family, types]) =>
         types.map(({ woff2, woff, vf, weight, italic, css }) => {
             const woff2Src = woff2 ? `url(${woff2}) format('woff2')` : undefined;
             const woffSrc = woff ? `url(${woff}) format('woff')` : undefined;
@@ -46,11 +55,11 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
                     fontStyle: italic && 'italic',
                     ...css,
                 },
-            };
+            } as CSSObject;
         }),
     );
 
-    const baseStyles = [
+    const baseStyles: CSSObject[] = [
         {
             '*, ::before, ::after': {
                 boxSizing: 'border-box',
@@ -74,7 +83,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
                 minHeight: '100%',
             },
             body: {
-                ...(body && typography(body.typography, theme?.typography ? theme : baseTheme)),
+                ...(body && typography(body.typography, theme.typography ? (theme as Theme) : (baseTheme as Theme))),
                 color: body?.color,
                 backgroundColor: body?.bg,
                 ...body?.css,
@@ -114,7 +123,7 @@ const ThemeProvider: React.FC<IThemeProvider> = ({ theme, children }) => {
     ];
 
     return (
-        <EmotionThemeProvider theme={theme}>
+        <EmotionThemeProvider theme={theme as Theme}>
             <EmotionGlobal styles={[fontStyles, baseStyles, css]} />
             {children}
         </EmotionThemeProvider>

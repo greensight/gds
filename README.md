@@ -1,6 +1,6 @@
 # GDS
 
-![Логотип GDS](public/images/logo/logo.svg)
+![Логотип GDS](public/images/logo.svg)
 
 **GDS** – это мультибрендовая дизайн-система, используемая в компании [Greensight](https://greensight.pro/) для разработки своих коммерческих проектов.
 

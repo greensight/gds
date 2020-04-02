@@ -1,12 +1,8 @@
 import * as React from 'react';
 import { useContext, createContext, useEffect } from 'react';
-import useTheme from '@utils/useTheme';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import typography from '@helpers/customTypography';
 import { Formik, Form as FormikForm, useFormikContext } from 'formik';
 import FormLabel from './Label';
-import FormField, { useFormField } from './Field';
+import FormField from './Field';
 import FormInput from './Input';
 import { IForm } from './Form';
 const FormContext = createContext();
@@ -66,7 +62,6 @@ export const Form: React.FC<IForm> = ({
     );
 };
 
-//Form.Error = FormError;
 Form.Input = FormInput;
 Form.Label = FormLabel;
 Form.Field = FormField;

@@ -1,0 +1,27 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import LayoutAutokit from '.';
+
+<Meta
+    title="Autokits / LayoutAutokit"
+    component={LayoutAutokit}
+    decorators={[paddingDecorator]}
+    parameters={{
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1502%3A1',
+        },
+    }}
+/>
+
+# Layout
+
+<Preview>
+    <Story name="basic">
+        <LayoutAutokit />
+    </Story>
+</Preview>
+
+Автокит для сеток проекта. Читает содержимое поля `layout` объекта темы.
+
+💬 Автокит демонстрирует размеры 1:1, так что здесь должен быть скролл.

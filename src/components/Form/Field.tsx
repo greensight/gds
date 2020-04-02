@@ -27,7 +27,7 @@ export const FormField: React.FC<IFormField> = ({
         <FormFieldContext.Provider
             value={{ controlId, optional, size, hintPosition, hint, hiddenLabel, validationPosition }}
         >
-            <div {...props}>{React.Children.map(children, child => React.cloneElement(child))}</div>
+            <div {...props}>{React.Children.map(children, (child) => React.cloneElement(child))}</div>
         </FormFieldContext.Provider>
     );
 };

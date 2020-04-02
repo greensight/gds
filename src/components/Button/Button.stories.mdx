@@ -1,10 +1,18 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, object, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import centeredDecorator from '@decorators/centeredDecorator';
-import scale from '@utils/scale';
-import theme from '@utils/baseTheme';
-import Button, { Button as ButtonProps } from '.';
+import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import Button from '.';
+import {
+    ButtonProps,
+    ButtonTheme,
+    ButtonStates,
+    ButtonThemeProperties,
+    ButtonStateProperties,
+    ButtonSizeProperties,
+} from '../../../.storybook/docgen/Button';
 
 <Meta
     title="Components / Button"
@@ -13,8 +21,8 @@ import Button, { Button as ButtonProps } from '.';
     parameters={{
         design: {
             type: 'figma',
-            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1608%3A0'
-        }
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1608%3A0',
+        },
     }}
 />
 
@@ -22,89 +30,19 @@ import Button, { Button as ButtonProps } from '.';
 
 <Story name="Knobs">
     {() => {
-        const { colors, shadows } = theme;
         return (
             <Button
                 theme={radios('theme', ['primary', 'secondary'], 'primary')}
                 size={radios('size', ['lg', 'md', 'sm'], 'md')}
                 block={boolean('block', false)}
                 disabled={boolean('disabled', false)}
-                Icon={boolean('icon', false) && theme.placeholder}
+                Icon={boolean('icon', false) && baseTheme.global.placeholder}
                 iconAfter={boolean('iconAfter', false)}
                 hidden={boolean('hidden', false)}
                 onClick={action('onClick')}
-                themeObj={boolean('Use custom theme', false) ? object('themeObj', {
-                    base: {
-                        css: {
-                            ':focus': {
-                                outlineOffset: 2,
-                                outlineColor: colors.brand,
-                            },
-                        },
-                    },
-                    base: {
-                        round: true,
-                        half: true,
-                    },
-                    sizes: {
-                        lg: {
-                            height: scale(8),
-                            padding: scale(3),
-                            iconSize: scale(4),
-                            iconOffset: scale(1),
-                            typography: 'buttonLg',
-                        },
-                        md: {
-                            height: scale(6),
-                            padding: scale(3),
-                            iconSize: scale(3),
-                            iconOffset: scale(1),
-                            typography: 'buttonMd',
-                        },
-                        sm: {
-                            height: scale(5),
-                            padding: scale(2),
-                            iconSize: scale(2),
-                            iconOffset: scale(1),
-                            typography: 'buttonSm',
-                        },
-                    },
-                    themes: {
-                        primary: {
-                            color: colors.white,
-                            bg: colors.brand,
-                            hover: {
-                                bg: colors.brandHover,
-                            },
-                            active: {
-                                border: 'transparent',
-                                shadow: shadows.inner,
-                            },
-                            disabled: {
-                                bg: colors.grey70,
-                                color: colors.grey40,
-                            },
-                        },
-                        secondary: {
-                            color: colors.brand,
-                            border: colors.brand,
-                            bg: colors.white,
-                            hover: {
-                                color: colors.brandHover,
-                                border: colors.brandHover,
-                            },
-                            active: {
-                                bg: colors.grey90,
-                                border: 'transparent',
-                                shadow: shadows.inner,
-                            },
-                            disabled: {
-                                border: colors.grey60,
-                                color: colors.grey40,
-                            },
-                        },
-                    },
-                }) : undefined}
+                __theme={
+                    boolean('Use custom theme', false) ? object('themeObj', baseTheme.components.Button) : undefined
+                }
             >
                 {text('children', 'Button')}
             </Button>
@@ -112,17 +50,15 @@ import Button, { Button as ButtonProps } from '.';
     }}
 </Story>
 
-Компонент кнопки.
-
 Кнопки определяются полем `button` в объекте темы. В целом концепт таков, что задаются глобальные настройки стилей в `base`, после чего стилистические различия диктуются сочитанием темы из `themes` и размера из `sizes`.
 
-После определения темы и размера для кнопки становятся доступны вариации, задаваемые через props: `block`, `disabled`, `hidden` и т.д. Т.е. эти вариации доступны для **любой** кнопки. Детальнее доступные props разобраны в разделе `Use Cases`.
+После определения темы и размера для кнопки становятся доступны вариации, задаваемые через props: `block`, `disabled`, `hidden` и т.д. Т.е. эти вариации доступны для **любой** кнопки. Детальнее доступные props разобраны в разделе `Use cases`.
 
-Центром истины при стилизации является высота кнопки – она должна совпадать с определённой в Figma. Однако внутри компонент не ограничивается по высоте – для него автоматически выполняется расчёт вертикальных полей. Такой подход позволяет сделать multiline режим доступным по умолчанию.
+Центром истины при указании размеров является высота кнопки – она должна совпадать с определённой в Figma. Однако внутри компонент не ограничивается по высоте – для него автоматически выполняется расчёт вертикальных полей. Такой подход позволяет сделать multiline режим доступным по умолчанию.
 
 Все необходимые размеры можно взять из панели `Auto Layout` в Figma, цвета берутся из палитры, типографика по имени из стилей.
 
-Для компонента доступно получение ref и прокидывание любых html-атрибутов, неопределённых в таблице пропсов.
+По умолчанию компонент рендерится через элемент `<button />` и наследует его пропсы. Вы можете изменить элемент через проп `as`, что позволит использовать компонент для ссылок, и предоставит возможность использовать пропсы переданного компонента.
 
 ## Props
 
@@ -130,85 +66,9 @@ import Button, { Button as ButtonProps } from '.';
 
 ## Theme
 
-```js
-export interface IButton {
-    /** Глобальные стили. Распространяются на все кнопки */
-    base?: IButtonBaseRules;
-    /** Стили тем */
-    themes: {
-        /** Дефолтная тема */
-        primary: IButtonThemeRules;
-        /** Можно добавлять свои темы */
-        [theme: string]: IButtonThemeRules;
-    };
-    /** Стили размеров */
-    sizes: {
-        /** Дефолтный размер */
-        md: IButtonSizeRules;
-        /** Можно добавлять свои размеры */
-        [size: string]: IButtonSizeRules;
-    };
-}
+<Props components={{ ButtonTheme, ButtonStates, ButtonThemeProperties, ButtonStateProperties, ButtonSizeProperties }} />
 
-export interface IButtonBaseRules {
-    /** Цвет текста и иконки */
-    color?: string;
-    /** Цвет фона */
-    bg?: string;
-    /** Цвет обводки */
-    border?: string;
-    /** Тень. Прежде всего для активного стейта */
-    shadow?: string;
-    /** Толщина обводки. Проставляется автоматически, если передан border */
-    borderWidth?: number;
-    /** Стиль обводки */
-    borderStyle?: string;
-    /** Скругление кнопки */
-    borderRadius?: number | string;
-    /** Режим половинчатого скругления. border-radius в половину высоты */
-    half?: boolean;
-    /** Режим полного скругления. border-radius в 50% для hidden режима */
-    round?: boolean;
-    /** Время анимации ховера */
-    time?: number;
-    /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
-    timeIn?: number;
-    /** Функция анимации */
-    easing?: string;
-    /** Кастомный CSS */
-    css?: Object;
-}
-
-export interface IButtonThemeRules extends IButtonBaseRules {
-    /** Правила на ховер */
-    hover?: IButtonRules;
-    /** Правила на клик */
-    active?: IButtonRules;
-    /** Правила на блокирование */
-    disabled?: IButtonRules;
-    /** Правила на фокус */
-    focus?: IButtonRules;
-}
-
-export interface IButtonSizeRules {
-    /** Высота кнопки */
-    height?: number;
-    /** Горизонтальные поля */
-    padding?: number;
-    /** Имя типографического стиля */
-    typography?: string;
-    /** Размер иконки */
-    iconSize?: number;
-    /** Отступ от иконки */
-    iconOffset?: number;
-    /** Кастомный CSS */
-    css?: Object;
-}
-```
-
-💬 Технически возможно переопределение любых параметров из списка в любом разделе. То есть ничто не мешает переопределить `color` внутри `sizes` за исключением, разве что, здравого смысла. В интерфейсе поля разбиты на группы `IButtonBaseRules` и `IButtonThemeRules` для лучшего понимания, хотя строго говоря такого ограничения в коде нет.
-
-## Use Cases
+## Use cases
 
 ### Basic
 
@@ -277,10 +137,12 @@ export interface IButtonSizeRules {
 
 <Preview>
     <Story name="With icon (before)">
-        <Button Icon={theme.placeholder}>Button</Button>
+        <Button Icon={baseTheme.global.placeholder}>Button</Button>
     </Story>
     <Story name="With icon (after)">
-        <Button Icon={theme.placeholder} iconAfter>Button</Button>
+        <Button Icon={baseTheme.global.placeholder} iconAfter>
+            Button
+        </Button>
     </Story>
 </Preview>
 
@@ -288,40 +150,34 @@ export interface IButtonSizeRules {
 
 Доступен режим иконочной кнопки через проп `hidden`.
 
-♿️ Это «hidden mode», а не «icon mode», т.к. текст при этом всё равно должен указываться для доступности с AT.
+♿️ Это «hidden mode», а не «icon mode», т.к. текст при этом всё равно должен указываться для доступа через AT.
 
 <Preview>
     <Story name="Hidden mode">
-        <Button Icon={theme.placeholder} hidden>Button</Button>
-    </Story>
-</Preview>
-
-### Custom icon
-
-Проп `Icon` может принимать jsx вместо SVGR компонента.
-
-jsx используется в редких случаях, когда нужно переопределить атрибуты иконки, например, задать цвет, отличный от цвета текста.
-
-<Preview>
-    <Story name="Custom icon">
-        <Button Icon={<theme.placeholder fill={theme.colors.warning} />}>Button</Button>
+        <Button Icon={baseTheme.global.placeholder} hidden>
+            Button
+        </Button>
     </Story>
 </Preview>
 
 ### Links
 
-Кнопку можно отрендерить в качестве ссылки – для этого достаточно передать проп `href`.
+Чтобы использовать компонент для ссылок нужно изменить элемент рендера через проп `as`. После этого вам станет доступно использование пропсов `href` в случае `a` и `to` в случае `Link`.
 
-В качестве ссылки может использоваться компонент `Link` используемого роутера. Для этого нужно передать компонент роутера в проп `as` и использовать `to` вместо `href`.
+💬 GDS не включает в себя встроенного инструмента для роутинга, так что вы можете использовать не только `react-router`, но и к примеру `@reach/router`.
 
-Также ссылка может быть внешняя, т.е. открывать вкладку в новом окне. Чтобы задать подобное поведение, передайте проп `external`. `external` задаёт атрибуты `target="_blank"` и `rel="nofollow noopener"`.
+Также ссылка может быть внешняя, т.е. открывать вкладку в новом окне. Чтобы задать подобное поведение, передайте проп `external`. Этот проп задаёт атрибуты `target="_blank"` и `rel="nofollow noopener"`.
 
 <Preview>
     <Story name="Link">
-        <Button href="http://greensight.pro">Button</Button>
+        <Button as="a" href="http://greensight.pro">
+            Button
+        </Button>
     </Story>
     <Story name="External link">
-        <Button href="http://greensight.pro" external>Button</Button>
+        <Button as="a" href="http://greensight.pro" external>
+            Button
+        </Button>
     </Story>
 </Preview>
 
@@ -333,9 +189,13 @@ jsx используется в редких случаях, когда нужн
 
 <Preview>
     <Story name="Multiline mode (br)">
-        <Button>Multiline<br/>button</Button>
+        <Button>
+            Multiline
+            <br />
+            button
+        </Button>
     </Story>
     <Story name="Multiline mode (fixed width)">
-        <Button css={{width: scale(14)}}>Multiline button</Button>
+        <Button css={{ width: scale(14) }}>Multiline button</Button>
     </Story>
 </Preview>

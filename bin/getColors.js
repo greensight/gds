@@ -1,6 +1,6 @@
 const colorToToken = require('./colorToToken');
 
-const getColors = frame => {
+const getColors = (frame) => {
     const tokens = frame.children
         .filter(({ type }) => type === 'FRAME')
         .reduce((acc, color) => {

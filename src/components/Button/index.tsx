@@ -1,13 +1,50 @@
-import * as React from 'react';
-import useTheme from '@utils/useTheme';
-import typography from '@utils/typography';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import cloneElement from '@helpers/cloneElement';
-import VisuallyHidden from '@components/VisuallyHidden';
-import { IButton } from './Button';
+import React from 'react';
+import { jsx, CSSObject } from '@emotion/core';
+import typography from '../../utils/typography';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import useComponentTheme from '../../helpers/useComponentTheme';
+import VisuallyHidden from '../../components/VisuallyHidden';
+import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
+import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
+import { TypographyProperties } from '../../types/Typography';
 
-export const Button: React.FC<IButton> = (
+export interface ButtonBaseProps {
+    /** Button content. */
+    children: React.ReactNode;
+    /** Theme name from list of themes defined in theme object at `components.Button.themes`. */
+    theme?: string;
+    /** Size name from list of sizes defined in theme object at `components.Button.sizes`. */
+    size?: string;
+    /** Block type. Use 100% of parent width. */
+    block?: boolean;
+    /** Icon. Accepts SVGR icon or custom JSX. */
+    Icon?: SVGRIcon;
+    /** Place icon after text. */
+    iconAfter?: boolean;
+    /** Visually hidden text. Keeps text accessible but visually shows only icons. Doesn't make sense without `Icon` prop. */
+    hidden?: boolean;
+    /** Open link in another browser tab. Additionaly adds `rel="nofollow noopener"`. */
+    external?: boolean;
+    /** Button theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __theme?: ButtonTheme;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export type ButtonProps<P extends React.ElementType = 'button'> = {
+    /** Use your own React component for render. Main usage: pass `a` for external links or pass `Link` from `react-router` for routes management. */
+    as?: P;
+} & MergeElementProps<P, ButtonBaseProps>;
+
+/**
+ * Button component.
+ *
+ * Renders <button /> or <a /> (pass `href`) or any custom element (pass `as`).
+ *
+ * Define themes and sizes in theme object (`components.Button`) and use them as `theme` / `size` prop values.
+ */
+const Button = <T extends React.ElementType = 'button'>(
     {
         children,
         theme = 'primary',
@@ -17,192 +54,186 @@ export const Button: React.FC<IButton> = (
         iconAfter = false,
         hidden = false,
         type = 'button',
-        href,
         as,
         external = false,
-        onClick,
-        themeObj,
+        __theme,
         css,
         ...props
-    },
-    ref,
+    }: ButtonProps<T>,
+    ref: React.Ref<HTMLButtonElement>,
 ) => {
-    const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Button ? globalTheme : baseTheme;
-    const buttonTheme = themeObj || usedTheme.components.Button;
+    /* Get theme objects. */
+    const { componentTheme, usedTheme } = useComponentTheme('Button', __theme);
+    const buttonTheme = componentTheme as ButtonTheme;
+    if (!buttonTheme.themes[theme]) console.warn(`Specify "${theme}" theme. Default values are used instead`);
+    if (!buttonTheme.sizes[size]) console.warn(`Specify "${size}" size. Default values are used instead`);
 
-    if (!buttonTheme.themes[theme]) {
-        console.warn(`Specify "${theme}" theme. Default values are used instead`);
-    }
-
-    if (!buttonTheme.sizes[size]) {
-        console.warn(`Specify "${size}" size. Default values are used instead`);
-    }
-
-    const getRule = (name, defaultValue) => {
-        const themeStyles = buttonTheme.themes[theme];
-        let themeRule;
-        if (themeStyles) themeRule = themeStyles[name];
-
-        const sizeStyles = buttonTheme.sizes[size];
-        let sizeRule;
-        if (sizeStyles) sizeRule = sizeStyles[name];
-
-        const baseStyles = buttonTheme.base;
-        const baseRule = baseStyles?.[name];
-
-        return themeRule || sizeRule || baseRule || defaultValue;
+    /* Get theme default state properties and merge them with default values. */
+    const themeProperties = getThemeProperties(buttonTheme, theme, 'default');
+    const sizeProperties = buttonTheme.sizes[size];
+    const themeDefaults = {
+        borderWidth: themeProperties.border ? 1 : 0,
+        borderStyle: 'solid',
+        time: 200,
+        easing: 'ease',
+        color: baseTheme.colors.white,
+        bg: baseTheme.colors.black,
+    };
+    const tp: RequiredBy<ButtonThemeProperties, keyof typeof themeDefaults> = {
+        ...themeDefaults,
+        ...themeProperties,
+    };
+    const sizeDefaults = {
+        height: scale(6),
+        padding: scale(3),
+        iconSize: scale(3),
+        iconOffset: scale(1),
+    };
+    const sp: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = {
+        ...sizeDefaults,
+        ...sizeProperties,
     };
 
-    const getStateStyles = (name, css) => {
-        const state = getRule(name);
-        if (!state) return;
-        const { color, bg, border, shadow, css: stateCss } = state;
-        return {
-            [`:${name}`]: {
-                color,
-                fill: color,
-                background: bg,
-                borderColor: border,
-                boxShadow: shadow,
-                ...stateCss,
-                ...css,
-            },
-        };
+    /* Define CSS rules from theme properties for default state. */
+    const typographyName = sp.typography;
+    const typographyCSS = typography(typographyName, usedTheme);
+    const pv = getVerticalPaddings(
+        typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
+        sp,
+        tp,
+        !!Icon,
+    );
+    const borderRadius = !tp.half ? tp.borderRadius : sp.height / 2;
+    const padding = `${pv}px ${sp.padding}px`;
+    const transition = getTransition(tp.time, tp.easing);
+    const defaultCSS: CSSObject = {
+        display: 'inline-flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: tp.borderWidth,
+        borderStyle: tp.borderStyle,
+        ...typographyCSS,
+        borderRadius,
+        padding,
+        transition,
+        ...getStateCSS(tp),
+        ...sp.css,
     };
 
-    const getPv = typographyStyles => {
-        let fontSize = '1rem';
-        let lineHeight = 1.4;
-
-        const cssRule = buttonTheme.sizes[size].css;
-
-        if (typographyStyles) {
-            fontSize = parseFloat(typographyStyles.fontSize) * 16;
-            lineHeight = typographyStyles.lineHeight;
-        } else if (cssRule) {
-            if (cssRule.fontSize) {
-                if (typeof cssRule.fontSize === 'number') {
-                    fontSize = cssRule.fontSize;
-                } else if (typeof cssRule.fontSize === 'string') {
-                    if (cssRule.fontSize.endsWith('rem')) {
-                        fontSize = parseFloat(cssRule.fontSize) * 16;
-                    } else {
-                        fontSize = parseFloat(cssRule.fontSize);
-                    }
-                }
-            }
-
-            if (cssRule.lineHeight) lineHeight = cssRule.lineHeight;
-        }
-
-        const textHeight = Math.floor(fontSize * lineHeight);
-        const maxHeight = Math.max(textHeight, Icon ? iconSize : 0);
-        const pv = (height - maxHeight - borderWidth * 2) / 2;
-
-        return pv;
+    /* Define CSS rules from theme properties for other states. */
+    const themeHoverProperties = getThemeProperties(buttonTheme, theme, 'hover');
+    const themeActiveProperties = getThemeProperties(buttonTheme, theme, 'active');
+    const themeDisabledProperties = getThemeProperties(buttonTheme, theme, 'disabled');
+    const themeFocusProperties = getThemeProperties(buttonTheme, theme, 'focus');
+    const statesCSS: CSSObject = {
+        ':hover': {
+            ...getStateCSS(themeHoverProperties),
+            ...(tp.timeIn && {
+                transition: getTransition(tp.timeIn, tp.easing),
+            }),
+        },
+        ':active': getStateCSS(themeActiveProperties),
+        ':disabled': {
+            ...getStateCSS(themeDisabledProperties),
+            cursor: 'not-allowed',
+        },
+        ':focus': getStateCSS(themeFocusProperties),
     };
 
-    const transition = time =>
-        ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
-            .map(name => `${name} ${easing} ${time}ms`)
-            .join(', ');
-
-    const border = getRule('border');
-    const borderWidth = getRule('borderWidth', border ? 1 : 0);
-    const borderStyle = getRule('borderStyle', 'solid');
-    const borderRadius = getRule('borderRadius');
-    const time = getRule('time', 200);
-    const timeIn = getRule('timeIn');
-    const easing = getRule('easing', 'ease');
-    const typographyName = getRule('typography');
-    const height = getRule('height', scale(6));
-    const padding = getRule('padding', scale(3));
-    const iconSize = getRule('iconSize', scale(3));
-    const iconOffset = getRule('iconOffset', scale(1));
-    const color = getRule('color', baseTheme.colors.white);
-    const bg = getRule('bg', baseTheme.colors.black);
-    const shadow = getRule('shadow');
-    const round = getRule('round');
-    const half = getRule('half');
-
-    const typographyStyles = typographyName && typography(typographyName, usedTheme);
-    const pv = getPv(typographyStyles);
-
+    /* Build CSS object combined with rules from props. */
     const blockStyles = { display: 'flex', width: '100%' };
-
-    const roundStyles = {
+    const hiddenRoundStyles = {
         borderRadius: '50%',
-        padding: `${pv}px ${(height - iconSize - borderWidth) / 2}px`,
+        padding: `${pv}px ${(sp.height - sp.iconSize - tp.borderWidth) / 2}px`,
     };
+    const styles = [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css];
 
-    const styles = [
-        {
-            display: 'inline-flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderWidth,
-            borderStyle,
-            borderRadius: !half ? borderRadius : height / 2,
-            padding: `${pv}px ${padding}px`,
-            ...typographyStyles,
-            color,
-            fill: color,
-            background: bg,
-            borderColor: border,
-            boxShadow: shadow,
-            transition: transition(time),
-            ...getStateStyles('hover', {
-                ...(timeIn && { transition: transition(timeIn) }),
-            }),
-            ...getStateStyles('active'),
-            ...getStateStyles('disabled', {
-                cursor: 'not-allowed',
-            }),
-            ...getStateStyles('focus'),
-        },
-        buttonTheme.base?.css,
-        buttonTheme.sizes?.[size]?.css,
-        buttonTheme.themes?.[theme]?.css,
-        block && blockStyles,
-        hidden && round && roundStyles,
-        css,
-    ];
-
-    const Component = href ? 'a' : as || 'button';
-
+    /* Define CSS rules for icon. */
     const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
-    const iconProps = {
-        css: {
-            [marginRule]: !hidden ? iconOffset : undefined,
-            width: iconSize,
-            height: iconSize,
-        },
+    const iconCSS = {
+        [marginRule]: !hidden ? sp.iconOffset : undefined,
+        width: sp.iconSize,
+        height: sp.iconSize,
     };
 
-    let IconComponent;
-    if (typeof Icon === 'function') {
-        IconComponent = <Icon {...iconProps} />;
-    } else if (typeof Icon === 'object') {
-        IconComponent = cloneElement(Icon, iconProps);
-    }
-
-    return (
-        <Component
-            type={!href && !as ? type : null}
-            href={href}
-            target={external ? '_blank' : null}
-            rel={external ? 'nofollow noopener' : null}
-            onClick={onClick}
-            css={styles}
-            ref={ref}
-            {...props}
-        >
-            {Icon && !iconAfter && IconComponent}
+    return jsx(
+        as || 'button',
+        {
+            ref,
+            type: !as || as === 'button' ? type : null,
+            target: external ? '_blank' : null,
+            rel: external ? 'nofollow noopener' : null,
+            css: styles,
+            ...props,
+        },
+        <>
+            {Icon && !iconAfter && <Icon css={iconCSS} />}
             {hidden ? <VisuallyHidden>{children}</VisuallyHidden> : children}
-            {Icon && iconAfter && IconComponent}
-        </Component>
+            {Icon && iconAfter && <Icon css={iconCSS} />}
+        </>,
     );
 };
 
-export default React.forwardRef(Button);
+const getStateCSS = ({ color, bg, border, shadow, css }: ButtonStateProperties) => ({
+    color,
+    fill: color,
+    background: bg,
+    borderColor: border,
+    boxShadow: shadow,
+    ...css,
+});
+
+const getThemeProperties = (
+    buttonTheme: ButtonTheme,
+    theme: string,
+    state: ComponentStates | 'default',
+): ButtonThemeProperties | ButtonStateProperties => {
+    const themeProperties = buttonTheme.themes[theme][state];
+    const baseProperties = buttonTheme.base?.[state];
+    return { ...baseProperties, ...themeProperties };
+};
+
+const getVerticalPaddings = (
+    typographyProperties: TypographyProperties | undefined,
+    sizeProperties: ButtonSizeProperties,
+    themeProperties: ButtonThemeProperties,
+    isIcon: boolean,
+) => {
+    const cssRule = sizeProperties.css;
+    let fontSize = 16;
+    let lineHeight = 1.4;
+
+    if (typographyProperties) {
+        fontSize = parseFloat(typographyProperties.fontSize) * 16;
+        lineHeight = typographyProperties.lineHeight;
+    } else if (cssRule) {
+        if (cssRule.fontSize) {
+            if (typeof cssRule.fontSize === 'number') {
+                fontSize = cssRule.fontSize;
+            } else if (typeof cssRule.fontSize === 'string') {
+                if (cssRule.fontSize.endsWith('rem')) {
+                    fontSize = parseFloat(cssRule.fontSize) * 16;
+                } else {
+                    fontSize = parseFloat(cssRule.fontSize);
+                }
+            }
+        }
+        if (cssRule.lineHeight && typeof cssRule.lineHeight === 'number') lineHeight = cssRule.lineHeight;
+    }
+
+    const textHeight = Math.floor(fontSize * lineHeight);
+    const iconSize = sizeProperties.iconSize as number;
+    const height = sizeProperties.height as number;
+    const borderWidth = themeProperties.borderWidth as number;
+    const maxHeight = Math.max(textHeight, isIcon ? iconSize : 0);
+    const verticalPaddings = (height - maxHeight - borderWidth * 2) / 2;
+
+    return verticalPaddings;
+};
+
+const getTransition = (time: number, easing: string) =>
+    ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
+        .map((name) => `${name} ${easing} ${time}ms`)
+        .join(', ');
+
+export default React.forwardRef(Button) as typeof Button;

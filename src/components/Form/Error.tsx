@@ -1,8 +1,8 @@
 import * as React from 'react';
-import useTheme from '@utils/useTheme';
-import scale from '@utils/scale';
-import baseTheme from '@utils/baseTheme';
-import typography from '@helpers/customTypography';
+import useTheme from '../../utils/useTheme';
+import scale from '../../utils/scale';
+import baseTheme from '../../utils/baseTheme';
+import typography from '../../utils/typography';
 import { useFormField } from './Field';
 import { useForm } from '.';
 

@@ -1,10 +1,11 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { radios, boolean, text, array, select, number } from '@storybook/addon-knobs';
-import scale from '@utils/scale';
-import Item from '@helpers/Item';
-import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
+import scale from '../../utils/scale';
+import Placeholder from '../../helpers/Placeholder';
+import Layout from '.';
+import { LayoutProps } from '../../../.storybook/docgen/Layout';
 
-<Meta title="Components / Layout" component={Layout} />
+<Meta title="Components / Helpers / Layout" component={Layout} />
 
 # Layout
 
@@ -68,7 +69,7 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
                 max: 400,
                 step: 8,
             },
-            'Layout'
+            'Layout',
         );
         const inline = boolean('inline', false, 'Layout (hardcore)');
         const colsHard = text('cols', '', 'Layout (hardcore)');
@@ -158,7 +159,7 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
                     };
                     return (
                         <Layout.Item key={index} {...itemProps}>
-                            <Item>Item {index}</Item>
+                            <Placeholder>Item {index}</Placeholder>
                         </Layout.Item>
                     );
                 })}
@@ -173,15 +174,9 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
 
 ## Props
 
-### Layout
+<Props components={{ Layout: LayoutProps, 'Layout.Item': Layout.Item }} />
 
-<Props of={LayoutProps} />
-
-### Layout.Item
-
-<Props of={LayoutItemProps} />
-
-## Use Cases
+## Use cases
 
 ### Basic
 
@@ -190,9 +185,9 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
 <Preview>
     <Story name="Basic">
         <Layout>
-            {[1, 2, 3, 4, 5, 6].map(item => (
+            {[1, 2, 3, 4, 5, 6].map((item) => (
                 <Layout.Item key={item}>
-                    <Item>Item {item}</Item>
+                    <Placeholder>Item {item}</Placeholder>
                 </Layout.Item>
             ))}
         </Layout>
@@ -214,9 +209,9 @@ import Layout, { Layout as LayoutProps, Item as LayoutItemProps } from '.';
 <Preview>
     <Story name="Custom Cols">
         <Layout cols={3} gap={scale(2)}>
-            {[1, 2, 3, 4, 5, 6].map(item => (
+            {[1, 2, 3, 4, 5, 6].map((item) => (
                 <Layout.Item key={item}>
-                    <Item>Item {item}</Item>
+                    <Placeholder>Item {item}</Placeholder>
                 </Layout.Item>
             ))}
         </Layout>
@@ -230,9 +225,9 @@ CSS Grid делает возможным задавать two-dimensional grids,
 <Preview>
     <Story name="Custom Rows">
         <Layout cols={2} rows={[2, 1, 2]}>
-            {[1, 2, 3, 4, 5, 6].map(item => (
+            {[1, 2, 3, 4, 5, 6].map((item) => (
                 <Layout.Item key={item}>
-                    <Item>Item {item}</Item>
+                    <Placeholder>Item {item}</Placeholder>
                 </Layout.Item>
             ))}
         </Layout>
@@ -248,9 +243,9 @@ CSS Grid делает возможным задавать two-dimensional grids,
 <Preview>
     <Story name="Auto mode">
         <Layout auto={scale(18)}>
-            {[1, 2, 3, 4, 5, 6].map(item => (
+            {[1, 2, 3, 4, 5, 6].map((item) => (
                 <Layout.Item key={item}>
-                    <Item>Item {item}</Item>
+                    <Placeholder>Item {item}</Placeholder>
                 </Layout.Item>
             ))}
         </Layout>
@@ -265,22 +260,22 @@ CSS Grid делает возможным задавать two-dimensional grids,
     <Story name="Item Col & Row">
         <Layout cols={6}>
             <Layout.Item col={2} row={2}>
-                <Item>Item 1</Item>
+                <Placeholder>Item 1</Placeholder>
             </Layout.Item>
             <Layout.Item>
-                <Item>Item 2</Item>
+                <Placeholder>Item 2</Placeholder>
             </Layout.Item>
             <Layout.Item>
-                <Item>Item 3</Item>
+                <Placeholder>Item 3</Placeholder>
             </Layout.Item>
             <Layout.Item>
-                <Item>Item 4</Item>
+                <Placeholder>Item 4</Placeholder>
             </Layout.Item>
             <Layout.Item>
-                <Item>Item 5</Item>
+                <Placeholder>Item 5</Placeholder>
             </Layout.Item>
             <Layout.Item col={4}>
-                <Item>Item 6</Item>
+                <Placeholder>Item 6</Placeholder>
             </Layout.Item>
         </Layout>
     </Story>
@@ -302,9 +297,9 @@ CSS Grid делает возможным задавать two-dimensional grids,
                 'item5 item6 item3',
             ]}
         >
-            {[1, 2, 3, 4, 5, 6].map(item => (
+            {[1, 2, 3, 4, 5, 6].map((item) => (
                 <Layout.Item key={item} area={`item${item}`}>
-                    <Item>Item {item}</Item>
+                    <Placeholder>Item {item}</Placeholder>
                 </Layout.Item>
             ))}
         </Layout>
@@ -313,7 +308,7 @@ CSS Grid делает возможным задавать two-dimensional grids,
 
 ### Media Queries
 
-Для задания адаптивной сетки, нужно указать пропсы в формате объектов.
+Практически все пропсы `Layout` принимают формат объекта с брейкпоинтами. Таким образом можно задать изменения сетки на адаптиве.
 
 В качестве полей объекта используются имена брейкпоинтов. Для всех проектов, использующих GDS они одинаковы, меняться могут только их значения, которые тянутся из макета Figma.
 
@@ -325,10 +320,10 @@ type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'x
 
 <Preview>
     <Story name="Media Queries">
-        <Layout cols={12} gap={{xxxl: scale(4), lg: scale(3), sm: scale(2), xs: scale(1)}}>
-            {[1, 2, 3, 4, 5, 6].map(item => (
-                <Layout.Item key={item} col={{xxxl: 2, lg: 3, sm: 4, xs: 6, xxs: 12}}>
-                    <Item>Item {item}</Item>
+        <Layout cols={12} gap={{ xxxl: scale(4), lg: scale(3), sm: scale(2), xs: scale(1) }}>
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+                <Layout.Item key={item} col={{ xxxl: 2, lg: 3, sm: 4, xs: 6, xxs: 12 }}>
+                    <Placeholder>Item {item}</Placeholder>
                 </Layout.Item>
             ))}
         </Layout>
@@ -343,10 +338,10 @@ type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'x
 
 <Preview>
     <Story name="Alignment">
-        <Layout cols={3} justify="end" align="center" css={{height: scale(30)}}>
-            {[1, 2, 3, 4, 5, 6].map(item => (
+        <Layout cols={3} justify="end" align="center" css={{ height: scale(30) }}>
+            {[1, 2, 3, 4, 5, 6].map((item) => (
                 <Layout.Item key={item}>
-                    <Item>Item {item}</Item>
+                    <Placeholder>Item {item}</Placeholder>
                 </Layout.Item>
             ))}
         </Layout>

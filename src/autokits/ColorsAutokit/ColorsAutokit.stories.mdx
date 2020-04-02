@@ -1,0 +1,25 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import ColorsAutokit from '.';
+
+<Meta
+    title="Autokits / ColorsAutokit"
+    component={ColorsAutokit}
+    decorators={[paddingDecorator]}
+    parameters={{
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1330%3A2',
+        },
+    }}
+/>
+
+# Colors
+
+<Preview>
+    <Story name="basic">
+        <ColorsAutokit />
+    </Story>
+</Preview>
+
+Автокит для цветов проекта. Читает содержимое поля `colors` объекта темы.

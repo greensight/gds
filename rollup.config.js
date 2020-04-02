@@ -1,39 +1,33 @@
 import fs from 'fs';
 import path from 'path';
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import babel from 'rollup-plugin-babel';
 import svgr from '@svgr/rollup';
 import json from '@rollup/plugin-json';
-import alias from '@rollup/plugin-alias';
 import postcss from 'rollup-plugin-postcss';
+import babel from 'rollup-plugin-babel';
 import pkg from './package.json';
 
-const getEntries = prefix =>
-    fs.readdirSync(path.resolve(__dirname, prefix)).reduce(
-        (acc, name) => ({
-            ...acc,
-            [name]: `${prefix}${name}/index.tsx`,
-        }),
-        {},
-    );
+const getEntries = (prefix, isFile) =>
+    fs.readdirSync(path.resolve(__dirname, prefix)).reduce((acc, name) => {
+        const entryName = path.parse(name).name;
+        const entryPath = isFile ? `${prefix}/${name}` : `${prefix}/${name}/index.tsx`;
+        return { ...acc, [entryName]: entryPath };
+    }, {});
 
 export default [
     {
         input: {
-            index: 'src/index.js',
-            ...getEntries('src/components/'),
-            autokits: 'src/autokits/index.js',
-            createTheme: 'src/utils/createTheme.js',
-            useTheme: 'src/utils/useTheme.js',
-            baseTheme: 'src/utils/baseTheme.js',
-            typography: 'src/utils/typography.js',
-            scale: 'src/utils/scale.js',
+            index: 'src/index.ts',
+            ...getEntries('src/components'),
+            ...getEntries('src/autokits'),
+            ...getEntries('src/utils', true),
         },
         output: [
             {
                 dir: 'esm',
-                format: 'esm',
+                format: 'es',
             },
             {
                 dir: 'cjs',
@@ -44,10 +38,12 @@ export default [
             resolve({
                 extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
             }),
-            commonjs({ exclude: 'src/**' }),
+            commonjs({
+                exclude: 'src/**',
+            }),
             babel({
                 exclude: 'node_modules/**',
-                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
             }),
             svgr({
                 svgo: false,
@@ -55,15 +51,8 @@ export default [
             }),
             json(),
             postcss(),
-            alias({
-                entries: [
-                    { find: '@components', replacement: path.resolve(__dirname, './src/components') },
-                    { find: '@utils', replacement: path.resolve(__dirname, './src/utils') },
-                    { find: '@helpers', replacement: path.resolve(__dirname, './src/helpers') },
-                    { find: '@icons', replacement: path.resolve(__dirname, './src/icons') },
-                ],
-            }),
         ],
         external: Object.keys(pkg.peerDependencies),
+        context: 'null',
     },
 ];

@@ -1,7 +1,14 @@
-import * as React from 'react';
-import IVisuallyHidden from './VisuallyHidden';
+import React from 'react';
 
-const VisuallyHidden: React.FC<IVisuallyHidden> = ({ children }) => {
+export interface VisuallyHiddenProps {
+    /** Hidden content. */
+    children: React.ReactNode;
+}
+
+/**
+ * Component to wrap components to make them visually hidden. These components still will be available for assistive technologies.
+ */
+const VisuallyHidden = ({ children }: VisuallyHiddenProps) => {
     return (
         <div
             css={{

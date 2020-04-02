@@ -1,0 +1,29 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import TypographyAutokit from '.';
+
+<Meta
+    title="Autokits / TypographyAutokit"
+    component={TypographyAutokit}
+    decorators={[paddingDecorator]}
+    parameters={{
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1373%3A2361',
+        },
+    }}
+/>
+
+# Typography
+
+<Preview>
+    <Story name="basic">
+        <TypographyAutokit />
+    </Story>
+</Preview>
+
+Автокит для типографики проекта. Читает содержимое поля `typography` объекта темы.
+
+## Props
+
+<Props of={TypographyAutokit} />

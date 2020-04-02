@@ -1,15 +1,12 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "allowJs": true,
+        "target": "ESNext",
         "jsx": "react",
-        "isolatedModules": true,
         "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "esm"
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "strict": true
     },
-    "include": ["src"]
+    "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
 }

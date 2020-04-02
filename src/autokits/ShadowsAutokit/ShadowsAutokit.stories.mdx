@@ -1,0 +1,25 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import ShadowsAutokit from '.';
+
+<Meta
+    title="Autokits / ShadowsAutokit"
+    component={ShadowsAutokit}
+    decorators={[paddingDecorator]}
+    parameters={{
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1844%3A3091',
+        },
+    }}
+/>
+
+# Shadows
+
+<Preview>
+    <Story name="basic">
+        <ShadowsAutokit />
+    </Story>
+</Preview>
+
+Автокит для теней проекта. Читает содержимое поля `shadows` объекта темы.

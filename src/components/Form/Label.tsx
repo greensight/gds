@@ -1,11 +1,11 @@
 import * as React from 'react';
-import useTheme from '@utils/useTheme';
-import baseTheme from '@utils/baseTheme';
-import scale from '@utils/scale';
-import cloneElement from '@helpers/cloneElement';
-import typography from '@helpers/customTypography';
-import VisuallyHidden from '@components/VisuallyHidden';
-import { MAJOR_STEP_DEFAULT } from '@helpers/constants';
+import useTheme from '../../utils/useTheme';
+import baseTheme from '../../utils/baseTheme';
+import scale from '../../utils/scale';
+/* import cloneElement from '@helpers/cloneElement';*/
+import typography from '../../utils/typography';
+import VisuallyHidden from '../../components/VisuallyHidden';
+import { MAJOR_STEP } from '../../helpers/constants';
 import { useField } from 'formik';
 import { useForm } from '.';
 import { useFormField } from './Field';
@@ -75,7 +75,6 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     const fill = getRule('fill', baseTheme.colors.black);
     const typographyName = getRule('typography');
     const marginBottom = getRule('marginBottom', scale(1));
-    const time = getRule('time', 200);
     const timeIn = getRule('timeIn');
     const typographyStyles = typographyName && typography(typographyName, usedTheme);
     const styles = [
@@ -101,12 +100,12 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
             position: 'relative',
             display: 'block',
             marginBottom,
-            paddingRight: (IconAfter || validationPosition === 'labelAfter') && `${iconSize + MAJOR_STEP_DEFAULT}px`,
+            paddingRight: (IconAfter || validationPosition === 'labelAfter') && `${iconSize + MAJOR_STEP}px`,
             paddingLeft:
                 (IconBefore ||
                     (validationPosition === 'labelBefore' && meta.touched && meta.error) ||
                     (validationPosition === 'labelBefore' && meta.touched && !meta.error && showSuccess)) &&
-                `${iconSize + MAJOR_STEP_DEFAULT}px`,
+                `${iconSize + MAJOR_STEP}px`,
         },
     ];
 

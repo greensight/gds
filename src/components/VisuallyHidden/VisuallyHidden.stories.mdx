@@ -1,13 +1,18 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import VisuallyHidden from '.';
 
-<Meta title="Components / VisuallyHidden" component={VisuallyHidden} />
+<Meta title="Components / Helpers / VisuallyHidden" component={VisuallyHidden} />
 
 # VisuallyHidden
 
 <Preview>
     <Story name="Basic">
-        <VisuallyHidden>I'm watching you 👀</VisuallyHidden>
+        <VisuallyHidden>
+            I&apos;m watching you{' '}
+            <span role="img" aria-label="Eyes Emoji">
+                👀
+            </span>
+        </VisuallyHidden>
     </Story>
 </Preview>
 
