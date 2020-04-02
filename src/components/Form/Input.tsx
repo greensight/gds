@@ -1,173 +1,151 @@
-import * as React from 'react';
-import useTheme from '../../utils/useTheme';
+import React from 'react';
 import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import typography from '../../utils/typography';
 import { useField } from 'formik';
 /*import cloneElement from '@helpers/cloneElement';*/
 import { useFormField } from './Field';
 import { useForm } from '.';
-import { IFormInput } from './Form';
 import { FormError } from './Error';
 import { FormHint } from './Hint';
+import { jsx, CSSObject } from '@emotion/core';
+import typography from '../../utils/typography';
+import baseTheme from '../../utils/baseTheme';
+import useComponentTheme from '../../helpers/useComponentTheme';
+import FormInputTheme, {
+    FormInputThemeProperties,
+    FormInputSizeProperties,
+    FormInputStateProperties,
+} from '../../types/Form';
+import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
 
-export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ...props }, ref) => {
+export interface FormInputProps {
+    /** Icon after value. Accepts SVGR icon or custom JSX. */
+    IconAfter?: SVGRIcon;
+    /** Icon before value. Accepts SVGR icon or custom JSX. */
+    IconBefore?: SVGRIcon;
+    /** Кастомный CSS */
+    css?: Record<string, any>;
+    /** ref. DOM node доступен через current */
+    ref?: HTMLInputElement;
+}
+
+const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref: React.Ref<HTMLInputElement>) => {
     const { controlId, optional, size, hint, hintPosition, validationPosition } = useFormField();
     const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
-    const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Form.Input ? globalTheme : baseTheme;
-    const inputTheme = themeObj?.Input ? themeObj.Input : usedTheme.components.Form.Input;
-    const iconErrorTheme = themeObj?.errorIcon ? themeObj.errorIcon : usedTheme.components.Form.errorIcon;
-    const iconSuccessTheme = themeObj?.successIcon ? themeObj.successIcon : usedTheme.components.Form.successIcon;
+
+    /* Get theme objects. */
+    const { componentTheme, usedTheme } = useComponentTheme('FormInput', themeObj);
+    const inputTheme = componentTheme as FormInputTheme;
+    console.log(componentTheme);
+    //const iconErrorTheme = componentTheme.errorIcon;
+    //const iconSuccessTheme = componentTheme.successIcon;
 
     if (!inputTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
 
-    const getRule = (name, defaultValue) => {
-        const sizeStyles = inputTheme.sizes[size];
-        let sizeRule;
-        if (sizeStyles) sizeRule = sizeStyles[name];
-
-        const baseStyles = inputTheme.base;
-        const baseRule = baseStyles?.[name];
-
-        return sizeRule || baseRule || defaultValue;
+    const themeProperties = getThemeProperties(inputTheme, 'default');
+    const themeDefaults = {
+        borderWidth: 1,
+        borderStyle: 'solid',
+        time: 200,
+        easing: 'ease',
+        color: baseTheme.colors.black,
+        bg: baseTheme.colors.white,
+    };
+    const tp: RequiredBy<FormInputThemeProperties, keyof typeof themeDefaults> = {
+        ...themeDefaults,
+        ...themeProperties,
     };
 
-    const getStateStyles = (name, css) => {
-        const state = getRule(name);
-        if (!state) return;
-        const { color, fill, bg, border, shadow, css: stateCss } = state;
-        return {
-            [`:${name}`]: {
-                color,
-                fill,
-                background: bg,
-                borderColor: border,
-                boxShadow: shadow,
-                ...stateCss,
-                ...css,
-            },
-        };
+    const sizeProperties = inputTheme.sizes[size];
+    const sizeDefaults = {
+        height: scale(5),
+        padding: scale(1),
+        iconSize: scale(3),
     };
-    const getValidationStyles = (name, css) => {
-        const state = getRule(name);
-        if (!state) return;
-        const { color, bg, border, shadow, css: stateCss } = state;
-        return {
-            color,
-            background: bg,
-            borderColor: border,
-            boxShadow: shadow,
-            ...stateCss,
-            ...css,
-        };
+    const sp: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = {
+        ...sizeDefaults,
+        ...sizeProperties,
     };
 
-    const transition = (time) =>
-        ['color', 'fill', 'background-color', 'border-color', 'border-width', 'box-shadow']
-            .map((name) => `${name} ${easing} ${time}ms`)
-            .join(', ');
-
-    const border = getRule('border');
-    const borderWidth = getRule('borderWidth', border ? 1 : 0);
-    const borderStyle = getRule('borderStyle', 'solid');
-    const borderRadius = getRule('borderRadius');
-    const time = getRule('time', 200);
-    const timeIn = getRule('timeIn');
-    const easing = getRule('easing', 'ease');
-    const typographyName = getRule('typography');
-    const height = getRule('height', scale(5));
-    const padding = getRule('padding', scale(3));
-    const iconSize = getRule('iconSize', scale(3));
-    const color = getRule('color', baseTheme.colors.black);
-    const bg = getRule('bg', baseTheme.colors.white);
-    const shadow = getRule('shadow');
-
-    const typographyStyles = typographyName && typography(typographyName, usedTheme);
+    /* Define CSS rules from theme properties for default state. */
+    const typographyName = sp.typography;
+    const typographyCSS = typography(typographyName, usedTheme);
+    const borderRadius = tp.borderRadius;
+    const height = sp.height;
+    const padding = `${sp.padding}px ${sp.padding}px`;
+    const transition = getTransition(tp.time, tp.easing);
 
     const [field, meta] = useField(controlId);
-    const styles = [
-        {
-            width: '100%',
-            borderWidth,
-            borderStyle,
-            borderRadius,
-            height,
-            padding: `${padding}px`,
-            paddingRight: (IconAfter || validationPosition === 'inputAfter') && `${height}px`,
-            paddingLeft:
-                (IconBefore ||
-                    (validationPosition === 'inputBefore' && meta.touched && meta.error) ||
-                    (validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess)) &&
-                `${height}px`,
-            ...typographyStyles,
-            color,
-            background: bg,
-            borderColor: border,
-            boxShadow: shadow,
-            transition: transition(time),
-            ...getStateStyles('hover', {
-                ...(timeIn && { transition: transition(timeIn) }),
-            }),
-            ...getStateStyles('disabled', {
-                cursor: 'not-allowed',
-            }),
-            ...getStateStyles('focus'),
-        },
 
-        meta.touched &&
-            meta.error && {
-                ...getValidationStyles('error'),
-            },
-        meta.touched &&
-            !meta.error &&
-            showSuccess && {
-                ...getValidationStyles('success'),
-            },
-        inputTheme.base?.css,
-        inputTheme.sizes?.[size]?.css,
-        css,
-    ];
-
-    const iconBeforeProps = {
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `-${iconSize / 2}px`,
-            left: `${(height - iconSize) / 2}px`,
-            width: iconSize,
-            height: iconSize,
-            fill: 'inherit',
-        },
+    const defaultCSS: CSSObject = {
+        width: '100%',
+        height,
+        borderWidth: tp.borderWidth,
+        borderStyle: tp.borderStyle,
+        ...typographyCSS,
+        borderRadius,
+        padding,
+        paddingRight: (IconAfter || validationPosition === 'inputAfter') && `${height}px`,
+        paddingLeft:
+            (IconBefore ||
+                (validationPosition === 'inputBefore' && meta.touched && meta.error) ||
+                (validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess)) &&
+            `${height}px`,
+        transition,
+        ...getStateCSS(tp),
+        ...sp.css,
     };
 
-    const iconAfterProps = {
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `-${iconSize / 2}px`,
-            right: `${(height - iconSize) / 2}px`,
-            width: iconSize,
-            height: iconSize,
-            fill: 'inherit',
+    /* Define CSS rules from theme properties for other states. */
+    const themeHoverProperties = getThemeProperties(inputTheme, 'hover');
+    const themeDisabledProperties = getThemeProperties(inputTheme, 'disabled');
+    const themeFocusProperties = getThemeProperties(inputTheme, 'focus');
+    const statesCSS: CSSObject = {
+        ':hover': {
+            ...getStateCSS(themeHoverProperties),
+            ...(tp.timeIn && {
+                transition: getTransition(tp.timeIn, tp.easing),
+            }),
         },
+        ':disabled': {
+            ...getStateCSS(themeDisabledProperties),
+            cursor: 'not-allowed',
+        },
+        ':focus': getStateCSS(themeFocusProperties),
     };
 
-    let IconBeforeComponent;
-    if (typeof IconBefore === 'function') {
-        IconBeforeComponent = <IconBefore {...iconBeforeProps} />;
-    } else if (typeof Icon === 'object') {
-        IconBeforeComponent = cloneElement(IconBefore, iconBeforeProps);
-    }
+    const styles = [defaultCSS, statesCSS, css];
 
-    let IconAfterComponent;
-    if (typeof IconAfter === 'function') {
-        IconAfterComponent = <IconAfter {...iconAfterProps} />;
-    } else if (typeof IconAfter === 'object') {
-        IconAfterComponent = cloneElement(IconAfter, iconAfterProps);
-    }
+    //     meta.touched &&
+    //         meta.error && {
+    //             ...getValidationStyles('error'),
+    //         },
+    //     meta.touched &&
+    //         !meta.error &&
+    //         showSuccess && {
+    //             ...getValidationStyles('success'),
+    //         },
+
+    const iconBeforeCSS = {
+        position: 'absolute',
+        top: '50%',
+        marginTop: `-${sp.iconSize / 2}px`,
+        left: `${(height - sp.iconSize) / 2}px`,
+        width: sp.iconSize,
+        height: sp.iconSize,
+        fill: 'inherit',
+    };
+
+    const iconAfterCSS = {
+        position: 'absolute',
+        top: '50%',
+        marginTop: `-${sp.iconSize / 2}px`,
+        right: `${(height - sp.iconSize) / 2}px`,
+        width: sp.iconSize,
+        height: sp.iconSize,
+        fill: 'inherit',
+    };
 
     let validationIconHorizontalRule;
 
@@ -182,10 +160,10 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
         css: {
             position: 'absolute',
             top: '50%',
-            marginTop: `${-(iconSize / 2)}px`,
-            [validationIconHorizontalRule]: `${(height - iconSize) / 2}px`,
-            width: iconSize,
-            height: iconSize,
+            marginTop: `${-(sp.iconSize / 2)}px`,
+            [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
+            width: sp.iconSize,
+            height: sp.iconSize,
         },
     };
 
@@ -201,10 +179,10 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
         css: {
             position: 'absolute',
             top: '50%',
-            marginTop: `${-(iconSize / 2)}px`,
-            [validationIconHorizontalRule]: `${(height - iconSize) / 2}px`,
-            width: iconSize,
-            height: iconSize,
+            marginTop: `${-(sp.iconSize / 2)}px`,
+            [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
+            width: sp.iconSize,
+            height: sp.iconSize,
         },
     };
 
@@ -218,9 +196,9 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
     const fieldStyles = [
         {
             position: 'relative',
-            ...getStateStyles('hover', {
-                ...(timeIn && { transition: transition(timeIn) }),
-            }),
+            // ...getStateStyles('hover', {
+            //     ...(timeIn && { transition: transition(timeIn) }),
+            // }),
         },
     ];
 
@@ -247,13 +225,15 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
 
                 {IconBefore &&
                     !(validationPosition === 'inputBefore' && meta.touched && meta.error) &&
-                    !(validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess) &&
-                    IconBeforeComponent}
+                    !(validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess) && (
+                        <IconBefore css={iconBeforeCSS} />
+                    )}
 
                 {IconAfter &&
                     !(validationPosition === 'inputAfter' && meta.touched && meta.error) &&
-                    !(validationPosition === 'inputAfter' && meta.touched && !meta.error && showSuccess) &&
-                    IconAfterComponent}
+                    !(validationPosition === 'inputAfter' && meta.touched && !meta.error && showSuccess) && (
+                        <IconAfter css={iconAfterCSS} />
+                    )}
 
                 {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
                     meta.touched &&
@@ -277,5 +257,25 @@ export const FormInput: React.FC<IFormInput> = ({ IconBefore, IconAfter, css, ..
     );
 };
 
-// export default FormInput;
-export default React.forwardRef(FormInput);
+const getStateCSS = ({ color, bg, border, shadow, css }: FormInputStateProperties) => ({
+    color,
+    background: bg,
+    borderColor: border,
+    boxShadow: shadow,
+    ...css,
+});
+
+const getThemeProperties = (
+    inputTheme: FormInputTheme,
+    state: ComponentStates | 'default',
+): FormInputThemeProperties | FormInputStateProperties => {
+    const themeProperties = inputTheme.base[state];
+    return { ...themeProperties };
+};
+
+const getTransition = (time: number, easing: string) =>
+    ['color', 'fill', 'background-color', 'border-color', 'box-shadow']
+        .map((name) => `${name} ${easing} ${time}ms`)
+        .join(', ');
+
+export default React.forwardRef(FormInput) as typeof FormInput;

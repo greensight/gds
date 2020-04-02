@@ -144,11 +144,13 @@ const baseTheme = deepmerge(tokens, {
             },
             Input: {
                 base: {
-                    color: colors.black,
-                    fill: colors.black,
-                    border: colors.grey20,
-                    bg: colors.white,
-                    borderRadius: 4,
+                    default: {
+                        color: colors.black,
+                        fill: colors.black,
+                        border: colors.grey20,
+                        bg: colors.white,
+                        borderRadius: 4,
+                    },
                     hover: {
                         border: colors.brand,
                         fill: colors.brand,

@@ -2,6 +2,8 @@ import TypographyTheme from './Typography';
 import LayoutTheme from './Layout';
 import GlobalTheme from './Global';
 import ButtonTheme from './Button';
+import FormTheme from './Form';
+import FormInputTheme from './Form';
 
 export type PalettesTheme = Record<string, string[]>;
 export type ColorsTheme = Record<string, string>;
@@ -23,6 +25,10 @@ export interface Tokens {
 export interface ComponentsTheme {
     /** `Button` component theme settings. */
     Button?: ButtonTheme;
+    /** `Form` component theme settings. */
+    Form?: FormTheme;
+    /** `FormInput` component theme settings. */
+    FormInput?: FormInputTheme;
 }
 
 export default interface Theme extends Tokens {

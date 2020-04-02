@@ -1,9 +1,25 @@
 import * as React from 'react';
 import { useContext, createContext } from 'react';
-import { IFormField } from './Form';
+
+export interface FormFieldProps {
+    /** Размер. Выбирается из определённых в объекте темы */
+    size?: string;
+    /** Позиционирование подсказки к полю */
+    hintPosition: 'top' | 'bottom';
+    /** Текст подсказки */
+    hint: string;
+    /** Устанавливает id компонентам FormInput и FormLabel */
+    controlId: string;
+    /** Визуально скрытый лейбл для скрин-ридеров */
+    hiddenLabel: boolean;
+    /** Расположение иконки валидации */
+    validationPosition: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
+    /** Устанавливает опциональное заполнение компоненту */
+    optional?: boolean;
+}
 
 const FormFieldContext = createContext();
-export const useFormField = (): IFormField => {
+export const useFormField = (): FormFieldProps => {
     const context = useContext(FormFieldContext);
 
     if (!context) {
@@ -12,7 +28,8 @@ export const useFormField = (): IFormField => {
 
     return context;
 };
-export const FormField: React.FC<IFormField> = ({
+
+const FormField = ({
     size = 'md',
     hintPosition = 'top',
     hint,
@@ -22,7 +39,7 @@ export const FormField: React.FC<IFormField> = ({
     optional,
     children,
     ...props
-}) => {
+}: FormInputProps) => {
     return (
         <FormFieldContext.Provider
             value={{ controlId, optional, size, hintPosition, hint, hiddenLabel, validationPosition }}

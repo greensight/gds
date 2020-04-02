@@ -3,11 +3,40 @@ import { useContext, createContext, useEffect } from 'react';
 import { Formik, Form as FormikForm, useFormikContext } from 'formik';
 import FormLabel from './Label';
 import FormField from './Field';
-import FormInput from './Input';
-import { IForm } from './Form';
-const FormContext = createContext();
+import FormInput, { FormInputProps } from './Input';
+import FormTheme from '../../types/Form';
 
-export const useForm = (): IForm => {
+export interface FormCompositionProps {
+    Input: React.FC<FormInputProps>;
+}
+
+interface IFormContext {
+    /** Позиционирование ошибок валидации */
+    errorPosition: 'top' | 'bottom';
+    /** Переключение между обязательностью и опциональностью */
+    required: 'optional' | 'mark';
+    /** Иконка ошибки */
+    ErrorIcon?: Function | React.Component;
+    /** Иконка успешной валидации */
+    SuccessIcon?: Function | React.Component;
+    /** Показ успешной валидации */
+    showSuccess: boolean;
+    /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
+    themeObj?: FormTheme;
+}
+
+export interface FormProps extends IFormContext {
+    /** Названия полей с начальными значениями */
+    initialValues: Record<string, any>;
+    /** Валидация через Yup */
+    validationSchema?: Record<string, any>;
+    /** Обработчик сабмита */
+    onSubmit?: (values: FormikValues) => void;
+}
+
+const FormContext = createContext<IFormContext | undefined>(undefined);
+
+export const useForm = (): IFormContext => {
     const context = useContext(FormContext);
 
     if (!context) {
