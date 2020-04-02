@@ -31,6 +31,7 @@
         "clear": "rimraf '{esm,cjs,types}'",
         "deploy": "yarn storybook:build && storybook-to-ghpages -e docs",
         "eslint": "eslint . --ext .js,.ts,.tsx,.mdx --fix",
+        "lint-staged": "lint-staged",
         "prepublishOnly": "yarn build",
         "storybook": "start-storybook -s ./public -p 3000 --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
@@ -41,7 +42,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged && tsc"
+            "pre-commit": "tsc"
         }
     },
     "lint-staged": {
