@@ -42,7 +42,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "run-p lint-staged tsc"
+            "pre-commit": "lint-staged && tsc"
         }
     },
     "lint-staged": {
