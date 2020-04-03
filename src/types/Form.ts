@@ -29,8 +29,6 @@ export interface FormInputThemeProperties extends FormInputStateProperties {
     timeIn?: number;
     /** Функция анимации */
     easing?: string;
-    /** Кастомный CSS */
-    css?: Object;
 }
 
 export interface FormInputThemeValidationProperties extends FormInputStateProperties {
@@ -57,41 +55,43 @@ export interface FormInputSizeProperties {
     css?: CSSObject;
 }
 
-export default interface FormInputTheme {
+export interface FormInputTheme {
     /** Common settings for all themes. */
-    base?: FormInputStates;
-    /** Available sizes. Any button can have size from this list. You must define at least `md` size. */
+    base: FormInputStates;
+    /** Available sizes. Any input can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, FormInputSizeProperties>, 'md'>;
 }
 
-export interface IFormLabelBaseRules {
+export interface FormLabelStateProperties {
     /** Цвет текста */
     color?: string;
     /** Цвет иконок */
     fill?: string;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export interface FormLabelThemeProperties extends FormLabelStateProperties {
     /** Время анимации ховера */
     time?: number;
     /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
     timeIn?: number;
     /** Функция анимации */
     easing?: string;
-    /** Кастомный CSS */
-    css?: Object;
 }
 
-export interface IFormLabelThemeRules extends IFormLabelBaseRules {
-    /** Правила на ховер */
-    hover?: IFormLabelRules;
-}
-
-export interface IFormLabelValidationRules extends IFormLabelBaseRules {
+export interface FormLabelThemeValidationProperties extends FormLabelStateProperties {
     /** Правила для ошибки */
-    error?: IFormLabelRules;
+    error?: FormLabelStateProperties;
     /** Правила для успеха  */
-    success?: IFormLabelRules;
+    success?: FormLabelStateProperties;
 }
 
-export interface IFormLabelSizeRules {
+export interface FormLabelStates extends Partial<Record<ComponentStates, FormLabelStateProperties>> {
+    default: FormLabelThemeProperties;
+}
+
+export interface FormLabelSizeProperties {
     /** Имя типографического стиля */
     typography?: string;
     /** Размер иконки */
@@ -100,33 +100,28 @@ export interface IFormLabelSizeRules {
     css?: Object;
 }
 
-export interface IFormLabelOptionalRules {
+export interface FormLabelOptionalRules {
     /** Цвет опционального текста */
     color?: string;
     /** Кастомный CSS */
     css?: Object;
 }
 
-export interface IFormLabelMarkRules {
+export interface FormLabelMarkRules {
     /** Цвет астериска */
     color?: string;
     /** Кастомный CSS */
     css?: Object;
 }
-export interface IFormLabel {
-    /** Глобальные стили. Распространяются на все лейблы */
-    base?: IFormLabelBaseRules;
-    /** Стили размеров */
-    sizes: {
-        /** Дефолтный размер */
-        md: IFormLabelBaseRules;
-        /** Можно добавлять свои размеры */
-        [size: string]: IFormLabelBaseRules;
-    };
-    /** Стили опционального текста */
-    optional?: IFormLabelOptionalRules;
-    /** Стили астерисков */
-    mark?: IFormLabelMarkRules;
+export interface FormLabelTheme {
+    /** Base rules. */
+    base: FormLabelStates;
+    /** Available sizes. Any label can have size from this list. You must define at least `md` size. */
+    sizes: RequireAtLeastOne<Record<string, FormLabelSizeProperties>, 'md'>;
+    /** Rules for optional text. */
+    optional?: FormLabelOptionalRules;
+    /** Rules for asterisk. */
+    mark?: FormLabelMarkRules;
 }
 
 export interface IFormHintBaseRules {
@@ -165,7 +160,7 @@ export interface IFormHint {
     };
 }
 
-export interface IFormErrorBaseRules {
+export interface FormErrorThemeProperties {
     /** Цвет текста */
     color?: string;
     /** Цвет фона */
@@ -176,29 +171,26 @@ export interface IFormErrorBaseRules {
     borderWidth?: number;
     /** Стиль обводки */
     borderStyle?: string;
-    /** Скругление */
+    /** Скругление Поля */
     borderRadius?: number | string;
-    /** Кастомный CSS */
-    css?: Object;
+    /** Тень */
+    shadow?: string;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
-export interface IFormErrorSizeRules {
-    /** Имя типографического стиля */
+export interface FormErrorSizeProperties {
+    /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default.*/
     typography?: string;
-    /** Кастомный CSS */
-    css?: Object;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
-export interface IFormError {
-    /** Глобальные стили. Распространяются на все ошибки */
-    base?: IFormErrorBaseRules;
-    /** Стили размеров */
-    sizes: {
-        /** Дефолтный размер */
-        md: IFormErrorSizeRules;
-        /** Можно добавлять свои размеры */
-        [size: string]: IFormErrorSizeRules;
-    };
+export interface FormErrorTheme {
+    /** Common settings for all themes. */
+    base?: FormErrorThemeProperties;
+    /** Available sizes. Any error can have size from this list. You must define at least `md` size. */
+    sizes: RequireAtLeastOne<Record<string, FormErrorSizeProperties>, 'md'>;
 }
 
-export interface FormTheme {}
+export default interface FormTheme {}

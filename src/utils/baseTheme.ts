@@ -142,96 +142,6 @@ const baseTheme = deepmerge(tokens, {
             successIcon: {
                 fill: colors.success,
             },
-            Input: {
-                base: {
-                    default: {
-                        color: colors.black,
-                        fill: colors.black,
-                        border: colors.grey20,
-                        bg: colors.white,
-                        borderRadius: 4,
-                    },
-                    hover: {
-                        border: colors.brand,
-                        fill: colors.brand,
-                    },
-                    focus: {
-                        border: colors.brand,
-                        fill: colors.brand,
-                        shadow: shadows.focus,
-                    },
-                    disabled: {
-                        color: colors.grey20,
-                        border: colors.grey70,
-                        fill: colors.grey20,
-                        bg: colors.grey70,
-                    },
-                    error: {
-                        border: colors.error,
-                    },
-                    success: {
-                        border: colors.success,
-                    },
-                },
-                sizes: {
-                    lg: {
-                        height: scale(7),
-                        padding: scale(1),
-                        iconSize: scale(4),
-                        typography: 'bodyLg',
-                    },
-                    md: {
-                        height: scale(5),
-                        padding: scale(1),
-                        iconSize: scale(3),
-                        typography: 'bodyMd',
-                    },
-                    sm: {
-                        height: scale(3),
-                        padding: scale(1),
-                        iconSize: scale(2),
-                        typography: 'bodySm',
-                    },
-                },
-            },
-            Label: {
-                base: {
-                    color: colors.black,
-                    fill: colors.black,
-                    hover: {
-                        color: colors.black,
-                        fill: colors.brand,
-                    },
-                    error: {
-                        color: colors.error,
-                        fill: colors.error,
-                    },
-                    success: {
-                        color: colors.success,
-                        fill: colors.black,
-                    },
-                },
-                sizes: {
-                    lg: {
-                        iconSize: scale(4),
-                        typography: 'labelLg',
-                    },
-                    md: {
-                        iconSize: scale(3),
-                        typography: 'labelMd',
-                    },
-                    sm: {
-                        iconSize: scale(2),
-                        typography: 'labelSm',
-                    },
-                },
-                optional: {
-                    color: colors.grey20,
-                },
-                mark: {
-                    color: colors.error,
-                },
-            },
             Hint: {
                 base: {
                     bg: 'transparent',
@@ -249,21 +159,113 @@ const baseTheme = deepmerge(tokens, {
                     },
                 },
             },
-            Error: {
-                base: {
-                    bg: 'transparent',
-                    color: colors.error,
+        },
+        FormLabel: {
+            base: {
+                default: {
+                    color: colors.black,
+                    fill: colors.black,
                 },
-                sizes: {
-                    lg: {
-                        typography: 'bodyLg',
-                    },
-                    md: {
-                        typography: 'bodyMd',
-                    },
-                    sm: {
-                        typography: 'bodySm',
-                    },
+                hover: {
+                    color: colors.black,
+                    fill: colors.brand,
+                },
+                error: {
+                    color: colors.error,
+                    fill: colors.error,
+                },
+                success: {
+                    color: colors.success,
+                    fill: colors.black,
+                },
+            },
+            sizes: {
+                lg: {
+                    iconSize: scale(4),
+                    typography: 'labelLg',
+                },
+                md: {
+                    iconSize: scale(3),
+                    typography: 'labelMd',
+                },
+                sm: {
+                    iconSize: scale(2),
+                    typography: 'labelSm',
+                },
+            },
+            optional: {
+                color: colors.grey20,
+            },
+            mark: {
+                color: colors.error,
+            },
+        },
+        FormInput: {
+            base: {
+                default: {
+                    color: colors.black,
+                    fill: colors.black,
+                    border: colors.grey20,
+                    bg: colors.white,
+                    borderRadius: 4,
+                },
+                hover: {
+                    border: colors.brand,
+                    fill: colors.brand,
+                },
+                focus: {
+                    border: colors.brand,
+                    fill: colors.brand,
+                    shadow: shadows.focus,
+                },
+                disabled: {
+                    color: colors.grey20,
+                    border: colors.grey70,
+                    fill: colors.grey20,
+                    bg: colors.grey70,
+                },
+                error: {
+                    border: colors.error,
+                },
+                success: {
+                    border: colors.success,
+                },
+            },
+            sizes: {
+                lg: {
+                    height: scale(7),
+                    padding: scale(1),
+                    iconSize: scale(4),
+                    typography: 'bodyLg',
+                },
+                md: {
+                    height: scale(5),
+                    padding: scale(1),
+                    iconSize: scale(3),
+                    typography: 'bodyMd',
+                },
+                sm: {
+                    height: scale(3),
+                    padding: scale(1),
+                    iconSize: scale(2),
+                    typography: 'bodySm',
+                },
+            },
+        },
+        FormError: {
+            base: {
+                bg: 'transparent',
+                color: colors.error,
+            },
+            sizes: {
+                lg: {
+                    typography: 'bodyLg',
+                },
+                md: {
+                    typography: 'bodyMd',
+                },
+                sm: {
+                    typography: 'bodySm',
                 },
             },
         },

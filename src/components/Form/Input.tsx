@@ -2,40 +2,41 @@ import React from 'react';
 import scale from '../../utils/scale';
 import { useField } from 'formik';
 /*import cloneElement from '@helpers/cloneElement';*/
-import { useFormField } from './Field';
-import { useForm } from '.';
+import { useForm } from './useForm';
+import { useFormField } from './useFormField';
 import { FormError } from './Error';
 import { FormHint } from './Hint';
 import { jsx, CSSObject } from '@emotion/core';
 import typography from '../../utils/typography';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
-import FormInputTheme, {
+import {
+    FormInputTheme,
     FormInputThemeProperties,
     FormInputSizeProperties,
     FormInputStateProperties,
 } from '../../types/Form';
 import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
 
-export interface FormInputProps {
+export interface FormInputProps extends React.HTMLProps<HTMLInputElement> {
     /** Icon after value. Accepts SVGR icon or custom JSX. */
     IconAfter?: SVGRIcon;
     /** Icon before value. Accepts SVGR icon or custom JSX. */
     IconBefore?: SVGRIcon;
     /** Кастомный CSS */
-    css?: Record<string, any>;
-    /** ref. DOM node доступен через current */
-    ref?: HTMLInputElement;
+    css?: CSSObject;
 }
 
-const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref: React.Ref<HTMLInputElement>) => {
+export const FormInput: React.FC<FormInputProps> = (
+    { IconBefore, IconAfter, css, ...props }: FormInputProps,
+    ref: React.Ref<HTMLInputElement>,
+) => {
     const { controlId, optional, size, hint, hintPosition, validationPosition } = useFormField();
-    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon, themeObj } = useForm();
+    const { errorPosition, showSuccess, ErrorIcon, SuccessIcon } = useForm();
 
     /* Get theme objects. */
-    const { componentTheme, usedTheme } = useComponentTheme('FormInput', themeObj);
+    const { componentTheme, usedTheme } = useComponentTheme('FormInput');
     const inputTheme = componentTheme as FormInputTheme;
-    console.log(componentTheme);
     //const iconErrorTheme = componentTheme.errorIcon;
     //const iconSuccessTheme = componentTheme.successIcon;
 
@@ -63,7 +64,7 @@ const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref
         padding: scale(1),
         iconSize: scale(3),
     };
-    const sp: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = {
+    const sp: RequiredBy<FormInputSizeProperties, keyof typeof sizeDefaults> = {
         ...sizeDefaults,
         ...sizeProperties,
     };
@@ -86,12 +87,13 @@ const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref
         ...typographyCSS,
         borderRadius,
         padding,
-        paddingRight: (IconAfter || validationPosition === 'inputAfter') && `${height}px`,
+        paddingRight: IconAfter || validationPosition === 'inputAfter' ? `${height}px` : undefined,
         paddingLeft:
-            (IconBefore ||
-                (validationPosition === 'inputBefore' && meta.touched && meta.error) ||
-                (validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess)) &&
-            `${height}px`,
+            IconBefore ||
+            (validationPosition === 'inputBefore' && meta.touched && meta.error) ||
+            (validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess)
+                ? `${height}px`
+                : undefined,
         transition,
         ...getStateCSS(tp),
         ...sp.css,
@@ -127,7 +129,7 @@ const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref
     //             ...getValidationStyles('success'),
     //         },
 
-    const iconBeforeCSS = {
+    const iconBeforeCSS: CSSObject = {
         position: 'absolute',
         top: '50%',
         marginTop: `-${sp.iconSize / 2}px`,
@@ -137,7 +139,7 @@ const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref
         fill: 'inherit',
     };
 
-    const iconAfterCSS = {
+    const iconAfterCSS: CSSObject = {
         position: 'absolute',
         top: '50%',
         marginTop: `-${sp.iconSize / 2}px`,
@@ -155,52 +157,50 @@ const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref
         validationIconHorizontalRule = 'right';
     }
 
-    const iconErrorProps = {
-        fill: iconErrorTheme.fill,
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `${-(sp.iconSize / 2)}px`,
-            [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
-            width: sp.iconSize,
-            height: sp.iconSize,
-        },
+    // const iconErrorProps = {
+    //     fill: iconErrorTheme.fill,
+    //     css: {
+    //         position: 'absolute',
+    //         top: '50%',
+    //         marginTop: `${-(sp.iconSize / 2)}px`,
+    //         [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
+    //         width: sp.iconSize,
+    //         height: sp.iconSize,
+    //     },
+    // };
+
+    // let IconErrorComponent;
+    // if (typeof ErrorIcon === 'function') {
+    //     IconErrorComponent = <ErrorIcon {...iconErrorProps} />;
+    // } else if (typeof ErrorIcon === 'object') {
+    //     IconErrorComponent = cloneElement(ErrorIcon, iconErrorProps);
+    // }
+
+    // const iconSuccessProps = {
+    //     fill: iconSuccessTheme.fill,
+    //     css: {
+    //         position: 'absolute',
+    //         top: '50%',
+    //         marginTop: `${-(sp.iconSize / 2)}px`,
+    //         [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
+    //         width: sp.iconSize,
+    //         height: sp.iconSize,
+    //     },
+    // };
+
+    // let IconSuccessComponent;
+    // if (typeof SuccessIcon === 'function') {
+    //     IconSuccessComponent = <SuccessIcon {...iconSuccessProps} />;
+    // } else if (typeof ErrorIcon === 'object') {
+    //     IconSuccessComponent = cloneElement(SuccessIcon, iconSuccessProps);
+    // }
+
+    const fieldStyles: CSSObject = {
+        position: 'relative',
+        // ...getStateStyles('hover', {
+        //     ...(timeIn && { transition: transition(timeIn) }),
+        // }),
     };
-
-    let IconErrorComponent;
-    if (typeof ErrorIcon === 'function') {
-        IconErrorComponent = <ErrorIcon {...iconErrorProps} />;
-    } else if (typeof ErrorIcon === 'object') {
-        IconErrorComponent = cloneElement(ErrorIcon, iconErrorProps);
-    }
-
-    const iconSuccessProps = {
-        fill: iconSuccessTheme.fill,
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `${-(sp.iconSize / 2)}px`,
-            [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
-            width: sp.iconSize,
-            height: sp.iconSize,
-        },
-    };
-
-    let IconSuccessComponent;
-    if (typeof SuccessIcon === 'function') {
-        IconSuccessComponent = <SuccessIcon {...iconSuccessProps} />;
-    } else if (typeof ErrorIcon === 'object') {
-        IconSuccessComponent = cloneElement(SuccessIcon, iconSuccessProps);
-    }
-
-    const fieldStyles = [
-        {
-            position: 'relative',
-            // ...getStateStyles('hover', {
-            //     ...(timeIn && { transition: transition(timeIn) }),
-            // }),
-        },
-    ];
 
     const getDescribedByList = () => {
         const hintId = hint && hintPosition === 'bottom' ? `hint-${controlId}` : undefined;
@@ -235,7 +235,7 @@ const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref
                         <IconAfter css={iconAfterCSS} />
                     )}
 
-                {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
+                {/* {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
                     meta.touched &&
                     meta.error &&
                     IconErrorComponent}
@@ -247,7 +247,7 @@ const FormInput = ({ IconBefore, IconAfter, css, ...props }: FormInputProps, ref
                     meta.touched &&
                     !meta.error &&
                     showSuccess &&
-                    IconSuccessComponent}
+                    IconSuccessComponent} */}
             </div>
             {meta.error && meta.touched && errorPosition === 'bottom' && (
                 <FormError err={meta.error} id={`error-${controlId}`} />

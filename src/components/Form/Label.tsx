@@ -1,24 +1,50 @@
-import * as React from 'react';
-import useTheme from '../../utils/useTheme';
+import React from 'react';
 import baseTheme from '../../utils/baseTheme';
+import useComponentTheme from '../../helpers/useComponentTheme';
+import {
+    FormLabelTheme,
+    FormLabelThemeProperties,
+    FormLabelSizeProperties,
+    FormLabelStateProperties,
+} from '../../types/Form';
 import scale from '../../utils/scale';
+import { CSSObject } from '@emotion/core';
 /* import cloneElement from '@helpers/cloneElement';*/
 import typography from '../../utils/typography';
 import VisuallyHidden from '../../components/VisuallyHidden';
 import { MAJOR_STEP } from '../../helpers/constants';
 import { useField } from 'formik';
-import { useForm } from '.';
-import { useFormField } from './Field';
-import { IFormLabel } from './Form';
+import { useForm } from './useForm';
+import { useFormField } from './useFormField';
 import { FormError } from './Error';
 import { FormHint } from './Hint';
+import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
 
-export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, children, css, ...props }) => {
+export interface FormLabelProps extends React.HTMLProps<HTMLLabelElement> {
+    /** Icon after text. Accepts SVGR icon or custom JSX. */
+    IconAfter?: SVGRIcon;
+    /** Icon before text. Accepts SVGR icon or custom JSX. */
+    IconBefore?: SVGRIcon;
+    /** Label content. */
+    children: React.ReactNode;
+    /** Кастомный CSS */
+    css?: CSSObject;
+}
+
+export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElement> = ({
+    IconBefore,
+    IconAfter,
+    children,
+    css,
+    ...props
+}: FormLabelProps) => {
     const { controlId, optional, size, hint, hintPosition, hiddenLabel, validationPosition } = useFormField();
-    const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon, themeObj } = useForm();
-    const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Form ? globalTheme : baseTheme;
-    const labelTheme = themeObj?.Label ? themeObj.Label : usedTheme.components.Form.Label;
+    const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon } = useForm();
+
+    /* Get theme objects. */
+    const { componentTheme, usedTheme } = useComponentTheme('FormLabel');
+    const labelTheme = componentTheme as FormLabelTheme;
+
     const optionalTheme = labelTheme.optional;
     const markTheme = labelTheme.mark;
 
@@ -27,87 +53,66 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     if (!labelTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
-
-    const getRule = (name, defaultValue) => {
-        const sizeStyles = labelTheme.sizes[size];
-        let sizeRule;
-        if (sizeStyles) sizeRule = sizeStyles[name];
-
-        const baseStyles = labelTheme.base;
-        const baseRule = baseStyles?.[name];
-
-        return sizeRule || baseRule || defaultValue;
+    const themeProperties = getThemeProperties(labelTheme, 'default');
+    const themeDefaults = {
+        color: baseTheme.colors.black,
+        fill: baseTheme.colors.black,
+        time: 200,
+        easing: 'ease',
+    };
+    const tp: RequiredBy<FormLabelThemeProperties, keyof typeof themeDefaults> = {
+        ...themeDefaults,
+        ...themeProperties,
     };
 
-    const getStateStyles = (name, css) => {
-        const state = getRule(name);
-        if (!state) return;
-        const { color, fill, bg, border, shadow, css: stateCss } = state;
-        return {
-            [`:${name}`]: {
-                color,
-                fill: fill,
-                background: bg,
-                borderColor: border,
-                boxShadow: shadow,
-                ...stateCss,
-                ...css,
-            },
-        };
+    const sizeProperties = labelTheme.sizes[size];
+    const sizeDefaults = {
+        iconSize: scale(3),
     };
-    const getValidationStyles = (name, css) => {
-        const state = getRule(name);
-        if (!state) return;
-        const { color, fill, bg, border, shadow, css: stateCss } = state;
-        return {
-            color,
-            fill: fill,
-            background: bg,
-            borderColor: border,
-            boxShadow: shadow,
-            ...stateCss,
-            ...css,
-        };
+    const sp: RequiredBy<FormLabelSizeProperties, keyof typeof sizeDefaults> = {
+        ...sizeDefaults,
+        ...sizeProperties,
     };
 
-    const iconSize = getRule('iconSize', scale(3));
-    const color = getRule('color', baseTheme.colors.black);
-    const fill = getRule('fill', baseTheme.colors.black);
-    const typographyName = getRule('typography');
-    const marginBottom = getRule('marginBottom', scale(1));
-    const timeIn = getRule('timeIn');
-    const typographyStyles = typographyName && typography(typographyName, usedTheme);
-    const styles = [
-        {
-            display: 'block',
-            ...typographyStyles,
-            marginBottom,
-            color,
-            fill,
-            ...getStateStyles('hover', {
-                ...(timeIn && { transition: transition(timeIn) }),
+    /* Define CSS rules from theme properties for default state. */
+    const typographyName = sp.typography;
+    const typographyCSS = typography(typographyName, usedTheme);
+
+    const transition = getTransition(tp.time, tp.easing);
+    const defaultCSS: CSSObject = {
+        display: 'block',
+        ...typographyCSS,
+        transition,
+        ...getStateCSS(tp),
+        ...sp.css,
+    };
+
+    /* Define CSS rules from theme properties for other states. */
+    const themeHoverProperties = getThemeProperties(labelTheme, 'hover');
+    const statesCSS: CSSObject = {
+        ':hover': {
+            ...getStateCSS(themeHoverProperties),
+            ...(tp.timeIn && {
+                transition: getTransition(tp.timeIn, tp.easing),
             }),
         },
-        labelTheme.base?.css,
-        labelTheme.sizes?.[size]?.css,
-        meta.touched && meta.error && { ...getValidationStyles('error') },
-        meta.touched && !meta.error && showSuccess && { ...getValidationStyles('success') },
-        css,
-    ];
+    };
 
-    const textStyles = [
-        {
-            position: 'relative',
-            display: 'block',
-            marginBottom,
-            paddingRight: (IconAfter || validationPosition === 'labelAfter') && `${iconSize + MAJOR_STEP}px`,
-            paddingLeft:
-                (IconBefore ||
-                    (validationPosition === 'labelBefore' && meta.touched && meta.error) ||
-                    (validationPosition === 'labelBefore' && meta.touched && !meta.error && showSuccess)) &&
-                `${iconSize + MAJOR_STEP}px`,
-        },
-    ];
+    const styles = [defaultCSS, statesCSS, css];
+    // meta.touched && meta.error && { ...getValidationStyles('error') },
+    // meta.touched && !meta.error && showSuccess && { ...getValidationStyles('success') },
+
+    const textStyles: CSSObject = {
+        position: 'relative',
+        display: 'block',
+        paddingRight: IconAfter || validationPosition === 'labelAfter' ? `${sp.iconSize + MAJOR_STEP}px` : undefined,
+        paddingLeft:
+            IconBefore ||
+            (validationPosition === 'labelBefore' && meta.touched && meta.error) ||
+            (validationPosition === 'labelBefore' && meta.touched && !meta.error && showSuccess)
+                ? `${sp.iconSize + MAJOR_STEP}px`
+                : undefined,
+    };
 
     const markStyles = [markTheme, markTheme?.css];
     const optionalStyles = [
@@ -119,26 +124,22 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
         optionalTheme?.css,
     ];
 
-    const iconAfterProps = {
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `${-(iconSize / 2)}px`,
-            right: 0,
-            width: iconSize,
-            height: iconSize,
-        },
+    const iconAfterCSS: CSSObject = {
+        position: 'absolute',
+        top: '50%',
+        marginTop: `${-(sp.iconSize / 2)}px`,
+        right: 0,
+        width: sp.iconSize,
+        height: sp.iconSize,
     };
 
-    const iconBeforeProps = {
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `${-(iconSize / 2)}px`,
-            left: 0,
-            width: iconSize,
-            height: iconSize,
-        },
+    const iconBeforeCSS: CSSObject = {
+        position: 'absolute',
+        top: '50%',
+        marginTop: `${-(sp.iconSize / 2)}px`,
+        left: 0,
+        width: sp.iconSize,
+        height: sp.iconSize,
     };
 
     let validationIconHorizontalRule;
@@ -148,62 +149,34 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
     } else if (validationPosition === 'labelAfter') {
         validationIconHorizontalRule = 'right';
     }
-    const iconErrorProps = {
-        fill: usedTheme.components.Form.errorIcon.fill,
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `${-(iconSize / 2)}px`,
-            [validationIconHorizontalRule]: 0,
-            width: iconSize,
-            height: iconSize,
-        },
-    };
+    // const iconErrorProps = {
+    //     fill: usedTheme.components.Form.errorIcon.fill,
+    //     css: {
+    //         position: 'absolute',
+    //         top: '50%',
+    //         marginTop: `${-(iconSize / 2)}px`,
+    //         [validationIconHorizontalRule]: 0,
+    //         width: iconSize,
+    //         height: iconSize,
+    //     },
+    // };
 
-    const iconSuccessProps = {
-        fill: usedTheme.components.Form.successIcon.fill,
-        css: {
-            position: 'absolute',
-            top: '50%',
-            marginTop: `${-(iconSize / 2)}px`,
-            [validationIconHorizontalRule]: 0,
-            width: iconSize,
-            height: iconSize,
-        },
-    };
+    // const iconSuccessProps = {
+    //     fill: usedTheme.components.Form.successIcon.fill,
+    //     css: {
+    //         position: 'absolute',
+    //         top: '50%',
+    //         marginTop: `${-(iconSize / 2)}px`,
+    //         [validationIconHorizontalRule]: 0,
+    //         width: iconSize,
+    //         height: iconSize,
+    //     },
+    // };
 
     const labelProps = {
         name: controlId,
         ...props,
     };
-
-    let IconAfterComponent;
-    if (typeof IconAfter === 'function') {
-        IconAfterComponent = <IconAfter {...iconAfterProps} />;
-    } else if (typeof Icon === 'object') {
-        IconAfterComponent = cloneElement(IconAfter, iconAfterProps);
-    }
-
-    let IconBeforeComponent;
-    if (typeof IconBefore === 'function') {
-        IconBeforeComponent = <IconBefore {...iconBeforeProps} />;
-    } else if (typeof IconBefore === 'object') {
-        IconBeforeComponent = cloneElement(IconBefore, iconBeforeProps);
-    }
-
-    let IconErrorComponent;
-    if (typeof ErrorIcon === 'function') {
-        IconErrorComponent = <ErrorIcon {...iconErrorProps} />;
-    } else if (typeof ErrorIcon === 'object') {
-        IconErrorComponent = cloneElement(ErrorIcon, iconErrorProps);
-    }
-
-    let IconSuccessComponent;
-    if (typeof SuccessIcon === 'function') {
-        IconSuccessComponent = <SuccessIcon {...iconSuccessProps} />;
-    } else if (typeof SuccessIcon === 'object') {
-        IconSuccessComponent = cloneElement(SuccessIcon, iconSuccessProps);
-    }
 
     return (
         <label htmlFor={labelProps.name} css={styles} {...props}>
@@ -212,26 +185,28 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
                 {IconBefore &&
                     !hiddenLabel &&
                     !(validationPosition === 'labelBefore' && meta.touched && meta.error) &&
-                    !(validationPosition === 'labelBefore' && meta.touched && !meta.error && showSuccess) &&
-                    IconBeforeComponent}
+                    !(validationPosition === 'labelBefore' && meta.touched && !meta.error && showSuccess) && (
+                        <IconBefore css={iconBeforeCSS} />
+                    )}
 
                 {IconAfter &&
                     !hiddenLabel &&
                     !(validationPosition === 'labelAfter' && meta.touched && meta.error) &&
-                    !(validationPosition === 'labelAfter' && meta.touched && !meta.error && showSuccess) &&
-                    IconAfterComponent}
+                    !(validationPosition === 'labelAfter' && meta.touched && !meta.error && showSuccess) && (
+                        <IconAfter css={iconAfterCSS} />
+                    )}
 
-                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
+                {/* {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
                     meta.touched &&
                     meta.error &&
                     !hiddenLabel &&
-                    IconErrorComponent}
-                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
+                    IconErrorComponent} */}
+                {/* {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
                     meta.touched &&
                     !meta.error &&
                     showSuccess &&
                     !hiddenLabel &&
-                    IconSuccessComponent}
+                    IconSuccessComponent} */}
                 {optional && required === 'optional' && !hiddenLabel && <span css={optionalStyles}>{optional}</span>}
                 {optional && required === 'optional' && hiddenLabel && <VisuallyHidden>{optional}</VisuallyHidden>}
                 {!optional && required === 'mark' && !hiddenLabel && (
@@ -245,5 +220,22 @@ export const FormLabel: React.FC<IFormLabel> = ({ IconBefore, IconAfter, childre
         </label>
     );
 };
+
+const getStateCSS = ({ color, fill, css }: FormLabelStateProperties) => ({
+    color,
+    fill,
+    ...css,
+});
+
+const getThemeProperties = (
+    labelTheme: FormLabelTheme,
+    state: ComponentStates | 'default',
+): FormLabelThemeProperties | FormLabelStateProperties => {
+    const themeProperties = labelTheme.base[state];
+    return { ...themeProperties };
+};
+
+const getTransition = (time: number, easing: string) =>
+    ['color', 'fill'].map((name) => `${name} ${easing} ${time}ms`).join(', ');
 
 export default FormLabel;

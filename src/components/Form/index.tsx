@@ -1,50 +1,26 @@
-import * as React from 'react';
-import { useContext, createContext, useEffect } from 'react';
-import { Formik, Form as FormikForm, useFormikContext } from 'formik';
-import FormLabel from './Label';
-import FormField from './Field';
+import React, { useEffect } from 'react';
+import { Formik, Form as FormikForm, FormikFormProps, FormikValues, FormikHelpers, useFormikContext } from 'formik';
+import * as Yup from 'yup';
+import FormField, { FormFieldProps } from './Field';
+import FormLabel, { FormLabelProps } from './Label';
 import FormInput, { FormInputProps } from './Input';
+import { FormContext, FormContextProps } from './useForm';
 import FormTheme from '../../types/Form';
 
 export interface FormCompositionProps {
+    Field: React.FC<FormFieldProps>;
+    Label: React.FC<FormLabelProps>;
     Input: React.FC<FormInputProps>;
 }
 
-interface IFormContext {
-    /** Позиционирование ошибок валидации */
-    errorPosition: 'top' | 'bottom';
-    /** Переключение между обязательностью и опциональностью */
-    required: 'optional' | 'mark';
-    /** Иконка ошибки */
-    ErrorIcon?: Function | React.Component;
-    /** Иконка успешной валидации */
-    SuccessIcon?: Function | React.Component;
-    /** Показ успешной валидации */
-    showSuccess: boolean;
-    /** Объект темы кнопки. Для теста в Storybook, перезаписывает глобальный */
-    themeObj?: FormTheme;
+export interface FormProps extends FormContextProps, FormikFormProps {
+    /** Initial formik values */
+    initialValues: FormikValues;
+    /** Yup validation schema */
+    validationSchema?: Yup.Schema<any> | (() => Yup.Schema<any>);
+    /** Formik submit handler */
+    onSubmit: (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => void | Promise<any>;
 }
-
-export interface FormProps extends IFormContext {
-    /** Названия полей с начальными значениями */
-    initialValues: Record<string, any>;
-    /** Валидация через Yup */
-    validationSchema?: Record<string, any>;
-    /** Обработчик сабмита */
-    onSubmit?: (values: FormikValues) => void;
-}
-
-const FormContext = createContext<IFormContext | undefined>(undefined);
-
-export const useForm = (): IFormContext => {
-    const context = useContext(FormContext);
-
-    if (!context) {
-        throw new Error('This component must be used within a <Form> component');
-    }
-
-    return context;
-};
 
 const FocusError = () => {
     const { errors, isSubmitting, isValidating } = useFormikContext();
@@ -64,7 +40,7 @@ const FocusError = () => {
     return null;
 };
 
-export const Form: React.FC<IForm> = ({
+export const Form: React.FC<FormProps> & FormCompositionProps = ({
     errorPosition = 'top',
     required = 'optional',
     ErrorIcon,
@@ -73,12 +49,11 @@ export const Form: React.FC<IForm> = ({
     initialValues,
     validationSchema,
     onSubmit,
-    themeObj,
     children,
     ...props
 }) => {
     return (
-        <FormContext.Provider value={{ errorPosition, required, showSuccess, ErrorIcon, SuccessIcon, themeObj }}>
+        <FormContext.Provider value={{ errorPosition, required, showSuccess, ErrorIcon, SuccessIcon }}>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                 {() => (
                     <FormikForm noValidate {...props}>

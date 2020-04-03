@@ -1559,6 +1559,7 @@ __metadata:
     "@types/svgr__rollup": 4.3.0
     "@types/webpack": 4.41.10
     "@types/webpack-env": 1.15.1
+    "@types/yup": ^0.26.34
     "@typescript-eslint/eslint-plugin": ^2.26.0
     "@typescript-eslint/parser": ^2.26.0
     "@yarnpkg/pnpify": ^2.0.0-rc.20
@@ -3326,6 +3327,13 @@ __metadata:
   dependencies:
     "@types/yargs-parser": "*"
   checksum: 2/03117288be47750740fd8bb670cf987360fc49b374348ce0c17efa743dcfdb52aa97ce001c606924fb062fe24800f680d0db78e1e5bc32c5e3a9f0248050d4d7
+  languageName: node
+  linkType: hard
+
+"@types/yup@npm:^0.26.34":
+  version: 0.26.34
+  resolution: "@types/yup@npm:0.26.34"
+  checksum: 2/56302c9205c229c228f709b8f151be093e5b614fbbf9a2220a263030c3b76c8de4644155fe4dae08443056af8d6ed5d677d82b43d82806e18a2b3b0f0595b052
   languageName: node
   linkType: hard
 

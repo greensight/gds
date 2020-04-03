@@ -64,6 +64,7 @@
         "@emotion/core": "^10.0.28",
         "@tippy.js/react": "^3.1.1",
         "@types/react": "^16.9.31",
+        "@types/yup": "^0.26.34",
         "deepmerge": "^4.2.2",
         "emotion-theming": "^10.0.27",
         "focus-visible": "^5.0.2",

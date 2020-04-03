@@ -2,8 +2,8 @@ import * as React from 'react';
 import useTheme from '../../utils/useTheme';
 import baseTheme from '../../utils/baseTheme';
 import typography from '../../utils/typography';
-import { useFormField } from './Field';
-import { useForm } from '.';
+import { useForm } from './useForm';
+import { useFormField } from './useFormField';
 
 export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
     const { hint, size } = useFormField();
