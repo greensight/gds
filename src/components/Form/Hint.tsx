@@ -1,61 +1,78 @@
-import * as React from 'react';
-import useTheme from '../../utils/useTheme';
+import React from 'react';
 import baseTheme from '../../utils/baseTheme';
+import useComponentTheme from '../../helpers/useComponentTheme';
+import { CSSObject } from '@emotion/core';
+import { FormHintTheme, FormHintThemeProperties, FormHintSizeProperties } from '../../types/Form';
 import typography from '../../utils/typography';
-import { useForm } from './useForm';
 import { useFormField } from './useFormField';
+import { RequiredBy } from '../../types/Utils';
 
-export const FormHint: React.FC<IFormHint> = ({ ...props }) => {
-    const { hint, size } = useFormField();
-    const { themeObj } = useForm();
-    const globalTheme = useTheme();
-    const usedTheme = globalTheme.components?.Hint ? globalTheme : baseTheme;
-    const hintTheme = themeObj?.Hint ? themeObj.Hint : usedTheme.components.Form.Hint;
+export interface FormHintProps extends React.HTMLProps<HTMLSpanElement> {
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+/**
+ * FormHint component.
+ *
+ * Inner component for hint.
+ */
+export const FormHint = ({ css, ...props }: FormHintProps) => {
+    const { size, hint } = useFormField();
+
+    /* Get theme objects. */
+    const { componentTheme, usedTheme } = useComponentTheme('FormHint');
+    const hintTheme = componentTheme as FormHintTheme;
 
     if (!hintTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
 
-    const getRule = (name, defaultValue) => {
-        const sizeStyles = hintTheme.sizes[size];
-        let sizeRule;
-        if (sizeStyles) sizeRule = sizeStyles[name];
-        const baseStyles = hintTheme.base;
-        const baseRule = baseStyles?.[name];
-
-        return sizeRule || baseRule || defaultValue;
+    const themeProperties = getThemeProperties(hintTheme);
+    const themeDefaults = {
+        color: baseTheme.colors.black,
+        borderRadius: 0,
     };
 
-    const border = getRule('border');
-    const borderWidth = getRule('borderWidth', border ? 1 : 0);
-    const borderStyle = getRule('borderStyle', 'solid');
-    const borderRadius = getRule('borderRadius');
-    const typographyName = getRule('typography');
-    const color = getRule('color', baseTheme.colors.black);
-    const bg = getRule('bg', baseTheme.colors.white);
+    const tp: RequiredBy<FormHintThemeProperties, keyof typeof themeDefaults> = {
+        ...themeDefaults,
+        ...themeProperties,
+    };
 
-    const typographyStyles = typographyName && typography(typographyName, usedTheme);
+    const sizeProperties = hintTheme.sizes[size];
+    const sizeDefaults = {};
+    const sp: RequiredBy<FormHintSizeProperties, keyof typeof sizeDefaults> = {
+        ...sizeDefaults,
+        ...sizeProperties,
+    };
 
-    const styles = [
-        {
-            display: 'block',
-            borderWidth,
-            borderStyle,
-            borderRadius,
-            ...typographyStyles,
-            color,
-            background: bg,
-            borderColor: border,
-        },
-        hintTheme.base?.css,
-        hintTheme.sizes?.[size]?.css,
-    ];
+    /* Define CSS rules from theme properties. */
+    const typographyName = sizeProperties.typography;
+    const typographyCSS = typography(typographyName, usedTheme);
 
+    const defaultCSS: CSSObject = {
+        display: 'block',
+        borderWidth: tp.borderWidth,
+        borderStyle: tp.borderStyle,
+        color: tp.color,
+        backgroundColor: tp.bg,
+        borderColor: tp.border,
+        borderRadius: tp.borderRadius,
+        ...typographyCSS,
+        ...tp.css,
+        ...sp.css,
+    };
+    const styles = [defaultCSS, css];
     return (
         <span css={styles} {...props}>
             {hint}
         </span>
     );
+};
+
+const getThemeProperties = (hintTheme: FormHintTheme): FormHintThemeProperties => {
+    const themeProperties = hintTheme?.base;
+    return { ...themeProperties };
 };
 
 export default FormHint;

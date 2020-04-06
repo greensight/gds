@@ -1,12 +1,11 @@
 import React from 'react';
 import scale from '../../utils/scale';
 import { useField } from 'formik';
-/*import cloneElement from '@helpers/cloneElement';*/
 import { useForm } from './useForm';
 import { useFormField } from './useFormField';
 import { FormError } from './Error';
 import { FormHint } from './Hint';
-import { jsx, CSSObject } from '@emotion/core';
+import { CSSObject } from '@emotion/core';
 import typography from '../../utils/typography';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
@@ -18,16 +17,16 @@ import {
 } from '../../types/Form';
 import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
 
-export interface FormInputProps extends React.HTMLProps<HTMLInputElement> {
+export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
     /** Icon after value. Accepts SVGR icon or custom JSX. */
     IconAfter?: SVGRIcon;
     /** Icon before value. Accepts SVGR icon or custom JSX. */
     IconBefore?: SVGRIcon;
-    /** Кастомный CSS */
+    /** Additional CSS. */
     css?: CSSObject;
 }
 
-export const FormInput: React.FC<FormInputProps> = (
+export const FormInput = (
     { IconBefore, IconAfter, css, ...props }: FormInputProps,
     ref: React.Ref<HTMLInputElement>,
 ) => {
@@ -37,8 +36,6 @@ export const FormInput: React.FC<FormInputProps> = (
     /* Get theme objects. */
     const { componentTheme, usedTheme } = useComponentTheme('FormInput');
     const inputTheme = componentTheme as FormInputTheme;
-    //const iconErrorTheme = componentTheme.errorIcon;
-    //const iconSuccessTheme = componentTheme.successIcon;
 
     if (!inputTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
@@ -117,17 +114,15 @@ export const FormInput: React.FC<FormInputProps> = (
         ':focus': getStateCSS(themeFocusProperties),
     };
 
-    const styles = [defaultCSS, statesCSS, css];
+    /* Define CSS rules from theme properties for validation states. */
+    const themeErrorProperties = getThemeProperties(inputTheme, 'error');
+    const themeSuccessProperties = getThemeProperties(inputTheme, 'success');
+    const validationCSS: CSSObject = {
+        ...(meta.touched && meta.error && getStateCSS(themeErrorProperties)),
+        ...(meta.touched && !meta.error && showSuccess && getStateCSS(themeSuccessProperties)),
+    };
 
-    //     meta.touched &&
-    //         meta.error && {
-    //             ...getValidationStyles('error'),
-    //         },
-    //     meta.touched &&
-    //         !meta.error &&
-    //         showSuccess && {
-    //             ...getValidationStyles('success'),
-    //         },
+    const styles = [defaultCSS, statesCSS, validationCSS, css];
 
     const iconBeforeCSS: CSSObject = {
         position: 'absolute',
@@ -153,47 +148,27 @@ export const FormInput: React.FC<FormInputProps> = (
 
     if (validationPosition === 'inputBefore') {
         validationIconHorizontalRule = 'left';
-    } else if (validationPosition === 'inputAfter') {
+    } else {
         validationIconHorizontalRule = 'right';
     }
 
-    // const iconErrorProps = {
-    //     fill: iconErrorTheme.fill,
-    //     css: {
-    //         position: 'absolute',
-    //         top: '50%',
-    //         marginTop: `${-(sp.iconSize / 2)}px`,
-    //         [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
-    //         width: sp.iconSize,
-    //         height: sp.iconSize,
-    //     },
-    // };
+    const iconErrorStyles: CSSObject = {
+        position: 'absolute',
+        top: '50%',
+        marginTop: `${-(sp.iconSize / 2)}px`,
+        [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
+        width: sp.iconSize,
+        height: sp.iconSize,
+    };
 
-    // let IconErrorComponent;
-    // if (typeof ErrorIcon === 'function') {
-    //     IconErrorComponent = <ErrorIcon {...iconErrorProps} />;
-    // } else if (typeof ErrorIcon === 'object') {
-    //     IconErrorComponent = cloneElement(ErrorIcon, iconErrorProps);
-    // }
-
-    // const iconSuccessProps = {
-    //     fill: iconSuccessTheme.fill,
-    //     css: {
-    //         position: 'absolute',
-    //         top: '50%',
-    //         marginTop: `${-(sp.iconSize / 2)}px`,
-    //         [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
-    //         width: sp.iconSize,
-    //         height: sp.iconSize,
-    //     },
-    // };
-
-    // let IconSuccessComponent;
-    // if (typeof SuccessIcon === 'function') {
-    //     IconSuccessComponent = <SuccessIcon {...iconSuccessProps} />;
-    // } else if (typeof ErrorIcon === 'object') {
-    //     IconSuccessComponent = cloneElement(SuccessIcon, iconSuccessProps);
-    // }
+    const iconSuccessStyles: CSSObject = {
+        position: 'absolute',
+        top: '50%',
+        marginTop: `${-(sp.iconSize / 2)}px`,
+        [validationIconHorizontalRule]: `${(height - sp.iconSize) / 2}px`,
+        width: sp.iconSize,
+        height: sp.iconSize,
+    };
 
     const fieldStyles: CSSObject = {
         position: 'relative',
@@ -235,19 +210,15 @@ export const FormInput: React.FC<FormInputProps> = (
                         <IconAfter css={iconAfterCSS} />
                     )}
 
-                {/* {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
-                    meta.touched &&
-                    meta.error &&
-                    IconErrorComponent}
                 {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
                     meta.touched &&
                     meta.error &&
-                    IconErrorComponent}
+                    ErrorIcon && <ErrorIcon css={iconErrorStyles} />}
                 {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
                     meta.touched &&
                     !meta.error &&
                     showSuccess &&
-                    IconSuccessComponent} */}
+                    SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
             </div>
             {meta.error && meta.touched && errorPosition === 'bottom' && (
                 <FormError err={meta.error} id={`error-${controlId}`} />
@@ -267,7 +238,7 @@ const getStateCSS = ({ color, bg, border, shadow, css }: FormInputStatePropertie
 
 const getThemeProperties = (
     inputTheme: FormInputTheme,
-    state: ComponentStates | 'default',
+    state: ComponentStates | 'success' | 'error' | 'default',
 ): FormInputThemeProperties | FormInputStateProperties => {
     const themeProperties = inputTheme.base[state];
     return { ...themeProperties };
@@ -278,4 +249,4 @@ const getTransition = (time: number, easing: string) =>
         .map((name) => `${name} ${easing} ${time}ms`)
         .join(', ');
 
-export default React.forwardRef(FormInput) as typeof FormInput;
+export default React.forwardRef(FormInput);

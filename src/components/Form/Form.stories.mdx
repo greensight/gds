@@ -1,12 +1,11 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { radios, boolean, object, text } from '@storybook/addon-knobs';
+import { radios, boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';
 import * as Yup from 'yup';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import Form from './';
-import { FormInput as FormInputProps } from './Input';
+// import { FormProps } from '../../../.storybook/docgen/Form';
 import Button from '../../components/Button';
 
 <Meta title="Components / Form" component={Form} decorators={[centeredDecorator]} />
@@ -15,7 +14,6 @@ import Button from '../../components/Button';
 
 <Story name="Knobs">
     {() => {
-        const { colors, shadows } = baseTheme;
         const initialValues = {
             exampleInput1: 'Некое значение',
             exampleInput2: '',
@@ -35,140 +33,6 @@ import Button from '../../components/Button';
                 showSuccess={boolean('Show success status', true)}
                 SuccessIcon={baseTheme.global.success}
                 ErrorIcon={baseTheme.global.error}
-                themeObj={
-                    boolean('Use custom theme', false)
-                        ? object('themeObj', {
-                              errorIcon: {
-                                  fill: colors.error,
-                              },
-                              successIcon: {
-                                  fill: colors.success,
-                              },
-                              Input: {
-                                  base: {
-                                      color: colors.black,
-                                      fill: colors.black,
-                                      border: colors.grey20,
-                                      bg: colors.white,
-                                      borderRadius: 4,
-                                      hover: {
-                                          border: colors.brand,
-                                          fill: colors.brand,
-                                      },
-                                      focus: {
-                                          border: colors.brand,
-                                          fill: colors.brand,
-                                          shadow: shadows.focus,
-                                      },
-                                      disabled: {
-                                          color: colors.grey20,
-                                          border: colors.grey70,
-                                          fill: colors.grey20,
-                                          bg: colors.grey70,
-                                      },
-                                      error: {
-                                          border: colors.error,
-                                      },
-                                      success: {
-                                          border: colors.success,
-                                      },
-                                  },
-                                  sizes: {
-                                      lg: {
-                                          height: scale(7),
-                                          padding: scale(1),
-                                          iconSize: scale(4),
-                                          typography: 'bodyLg',
-                                      },
-                                      md: {
-                                          height: scale(5),
-                                          padding: scale(1),
-                                          iconSize: scale(3),
-                                          typography: 'bodyMd',
-                                      },
-                                      sm: {
-                                          height: scale(3),
-                                          padding: scale(1),
-                                          iconSize: scale(2),
-                                          typography: 'bodySm',
-                                      },
-                                  },
-                              },
-                              Label: {
-                                  base: {
-                                      color: colors.black,
-                                      fill: colors.black,
-                                      hover: {
-                                          color: colors.black,
-                                          fill: colors.brand,
-                                      },
-                                      error: {
-                                          color: colors.error,
-                                          fill: colors.error,
-                                      },
-                                      success: {
-                                          color: colors.success,
-                                          fill: colors.black,
-                                      },
-                                  },
-                                  sizes: {
-                                      lg: {
-                                          iconSize: scale(4),
-                                          typography: 'labelLg',
-                                      },
-                                      md: {
-                                          iconSize: scale(3),
-                                          typography: 'labelMd',
-                                      },
-                                      sm: {
-                                          iconSize: scale(2),
-                                          typography: 'labelSm',
-                                      },
-                                  },
-                                  optional: {
-                                      color: colors.grey20,
-                                  },
-                                  mark: {
-                                      color: colors.error,
-                                  },
-                              },
-                              Hint: {
-                                  base: {
-                                      bg: 'transparent',
-                                      color: colors.grey20,
-                                  },
-                                  sizes: {
-                                      lg: {
-                                          typography: 'bodyLg',
-                                      },
-                                      md: {
-                                          typography: 'bodyMd',
-                                      },
-                                      sm: {
-                                          typography: 'bodySm',
-                                      },
-                                  },
-                              },
-                              Error: {
-                                  base: {
-                                      color: colors.error,
-                                      bg: 'transparent',
-                                  },
-                                  sizes: {
-                                      lg: {
-                                          typography: 'bodyLg',
-                                      },
-                                      md: {
-                                          typography: 'bodyMd',
-                                      },
-                                      sm: {
-                                          typography: 'bodySm',
-                                      },
-                                  },
-                              },
-                          })
-                        : undefined
-                }
             >
                 <p>Это форма Вадяна.</p>
                 <br />
@@ -278,10 +142,6 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 ❗️ Компонент `Form` не накладывает никакой стилизации на форму. Сетку вы можете задавать по месту через прокидывание своих классов или
 добавление оберток компонентам формы.
-
-<!-- ## Поле ошибки
-
-Для полей ошибок используется `Form.Error`, который изнутри использует ErrorMessage (formik). Обычно его не нужно использовать напрямую: в полях `Form.Field` он вставляется изнутри, в остальных импортируется из компонента формы и также обрабатывается на уровне компонентов. -->
 
 ## Props of Form
 

@@ -2,54 +2,49 @@ import { CSSObject } from '@emotion/core';
 import { ComponentStates, RequireAtLeastOne } from './Utils';
 
 export interface FormInputStateProperties {
-    /** Цвет текста */
+    /** Text color. */
     color?: string;
-    /** Цвет иконок */
+    /** Icon color. */
     fill?: string;
-    /** Цвет фона */
+    /** Background color. */
     bg?: string;
-    /** Цвет обводки */
+    /** Border color. */
     border?: string;
-    /** Тень */
+    /** Shadow. */
     shadow?: string;
     /** Additional CSS. */
     css?: CSSObject;
 }
 
 export interface FormInputThemeProperties extends FormInputStateProperties {
-    /** Толщина обводки. Проставляется автоматически, если передан border */
+    /** Border width. Equals `1` by default if `border` property is defined. */
     borderWidth?: number;
-    /** Стиль обводки */
+    /** Border style. `'solid'` by default. */
     borderStyle?: string;
-    /** Скругление Поля */
+    /** Border radius. */
     borderRadius?: number | string;
-    /** Время анимации ховера */
+    /** Transition duration. Equals `200` by default. */
     time?: number;
-    /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
+    /** Transition enter duration for hover state. Uses with `time` property to differ enter/exit transition durations. */
     timeIn?: number;
-    /** Функция анимации */
+    /** Transition easing function. Equals `'ease'` by default. */
     easing?: string;
-}
-
-export interface FormInputThemeValidationProperties extends FormInputStateProperties {
-    /** Правила для ошибки */
-    error?: FormInputStateProperties;
-    /** Правила для успеха  */
-    success?: FormInputStateProperties;
 }
 
 export interface FormInputStates extends Partial<Record<ComponentStates, FormInputStateProperties>> {
     default: FormInputThemeProperties;
+    error?: FormInputStateProperties;
+    success?: FormInputStateProperties;
 }
 
 export interface FormInputSizeProperties {
-    /** Height. Equals `scale(6)` by default. */
+    /** Height. Equals `scale(5)` by default. */
     height?: number;
-    /** Horizontal paddings. Equals `scale(3)` by default. */
+    /** Horizontal paddings. Equals `scale(1)` by default. */
     padding?: number;
     /** Icon size. Equals `scale(3)` by default. */
     iconSize?: number;
-    /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default.*/
+    /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
     typography?: string;
     /** Additional CSS. */
     css?: CSSObject;
@@ -63,124 +58,115 @@ export interface FormInputTheme {
 }
 
 export interface FormLabelStateProperties {
-    /** Цвет текста */
+    /** Text color. */
     color?: string;
-    /** Цвет иконок */
+    /** Icon color. */
     fill?: string;
     /** Additional CSS. */
     css?: CSSObject;
 }
 
 export interface FormLabelThemeProperties extends FormLabelStateProperties {
-    /** Время анимации ховера */
+    /** Transition duration. Equals `200` by default. */
     time?: number;
-    /** Время анимации перехода на ховер. Указывается, когда нужно разделить тайминги входа/выхода */
+    /** Transition enter duration for hover state. Uses with `time` property to differ enter/exit transition durations. */
     timeIn?: number;
-    /** Функция анимации */
+    /** Transition easing function. Equals `'ease'` by default. */
     easing?: string;
-}
-
-export interface FormLabelThemeValidationProperties extends FormLabelStateProperties {
-    /** Правила для ошибки */
-    error?: FormLabelStateProperties;
-    /** Правила для успеха  */
-    success?: FormLabelStateProperties;
 }
 
 export interface FormLabelStates extends Partial<Record<ComponentStates, FormLabelStateProperties>> {
     default: FormLabelThemeProperties;
+    error?: FormLabelStateProperties;
+    success?: FormLabelStateProperties;
 }
 
 export interface FormLabelSizeProperties {
-    /** Имя типографического стиля */
+    /** Typography style. Can be omitted if `fontSize`, `fontWeight` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'`, `700` and `1` by default. */
     typography?: string;
-    /** Размер иконки */
+    /** Icon size. Equals `scale(3)` by default. */
     iconSize?: number;
-    /** Кастомный CSS */
-    css?: Object;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
-export interface FormLabelOptionalRules {
-    /** Цвет опционального текста */
+export interface FormLabelOptionalProperties {
+    /** Text color. */
     color?: string;
-    /** Кастомный CSS */
-    css?: Object;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
-export interface FormLabelMarkRules {
-    /** Цвет астериска */
+export interface FormLabelMarkProperties {
+    /** Asterisk color. */
     color?: string;
-    /** Кастомный CSS */
-    css?: Object;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
+
 export interface FormLabelTheme {
     /** Base rules. */
     base: FormLabelStates;
     /** Available sizes. Any label can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, FormLabelSizeProperties>, 'md'>;
     /** Rules for optional text. */
-    optional?: FormLabelOptionalRules;
+    optional?: FormLabelOptionalProperties;
     /** Rules for asterisk. */
-    mark?: FormLabelMarkRules;
+    mark?: FormLabelMarkProperties;
 }
 
-export interface IFormHintBaseRules {
-    /** Цвет текста */
+export interface FormHintThemeProperties {
+    /** Text color. */
     color?: string;
-    /** Цвет фона */
+    /** Background color. */
     bg?: string;
-    /** Цвет обводки */
+    /** Border color. */
     border?: string;
-    /** Толщина обводки. Проставляется автоматически, если передан border */
+    /** Border width. Equals `1` by default if `border` property is defined. */
     borderWidth?: number;
-    /** Стиль обводки */
+    /** Border style. `'solid'` by default. */
     borderStyle?: string;
-    /** Скругление */
+    /** Border radius. */
     borderRadius?: number | string;
-    /** Кастомный CSS */
-    css?: Object;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
-export interface IFormHintSizeRules {
-    /** Имя типографического стиля */
+export interface FormHintSizeProperties {
+    /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
     typography?: string;
-    /** Кастомный CSS */
-    css?: Object;
+    /** Additional CSS. */
+    css?: CSSObject;
 }
 
-export interface IFormHint {
-    /** Глобальные стили. Распространяются на все хинты */
-    base?: IFormHintBaseRules;
-    /** Стили размеров */
-    sizes: {
-        /** Дефолтный размер */
-        md: IFormHintSizeRules;
-        /** Можно добавлять свои размеры */
-        [size: string]: IFormHintSizeRules;
-    };
+export interface FormHintTheme {
+    /** Common settings for all themes. */
+    base?: FormHintThemeProperties;
+    /** Available sizes. Any hint can have size from this list. You must define at least `md` size. */
+    sizes: RequireAtLeastOne<Record<string, FormHintSizeProperties>, 'md'>;
 }
 
 export interface FormErrorThemeProperties {
-    /** Цвет текста */
+    /** Text color. */
     color?: string;
-    /** Цвет фона */
+    /** Background color. */
     bg?: string;
-    /** Цвет обводки */
+    /** Border color. */
     border?: string;
-    /** Толщина обводки. Проставляется автоматически, если передан border */
+    /** Border width. Equals `1` by default if `border` property is defined. */
     borderWidth?: number;
-    /** Стиль обводки */
+    /** Border style. `'solid'` by default. */
     borderStyle?: string;
-    /** Скругление Поля */
+    /** Border radius. */
     borderRadius?: number | string;
-    /** Тень */
+    /** Shadow. */
     shadow?: string;
     /** Additional CSS. */
     css?: CSSObject;
 }
 
 export interface FormErrorSizeProperties {
-    /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default.*/
+    /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
     typography?: string;
     /** Additional CSS. */
     css?: CSSObject;

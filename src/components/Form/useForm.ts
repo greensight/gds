@@ -3,16 +3,16 @@ import React, { createContext, useContext } from 'react';
 import { SVGRIcon } from '../../types/Utils';
 
 export interface FormContextProps {
-    /** Error position */
+    /** Error's positioning. */
     errorPosition: 'top' | 'bottom';
-    /** Switch between optional text & asterisk */
+    /** Switch between optional text & asterisk. */
     required: 'optional' | 'mark';
-    /** Error icon for validation */
+    /** Error icon for validation. */
     ErrorIcon?: SVGRIcon;
-    /** Success icon for validation */
+    /** Success icon for validation. Doesn't make sense without `showSuccess` prop. */
     SuccessIcon?: SVGRIcon;
-    /** Show success status for validation or not */
-    showSuccess: boolean;
+    /** Show success status for validation or not. */
+    showSuccess?: boolean;
     // /** Form theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     // themeObj?: FormTheme;
 }

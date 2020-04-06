@@ -5,7 +5,6 @@ import FormField, { FormFieldProps } from './Field';
 import FormLabel, { FormLabelProps } from './Label';
 import FormInput, { FormInputProps } from './Input';
 import { FormContext, FormContextProps } from './useForm';
-import FormTheme from '../../types/Form';
 
 export interface FormCompositionProps {
     Field: React.FC<FormFieldProps>;
@@ -14,11 +13,13 @@ export interface FormCompositionProps {
 }
 
 export interface FormProps extends FormContextProps, FormikFormProps {
-    /** Initial formik values */
+    /** Form content. */
+    children: React.ReactNode;
+    /** Initial formik values. */
     initialValues: FormikValues;
-    /** Yup validation schema */
+    /** Yup validation schema. */
     validationSchema?: Yup.Schema<any> | (() => Yup.Schema<any>);
-    /** Formik submit handler */
+    /** Formik submit handler. */
     onSubmit: (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => void | Promise<any>;
 }
 
@@ -43,9 +44,9 @@ const FocusError = () => {
 export const Form: React.FC<FormProps> & FormCompositionProps = ({
     errorPosition = 'top',
     required = 'optional',
+    SuccessIcon,
     ErrorIcon,
     showSuccess = true,
-    SuccessIcon,
     initialValues,
     validationSchema,
     onSubmit,

@@ -15,6 +15,13 @@ export interface FormErrorProps extends React.HTMLProps<HTMLSpanElement> {
     css?: CSSObject;
 }
 
+/**
+ * FormError component.
+ *
+ * Inner component for error message.
+ *
+ */
+
 export const FormError = ({ err, css, ...props }: FormErrorProps) => {
     const { size } = useFormField();
 
@@ -24,13 +31,14 @@ export const FormError = ({ err, css, ...props }: FormErrorProps) => {
     if (!errorTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
-
+    const sizeDefaults = {};
     const sizeProperties = errorTheme.sizes[size];
-    const sp = {
+    const sp: RequiredBy<FormErrorSizeProperties, keyof typeof sizeDefaults> = {
+        ...sizeDefaults,
         ...sizeProperties,
     };
 
-    /* Define CSS rules from theme properties for default state. */
+    /* Define CSS rules from theme properties. */
     const typographyName = sp.typography;
     const typographyCSS = typography(typographyName, usedTheme);
 
@@ -56,6 +64,7 @@ export const FormError = ({ err, css, ...props }: FormErrorProps) => {
         marginTop: scale(1),
         ...typographyCSS,
         borderRadius: tp.borderRadius,
+        ...tp.css,
         ...sp.css,
     };
     const styles = [defaultCSS, css];
@@ -68,8 +77,8 @@ export const FormError = ({ err, css, ...props }: FormErrorProps) => {
 };
 
 const getThemeProperties = (formErrorTheme: FormErrorTheme): FormErrorThemeProperties => {
-    const baseProperties = formErrorTheme.base;
-    return { ...baseProperties };
+    const themeProperties = formErrorTheme?.base;
+    return { ...themeProperties };
 };
 
 export default FormError;

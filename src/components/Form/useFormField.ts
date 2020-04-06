@@ -1,20 +1,19 @@
-/** Импорт React нужен для tsc. */
 import React, { createContext, useContext } from 'react';
 
 export interface FormFieldContextProps {
-    /** Размер. Выбирается из определённых в объекте темы */
+    /** Size name from list of sizes defined in theme object at `components.FormInput.sizes`. */
     size: string;
-    /** Позиционирование подсказки к полю */
-    hintPosition: 'top' | 'bottom';
-    /** Текст подсказки */
-    hint: string;
-    /** Устанавливает id компонентам FormInput и FormLabel */
+    /** Hint's positioning. */
+    hintPosition?: 'top' | 'bottom';
+    /** Hint text. */
+    hint?: string;
+    /** Set `htmlFor` to `Form.Label` and `id` and `name` to `Form.Input`. */
     controlId: string;
-    /** Визуально скрытый лейбл для скрин-ридеров */
-    hiddenLabel: boolean;
-    /** Расположение иконки валидации */
-    validationPosition: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
-    /** Устанавливает опциональное заполнение компоненту */
+    /** Visually hidden label. Keeps text accessible. */
+    hiddenLabel?: boolean;
+    /** Validation icon's positioning. */
+    validationPosition?: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
+    /** Set optional fill to `Form.Input`. If get string, also set optional text to `Form.Label`. */
     optional?: boolean | string;
 }
 
