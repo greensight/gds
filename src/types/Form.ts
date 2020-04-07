@@ -179,4 +179,18 @@ export interface FormErrorTheme {
     sizes: RequireAtLeastOne<Record<string, FormErrorSizeProperties>, 'md'>;
 }
 
-export default interface FormTheme {}
+export interface FormValidationIconProperties {
+    /** Icon color. */
+    fill?: string;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export default interface FormTheme {
+    /** Rules for error icon. */
+    errorIcon?: FormValidationIconProperties;
+    /** Rules for success icon. */
+    successIcon?: FormValidationIconProperties;
+    /** Additional CSS. */
+    css?: CSSObject;
+}

@@ -1,11 +1,12 @@
 import React from 'react';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
-import {
+import FormTheme, {
     FormLabelTheme,
     FormLabelThemeProperties,
     FormLabelSizeProperties,
     FormLabelStateProperties,
+    FormValidationIconProperties,
 } from '../../types/Form';
 import scale from '../../utils/scale';
 import { CSSObject } from '@emotion/core';
@@ -159,7 +160,9 @@ export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElem
     } else {
         validationIconHorizontalRule = 'right';
     }
-    const iconErrorStyles: CSSObject = {
+    const { componentTheme: componentFormTheme } = useComponentTheme('Form');
+    const formTheme = componentFormTheme as FormTheme;
+    const iconErrorDefaultStyles: CSSObject = {
         position: 'absolute',
         top: '50%',
         marginTop: `${-(sp.iconSize / 2)}px`,
@@ -167,8 +170,10 @@ export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElem
         width: sp.iconSize,
         height: sp.iconSize,
     };
+    const errorIconProperties = getIconProperty(formTheme, 'errorIcon');
+    const iconErrorStyles = [iconErrorDefaultStyles, getIconCSS(errorIconProperties), formTheme.errorIcon?.css];
 
-    const iconSuccessStyles: CSSObject = {
+    const iconSuccessDefaultStyles: CSSObject = {
         position: 'absolute',
         top: '50%',
         marginTop: `${-(sp.iconSize / 2)}px`,
@@ -176,6 +181,8 @@ export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElem
         width: sp.iconSize,
         height: sp.iconSize,
     };
+    const successIconProperties = getIconProperty(formTheme, 'successIcon');
+    const iconSuccessStyles = [iconSuccessDefaultStyles, getIconCSS(successIconProperties), formTheme.successIcon?.css];
 
     const labelProps = {
         name: controlId,
@@ -243,6 +250,16 @@ const getAdditionalProperty = (labelTheme: FormLabelTheme, property: 'optional' 
     const themeProperties = labelTheme[property];
     return { ...themeProperties };
 };
+
+const getIconProperty = (formTheme: FormTheme, property: 'successIcon' | 'errorIcon'): FormValidationIconProperties => {
+    const themeProperties = formTheme[property];
+    return { ...themeProperties };
+};
+
+const getIconCSS = ({ fill, css }: FormValidationIconProperties) => ({
+    fill,
+    ...css,
+});
 
 const getTransition = (time: number, easing: string) =>
     ['color', 'fill'].map((name) => `${name} ${easing} ${time}ms`).join(', ');

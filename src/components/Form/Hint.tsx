@@ -15,7 +15,7 @@ export interface FormHintProps extends React.HTMLProps<HTMLSpanElement> {
 /**
  * FormHint component.
  *
- * Inner component for hint.
+ * Inner component for hint. Use in `Form.Input` or `Form.Label` (by default).
  */
 export const FormHint = ({ css, ...props }: FormHintProps) => {
     const { size, hint } = useFormField();

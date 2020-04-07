@@ -2,8 +2,6 @@
 import React from 'react';
 import deepmerge from 'deepmerge';
 import PlaceholderIcon from '../icons/tokens/medium/placeholder.svg';
-import ErrorIcon from '../icons/tokens/medium/errorTriangle.svg';
-import SuccessIcon from '../icons/tokens/medium/checkCircle.svg';
 import scale from './scale';
 import { FONT_STACK } from '../helpers/constants';
 import tokens from '../../public/tokens.json';
@@ -18,8 +16,6 @@ const { colors, shadows } = tokens;
 const baseTheme = deepmerge(tokens, {
     global: {
         placeholder: PlaceholderIcon,
-        success: SuccessIcon,
-        error: ErrorIcon,
         fonts: {
             fontFace: {
                 'PT Root UI': [

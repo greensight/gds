@@ -18,7 +18,7 @@ export interface FormErrorProps extends React.HTMLProps<HTMLSpanElement> {
 /**
  * FormError component.
  *
- * Inner component for error message.
+ * Inner component for error message. Use in `Form.Input` or `Form.Label` (by default).
  *
  */
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormFieldContext, FormFieldContextProps } from './useFormField';
 
-export interface FormFieldProps extends FormFieldContextProps {
+export interface FormFieldProps extends FormFieldContextProps, Omit<React.HTMLProps<HTMLDivElement>, 'size'> {
     children: React.ReactNode;
 }
 
@@ -13,7 +13,7 @@ export interface FormFieldProps extends FormFieldContextProps {
  * Provide props to `Form.Label` and `Form.Input` components.
  *
  */
-export const FormField: React.FC<FormFieldProps> & React.HTMLProps<HTMLDivElement> = ({
+export const FormField = ({
     size = 'md',
     hintPosition = 'top',
     hint,

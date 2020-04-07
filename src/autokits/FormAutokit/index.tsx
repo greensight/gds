@@ -22,9 +22,8 @@ const FormAutokit = ({ ErrorIcon, SuccessIcon }: FormAutokitProps) => {
     const { componentTheme: componentInputTheme } = useComponentTheme('FormInput');
     const inputTheme = componentInputTheme as FormInputTheme;
 
-    const PlaceholderErrorIcon = ErrorIcon || baseTheme.global?.error;
-    const PlaceholderSuccessIcon = SuccessIcon || baseTheme.global?.success;
-
+    const PlaceholderErrorIcon = ErrorIcon || theme.global?.placeholder || baseTheme.global?.placeholder;
+    const PlaceholderSuccessIcon = SuccessIcon || theme.global?.placeholder || baseTheme.global?.placeholder;
     const PlaceholderIcon = theme.global?.placeholder || baseTheme.global?.placeholder;
 
     return (

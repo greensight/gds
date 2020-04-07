@@ -9,15 +9,16 @@ import { CSSObject } from '@emotion/core';
 import typography from '../../utils/typography';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
-import {
+import FormTheme, {
     FormInputTheme,
     FormInputThemeProperties,
     FormInputSizeProperties,
     FormInputStateProperties,
+    FormValidationIconProperties,
 } from '../../types/Form';
 import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
 
-export interface FormInputProps extends React.HTMLProps<HTMLDivElement> {
+export interface FormInputProps {
     /** Icon after value. Accepts SVGR icon or custom JSX. */
     IconAfter?: SVGRIcon;
     /** Icon before value. Accepts SVGR icon or custom JSX. */
@@ -152,7 +153,9 @@ export const FormInput = (
         validationIconHorizontalRule = 'right';
     }
 
-    const iconErrorStyles: CSSObject = {
+    const { componentTheme: componentFormTheme } = useComponentTheme('Form');
+    const formTheme = componentFormTheme as FormTheme;
+    const iconErrorDefaultStyles: CSSObject = {
         position: 'absolute',
         top: '50%',
         marginTop: `${-(sp.iconSize / 2)}px`,
@@ -160,8 +163,10 @@ export const FormInput = (
         width: sp.iconSize,
         height: sp.iconSize,
     };
+    const errorIconProperties = getIconProperty(formTheme, 'errorIcon');
+    const iconErrorStyles = [iconErrorDefaultStyles, getIconCSS(errorIconProperties), formTheme.errorIcon?.css];
 
-    const iconSuccessStyles: CSSObject = {
+    const iconSuccessDefaultStyles: CSSObject = {
         position: 'absolute',
         top: '50%',
         marginTop: `${-(sp.iconSize / 2)}px`,
@@ -169,6 +174,8 @@ export const FormInput = (
         width: sp.iconSize,
         height: sp.iconSize,
     };
+    const successIconProperties = getIconProperty(formTheme, 'successIcon');
+    const iconSuccessStyles = [iconSuccessDefaultStyles, getIconCSS(successIconProperties), formTheme.successIcon?.css];
 
     const fieldStyles: CSSObject = {
         position: 'relative',
@@ -243,6 +250,16 @@ const getThemeProperties = (
     const themeProperties = inputTheme.base[state];
     return { ...themeProperties };
 };
+
+const getIconProperty = (formTheme: FormTheme, property: 'successIcon' | 'errorIcon'): FormValidationIconProperties => {
+    const themeProperties = formTheme[property];
+    return { ...themeProperties };
+};
+
+const getIconCSS = ({ fill, css }: FormValidationIconProperties) => ({
+    fill,
+    ...css,
+});
 
 const getTransition = (time: number, easing: string) =>
     ['color', 'fill', 'background-color', 'border-color', 'box-shadow']

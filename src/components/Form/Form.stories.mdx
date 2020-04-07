@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import Form from './';
 // import { FormProps } from '../../../.storybook/docgen/Form';
+import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
+import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 import Button from '../../components/Button';
 
 <Meta title="Components / Form" component={Form} decorators={[centeredDecorator]} />
@@ -31,15 +33,15 @@ import Button from '../../components/Button';
                 style={{ width: '25vw', minWidth: '320px' }}
                 data-vadyan="{title: 'Это форма Вадяна'}"
                 showSuccess={boolean('Show success status', true)}
-                SuccessIcon={baseTheme.global.success}
-                ErrorIcon={baseTheme.global.error}
+                SuccessIcon={SuccessIcon}
+                ErrorIcon={ErrorIcon}
             >
                 <p>Это форма Вадяна.</p>
                 <br />
                 <Form.Field
                     controlId="exampleInput1"
                     size={radios('size', ['lg', 'md', 'sm'], 'md')}
-                    hint={boolean('Hint', true) ? text('Hint text', 'Подсказка к полю 2') : undefined}
+                    hint={boolean('Hint', true) ? text('Hint text', 'Подсказка к полю 1') : undefined}
                     hintPosition={radios('hintPosition', ['top', 'bottom'], 'top')}
                     hiddenLabel={boolean('Hidden Label', false)}
                     validationPosition={radios(
@@ -53,7 +55,7 @@ import Button from '../../components/Button';
                         IconBefore={boolean('Label icon before', true) && baseTheme.global.placeholder}
                         IconAfter={boolean('Label icon after', true) && baseTheme.global.placeholder}
                     >
-                        Лейбл 2
+                        Лейбл 1
                     </Form.Label>
                     <Form.Input
                         onFocus={action('onFocus')}
@@ -220,7 +222,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    ErrorIcon={baseTheme.global.error}
+                    ErrorIcon={ErrorIcon}
                     showSuccess={false}
                 >
                     <Form.Field controlId="errorLabel1">
@@ -246,7 +248,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    ErrorIcon={baseTheme.global.error}
+                    ErrorIcon={ErrorIcon}
                     showSuccess={false}
                     errorPosition="bottom"
                 >
@@ -295,8 +297,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon1">
                         <Form.Label>Иконка валидации после текста</Form.Label>
@@ -323,8 +325,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon2" validationPosition="labelBefore">
                         <Form.Label>Иконка валидации до текста</Form.Label>
@@ -351,8 +353,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon3" validationPosition="inputAfter">
                         <Form.Label>Иконка валидации в поле после значения</Form.Label>
@@ -379,8 +381,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon4" validationPosition="inputBefore">
                         <Form.Label>Иконка валидации в поле до значения</Form.Label>
@@ -419,8 +421,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="successLabel1">
                         <Form.Label>Лейбл</Form.Label>
@@ -448,7 +450,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
                     showSuccess={false}
-                    ErrorIcon={baseTheme.global.error}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="successLabel2">
                         <Form.Label>Лейбл</Form.Label>
@@ -569,8 +571,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="hiddenLabel" hiddenLabel={true} validationPosition="inputAfter">
                         <Form.Label>Визуально скрытый лейбл</Form.Label>
@@ -616,8 +618,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon1" validationPosition="labelAfter">
                         <Form.Label IconAfter={baseTheme.global.placeholder}>Лейбл с иконкой после текста</Form.Label>
@@ -644,8 +646,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
                         <Form.Label IconBefore={baseTheme.global.placeholder}>Лейбл с иконкой до текста</Form.Label>
@@ -672,8 +674,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
                         <Form.Label IconAfter={baseTheme.global.placeholder} IconBefore={baseTheme.global.placeholder}>
@@ -723,8 +725,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon1" validationPosition="inputAfter">
                         <Form.Label>Поле с иконкой до текста</Form.Label>
@@ -751,8 +753,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon2" validationPosition="inputBefore">
                         <Form.Label>Поле с иконкой после текста</Form.Label>
@@ -779,8 +781,8 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={action('Submit')}
-                    SuccessIcon={baseTheme.global.success}
-                    ErrorIcon={baseTheme.global.error}
+                    SuccessIcon={SuccessIcon}
+                    ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon3" validationPosition="inputAfter">
                         <Form.Label>Поле с двумя иконками</Form.Label>
