@@ -229,19 +229,19 @@ const baseTheme = deepmerge(tokens, {
             sizes: {
                 lg: {
                     height: scale(7),
-                    padding: scale(1),
+                    padding: `0.5em ${scale(1)}px`,
                     iconSize: scale(4),
                     typography: 'bodyLg',
                 },
                 md: {
                     height: scale(5),
-                    padding: scale(1),
+                    padding: `0.4em ${scale(1)}px`,
                     iconSize: scale(3),
                     typography: 'bodyMd',
                 },
                 sm: {
                     height: scale(3),
-                    padding: scale(1),
+                    padding: `0.3em ${scale(1)}px`,
                     iconSize: scale(2),
                     typography: 'bodySm',
                 },

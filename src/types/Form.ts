@@ -40,8 +40,8 @@ export interface FormInputStates extends Partial<Record<ComponentStates, FormInp
 export interface FormInputSizeProperties {
     /** Height. Equals `scale(5)` by default. */
     height?: number;
-    /** Horizontal paddings. Equals `scale(1)` by default. */
-    padding?: number;
+    /** Paddings. Equals `0.4em scale(1)` by default. */
+    padding?: string | number;
     /** Icon size. Equals `scale(3)` by default. */
     iconSize?: number;
     /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
@@ -56,7 +56,6 @@ export interface FormInputTheme {
     /** Available sizes. Any input can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, FormInputSizeProperties>, 'md'>;
 }
-
 export interface FormLabelStateProperties {
     /** Text color. */
     color?: string;

@@ -31,13 +31,7 @@ export interface FormLabelProps extends React.HTMLProps<HTMLLabelElement> {
     css?: CSSObject;
 }
 
-export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElement> = ({
-    IconBefore,
-    IconAfter,
-    children,
-    css,
-    ...props
-}: FormLabelProps) => {
+export const FormLabel = ({ IconBefore, IconAfter, children, css, ...props }: FormLabelProps) => {
     const { controlId, optional, size, hint, hintPosition, hiddenLabel, validationPosition } = useFormField();
     const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon } = useForm();
 
@@ -81,6 +75,7 @@ export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElem
     const transition = getTransition(tp.time, tp.easing);
     const defaultCSS: CSSObject = {
         display: 'block',
+        marginBottom: hiddenLabel ? undefined : scale(1),
         ...typographyCSS,
         transition,
         ...getStateCSS(tp),
@@ -184,6 +179,10 @@ export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElem
     const successIconProperties = getIconProperty(formTheme, 'successIcon');
     const iconSuccessStyles = [iconSuccessDefaultStyles, getIconCSS(successIconProperties), formTheme.successIcon?.css];
 
+    const labelTextStyles: CSSObject = {
+        display: 'inline-block',
+    };
+
     const labelProps = {
         name: controlId,
         ...props,
@@ -192,7 +191,11 @@ export const FormLabel: React.FC<FormLabelProps> & React.HTMLProps<HTMLLabelElem
     return (
         <label htmlFor={labelProps.name} css={styles} {...props}>
             <span css={textStyles}>
-                {hiddenLabel ? <VisuallyHidden>{children}</VisuallyHidden> : children}
+                {hiddenLabel ? (
+                    <VisuallyHidden>{children}</VisuallyHidden>
+                ) : (
+                    <span css={labelTextStyles}>{children}</span>
+                )}
                 {IconBefore &&
                     !hiddenLabel &&
                     !(validationPosition === 'labelBefore' && meta.touched && meta.error) &&

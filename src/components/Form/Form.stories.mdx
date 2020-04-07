@@ -5,10 +5,10 @@ import baseTheme from '../../utils/baseTheme';
 import * as Yup from 'yup';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import Form from './';
-// import { FormProps } from '../../../.storybook/docgen/Form';
 import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
 import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 import Button from '../../components/Button';
+import scale from '../../utils/scale';
 
 <Meta title="Components / Form" component={Form} decorators={[centeredDecorator]} />
 
@@ -30,14 +30,13 @@ import Button from '../../components/Button';
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={action('Submit')}
-                style={{ width: '25vw', minWidth: '320px' }}
+                css={{ width: '25vw', minWidth: '320px' }}
                 data-vadyan="{title: 'Это форма Вадяна'}"
                 showSuccess={boolean('Show success status', true)}
                 SuccessIcon={SuccessIcon}
                 ErrorIcon={ErrorIcon}
             >
-                <p>Это форма Вадяна.</p>
-                <br />
+                <p style={{ marginBottom: scale(2) }}>Это форма Вадяна.</p>
                 <Form.Field
                     controlId="exampleInput1"
                     size={radios('size', ['lg', 'md', 'sm'], 'md')}
@@ -50,6 +49,7 @@ import Button from '../../components/Button';
                         'labelAfter',
                     )}
                     optional="(Необязательное поле)"
+                    style={{ marginBottom: scale(2) }}
                 >
                     <Form.Label
                         IconBefore={boolean('Label icon before', true) && baseTheme.global.placeholder}
@@ -63,7 +63,6 @@ import Button from '../../components/Button';
                         IconAfter={boolean('Input icon after', true) && baseTheme.global.placeholder}
                     />
                 </Form.Field>
-                <br />
                 <Form.Field
                     controlId="exampleInput2"
                     size={radios('size', ['lg', 'md', 'sm'], 'md')}
@@ -75,6 +74,7 @@ import Button from '../../components/Button';
                         ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
                         'labelAfter',
                     )}
+                    style={{ marginBottom: scale(2) }}
                 >
                     <Form.Label
                         IconBefore={boolean('Label icon before', true) && baseTheme.global.placeholder}
@@ -87,7 +87,6 @@ import Button from '../../components/Button';
                         IconAfter={boolean('Input icon after', true) && baseTheme.global.placeholder}
                     />
                 </Form.Field>
-                <br />
                 <Button type="submit">Submit</Button>
             </Form>
         );
@@ -147,7 +146,14 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 ## Props of Form
 
-<Props of={Form} />
+<Props
+    components={{
+        Form,
+        'Form.Field': Form.Field,
+        'Form.Input': Form.Input,
+        'Form.Label': Form.Label,
+    }}
+/>
 
 ## Use Cases
 

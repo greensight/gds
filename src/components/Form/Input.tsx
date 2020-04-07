@@ -59,7 +59,7 @@ export const FormInput = (
     const sizeProperties = inputTheme.sizes[size];
     const sizeDefaults = {
         height: scale(5),
-        padding: scale(1),
+        padding: `0.5em, ${scale(1)}`,
         iconSize: scale(3),
     };
     const sp: RequiredBy<FormInputSizeProperties, keyof typeof sizeDefaults> = {
@@ -72,7 +72,7 @@ export const FormInput = (
     const typographyCSS = typography(typographyName, usedTheme);
     const borderRadius = tp.borderRadius;
     const height = sp.height;
-    const padding = `${sp.padding}px ${sp.padding}px`;
+    const padding = `${sp.padding}`;
     const transition = getTransition(tp.time, tp.easing);
 
     const [field, meta] = useField(controlId);

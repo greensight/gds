@@ -4,6 +4,7 @@ import { CSSObject } from '@emotion/core';
 import baseTheme from '../../utils/baseTheme';
 import typography from '../../utils/typography';
 import { useFormField } from './useFormField';
+import { useForm } from './useForm';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import { FormErrorTheme, FormErrorThemeProperties, FormErrorSizeProperties } from '../../types/Form';
 import { RequiredBy } from '../../types/Utils';
@@ -23,7 +24,8 @@ export interface FormErrorProps extends React.HTMLProps<HTMLSpanElement> {
  */
 
 export const FormError = ({ err, css, ...props }: FormErrorProps) => {
-    const { size } = useFormField();
+    const { size, hiddenLabel } = useFormField();
+    const { errorPosition } = useForm();
 
     const { componentTheme, usedTheme } = useComponentTheme('FormError');
     const errorTheme = componentTheme as FormErrorTheme;
@@ -61,7 +63,7 @@ export const FormError = ({ err, css, ...props }: FormErrorProps) => {
         backgroundColor: tp.bg,
         borderColor: tp.border,
         boxShadow: tp.shadow,
-        marginTop: scale(1),
+        marginTop: (errorPosition === 'top' && !hiddenLabel) || errorPosition === 'bottom' ? scale(1) : undefined,
         ...typographyCSS,
         borderRadius: tp.borderRadius,
         ...tp.css,

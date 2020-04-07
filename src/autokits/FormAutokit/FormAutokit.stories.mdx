@@ -1,6 +1,9 @@
-import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import { action } from '@storybook/addon-actions';
 import FormAutokit from '.';
+import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
+import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 
 <Meta title="Autokits / FormAutokit" component={FormAutokit} decorators={[paddingDecorator]} />
 
@@ -8,8 +11,10 @@ import FormAutokit from '.';
 
 <Preview>
     <Story name="basic">
-        <FormAutokit />
+        <FormAutokit SuccessIcon={SuccessIcon} ErrorIcon={ErrorIcon} onSubmit={action('Submit')} />
     </Story>
 </Preview>
 
 ## Props
+
+<Props of={FormAutokit} />
