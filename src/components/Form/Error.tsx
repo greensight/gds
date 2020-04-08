@@ -12,8 +12,6 @@ import { RequiredBy } from '../../types/Utils';
 export interface FormErrorProps extends React.HTMLProps<HTMLSpanElement> {
     /** Error text. */
     err: string;
-    /** Additional CSS. */
-    css?: CSSObject;
 }
 
 /**
@@ -23,7 +21,7 @@ export interface FormErrorProps extends React.HTMLProps<HTMLSpanElement> {
  *
  */
 
-export const FormError = ({ err, css, ...props }: FormErrorProps) => {
+export const FormError = ({ err, ...props }: FormErrorProps) => {
     const { size, hiddenLabel } = useFormField();
     const { errorPosition } = useForm();
 
@@ -55,7 +53,7 @@ export const FormError = ({ err, css, ...props }: FormErrorProps) => {
         ...themeProperties,
     };
 
-    const defaultCSS: CSSObject = {
+    const styles: CSSObject = {
         display: 'block',
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
@@ -69,7 +67,6 @@ export const FormError = ({ err, css, ...props }: FormErrorProps) => {
         ...tp.css,
         ...sp.css,
     };
-    const styles = [defaultCSS, css];
 
     return (
         <span css={styles} {...props}>

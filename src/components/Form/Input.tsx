@@ -16,26 +16,37 @@ import FormTheme, {
     FormInputStateProperties,
     FormValidationIconProperties,
 } from '../../types/Form';
-import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
+import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
 
-export interface FormInputProps {
+export interface FormInputBaseProps {
     /** Icon after value. Accepts SVGR icon or custom JSX. */
     IconAfter?: SVGRIcon;
     /** Icon before value. Accepts SVGR icon or custom JSX. */
     IconBefore?: SVGRIcon;
+    /** Input theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __theme?: FormInputTheme;
     /** Additional CSS. */
     css?: CSSObject;
 }
 
-export const FormInput = (
-    { IconBefore, IconAfter, css, ...props }: FormInputProps,
+export type FormInputProps<P extends React.ElementType = 'input'> = {} & MergeElementProps<P, FormInputBaseProps>;
+
+/**
+ * FormInput component.
+ *
+ * Render <div /> with `input[type="text"]` element. Can contain icons, error message and hint.
+ *
+ * Consume props from `Form` and `Form.Field` compoents.
+ */
+const FormInput = <T extends React.ElementType = 'input'>(
+    { IconBefore, IconAfter, __theme, css, ...props }: FormInputProps<T>,
     ref: React.Ref<HTMLInputElement>,
 ) => {
     const { controlId, optional, size, hint, hintPosition, validationPosition } = useFormField();
     const { errorPosition, showSuccess, ErrorIcon, SuccessIcon } = useForm();
 
     /* Get theme objects. */
-    const { componentTheme, usedTheme } = useComponentTheme('FormInput');
+    const { componentTheme, usedTheme } = useComponentTheme('FormInput', __theme);
     const inputTheme = componentTheme as FormInputTheme;
 
     if (!inputTheme.sizes[size]) {
@@ -132,7 +143,7 @@ export const FormInput = (
         left: `${(height - sp.iconSize) / 2}px`,
         width: sp.iconSize,
         height: sp.iconSize,
-        fill: 'inherit',
+        transition,
     };
 
     const iconAfterCSS: CSSObject = {
@@ -142,7 +153,7 @@ export const FormInput = (
         right: `${(height - sp.iconSize) / 2}px`,
         width: sp.iconSize,
         height: sp.iconSize,
-        fill: 'inherit',
+        transition,
     };
 
     let validationIconHorizontalRule;
@@ -176,14 +187,6 @@ export const FormInput = (
     };
     const successIconProperties = getIconProperty(formTheme, 'successIcon');
     const iconSuccessStyles = [iconSuccessDefaultStyles, getIconCSS(successIconProperties), formTheme.successIcon?.css];
-
-    const fieldStyles: CSSObject = {
-        position: 'relative',
-        // ...getStateStyles('hover', {
-        //     ...(timeIn && { transition: transition(timeIn) }),
-        // }),
-    };
-
     const getDescribedByList = () => {
         const hintId = hint && hintPosition === 'bottom' ? `hint-${controlId}` : undefined;
         const errorId = meta.touched && meta.error && errorPosition === 'bottom' ? `error-${controlId}` : undefined;
@@ -197,26 +200,37 @@ export const FormInput = (
         'aria-invalid': meta.touched && meta.error ? true : undefined,
         'aria-required': optional ? undefined : true,
         'aria-describedby': getDescribedByList(),
+        disabled: false,
         ...props,
     };
+
+    const fieldBaseStyles: CSSObject = {
+        position: 'relative',
+        ':hover': {
+            ...(!inputProps.disabled && getStateFieldCSS(themeHoverProperties)),
+        },
+    };
+
+    const fieldDisabledStyles: CSSObject = {
+        ...(inputProps.disabled && getStateFieldCSS(themeDisabledProperties)),
+    };
+
+    const fieldStyles = [fieldBaseStyles, fieldDisabledStyles];
 
     return (
         <>
             <div css={fieldStyles}>
                 <input id={controlId} {...field} {...inputProps} ref={ref} css={styles} />
-
                 {IconBefore &&
                     !(validationPosition === 'inputBefore' && meta.touched && meta.error) &&
                     !(validationPosition === 'inputBefore' && meta.touched && !meta.error && showSuccess) && (
                         <IconBefore css={iconBeforeCSS} />
                     )}
-
                 {IconAfter &&
                     !(validationPosition === 'inputAfter' && meta.touched && meta.error) &&
                     !(validationPosition === 'inputAfter' && meta.touched && !meta.error && showSuccess) && (
                         <IconAfter css={iconAfterCSS} />
                     )}
-
                 {(validationPosition === 'inputAfter' || validationPosition === 'inputBefore') &&
                     meta.touched &&
                     meta.error &&
@@ -243,6 +257,10 @@ const getStateCSS = ({ color, bg, border, shadow, css }: FormInputStatePropertie
     ...css,
 });
 
+const getStateFieldCSS = ({ fill }: FormInputStateProperties) => ({
+    fill,
+});
+
 const getThemeProperties = (
     inputTheme: FormInputTheme,
     state: ComponentStates | 'success' | 'error' | 'default',
@@ -266,4 +284,4 @@ const getTransition = (time: number, easing: string) =>
         .map((name) => `${name} ${easing} ${time}ms`)
         .join(', ');
 
-export default React.forwardRef(FormInput);
+export default FormInput;

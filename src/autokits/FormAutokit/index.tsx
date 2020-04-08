@@ -18,6 +18,9 @@ export interface FormAutokitProps {
     onSubmit: (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => void | Promise<any>;
 }
 
+/**
+ * Autokit for `Form` component.
+ */
 const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => {
     const theme = useTheme();
     const { componentTheme: componentInputTheme } = useComponentTheme('FormInput');
@@ -30,6 +33,9 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
         'field-1': 'Некое значение',
         'field-2': 'Некое значение',
         'field-3': 'Некое значение',
+        'field-disabled-1': 'Заблокированное поле',
+        'field-disabled-2': 'Заблокированное поле',
+        'field-disabled-3': 'Заблокированное поле',
         'field-hint-1': '',
         'field-hint-2': '',
         'field-hint-3': '',
@@ -77,6 +83,9 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
         'field-1': Yup.string().required('Обязательное поле'),
         'field-2': Yup.string().required('Обязательное поле'),
         'field-3': Yup.string().required('Обязательное поле'),
+        'field-disabled-1': Yup.string().required('Обязательное поле'),
+        'field-disabled-2': Yup.string().required('Обязательное поле'),
+        'field-disabled-3': Yup.string().required('Обязательное поле'),
         'field-hint-1': Yup.string().required('Обязательное поле'),
         'field-hint-2': Yup.string().required('Обязательное поле'),
         'field-hint-3': Yup.string().required('Обязательное поле'),
@@ -86,9 +95,6 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
         'field-hidden-1': Yup.string().required('Обязательное поле'),
         'field-hidden-2': Yup.string().required('Обязательное поле'),
         'field-hidden-3': Yup.string().required('Обязательное поле'),
-        // 'field-optional-1': '',
-        // 'field-optional-2': '',
-        // 'field-optional-3': '',
         'field-LabelIconBefore-1': Yup.string().required('Обязательное поле'),
         'field-LabelIconBefore-2': Yup.string().required('Обязательное поле'),
         'field-LabelIconBefore-3': Yup.string().required('Обязательное поле'),
@@ -140,6 +146,21 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                     <Form.Field key={sizeName} controlId={`field-${index + 1}`} size={sizeName}>
                         <Form.Label>Лейбл {sizeName}</Form.Label>
                         <Form.Input />
+                    </Form.Field>
+                ))}
+            </Layout>
+            <div css={{ ...typography('title'), marginBottom: scale(2) }}>Disabled</div>
+            <Layout
+                cols={{ xxxl: Object.keys(inputTheme.sizes).length, xxs: 1 }}
+                gap={scale(2)}
+                justify="start"
+                align="start"
+                css={{ marginBottom: scale(2) }}
+            >
+                {Object.keys(inputTheme.sizes).map((sizeName, index) => (
+                    <Form.Field key={sizeName} controlId={`field-disabled-${index + 1}`} size={sizeName}>
+                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Form.Input disabled IconAfter={PlaceholderIcon} />
                     </Form.Field>
                 ))}
             </Layout>

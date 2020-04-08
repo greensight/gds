@@ -8,17 +8,14 @@ import { useFormField } from './useFormField';
 import { RequiredBy } from '../../types/Utils';
 import scale from '../../utils/scale';
 
-export interface FormHintProps extends React.HTMLProps<HTMLSpanElement> {
-    /** Additional CSS. */
-    css?: CSSObject;
-}
+export type FormHintProps = React.HTMLProps<HTMLSpanElement>;
 
 /**
  * FormHint component.
  *
  * Inner component for hint. Use in `Form.Input` or `Form.Label` (by default).
  */
-export const FormHint = ({ css, ...props }: FormHintProps) => {
+export const FormHint = ({ ...props }: FormHintProps) => {
     const { size, hint, hintPosition, hiddenLabel } = useFormField();
 
     /* Get theme objects. */
@@ -51,7 +48,7 @@ export const FormHint = ({ css, ...props }: FormHintProps) => {
     const typographyName = sizeProperties.typography;
     const typographyCSS = typography(typographyName, usedTheme);
 
-    const defaultCSS: CSSObject = {
+    const styles: CSSObject = {
         display: 'block',
         marginTop: (hintPosition === 'top' && !hiddenLabel) || hintPosition === 'bottom' ? scale(1) : undefined,
         borderWidth: tp.borderWidth,
@@ -64,7 +61,6 @@ export const FormHint = ({ css, ...props }: FormHintProps) => {
         ...tp.css,
         ...sp.css,
     };
-    const styles = [defaultCSS, css];
     return (
         <span css={styles} {...props}>
             {hint}

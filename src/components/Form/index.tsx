@@ -23,6 +23,9 @@ export interface FormProps extends FormContextProps, FormikFormProps {
     onSubmit: (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => void | Promise<any>;
 }
 
+/**
+ * Focus to first invalid input after submit.
+ */
 const FocusError = () => {
     const { errors, isSubmitting, isValidating } = useFormikContext();
     useEffect(() => {
@@ -67,7 +70,7 @@ export const Form: React.FC<FormProps> & FormCompositionProps = ({
     );
 };
 
-Form.Input = FormInput;
+Form.Input = React.forwardRef(FormInput);
 Form.Label = FormLabel;
 Form.Field = FormField;
 

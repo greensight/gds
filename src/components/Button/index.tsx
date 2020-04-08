@@ -8,6 +8,7 @@ import VisuallyHidden from '../../components/VisuallyHidden';
 import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
 import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
 import { TypographyProperties } from '../../types/Typography';
+import { ButtonProps } from '../../../.storybook/docgen/Button';
 
 export interface ButtonBaseProps {
     /** Button content. */

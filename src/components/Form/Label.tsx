@@ -27,16 +27,25 @@ export interface FormLabelProps extends React.HTMLProps<HTMLLabelElement> {
     IconBefore?: SVGRIcon;
     /** Label content. */
     children: React.ReactNode;
+    /** Label theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __theme?: FormLabelTheme;
     /** Additional CSS. */
     css?: CSSObject;
 }
 
-export const FormLabel = ({ IconBefore, IconAfter, children, css, ...props }: FormLabelProps) => {
+/**
+ * FormLabel component.
+ *
+ * Render <label /> element. Can contain icons, error message and hint.
+ *
+ * Consume props from `Form` and `Form.Field` compoents.
+ */
+export const FormLabel = ({ IconBefore, IconAfter, children, __theme, css, ...props }: FormLabelProps) => {
     const { controlId, optional, size, hint, hintPosition, hiddenLabel, validationPosition } = useFormField();
     const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon } = useForm();
 
     /* Get theme objects. */
-    const { componentTheme, usedTheme } = useComponentTheme('FormLabel');
+    const { componentTheme, usedTheme } = useComponentTheme('FormLabel', __theme);
     const labelTheme = componentTheme as FormLabelTheme;
 
     const optionalTheme = labelTheme.optional;
@@ -76,8 +85,8 @@ export const FormLabel = ({ IconBefore, IconAfter, children, css, ...props }: Fo
     const defaultCSS: CSSObject = {
         display: 'block',
         marginBottom: hiddenLabel ? undefined : scale(1),
-        ...typographyCSS,
         transition,
+        ...typography('bodyMd'),
         ...getStateCSS(tp),
         ...sp.css,
     };
@@ -117,7 +126,6 @@ export const FormLabel = ({ IconBefore, IconAfter, children, css, ...props }: Fo
 
     /* Define CSS rules from theme properties for optional text. */
     const optionalDefaultStyles: CSSObject = {
-        fontWeight: 400,
         fontSize: '0.8em',
     };
     const themeOptionalProperties = getAdditionalProperty(labelTheme, 'optional');
@@ -181,6 +189,7 @@ export const FormLabel = ({ IconBefore, IconAfter, children, css, ...props }: Fo
 
     const labelTextStyles: CSSObject = {
         display: 'inline-block',
+        ...typographyCSS,
     };
 
     const labelProps = {

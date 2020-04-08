@@ -56,6 +56,7 @@ export interface FormInputTheme {
     /** Available sizes. Any input can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, FormInputSizeProperties>, 'md'>;
 }
+
 export interface FormLabelStateProperties {
     /** Text color. */
     color?: string;
