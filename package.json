@@ -38,11 +38,12 @@
         "storybook:serve": "serve docs -l 8080",
         "tokens": "node bin/index.js",
         "tokens:dev": "node bin/index.js -c gds-dev.config.json",
-        "tsc": "yarn pnpify tsc"
+        "tsc": "yarn pnpify tsc",
+        "precommit": "run-p lint-staged tsc"
     },
     "husky": {
         "hooks": {
-            "pre-commit": "run-p lint-staged tsc"
+            "pre-commit": "yarn precommit"
         }
     },
     "lint-staged": {
