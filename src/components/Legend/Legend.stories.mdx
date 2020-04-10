@@ -1,0 +1,30 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { text, boolean } from '@storybook/addon-knobs';
+import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
+import Legend from '.';
+import Form from '../../components/Form';
+
+<Meta title="Components / Legend" component={Legend} decorators={[centeredDecorator]} />
+
+# Legend
+
+Легенда...
+
+<Preview>
+    <Story name="Knobs">
+        <Form style={{ width: '25vw', minWidth: '320px' }}>
+            <Form.Field controlId="kek" hint={text('Hint', 'Подсказка')} optional="(Необязательно)">
+                <Legend as={text('Tag', 'fieldset', 'Props')} label={text('Label', 'Пример текста', 'Props')} />
+            </Form.Field>
+            <Form.Field controlId="kek" hint={text('Hint', 'Подсказка')} optional="(Необязательно)">
+                <Legend as={text('Tag', 'fieldset', 'Props')} label={text('Label', 'Пример текста', 'Props')} />
+            </Form.Field>
+        </Form>
+    </Story>
+</Preview>
+
+## Props
+
+### Legend
+
+<Props of={Legend} />
