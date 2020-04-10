@@ -1,5 +1,5 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { text, boolean } from '@storybook/addon-knobs';
+import { text, radios } from '@storybook/addon-knobs';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import Legend from '.';
 import Form from '../../components/Form';
@@ -12,11 +12,23 @@ import Form from '../../components/Form';
 
 <Preview>
     <Story name="Knobs">
-        <Form style={{ width: '25vw', minWidth: '320px' }}>
-            <Form.Field controlId="kek" hint={text('Hint', 'Подсказка')} optional="(Необязательно)">
+        <Form
+            style={{ width: '25vw', minWidth: '320px' }}
+            required={radios('required', ['optional', 'mark'], 'optional')}
+        >
+            <Form.Field
+                controlId="field-1"
+                hint={text('Hint', 'Подсказка')}
+                optional="(Необязательно)"
+                size={radios('size', ['lg', 'md', 'sm'], 'md')}
+            >
                 <Legend as={text('Tag', 'fieldset', 'Props')} label={text('Label', 'Пример текста', 'Props')} />
             </Form.Field>
-            <Form.Field controlId="kek" hint={text('Hint', 'Подсказка')} optional="(Необязательно)">
+            <Form.Field
+                controlId="field-2"
+                hint={text('Hint', 'Подсказка')}
+                size={radios('size', ['lg', 'md', 'sm'], 'md')}
+            >
                 <Legend as={text('Tag', 'fieldset', 'Props')} label={text('Label', 'Пример текста', 'Props')} />
             </Form.Field>
         </Form>

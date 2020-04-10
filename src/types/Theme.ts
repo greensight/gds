@@ -2,6 +2,7 @@ import TypographyTheme from './Typography';
 import LayoutTheme from './Layout';
 import GlobalTheme from './Global';
 import ButtonTheme from './Button';
+import { RadioItemTheme } from './Radio';
 import FormTheme, { FormLabelTheme, FormHintTheme, FormInputTheme, FormErrorTheme } from './Form';
 
 export type PalettesTheme = Record<string, string[]>;
@@ -34,6 +35,8 @@ export interface ComponentsTheme {
     FormInput?: FormInputTheme;
     /** `FormError` component theme settings. */
     FormError?: FormErrorTheme;
+    /** `RadioItem` component theme settings. */
+    RadioItem?: RadioItemTheme;
 }
 
 export default interface Theme extends Tokens {

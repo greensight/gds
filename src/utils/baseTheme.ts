@@ -263,6 +263,74 @@ const baseTheme = deepmerge(tokens, {
                 },
             },
         },
+        Radio: {
+            base: {
+                default: {
+                    isVertical: true,
+                },
+            },
+        },
+        RadioItem: {
+            base: {
+                default: {
+                    labelRight: true,
+                },
+            },
+            theme: {
+                default: {
+                    color: colors.black,
+                    after: {
+                        border: colors.black,
+                    },
+                },
+                hover: {
+                    color: colors.black,
+                    after: {
+                        border: colors.brand,
+                    },
+                },
+                focus: {
+                    color: colors.black,
+                    after: {
+                        border: colors.brand,
+                        shadows: shadows.focus,
+                    },
+                },
+                disabled: {
+                    color: colors.black,
+                    after: {
+                        border: colors.grey60,
+                        bg: colors.grey60,
+                    },
+                },
+            },
+            sizes: {
+                sm: {
+                    beforeSize: scale(3),
+                    afterSize: scale(1),
+                    beforeOffset: scale(1),
+                    typography: 'labelSm',
+                    horizontalGap: scale(2),
+                    verticalGap: scale(1),
+                },
+                md: {
+                    beforeSize: scale(3),
+                    afterSize: scale(1),
+                    beforeOffset: scale(1),
+                    typography: 'labelMd',
+                    horizontalGap: scale(3),
+                    verticalGap: scale(2),
+                },
+                lg: {
+                    beforeSize: scale(4),
+                    afterSize: 11,
+                    beforeOffset: scale(1),
+                    typography: 'labelLg',
+                    horizontalGap: scale(3),
+                    verticalGap: scale(2),
+                },
+            },
+        },
     },
 });
 
