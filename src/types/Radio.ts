@@ -14,15 +14,13 @@ export interface RadioItemStateProperties {
     css?: CSSObject;
 }
 
-export interface RadioItemThemeProperties extends RadioStateProperties {
+export interface RadioItemThemeProperties extends RadioItemStateProperties {
     /** Border width. Equals `1` by default if `border` property is defined. */
     borderWidth?: number;
     /** Border style. `'solid'` by default. */
     borderStyle?: string;
     /** Border radius. */
     borderRadius?: number | string;
-    /** Half mode. Redefines `border-radius` with value equals half of button height. */
-    labelRight: boolean;
     /** Transition duration. Equals `200` by default. */
     time?: number;
     /** Transition enter duration for hover state. Uses with `time` property to differ enter/exit transition durations. */
@@ -33,6 +31,9 @@ export interface RadioItemThemeProperties extends RadioStateProperties {
 
 export interface RadioItemStates extends Partial<Record<ComponentStates, RadioItemStateProperties>> {
     default: RadioItemThemeProperties;
+    label?: RadioItemThemeProperties;
+    after?: RadioItemThemeProperties;
+    before?: RadioItemThemeProperties;
 }
 
 export interface RadioItemSizeProperties {

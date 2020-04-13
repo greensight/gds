@@ -263,44 +263,52 @@ const baseTheme = deepmerge(tokens, {
                 },
             },
         },
-        Radio: {
-            base: {
-                default: {
-                    isVertical: true,
-                },
-            },
-        },
         RadioItem: {
-            base: {
-                default: {
-                    labelRight: true,
-                },
-            },
             theme: {
                 default: {
-                    color: colors.black,
-                    after: {
+                    label: {
+                        color: colors.black,
+                    },
+                    before: {
                         border: colors.black,
+                    },
+                    after: {
+                        bg: colors.black,
                     },
                 },
                 hover: {
-                    color: colors.black,
-                    after: {
+                    label: {
+                        color: colors.black,
+                    },
+                    before: {
                         border: colors.brand,
+                    },
+                    after: {
+                        bg: colors.black,
                     },
                 },
                 focus: {
-                    color: colors.black,
-                    after: {
+                    label: {
+                        color: colors.black,
+                    },
+                    before: {
                         border: colors.brand,
-                        shadows: shadows.focus,
+                        shadow: shadows.focus,
+                    },
+                    after: {
+                        bg: colors.black,
                     },
                 },
                 disabled: {
-                    color: colors.black,
-                    after: {
+                    label: {
+                        color: colors.black,
+                    },
+                    before: {
                         border: colors.grey60,
                         bg: colors.grey60,
+                    },
+                    after: {
+                        bg: colors.grey20,
                     },
                 },
             },
@@ -309,25 +317,25 @@ const baseTheme = deepmerge(tokens, {
                     beforeSize: scale(3),
                     afterSize: scale(1),
                     beforeOffset: scale(1),
-                    typography: 'labelSm',
                     horizontalGap: scale(2),
                     verticalGap: scale(1),
+                    typography: 'labelSm',
                 },
                 md: {
                     beforeSize: scale(3),
                     afterSize: scale(1),
                     beforeOffset: scale(1),
-                    typography: 'labelMd',
                     horizontalGap: scale(3),
                     verticalGap: scale(2),
+                    typography: 'labelMd',
                 },
                 lg: {
                     beforeSize: scale(4),
                     afterSize: 11,
                     beforeOffset: scale(1),
-                    typography: 'labelLg',
                     horizontalGap: scale(3),
                     verticalGap: scale(2),
+                    typography: 'labelLg',
                 },
             },
         },
