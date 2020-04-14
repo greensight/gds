@@ -12,18 +12,17 @@ export interface RadioCompositionProps {
 }
 
 export interface RadioProps extends RadioContextProps {
-    /** Radio group name */
-    name: string;
     /** Field legend */
     legend: string;
-    /** Hint text */
-    hint?: string;
+    /** Radio content. */
+    children: React.ReactNode;
 }
 
 export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     children,
     legend,
     orientation = 'vertical',
+    alignment = 'top',
     ...props
 }) => {
     const { controlId, hiddenLabel, optional } = useFormField();
@@ -33,7 +32,7 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
         'aria-required': optional ? undefined : true,
     };
     return (
-        <RadioContext.Provider value={{ orientation }}>
+        <RadioContext.Provider value={{ orientation, alignment }}>
             <fieldset {...fieldsetProps}>
                 {hiddenLabel ? (
                     <VisuallyHidden>

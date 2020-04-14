@@ -1,8 +1,8 @@
 import { CSSObject } from '@emotion/core';
 import { ComponentStates, RequireAtLeastOne } from './Utils';
 
-export interface RadioItemStateProperties {
-    /** Text. */
+export interface RadioItemLabelStateProperties {
+    /** Text color. */
     color?: string;
     /** Background color. */
     bg?: string;
@@ -14,7 +14,7 @@ export interface RadioItemStateProperties {
     css?: CSSObject;
 }
 
-export interface RadioItemThemeProperties extends RadioItemStateProperties {
+export interface RadioItemLabelThemeProperties extends RadioItemLabelStateProperties {
     /** Border width. Equals `1` by default if `border` property is defined. */
     borderWidth?: number;
     /** Border style. `'solid'` by default. */
@@ -29,20 +29,51 @@ export interface RadioItemThemeProperties extends RadioItemStateProperties {
     easing?: string;
 }
 
-export interface RadioItemStates extends Partial<Record<ComponentStates, RadioItemStateProperties>> {
-    default: RadioItemThemeProperties;
-    label?: RadioItemThemeProperties;
-    after?: RadioItemThemeProperties;
-    before?: RadioItemThemeProperties;
+export interface RadioItemCircleStateProperties {
+    /** Element color. */
+    color?: string;
+    /** Border color. */
+    border?: string;
+    /** Shadow. */
+    shadow?: string;
+    /** Transforms */
+    transform?: string;
+    /** Additional CSS. */
+    css?: CSSObject;
+}
+
+export interface RadioItemCircleThemeProperties extends RadioItemCircleStateProperties {
+    /** Border width. Equals `1` by default if `border` property is defined. */
+    borderWidth?: number;
+    /** Border style. `'solid'` by default. */
+    borderStyle?: string;
+    /** Border radius. */
+    borderRadius?: number | string;
+    /** Transition duration. Equals `200` by default. */
+    time?: number;
+    /** Transition enter duration for hover state. Uses with `time` property to differ enter/exit transition durations. */
+    timeIn?: number;
+    /** Transition easing function. Equals `'ease'` by default. */
+    easing?: string;
+}
+
+export interface RadioItemLabelStates extends Partial<Record<ComponentStates, RadioItemLabelStateProperties>> {
+    default: RadioItemLabelThemeProperties;
+    checked: RadioItemLabelThemeProperties;
+}
+
+export interface RadioItemCircleStates extends Partial<Record<ComponentStates, RadioItemCircleStateProperties>> {
+    default: RadioItemCircleThemeProperties;
+    checked: RadioItemCircleThemeProperties;
 }
 
 export interface RadioItemSizeProperties {
     /** Big circle. Equals `scale(3)` by default. */
-    beforeSize?: number;
+    outerSize?: number;
     /** Small circle. Equals `scale(1)` by default. */
-    afterSize?: number;
+    innerSize?: number;
     /** Offset between big circle and label. Equals `scale(1)` by default. */
-    beforeOffset?: number;
+    outerOffset?: number;
     /** Horizontal offset between neighboring radio items if they have horizontal orientation. Equals `scale(2)` by default. */
     horizontalGap?: number;
     /** Vertical offset between neighboring radio items if they hav vertical orientation. Equals `scale(1)` by default. */
@@ -54,10 +85,12 @@ export interface RadioItemSizeProperties {
 }
 
 export interface RadioItemTheme {
-    /** Common settings for all themes. */
-    base?: RadioItemStates;
     /** Available theme. */
-    theme: RadioItemStates;
+    theme: {
+        label: RadioItemLabelStates;
+        outer: RadioItemCircleStates;
+        inner: RadioItemCircleStates;
+    };
     /** Available sizes. Any radio item can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, RadioItemSizeProperties>, 'md'>;
 }

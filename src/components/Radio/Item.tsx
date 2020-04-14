@@ -2,9 +2,11 @@ import React from 'react';
 import { CSSObject } from '@emotion/core';
 import {
     RadioItemTheme,
-    RadioItemThemeProperties,
+    RadioItemLabelThemeProperties,
+    RadioItemLabelStateProperties,
+    RadioItemCircleThemeProperties,
+    RadioItemCircleStateProperties,
     RadioItemSizeProperties,
-    RadioItemStateProperties,
 } from '../../types/Radio';
 import baseTheme from '../../utils/baseTheme';
 import { useRadio } from './useRadio';
@@ -15,6 +17,7 @@ import scale from '../../utils/scale';
 import typography from '../../utils/typography';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
+import { TypographyProperties } from '../../types/Typography';
 
 export interface RadioItemProps extends React.HTMLProps<HTMLInputElement> {
     /** Radio group name (inner) */
@@ -33,6 +36,8 @@ export interface RadioItemProps extends React.HTMLProps<HTMLInputElement> {
     labelRight?: boolean;
     /** Custom icon for inner circle. */
     IconInner?: SVGRIcon;
+    /** RadioItem theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __theme?: RadioItemTheme;
     /** Additional CSS. */
     css?: CSSObject;
 }
@@ -44,6 +49,7 @@ export const RadioItem = ({
     labelRight = true,
     IconInner,
     children,
+    __theme,
     css,
     ...props
 }: RadioItemProps) => {
@@ -51,17 +57,16 @@ export const RadioItem = ({
     delete props.meta;
     delete props.helpers;
 
-    const { orientation } = useRadio();
-
+    const { orientation, alignment } = useRadio();
     const { size } = useFormField();
+
     /* Get theme objects. */
-    const { componentTheme, usedTheme } = useComponentTheme('RadioItem');
+    const { componentTheme, usedTheme } = useComponentTheme('RadioItem', __theme);
     const radioItemTheme = componentTheme as RadioItemTheme;
     if (!radioItemTheme.sizes[size]) console.warn(`Specify "${size}" size. Default values are used instead`);
 
-    /* Get theme default state properties and merge them with default values. */
-    const themeProperties = getThemeProperties(radioItemTheme, 'default');
-
+    /* Get theme for default state properties and merge them with default values for label. */
+    const themeProperties = getThemeProperties(radioItemTheme, 'label', 'default');
     const sizeProperties = radioItemTheme.sizes[size];
     const themeDefaults = {
         borderWidth: themeProperties.border ? 1 : 0,
@@ -72,42 +77,46 @@ export const RadioItem = ({
         bg: 'transparent',
     };
 
-    const tp: RequiredBy<RadioItemThemeProperties, keyof typeof themeDefaults> = {
+    const tp: RequiredBy<RadioItemLabelThemeProperties, keyof typeof themeDefaults> = {
         ...themeDefaults,
         ...themeProperties,
     };
 
-    const themeBeforeProperties = getBeforeProperties(radioItemTheme, 'default');
-    const themeBeforeDefault = {
-        borderWidth: 1,
+    /* Get theme for default state properties and merge them with default values for outer circle. */
+    const themeOuterProperties = getThemeProperties(radioItemTheme, 'outer', 'default');
+    const themeOuterDefault = {
+        borderWidth: themeOuterProperties.border ? 1 : 0,
         borderStyle: 'solid',
-        borderRadius: '50%',
-        border: baseTheme.colors.black,
         time: 200,
         easing: 'ease',
-    };
-    //: RequiredBy<RadioItemThemeProperties, keyof typeof themeDefaults>
-    const tBeforeP: RequiredBy<RadioItemThemeProperties, keyof typeof themeDefaults> = {
-        ...themeBeforeDefault,
-        ...themeBeforeProperties,
+        transform: 'none',
     };
 
-    const themeAfterProperties = getAfterProperties(radioItemTheme, 'default');
-    const themeAfterDefault = {
-        bg: baseTheme.colors.black,
+    const tOuterP: RequiredBy<RadioItemCircleThemeProperties, keyof typeof themeOuterDefault> = {
+        ...themeOuterDefault,
+        ...themeOuterProperties,
+    };
+
+    /* Get theme for default state properties and merge them with default values for inner circle. */
+    const themeInnerProperties = getThemeProperties(radioItemTheme, 'inner', 'default');
+    const themeInnerDefault = {
+        borderWidth: themeInnerProperties.border ? 1 : 0,
+        borderStyle: 'solid',
+        color: baseTheme.colors.black,
         time: 200,
         easing: 'ease',
+        transform: 'none',
     };
 
-    const tAfterP: RequiredBy<RadioItemThemeProperties, keyof typeof themeDefaults> = {
-        ...themeAfterDefault,
-        ...themeAfterProperties,
+    const tInnerP: RequiredBy<RadioItemCircleThemeProperties, keyof typeof themeInnerDefault> = {
+        ...themeInnerDefault,
+        ...themeInnerProperties,
     };
 
     const sizeDefaults = {
-        beforeSize: scale(3),
-        afterSize: scale(1),
-        beforeOffset: scale(1),
+        outerSize: scale(3),
+        innerSize: scale(1),
+        outerOffset: scale(1),
         horizontalGap: scale(3),
         verticalGap: scale(2),
     };
@@ -122,143 +131,185 @@ export const RadioItem = ({
 
     const transition = getTransition(tp.time, tp.easing);
     const paddingRule = `padding${labelRight ? 'Left' : 'Right'}`;
+    const innerBorderRadius = tInnerP.borderRadius ? tInnerP.borderRadius : '50%';
+    const outerBorderRadius = tOuterP.borderRadius ? tOuterP.borderRadius : '50%';
 
-    let horizontalRule;
-    if (labelRight) {
-        horizontalRule = 'left';
-    } else {
-        horizontalRule = 'right';
-    }
+    const horizontalRule = labelRight ? 'left' : 'right';
+    const verticalRule = alignment !== 'bottom' ? 'top' : 'bottom';
+
+    const topOuter =
+        alignment !== 'center'
+            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                  .minLineHeight *
+                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                      .textHeight -
+                  sp.outerSize) /
+              2
+            : `calc(50% - ${sp.outerSize / 2}px)`;
+    const topInner =
+        alignment !== 'center'
+            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                  .minLineHeight *
+                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                      .textHeight -
+                  sp.outerSize) /
+                  2 +
+              sp.outerSize / 2 -
+              sp.innerSize / 2
+            : `calc(50% - ${sp.innerSize / 2}px)`;
+
+    const paddingVertical =
+        sp.outerSize <=
+        getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp).textHeight
+            ? undefined
+            : Math.ceil(
+                  (sp.outerSize -
+                      getLineHeight(
+                          typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
+                          sp,
+                      ).textHeight) /
+                      2,
+              );
 
     const defaultCSS: CSSObject = {
         position: 'relative',
         display: 'inline-block',
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
-        [paddingRule]: sp.beforeSize + sp.beforeOffset,
+        borderRadius: tp.borderRadius,
+        paddingTop: paddingVertical,
+        paddingBottom: paddingVertical,
+        [paddingRule]: sp.outerSize + sp.outerOffset,
         ...typographyCSS,
-        lineHeight: getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-            .minLineHeight,
         transition,
-        ...getStateCSS(tp),
+        ...getLabelStateCSS(tp),
         ...sp.css,
+    };
 
+    const defaultOuterCSS: CSSObject = {
         'input:focus + &::before': {
             outline: `2px solid ${baseTheme.colors.brand}`,
         },
         '&::before': {
             content: '""',
             position: 'absolute',
-            width: sp.beforeSize,
-            height: sp.beforeSize,
-            borderWidth: 1,
-            borderStyle: 'solid',
-            borderRadius: '50%',
-            top:
-                (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                    .minLineHeight *
-                    getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                        .textHeight -
-                    sp.beforeSize) /
-                2,
+            width: sp.outerSize,
+            height: sp.outerSize,
+            borderWidth: tOuterP.borderWidth,
+            borderStyle: tOuterP.borderStyle,
+            borderRadius: outerBorderRadius,
+            [verticalRule]: topOuter,
             [horizontalRule]: 0,
             transition,
-            ...getStateCSS(tBeforeP),
+            ...getCircleStateCSS(tOuterP, false),
         },
+    };
+
+    const defaultInnerCSS: CSSObject = {
         '&::after': {
-            content: '""',
+            content: IconInner ? 'none' : '""',
             position: 'absolute',
-            width: sp.afterSize,
-            height: sp.afterSize,
-            borderRadius: '50%',
-            top:
-                (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                    .minLineHeight *
-                    getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                        .textHeight -
-                    sp.beforeSize) /
-                    2 +
-                sp.beforeSize / 2,
-            [horizontalRule]: sp.beforeSize / 2 - sp.afterSize / 2,
+            width: sp.innerSize,
+            height: sp.innerSize,
+            borderWidth: tInnerP.borderWidth,
+            borderStyle: tInnerP.borderStyle,
+            borderRadius: innerBorderRadius,
+            [verticalRule]: topInner,
+            [horizontalRule]: sp.outerSize / 2 - sp.innerSize / 2,
             transition,
-            transform: 'translateY(-50%) scale(0)',
-            ...getStateCSS(tAfterP),
+            ...getCircleStateCSS(tInnerP, false),
+        },
+    };
+
+    const defaultInnerIconCSS: CSSObject = {
+        svg: {
+            position: 'absolute',
+            width: sp.innerSize,
+            height: sp.innerSize,
+            [verticalRule]: topInner,
+            [horizontalRule]: sp.outerSize / 2 - sp.innerSize / 2,
+            transition,
+            ...getCircleStateCSS(tInnerP, true),
         },
     };
 
     /* Define CSS rules from theme properties for other states. */
-    const themeHoverProperties = getThemeProperties(radioItemTheme, 'hover');
-    const themeBeforeHoverProperties = getBeforeProperties(radioItemTheme, 'hover');
-    const themeAfterHoverProperties = getAfterProperties(radioItemTheme, 'hover');
+    const themeHoverProperties = getThemeProperties(radioItemTheme, 'label', 'hover');
+    const themeOuterHoverProperties = getThemeProperties(radioItemTheme, 'outer', 'hover');
+    const themeInnerHoverProperties = getThemeProperties(radioItemTheme, 'inner', 'hover');
 
-    const themeDisabledProperties = getThemeProperties(radioItemTheme, 'disabled');
-    const themeBeforeDisabledProperties = getBeforeProperties(radioItemTheme, 'disabled');
-    const themeAfterDisabledProperties = getAfterProperties(radioItemTheme, 'disabled');
+    const themeDisabledProperties = getThemeProperties(radioItemTheme, 'label', 'disabled');
+    const themeOuterDisabledProperties = getThemeProperties(radioItemTheme, 'outer', 'disabled');
+    const themeInnerDisabledProperties = getThemeProperties(radioItemTheme, 'inner', 'disabled');
 
-    const themeFocusProperties = getThemeProperties(radioItemTheme, 'focus');
-    const themeBeforeFocusProperties = getBeforeProperties(radioItemTheme, 'focus');
-    const themeAfterFocusProperties = getAfterProperties(radioItemTheme, 'focus');
+    const themeFocusProperties = getThemeProperties(radioItemTheme, 'label', 'focus');
+    const themeOuterFocusProperties = getThemeProperties(radioItemTheme, 'outer', 'focus');
+    const themeInnerFocusProperties = getThemeProperties(radioItemTheme, 'inner', 'focus');
+
+    const themeCheckedProperties = getThemeProperties(radioItemTheme, 'label', 'checked');
+    const themeOuterCheckedProperties = getThemeProperties(radioItemTheme, 'outer', 'checked');
+    const themeInnerCheckedProperties = getThemeProperties(radioItemTheme, 'inner', 'checked');
 
     const statesCSS: CSSObject = {
         ':hover': {
-            ...getStateCSS(themeHoverProperties),
+            ...getLabelStateCSS(themeHoverProperties),
             ...(tp.timeIn && {
                 transition: getTransition(tp.timeIn, tp.easing),
             }),
-
             '&::before': {
-                ...getStateCSS(themeBeforeHoverProperties),
+                ...getCircleStateCSS(themeOuterHoverProperties, false),
             },
             '&::after': {
-                ...getStateCSS(themeAfterHoverProperties),
+                ...getCircleStateCSS(themeInnerHoverProperties, false),
             },
-        },
-        'input:disabled + &': {
-            ...getStateCSS(themeDisabledProperties),
-            '&::before': {
-                ...getStateCSS(themeBeforeDisabledProperties),
-            },
-            '&::after': {
-                ...getStateCSS(themeAfterDisabledProperties),
+            svg: {
+                ...getCircleStateCSS(themeInnerHoverProperties, true),
             },
         },
         'input:focus + &': {
-            ...getStateCSS(themeFocusProperties),
+            ...getLabelStateCSS(themeFocusProperties),
             '&::before': {
-                ...getStateCSS(themeBeforeFocusProperties),
+                ...getCircleStateCSS(themeOuterFocusProperties, false),
             },
             '&::after': {
-                ...getStateCSS(themeAfterFocusProperties),
+                ...getCircleStateCSS(themeInnerFocusProperties, false),
+            },
+            svg: {
+                ...getCircleStateCSS(themeInnerFocusProperties, true),
             },
         },
         'input:checked + &': {
+            ...getLabelStateCSS(themeCheckedProperties),
+            '&:before': {
+                ...getCircleStateCSS(themeOuterCheckedProperties, false),
+            },
             '&:after': {
-                transform: 'translateY(-50%) scale(1)',
+                ...getCircleStateCSS(themeInnerCheckedProperties, false),
             },
             svg: {
-                transform: 'translateY(-50%) scale(1)',
+                ...getCircleStateCSS(themeInnerCheckedProperties, true),
+            },
+        },
+        'input:disabled + &': {
+            ...getLabelStateCSS(themeDisabledProperties),
+            '&::before': {
+                ...getCircleStateCSS(themeOuterDisabledProperties, false),
+            },
+            '&::after': {
+                ...getCircleStateCSS(themeInnerDisabledProperties, false),
             },
         },
     };
-    //console.log(statesCSS);
-    const styles = [defaultCSS, statesCSS, css];
-    const iconCSS: CSSObject = {
-        position: 'absolute',
-        width: sp.afterSize,
-        height: sp.afterSize,
-        borderRadius: '50%',
-        top:
-            (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                .minLineHeight *
-                getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                    .textHeight -
-                sp.beforeSize) /
-                2 +
-            sp.beforeSize / 2,
-        [horizontalRule]: sp.beforeSize / 2 - sp.afterSize / 2,
-        transition,
-        transform: 'translateY(-50%) scale(0)',
-    };
+
+    const styles = [
+        defaultCSS,
+        defaultOuterCSS,
+        !IconInner && defaultInnerCSS,
+        IconInner && defaultInnerIconCSS,
+        statesCSS,
+        css,
+    ];
+
     const inputStyles: CSSObject = {
         position: 'absolute',
         clip: 'rect(0, 0, 0, 0)',
@@ -288,45 +339,49 @@ export const RadioItem = ({
                 checked={value === field?.value}
             />
             <label htmlFor={id} css={styles}>
-                {IconInner && <IconInner css={iconCSS} />}
+                {IconInner && <IconInner />}
                 {children}
             </label>
         </div>
     );
 };
 
-const getStateCSS = ({ color, bg, border, shadow, css }: RadioItemStateProperties) => ({
+const getLabelStateCSS = ({ color, bg, border, shadow, css }: RadioItemLabelStateProperties) => ({
     color,
-    fill: color,
     background: bg,
     borderColor: border,
     boxShadow: shadow,
     ...css,
 });
 
+const getCircleStateCSS = (
+    { color, border, shadow, transform, css }: RadioItemCircleStateProperties,
+    isIcon: boolean,
+) => {
+    const fillRule = isIcon ? 'fill' : 'background';
+    const shadowRule = isIcon ? 'filter' : 'boxShadow';
+    const shadowValue = shadow ? (isIcon ? `drop-shadow(${shadow})` : shadow) : undefined;
+
+    return {
+        [fillRule]: color,
+        borderColor: border,
+        [shadowRule]: shadowValue,
+        transform,
+        ...css,
+    };
+};
+
 const getThemeProperties = (
     radioItemTheme: RadioItemTheme,
-    state: ComponentStates | 'default',
-): RadioItemThemeProperties | RadioItemStateProperties => {
-    const themeProperties = radioItemTheme.theme[state]?.label;
-    const baseProperties = radioItemTheme.base?.[state];
-    return { ...baseProperties, ...themeProperties };
-};
-
-const getBeforeProperties = (
-    radioItemTheme: RadioItemTheme,
-    state: ComponentStates | 'default',
-): RadioItemThemeProperties | RadioItemStateProperties => {
-    const beforeProperties = radioItemTheme.theme[state]?.before;
-    return { ...beforeProperties };
-};
-
-const getAfterProperties = (
-    radioItemTheme: RadioItemTheme,
-    state: ComponentStates | 'default',
-): RadioItemThemeProperties | RadioItemStateProperties => {
-    const afterProperties = radioItemTheme.theme[state]?.after;
-    return { ...afterProperties };
+    component: 'label' | 'outer' | 'inner',
+    state: ComponentStates | 'checked' | 'default',
+):
+    | RadioItemLabelThemeProperties
+    | RadioItemLabelStateProperties
+    | RadioItemCircleThemeProperties
+    | RadioItemCircleStateProperties => {
+    const themeProperties = radioItemTheme.theme[component][state];
+    return { ...themeProperties };
 };
 
 const getTransition = (time: number, easing: string) =>
@@ -361,7 +416,7 @@ const getLineHeight = (
     }
 
     const textHeight = Math.floor(fontSize * lineHeight);
-    const minLineHeight = sizeProperties.beforeSize / textHeight;
+    const minLineHeight = (sizeProperties.outerSize as number) / textHeight;
 
     return { textHeight, minLineHeight };
 };

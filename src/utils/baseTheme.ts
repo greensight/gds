@@ -265,74 +265,83 @@ const baseTheme = deepmerge(tokens, {
         },
         RadioItem: {
             theme: {
-                default: {
-                    label: {
+                label: {
+                    default: {
                         color: colors.black,
                     },
-                    before: {
+                    hover: {
+                        color: colors.black,
+                    },
+                    focus: {
+                        color: colors.black,
+                    },
+                    disabled: {
+                        color: colors.black,
+                    },
+                    checked: {
+                        color: colors.black,
+                    },
+                },
+                outer: {
+                    default: {
                         border: colors.black,
                     },
-                    after: {
-                        bg: colors.black,
-                    },
-                },
-                hover: {
-                    label: {
-                        color: colors.black,
-                    },
-                    before: {
+                    hover: {
                         border: colors.brand,
                     },
-                    after: {
-                        bg: colors.black,
-                    },
-                },
-                focus: {
-                    label: {
-                        color: colors.black,
-                    },
-                    before: {
+                    focus: {
                         border: colors.brand,
                         shadow: shadows.focus,
                     },
-                    after: {
-                        bg: colors.black,
+                    disabled: {
+                        border: colors.grey60,
+                        color: colors.grey60,
+                    },
+                    checked: {
+                        border: colors.black,
                     },
                 },
-                disabled: {
-                    label: {
+                inner: {
+                    default: {
+                        color: colors.black,
+                        transform: 'scale(0)',
+                    },
+                    hover: {
                         color: colors.black,
                     },
-                    before: {
-                        border: colors.grey60,
-                        bg: colors.grey60,
+                    focus: {
+                        color: colors.black,
+                        shadow: '0 0 3px rgba(100,0,0,0.9)',
                     },
-                    after: {
-                        bg: colors.grey20,
+                    disabled: {
+                        color: colors.grey20,
+                    },
+                    checked: {
+                        transform: 'scale(1)',
                     },
                 },
             },
             sizes: {
                 sm: {
-                    beforeSize: scale(3),
-                    afterSize: scale(1),
-                    beforeOffset: scale(1),
+                    outerSize: scale(2),
+                    innerSize: scale(1),
+                    outerOffset: scale(1),
                     horizontalGap: scale(2),
                     verticalGap: scale(1),
                     typography: 'labelSm',
                 },
                 md: {
-                    beforeSize: scale(3),
-                    afterSize: scale(1),
-                    beforeOffset: scale(1),
+                    outerSize: scale(3),
+                    innerSize: scale(1),
+                    outerOffset: scale(1),
                     horizontalGap: scale(3),
                     verticalGap: scale(2),
                     typography: 'labelMd',
                 },
                 lg: {
-                    beforeSize: scale(4),
-                    afterSize: 11,
-                    beforeOffset: scale(1),
+                    outerSize: scale(4),
+                    innerSize: 11,
+                    outerOffset: scale(1),
                     horizontalGap: scale(3),
                     verticalGap: scale(2),
                     typography: 'labelLg',

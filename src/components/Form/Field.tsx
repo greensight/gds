@@ -2,6 +2,7 @@ import React from 'react';
 import { FormFieldContext, FormFieldContextProps } from './useFormField';
 
 export interface FormFieldProps extends FormFieldContextProps, Omit<React.HTMLProps<HTMLDivElement>, 'size'> {
+    /** Field content. */
     children: React.ReactNode;
 }
 
