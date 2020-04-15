@@ -11,8 +11,6 @@ import {
 import baseTheme from '../../utils/baseTheme';
 import { useRadio } from './useRadio';
 import { FieldInputProps, FieldMetaProps, FieldHelperProps, FormikValues } from 'formik';
-import { useFormField } from '../Form/useFormField';
-
 import scale from '../../utils/scale';
 import typography from '../../utils/typography';
 import useComponentTheme from '../../helpers/useComponentTheme';
@@ -57,8 +55,7 @@ export const RadioItem = ({
     delete props.meta;
     delete props.helpers;
 
-    const { orientation, alignment } = useRadio();
-    const { size } = useFormField();
+    const { orientation, alignment, size } = useRadio();
 
     /* Get theme objects. */
     const { componentTheme, usedTheme } = useComponentTheme('RadioItem', __theme);
@@ -328,16 +325,7 @@ export const RadioItem = ({
 
     return (
         <div css={wrapperStyles}>
-            <input
-                css={inputStyles}
-                {...field}
-                {...props}
-                type="radio"
-                name={name}
-                id={id}
-                value={value}
-                checked={value === field?.value}
-            />
+            <input css={inputStyles} {...field} {...props} type="radio" name={name} id={id} value={value} />
             <label htmlFor={id} css={styles}>
                 {IconInner && <IconInner />}
                 {children}

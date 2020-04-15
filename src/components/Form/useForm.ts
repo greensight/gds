@@ -20,9 +20,9 @@ export const FormContext = createContext<FormContextProps | undefined>(undefined
 export const useForm = (): FormContextProps => {
     const context = useContext(FormContext);
 
-    if (!context) {
-        throw new Error('This component must be used within a <Form> component');
-    }
+    // if (!context) {
+    //     throw new Error('This component must be used within a <Form> component');
+    // }
 
     return context;
 };
