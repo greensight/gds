@@ -34,6 +34,8 @@ export interface RadioItemProps extends React.HTMLProps<HTMLInputElement> {
     labelRight?: boolean;
     /** Custom icon for inner circle. */
     IconInner?: SVGRIcon;
+    /** Custom icon for outer circle. */
+    IconOuter?: SVGRIcon;
     /** RadioItem theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: RadioItemTheme;
     /** Additional CSS. */
@@ -46,6 +48,7 @@ export const RadioItem = ({
     value,
     labelRight = true,
     IconInner,
+    IconOuter,
     children,
     __theme,
     css,
@@ -188,7 +191,7 @@ export const RadioItem = ({
             outline: `2px solid ${baseTheme.colors.brand}`,
         },
         '&::before': {
-            content: '""',
+            content: IconOuter ? 'none' : '""',
             position: 'absolute',
             width: sp.outerSize,
             height: sp.outerSize,
@@ -218,8 +221,9 @@ export const RadioItem = ({
         },
     };
 
+    /** Define CSS rules from theme properties for custom icons for default state */
     const defaultInnerIconCSS: CSSObject = {
-        svg: {
+        'input + label &': {
             position: 'absolute',
             width: sp.innerSize,
             height: sp.innerSize,
@@ -227,6 +231,18 @@ export const RadioItem = ({
             [horizontalRule]: sp.outerSize / 2 - sp.innerSize / 2,
             transition,
             ...getCircleStateCSS(tInnerP, true),
+        },
+    };
+
+    const defaultOuterIconCSS: CSSObject = {
+        'input + label &': {
+            position: 'absolute',
+            width: sp.outerSize,
+            height: sp.outerSize,
+            [verticalRule]: topOuter,
+            [horizontalRule]: 0,
+            transition,
+            ...getCircleStateCSS(tOuterP, true),
         },
     };
 
@@ -259,9 +275,6 @@ export const RadioItem = ({
             '&::after': {
                 ...getCircleStateCSS(themeInnerHoverProperties, false),
             },
-            svg: {
-                ...getCircleStateCSS(themeInnerHoverProperties, true),
-            },
         },
         'input:focus + &': {
             ...getLabelStateCSS(themeFocusProperties),
@@ -271,9 +284,6 @@ export const RadioItem = ({
             '&::after': {
                 ...getCircleStateCSS(themeInnerFocusProperties, false),
             },
-            svg: {
-                ...getCircleStateCSS(themeInnerFocusProperties, true),
-            },
         },
         'input:checked + &': {
             ...getLabelStateCSS(themeCheckedProperties),
@@ -282,9 +292,6 @@ export const RadioItem = ({
             },
             '&:after': {
                 ...getCircleStateCSS(themeInnerCheckedProperties, false),
-            },
-            svg: {
-                ...getCircleStateCSS(themeInnerCheckedProperties, true),
             },
         },
         'input:disabled + &': {
@@ -298,14 +305,40 @@ export const RadioItem = ({
         },
     };
 
-    const styles = [
-        defaultCSS,
-        defaultOuterCSS,
-        !IconInner && defaultInnerCSS,
-        IconInner && defaultInnerIconCSS,
-        statesCSS,
-        css,
-    ];
+    const statesInnerIconCSS: CSSObject = {
+        'input + label:hover &': {
+            ...getCircleStateCSS(themeInnerHoverProperties, true),
+        },
+        'input:focus + label &': {
+            ...getCircleStateCSS(themeInnerFocusProperties, true),
+        },
+        'input:checked + label &': {
+            ...getCircleStateCSS(themeInnerCheckedProperties, true),
+        },
+        'input:disabled + label &': {
+            ...getCircleStateCSS(themeInnerDisabledProperties, true),
+        },
+    };
+
+    const statesOuterIconCSS: CSSObject = {
+        'input + label:hover &': {
+            ...getCircleStateCSS(themeOuterHoverProperties, true),
+        },
+        'input:focus + label &': {
+            ...getCircleStateCSS(themeOuterFocusProperties, true),
+        },
+        'input:checked + label &': {
+            ...getCircleStateCSS(themeOuterCheckedProperties, true),
+        },
+        'input:disabled + label &': {
+            ...getCircleStateCSS(themeOuterDisabledProperties, true),
+        },
+    };
+
+    const styles = [defaultCSS, !IconOuter && defaultOuterCSS, !IconInner && defaultInnerCSS, statesCSS, css];
+
+    const innerIconStyles = [defaultInnerIconCSS, statesInnerIconCSS];
+    const outerIconStyles = [defaultOuterIconCSS, statesOuterIconCSS];
 
     const inputStyles: CSSObject = {
         position: 'absolute',
@@ -327,7 +360,8 @@ export const RadioItem = ({
         <div css={wrapperStyles}>
             <input css={inputStyles} {...field} {...props} type="radio" name={name} id={id} value={value} />
             <label htmlFor={id} css={styles}>
-                {IconInner && <IconInner />}
+                {IconInner && <IconInner css={innerIconStyles} />}
+                {IconOuter && <IconOuter css={outerIconStyles} />}
                 {children}
             </label>
         </div>
@@ -347,12 +381,14 @@ const getCircleStateCSS = (
     isIcon: boolean,
 ) => {
     const fillRule = isIcon ? 'fill' : 'background';
+    const borderRule = isIcon ? 'fill' : 'borderColor';
     const shadowRule = isIcon ? 'filter' : 'boxShadow';
-    const shadowValue = shadow ? (isIcon ? `drop-shadow(${shadow})` : shadow) : undefined;
+    console.log(shadow);
+    const shadowValue = shadow ? (isIcon ? `drop-shadow(${shadow.replace('inset', '')})` : shadow) : undefined;
 
     return {
         [fillRule]: color,
-        borderColor: border,
+        [borderRule]: border,
         [shadowRule]: shadowValue,
         transform,
         ...css,

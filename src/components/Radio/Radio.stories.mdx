@@ -41,6 +41,7 @@ import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
             labelRight={boolean('Label right', true, 'Radio 1 props')}
             disabled={boolean('Disabled', true, 'Radio 1 props')}
             IconInner={boolean('Custom inner icon', false, 'Radio 1 props') && baseTheme.global.placeholder}
+            IconOuter={boolean('Custom outer icon', false, 'Radio 1 props') && baseTheme.global.placeholder}
             __theme={
                 boolean('Use custom theme', false, 'Radio 1 props')
                     ? object('themeObj', baseTheme.components.RadioItem, 'Radio 1 props')
@@ -98,10 +99,18 @@ import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
                         hiddenLabel={boolean('Hidden Legend', false, 'Props')}
                         size={radios('size', ['lg', 'md', 'sm'], 'md', 'Props')}
                     >
-                        <Radio
+                        <Legend
+                            as="legend"
+                            hint="Подсказка"
+                            IconBefore={baseTheme.global.placeholder}
+                            IconAfter={baseTheme.global.placeholder}
+                            hiddenLegend={boolean('Hidden legend', false)}
+                        >
+                            Выберите вариант
+                        </Legend>
+                        <Form.Radio
                             orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Props')}
                             alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Props')}
-                            legend={text('Legend', 'Выберите вариант', 'Props')}
                         >
                             <Radio.Item
                                 value="first"
@@ -131,7 +140,7 @@ import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
                             <Radio.Item value="fourth" disabled={boolean('Disabled', false, 'Radio 4 props')}>
                                 {text('Label', 'Вариант 4', 'Radio 4 props')}
                             </Radio.Item>
-                        </Radio>
+                        </Form.Radio>
                     </Form.Field>
                     <br />
                     <Button type="submit">Submit</Button>

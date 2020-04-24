@@ -4,12 +4,14 @@ import * as Yup from 'yup';
 import FormField, { FormFieldProps } from './Field';
 import FormLabel, { FormLabelProps } from './Label';
 import FormInput, { FormInputProps } from './Input';
+import FormRadio, { FormRadioProps } from './Radio';
 import { FormContext, FormContextProps } from './useForm';
 
 export interface FormCompositionProps {
     Field: React.FC<FormFieldProps>;
     Label: React.FC<FormLabelProps>;
     Input: React.FC<FormInputProps>;
+    Radio: React.FC<FormRadioProps>;
 }
 
 export interface FormProps extends FormContextProps, FormikFormProps {
@@ -72,6 +74,7 @@ export const Form: React.FC<FormProps> & FormCompositionProps = ({
 
 Form.Input = React.forwardRef(FormInput);
 Form.Label = FormLabel;
+Form.Radio = FormRadio;
 Form.Field = FormField;
 
 export default Form;
