@@ -180,17 +180,20 @@ const baseTheme = deepmerge(tokens, {
             },
         },
         FormHint: {
-            base: {
+            theme: {
                 color: colors.grey20,
             },
             sizes: {
                 lg: {
+                    topGap: scale(1),
                     typography: 'bodyLg',
                 },
                 md: {
+                    topGap: scale(1),
                     typography: 'bodyMd',
                 },
                 sm: {
+                    topGap: scale(1),
                     typography: 'bodySm',
                 },
             },
@@ -248,17 +251,20 @@ const baseTheme = deepmerge(tokens, {
             },
         },
         FormError: {
-            base: {
+            theme: {
                 color: colors.error,
             },
             sizes: {
                 lg: {
+                    topGap: scale(1),
                     typography: 'bodyLg',
                 },
                 md: {
+                    topGap: scale(1),
                     typography: 'bodyMd',
                 },
                 sm: {
+                    topGap: scale(1),
                     typography: 'bodySm',
                 },
             },
@@ -281,6 +287,9 @@ const baseTheme = deepmerge(tokens, {
                     checked: {
                         color: colors.black,
                     },
+                    error: {
+                        color: colors.error,
+                    },
                 },
                 outer: {
                     default: {
@@ -299,6 +308,9 @@ const baseTheme = deepmerge(tokens, {
                     },
                     checked: {
                         border: colors.black,
+                    },
+                    error: {
+                        border: colors.error,
                     },
                 },
                 inner: {

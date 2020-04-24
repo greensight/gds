@@ -54,10 +54,6 @@ export const RadioItem = ({
     css,
     ...props
 }: RadioItemProps) => {
-    delete props.values;
-    delete props.meta;
-    delete props.helpers;
-
     const { orientation, alignment, size } = useRadio();
 
     /* Get theme objects. */
@@ -263,6 +259,9 @@ export const RadioItem = ({
     const themeOuterCheckedProperties = getThemeProperties(radioItemTheme, 'outer', 'checked');
     const themeInnerCheckedProperties = getThemeProperties(radioItemTheme, 'inner', 'checked');
 
+    const themeErrorProperties = getThemeProperties(radioItemTheme, 'label', 'error');
+    const themeOuterErrorProperties = getThemeProperties(radioItemTheme, 'outer', 'error');
+
     const statesCSS: CSSObject = {
         ':hover': {
             ...getLabelStateCSS(themeHoverProperties),
@@ -335,7 +334,23 @@ export const RadioItem = ({
         },
     };
 
-    const styles = [defaultCSS, !IconOuter && defaultOuterCSS, !IconInner && defaultInnerCSS, statesCSS, css];
+    const errorCSS: CSSObject = {
+        ...getLabelStateCSS(themeErrorProperties),
+        'input + &': {
+            '&:before': {
+                ...getLabelStateCSS(themeOuterErrorProperties),
+            },
+        },
+    };
+
+    const styles = [
+        defaultCSS,
+        !IconOuter && defaultOuterCSS,
+        !IconInner && defaultInnerCSS,
+        statesCSS,
+        props?.meta?.touched && props?.meta?.error && errorCSS,
+        css,
+    ];
 
     const innerIconStyles = [defaultInnerIconCSS, statesInnerIconCSS];
     const outerIconStyles = [defaultOuterIconCSS, statesOuterIconCSS];
@@ -355,7 +370,9 @@ export const RadioItem = ({
     };
 
     const id = `${name}-${value}`;
-
+    delete props.values;
+    delete props.meta;
+    delete props.helpers;
     return (
         <div css={wrapperStyles}>
             <input css={inputStyles} {...field} {...props} type="radio" name={name} id={id} value={value} />
@@ -383,7 +400,6 @@ const getCircleStateCSS = (
     const fillRule = isIcon ? 'fill' : 'background';
     const borderRule = isIcon ? 'fill' : 'borderColor';
     const shadowRule = isIcon ? 'filter' : 'boxShadow';
-    console.log(shadow);
     const shadowValue = shadow ? (isIcon ? `drop-shadow(${shadow.replace('inset', '')})` : shadow) : undefined;
 
     return {
@@ -398,7 +414,7 @@ const getCircleStateCSS = (
 const getThemeProperties = (
     radioItemTheme: RadioItemTheme,
     component: 'label' | 'outer' | 'inner',
-    state: ComponentStates | 'checked' | 'default',
+    state: ComponentStates | 'checked' | 'error' | 'success' | 'default',
 ):
     | RadioItemLabelThemeProperties
     | RadioItemLabelStateProperties

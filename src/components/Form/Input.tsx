@@ -3,8 +3,8 @@ import scale from '../../utils/scale';
 import { useField } from 'formik';
 import { useForm } from './useForm';
 import { useFormField } from './useFormField';
-import { FormError } from './Error';
-import { FormHint } from './Hint';
+import { FormError } from '../Legend/Error';
+import { FormHint } from '../Legend/Hint';
 import { CSSObject } from '@emotion/core';
 import typography from '../../utils/typography';
 import baseTheme from '../../utils/baseTheme';
@@ -242,9 +242,11 @@ const FormInput = <T extends React.ElementType = 'input'>(
                     SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
             </div>
             {meta.error && meta.touched && errorPosition === 'bottom' && (
-                <FormError err={meta.error} id={`error-${controlId}`} />
+                <FormError err={meta.error} id={`error-${controlId}`} size={size} errorPosition={errorPosition} />
             )}
-            {hint && hintPosition === 'bottom' && <FormHint id={`hint-${controlId}`} />}
+            {hint && hintPosition === 'bottom' && (
+                <FormHint size={size} hint={hint} hintPosition={hintPosition} id={`hint-${controlId}`} />
+            )}
         </>
     );
 };

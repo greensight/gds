@@ -20,7 +20,7 @@ export interface FormRadioProps {
  *
  * Consume props from `Form` and `Form.Field` compoents.
  */
-export const FormRadio = ({ children, css, ...props }: FormLabelProps) => {
+export const FormRadio = ({ children, css }: FormRadioProps) => {
     const { controlId, optional, size } = useFormField();
     const { errorPosition } = useForm();
     const [field, meta, helpers] = useField(controlId);
@@ -29,11 +29,12 @@ export const FormRadio = ({ children, css, ...props }: FormLabelProps) => {
         <Radio
             size={size}
             name={controlId}
-            isOptional={optional}
+            isOptional={Boolean(optional)}
             errorPosition={errorPosition}
             field={field}
             meta={meta}
             helpers={helpers}
+            css={css}
         >
             {children}
         </Radio>

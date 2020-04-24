@@ -91,27 +91,25 @@ import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
                     style={{ width: '25vw', minWidth: '320px' }}
                     ErrorIcon={ErrorIcon}
                     required="mark"
-                    errorPosition={radios('errorPosition', ['top', 'bottom'], 'top')}
+                    errorPosition={radios('errorPosition', ['top', 'bottom'], 'top', 'Form')}
                 >
                     <Form.Field
                         controlId="radioKnobs"
                         hint="Подсказка 1"
-                        hiddenLabel={boolean('Hidden Legend', false, 'Props')}
-                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Props')}
+                        hiddenLabel={boolean('Hidden Legend', false, 'Field')}
+                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field')}
                     >
-                        <Legend
-                            as="legend"
-                            hint="Подсказка"
-                            IconBefore={baseTheme.global.placeholder}
-                            IconAfter={baseTheme.global.placeholder}
-                            hiddenLegend={boolean('Hidden legend', false)}
-                        >
-                            Выберите вариант
-                        </Legend>
                         <Form.Radio
-                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Props')}
-                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Props')}
+                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio')}
+                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio')}
                         >
+                            <Form.Label
+                                as="legend"
+                                IconBefore={baseTheme.global.placeholder}
+                                IconAfter={baseTheme.global.placeholder}
+                            >
+                                Выберите вариант
+                            </Form.Label>
                             <Radio.Item
                                 value="first"
                                 disabled={boolean('Disabled', true, 'Radio 1 props')}

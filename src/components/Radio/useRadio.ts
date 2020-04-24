@@ -4,9 +4,9 @@ export interface RadioContextProps {
     /** Orientation for Radio items. */
     orientation?: 'vertical' | 'horizontal';
     /** Vertical alignment for radio icon */
-    alignment: 'top' | 'center' | 'bottom';
+    alignment?: 'top' | 'center' | 'bottom';
     /** Size name from list of sizes defined in theme object at `components.Button.sizes`. */
-    size?: string;
+    size: string;
 }
 
 export const RadioContext = createContext<RadioContextProps | undefined>(undefined);

@@ -4,26 +4,38 @@ import useComponentTheme from '../../helpers/useComponentTheme';
 import { CSSObject } from '@emotion/core';
 import { FormHintTheme, FormHintThemeProperties, FormHintSizeProperties } from '../../types/Form';
 import typography from '../../utils/typography';
-import { useFormField } from '../Form/useFormField';
-import { useLegend } from './useLegend';
 import { RequiredBy } from '../../types/Utils';
 import scale from '../../utils/scale';
 
-export type FormHintProps = React.HTMLProps<HTMLSpanElement>;
+export interface FormHintProps extends Omit<React.HTMLProps<HTMLSpanElement>, 'size'> {
+    /** Hint text. */
+    hint?: string;
+    /** Size name from list of sizes defined in theme object at `components.FormLabel.sizes`. */
+    size?: string;
+    /** Error's positioning. */
+    hintPosition?: 'top' | 'bottom';
+    /** Visually hidden label. Keeps text accessible. */
+    hiddenLegend?: boolean;
+    /** Label theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __hintTheme?: FormHintTheme;
+}
 
 /**
  * FormHint component.
  *
  * Inner component for hint. Use in `Form.Input` or `Form.Label` (by default).
  */
-export const FormHint = ({ ...props }: FormHintProps) => {
-    const size = useFormField()?.size ?? useLegend()?.size;
-    const hint = useFormField()?.hint ?? useLegend()?.hint;
-    const hintPosition = useFormField()?.hintPosition || 'top';
-    const { hiddenLegend } = useLegend();
-
+export const FormHint = ({
+    size = 'md',
+    hint,
+    __hintTheme,
+    hintPosition = 'top',
+    hiddenLegend = false,
+    ...props
+}: FormHintProps) => {
     /* Get theme objects. */
-    const { componentTheme, usedTheme } = useComponentTheme('FormHint');
+    const { componentTheme, usedTheme } = useComponentTheme('FormHint', __hintTheme);
+
     const hintTheme = componentTheme as FormHintTheme;
 
     if (!hintTheme.sizes[size]) {
@@ -33,7 +45,8 @@ export const FormHint = ({ ...props }: FormHintProps) => {
     const themeProperties = getThemeProperties(hintTheme);
     const themeDefaults = {
         color: baseTheme.colors.black,
-        borderRadius: 0,
+        borderWidth: themeProperties.border ? 1 : 0,
+        borderStyle: 'solid',
     };
 
     const tp: RequiredBy<FormHintThemeProperties, keyof typeof themeDefaults> = {
@@ -42,7 +55,10 @@ export const FormHint = ({ ...props }: FormHintProps) => {
     };
 
     const sizeProperties = hintTheme.sizes[size];
-    const sizeDefaults = {};
+    const sizeDefaults = {
+        padding: 0,
+        topGap: scale(1),
+    };
     const sp: RequiredBy<FormHintSizeProperties, keyof typeof sizeDefaults> = {
         ...sizeDefaults,
         ...sizeProperties,
@@ -54,13 +70,16 @@ export const FormHint = ({ ...props }: FormHintProps) => {
 
     const styles: CSSObject = {
         display: 'block',
-        marginTop: (hintPosition === 'top' && !hiddenLegend) || hintPosition === 'bottom' ? scale(1) : undefined,
+        padding: sp.padding,
+        marginTop: (hintPosition === 'top' && !hiddenLegend) || hintPosition === 'bottom' ? sp.topGap : undefined,
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
         color: tp.color,
         backgroundColor: tp.bg,
         borderColor: tp.border,
         borderRadius: tp.borderRadius,
+        boxShadow: tp.shadow,
+        textAlign: tp.textAlign,
         ...typographyCSS,
         ...tp.css,
         ...sp.css,
@@ -73,7 +92,7 @@ export const FormHint = ({ ...props }: FormHintProps) => {
 };
 
 const getThemeProperties = (hintTheme: FormHintTheme): FormHintThemeProperties => {
-    const themeProperties = hintTheme?.base;
+    const themeProperties = hintTheme.theme;
     return { ...themeProperties };
 };
 

@@ -8,7 +8,6 @@ import Form from './';
 import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
 import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 import Button from '../../components/Button';
-import Legend from '../../components/Legend';
 import scale from '../../utils/scale';
 import {
     FormTheme,
@@ -76,7 +75,7 @@ import {
                     optional="(Необязательное поле)"
                     style={{ marginBottom: scale(2) }}
                 >
-                    <Legend
+                    <Form.Label
                         IconBefore={boolean('Label icon before', true) && baseTheme.global.placeholder}
                         IconAfter={boolean('Label icon after', true) && baseTheme.global.placeholder}
                         __theme={
@@ -86,7 +85,7 @@ import {
                         }
                     >
                         Лейбл 1
-                    </Legend>
+                    </Form.Label>
                     <Form.Input
                         onFocus={action('onFocus')}
                         IconBefore={boolean('Input icon before', true) && baseTheme.global.placeholder}
@@ -111,18 +110,23 @@ import {
                         'labelAfter',
                     )}
                     style={{ marginBottom: scale(2) }}
+                    __errorTheme={
+                        boolean('Use custom ErorrTheme', false)
+                            ? object('errorThemeObj', baseTheme.components.FormError)
+                            : undefined
+                    }
+                    __hintTheme={
+                        boolean('Use custom HintTheme', false)
+                            ? object('hintThemeObj', baseTheme.components.FormHint)
+                            : undefined
+                    }
                 >
-                    <Legend
+                    <Form.Label
                         IconBefore={boolean('Label icon before', true) && baseTheme.global.placeholder}
                         IconAfter={boolean('Label icon after', true) && baseTheme.global.placeholder}
-                        __theme={
-                            boolean('Use custom LabelTheme', false)
-                                ? object('themeObj', baseTheme.components.FormLabel)
-                                : undefined
-                        }
                     >
                         Лейбл 2
-                    </Legend>
+                    </Form.Label>
                     <Form.Input
                         IconBefore={boolean('Input icon before', true) && baseTheme.global.placeholder}
                         IconAfter={boolean('Input icon after', true) && baseTheme.global.placeholder}
@@ -231,7 +235,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Optional">
         <Form showSuccess={false}>
             <Form.Field controlId="requiredField1" optional="(необязательное поле)">
-                <Legend>Лейбл</Legend>
+                <Form.Label>Лейбл</Form.Label>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -239,7 +243,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Mark">
         <Form required="mark" showSuccess={false}>
             <Form.Field controlId="requiredField2">
-                <Legend>Лейбл</Legend>
+                <Form.Label>Лейбл</Form.Label>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -277,7 +281,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     showSuccess={false}
                 >
                     <Form.Field controlId="errorLabel1">
-                        <Legend>Лейбл</Legend>
+                        <Form.Label>Лейбл</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -304,7 +308,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     errorPosition="bottom"
                 >
                     <Form.Field controlId="errorLabel2">
-                        <Legend>Лейбл</Legend>
+                        <Form.Label>Лейбл</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -352,7 +356,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon1">
-                        <Legend>Иконка валидации после текста</Legend>
+                        <Form.Label>Иконка валидации после текста</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -380,7 +384,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon2" validationPosition="labelBefore">
-                        <Legend>Иконка валидации до текста</Legend>
+                        <Form.Label>Иконка валидации до текста</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -408,7 +412,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon3" validationPosition="inputAfter">
-                        <Legend>Иконка валидации в поле после значения</Legend>
+                        <Form.Label>Иконка валидации в поле после значения</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -436,7 +440,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon4" validationPosition="inputBefore">
-                        <Legend>Иконка валидации в поле до значения</Legend>
+                        <Form.Label>Иконка валидации в поле до значения</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -476,7 +480,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="successLabel1">
-                        <Legend>Лейбл</Legend>
+                        <Form.Label>Лейбл</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -504,7 +508,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="successLabel2">
-                        <Legend>Лейбл</Legend>
+                        <Form.Label>Лейбл</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -538,7 +542,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Large size">
         <Form showSuccess={false}>
             <Form.Field controlId="sizeLg" size="lg">
-                <Legend>Поле Lg</Legend>
+                <Form.Label>Поле Lg</Form.Label>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -546,7 +550,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Medium size">
         <Form showSuccess={false}>
             <Form.Field controlId="sizeMd" size="md">
-                <Legend>Поле Mg</Legend>
+                <Form.Label>Поле Mg</Form.Label>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -554,7 +558,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Small size">
         <Form showSuccess={false}>
             <Form.Field controlId="sizeSm" size="sm">
-                <Legend>Поле Sm</Legend>
+                <Form.Label>Поле Sm</Form.Label>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -579,7 +583,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Hint Top">
         <Form showSuccess={false}>
             <Form.Field controlId="hintTop" hint="Текст подсказки сверху">
-                <Legend>Поле с подсказкой</Legend>
+                <Form.Label>Поле с подсказкой</Form.Label>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -587,7 +591,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Hint Bottom">
         <Form showSuccess={false}>
             <Form.Field controlId="hintBottom" hint="Текст подсказки снизу" hintPosition="bottom">
-                <Legend>Поле с подсказкой</Legend>
+                <Form.Label>Поле с подсказкой</Form.Label>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -625,7 +629,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="hiddenLabel" hiddenLabel={true} validationPosition="inputAfter">
-                        <Legend>Визуально скрытый лейбл</Legend>
+                        <Form.Label>Визуально скрытый лейбл</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -684,7 +688,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon1" validationPosition="labelAfter">
-                        <Legend IconAfter={baseTheme.global.placeholder}>Лейбл с иконкой после текста</Legend>
+                        <Form.Label IconAfter={baseTheme.global.placeholder}>Лейбл с иконкой после текста</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -712,7 +716,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
-                        <Legend IconBefore={baseTheme.global.placeholder}>Лейбл с иконкой до текста</Legend>
+                        <Form.Label IconBefore={baseTheme.global.placeholder}>Лейбл с иконкой до текста</Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -740,9 +744,9 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
-                        <Legend IconAfter={baseTheme.global.placeholder} IconBefore={baseTheme.global.placeholder}>
+                        <Form.Label IconAfter={baseTheme.global.placeholder} IconBefore={baseTheme.global.placeholder}>
                             Лейбл с двумя иконками
-                        </Legend>
+                        </Form.Label>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -801,7 +805,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon1" validationPosition="inputAfter">
-                        <Legend>Поле с иконкой до текста</Legend>
+                        <Form.Label>Поле с иконкой до текста</Form.Label>
                         <Form.Input IconBefore={baseTheme.global.placeholder} />
                     </Form.Field>
                     <br />
@@ -829,7 +833,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon2" validationPosition="inputBefore">
-                        <Legend>Поле с иконкой после текста</Legend>
+                        <Form.Label>Поле с иконкой после текста</Form.Label>
                         <Form.Input IconAfter={baseTheme.global.placeholder} />
                     </Form.Field>
                     <br />
@@ -857,7 +861,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon3" validationPosition="inputAfter">
-                        <Legend>Поле с двумя иконками</Legend>
+                        <Form.Label>Поле с двумя иконками</Form.Label>
                         <Form.Input
                             IconAfter={baseTheme.global.placeholder}
                             IconBefore={baseTheme.global.placeholder}
@@ -885,7 +889,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
             return (
                 <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={action('Submit')}>
                     <Form.Field controlId="inputDisabled">
-                        <Legend>Заблокированное поле</Legend>
+                        <Form.Label>Заблокированное поле</Form.Label>
                         <Form.Input disabled IconBefore={baseTheme.global.placeholder} />
                     </Form.Field>
                 </Form>

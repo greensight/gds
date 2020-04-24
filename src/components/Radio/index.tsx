@@ -1,15 +1,14 @@
 import React from 'react';
+import { FieldMetaProps, FieldHelperProps, FieldInputProps } from 'formik';
 import RadioItem, { RadioItemProps } from './Item';
 import { RadioContext, RadioContextProps } from './useRadio';
-import { FormError } from '../Form/Error';
+import { FormError } from '../Legend/Error';
 
 export interface RadioCompositionProps {
     Item: React.FC<RadioItemProps>;
 }
 
 export interface RadioProps extends RadioContextProps {
-    /** Field legend. */
-    legend: string;
     /** Hint text. */
     hint?: string;
     /** Formik field object (inner) */
@@ -18,6 +17,12 @@ export interface RadioProps extends RadioContextProps {
     meta?: FieldMetaProps<string[]>;
     /** Formik helpers (inner) */
     helpers?: FieldHelperProps<string[]>;
+    /** Name of radio */
+    name: string;
+    /** Set optional fill to fieldset. */
+    isOptional: boolean;
+    /** Error's positioning. */
+    errorPosition?: 'top' | 'bottom';
     /** Radio content. */
     children: React.ReactNode;
 }
@@ -32,12 +37,14 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     field,
     meta,
     helpers,
+    errorPosition = 'top',
     ...props
 }) => {
     const fieldsetProps = {
         'aria-invalid': meta?.touched && meta?.error ? true : undefined,
         'aria-required': isOptional ? undefined : true,
     };
+
     return (
         <RadioContext.Provider value={{ orientation, alignment, size }}>
             <fieldset {...fieldsetProps}>
@@ -54,7 +61,9 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
                         }
                     })}
                 </div>
-                {meta?.error && meta?.touched && props?.errorPosition === 'bottom' && <FormError err={meta?.error} />}
+                {meta?.error && meta?.touched && errorPosition === 'bottom' && (
+                    <FormError size={size} err={meta?.error} />
+                )}
             </fieldset>
         </RadioContext.Provider>
     );

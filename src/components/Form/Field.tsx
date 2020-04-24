@@ -23,11 +23,23 @@ export const FormField = ({
     validationPosition = 'labelAfter',
     optional,
     children,
+    __hintTheme,
+    __errorTheme,
     ...props
 }: FormFieldProps) => {
     return (
         <FormFieldContext.Provider
-            value={{ controlId, optional, size, hintPosition, hint, hiddenLabel, validationPosition }}
+            value={{
+                controlId,
+                optional,
+                size,
+                hintPosition,
+                hint,
+                hiddenLabel,
+                validationPosition,
+                __hintTheme,
+                __errorTheme,
+            }}
         >
             <div {...props}>{children}</div>
         </FormFieldContext.Provider>

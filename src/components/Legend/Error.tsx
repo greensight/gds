@@ -1,17 +1,22 @@
 import * as React from 'react';
-import scale from '../../utils/scale';
 import { CSSObject } from '@emotion/core';
 import baseTheme from '../../utils/baseTheme';
 import typography from '../../utils/typography';
-import { useFormField } from './useFormField';
-import { useForm } from './useForm';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import { FormErrorTheme, FormErrorThemeProperties, FormErrorSizeProperties } from '../../types/Form';
 import { RequiredBy } from '../../types/Utils';
 
-export interface FormErrorProps extends React.HTMLProps<HTMLSpanElement> {
+export interface FormErrorProps extends Omit<React.HTMLProps<HTMLSpanElement>, 'size'> {
     /** Error text. */
     err: string;
+    /** Size name from list of sizes defined in theme object at `components.FormLabel.sizes`. */
+    size?: string;
+    /** Error's positioning. */
+    errorPosition?: 'top' | 'bottom';
+    /** Visually hidden label. Keeps text accessible. */
+    hiddenLegend?: boolean;
+    /** Label theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __errorTheme?: FormErrorTheme;
 }
 
 /**
@@ -21,11 +26,15 @@ export interface FormErrorProps extends React.HTMLProps<HTMLSpanElement> {
  *
  */
 
-export const FormError = ({ err, ...props }: FormErrorProps) => {
-    const { size, hiddenLabel } = useFormField();
-    const { errorPosition } = useForm();
-
-    const { componentTheme, usedTheme } = useComponentTheme('FormError');
+export const FormError = ({
+    err,
+    size = 'md',
+    errorPosition = 'top',
+    hiddenLegend = false,
+    __errorTheme,
+    ...props
+}: FormErrorProps) => {
+    const { componentTheme, usedTheme } = useComponentTheme('FormError', __errorTheme);
     const errorTheme = componentTheme as FormErrorTheme;
 
     if (!errorTheme.sizes[size]) {
@@ -45,7 +54,9 @@ export const FormError = ({ err, ...props }: FormErrorProps) => {
     const themeProperties = getThemeProperties(errorTheme);
 
     const themeDefaults = {
-        color: baseTheme.colors.error,
+        borderWidth: themeProperties.border ? 1 : 0,
+        borderStyle: 'solid',
+        color: baseTheme.colors.black,
     };
 
     const tp: RequiredBy<FormErrorThemeProperties, keyof typeof themeDefaults> = {
@@ -55,15 +66,17 @@ export const FormError = ({ err, ...props }: FormErrorProps) => {
 
     const styles: CSSObject = {
         display: 'block',
+        padding: sp.padding,
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
         color: tp.color,
         backgroundColor: tp.bg,
         borderColor: tp.border,
         boxShadow: tp.shadow,
-        marginTop: (errorPosition === 'top' && !hiddenLabel) || errorPosition === 'bottom' ? scale(1) : undefined,
+        marginTop: (errorPosition === 'top' && !hiddenLegend) || errorPosition === 'bottom' ? sp.topGap : undefined,
         ...typographyCSS,
         borderRadius: tp.borderRadius,
+        textAlign: tp.textAlign,
         ...tp.css,
         ...sp.css,
     };
@@ -76,7 +89,7 @@ export const FormError = ({ err, ...props }: FormErrorProps) => {
 };
 
 const getThemeProperties = (formErrorTheme: FormErrorTheme): FormErrorThemeProperties => {
-    const themeProperties = formErrorTheme?.base;
+    const themeProperties = formErrorTheme.theme;
     return { ...themeProperties };
 };
 

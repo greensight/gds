@@ -60,11 +60,15 @@ export interface RadioItemCircleThemeProperties extends RadioItemCircleStateProp
 export interface RadioItemLabelStates extends Partial<Record<ComponentStates, RadioItemLabelStateProperties>> {
     default: RadioItemLabelThemeProperties;
     checked: RadioItemLabelThemeProperties;
+    error?: RadioItemLabelThemeProperties;
+    success?: RadioItemLabelThemeProperties;
 }
 
 export interface RadioItemCircleStates extends Partial<Record<ComponentStates, RadioItemCircleStateProperties>> {
     default: RadioItemCircleThemeProperties;
     checked: RadioItemCircleThemeProperties;
+    error?: RadioItemCircleThemeProperties;
+    success?: RadioItemCircleThemeProperties;
 }
 
 export interface RadioItemSizeProperties {

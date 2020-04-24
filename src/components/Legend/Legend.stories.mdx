@@ -19,11 +19,16 @@ import baseTheme from '../../utils/baseTheme';
             hint={text('Hint', 'Подсказка к полю')}
             hiddenLegend={boolean('Hidden legend', false)}
             size={radios('size', ['lg', 'md', 'sm'], 'md')}
-            optional={boolean('Is optional?', false) ? text('Optional text', '') : undefined}
+            optional={boolean('Is optional?', true) ? text('Optional text', '(необязательное поле)') : undefined}
             IconBefore={boolean('Icon before', true) && baseTheme.global.placeholder}
             IconAfter={boolean('Icon after', true) && baseTheme.global.placeholder}
             __theme={
                 boolean('Use custom theme', false) ? object('themeObj', baseTheme.components.FormLabel) : undefined
+            }
+            __hintTheme={
+                boolean('Use custom hint theme', false)
+                    ? object('hintThemeObj', baseTheme.components.FormHint)
+                    : undefined
             }
         >
             Пример лейбла/легенды
@@ -44,14 +49,17 @@ import baseTheme from '../../utils/baseTheme';
                         ? text('Optional text', '(Необязательное поле)', 'Field Props')
                         : undefined
                 }
+                hint={boolean('Hint', true, 'Field Props') ? text('Hint text', 'Подсказка', 'Field Props') : undefined}
                 size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field Props')}
+                hiddenLabel={boolean('Hidden label', false, 'Field Props')}
             >
-                <Legend
-                    hiddenLegend={boolean('Hidden legend', false, 'Legend Props')}
-                    hint={text('Hint', 'Подсказка', 'Legend Props')}
+                <Form.Label
+                    as={text('Tag', 'Legend', 'Label Props')}
+                    IconBefore={boolean('Label icon before', true, 'Label Props') && baseTheme.global.placeholder}
+                    IconAfter={boolean('Label icon after', true, 'Label Props') && baseTheme.global.placeholder}
                 >
                     Лейбл внутри Form
-                </Legend>
+                </Form.Label>
             </Form.Field>
         </Form>
     </Story>

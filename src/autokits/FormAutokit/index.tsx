@@ -2,6 +2,7 @@ import React from 'react';
 import Form from '../../components/Form';
 import Layout from '../../components/Layout';
 import Button from '../../components/Button';
+import Legend from '../../components/Legend';
 import useTheme from '../../utils/useTheme';
 import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';
@@ -144,7 +145,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
             >
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-${index + 1}`} size={sizeName}>
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -159,7 +160,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
             >
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-disabled-${index + 1}`} size={sizeName}>
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input disabled IconAfter={PlaceholderIcon} />
                     </Form.Field>
                 ))}
@@ -179,7 +180,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                         size={sizeName}
                         hint="Подсказка к полю"
                     >
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -191,7 +192,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                         hint="Подсказка к полю"
                         hintPosition="bottom"
                     >
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -211,7 +212,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                         size={sizeName}
                         hiddenLabel={true}
                     >
-                        <Form.Label>Скрытый лейбл</Form.Label>
+                        <Legend>Скрытый лейбл</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -231,7 +232,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                         size={sizeName}
                         optional="(необязательное поле)"
                     >
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -246,21 +247,21 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
             >
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-LabelIconBefore-${index + 1}`} size={sizeName}>
-                        <Form.Label IconBefore={PlaceholderIcon}>Лейбл {sizeName}</Form.Label>
+                        <Legend IconBefore={PlaceholderIcon}>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-LabelIconAfter-${index + 1}`} size={sizeName}>
-                        <Form.Label IconAfter={PlaceholderIcon}>Лейбл {sizeName}</Form.Label>
+                        <Legend IconAfter={PlaceholderIcon}>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-LabelIconBoth-${index + 1}`} size={sizeName}>
-                        <Form.Label IconBefore={PlaceholderIcon} IconAfter={PlaceholderIcon}>
+                        <Legend IconBefore={PlaceholderIcon} IconAfter={PlaceholderIcon}>
                             Лейбл {sizeName}
-                        </Form.Label>
+                        </Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -275,19 +276,19 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
             >
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-InputIconBefore-${index + 1}`} size={sizeName}>
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input IconBefore={PlaceholderIcon} />
                     </Form.Field>
                 ))}
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-InputIconAfter-${index + 1}`} size={sizeName}>
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input IconAfter={PlaceholderIcon} />
                     </Form.Field>
                 ))}
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-InputIconBoth-${index + 1}`} size={sizeName}>
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input IconAfter={PlaceholderIcon} IconBefore={PlaceholderIcon} />
                     </Form.Field>
                 ))}
@@ -302,7 +303,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
             >
                 {Object.keys(inputTheme.sizes).map((sizeName, index) => (
                     <Form.Field key={sizeName} controlId={`field-validationLabelAfter-${index + 1}`} size={sizeName}>
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -313,7 +314,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                         size={sizeName}
                         validationPosition="labelBefore"
                     >
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -324,7 +325,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                         size={sizeName}
                         validationPosition="inputAfter"
                     >
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}
@@ -335,7 +336,7 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                         size={sizeName}
                         validationPosition="inputBefore"
                     >
-                        <Form.Label>Лейбл {sizeName}</Form.Label>
+                        <Legend>Лейбл {sizeName}</Legend>
                         <Form.Input />
                     </Form.Field>
                 ))}

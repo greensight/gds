@@ -128,11 +128,19 @@ export interface FormHintThemeProperties {
     borderStyle?: string;
     /** Border radius. */
     borderRadius?: number | string;
+    /** Shadow. */
+    shadow?: string;
+    /** Text align. */
+    textAlign?: 'left' | 'center' | 'right';
     /** Additional CSS. */
     css?: CSSObject;
 }
 
 export interface FormHintSizeProperties {
+    /** Spacing above hint. */
+    topGap: number;
+    /** Paddings. Equals `0 by default. */
+    padding?: string | number;
     /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
     typography?: string;
     /** Additional CSS. */
@@ -140,8 +148,8 @@ export interface FormHintSizeProperties {
 }
 
 export interface FormHintTheme {
-    /** Common settings for all themes. */
-    base?: FormHintThemeProperties;
+    /** Available theme. */
+    theme?: FormHintThemeProperties;
     /** Available sizes. Any hint can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, FormHintSizeProperties>, 'md'>;
 }
@@ -161,11 +169,17 @@ export interface FormErrorThemeProperties {
     borderRadius?: number | string;
     /** Shadow. */
     shadow?: string;
+    /** Text align. */
+    textAlign?: 'left' | 'center' | 'right';
     /** Additional CSS. */
     css?: CSSObject;
 }
 
 export interface FormErrorSizeProperties {
+    /** Spacing above error. */
+    topGap: number;
+    /** Paddings. Equals `0 by default. */
+    padding?: string | number;
     /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
     typography?: string;
     /** Additional CSS. */
@@ -174,7 +188,7 @@ export interface FormErrorSizeProperties {
 
 export interface FormErrorTheme {
     /** Common settings for all themes. */
-    base?: FormErrorThemeProperties;
+    theme?: FormErrorThemeProperties;
     /** Available sizes. Any error can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, FormErrorSizeProperties>, 'md'>;
 }

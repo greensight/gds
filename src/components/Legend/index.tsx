@@ -1,4 +1,5 @@
 import React from 'react';
+import { FieldMetaProps } from 'formik';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import FormTheme, {
@@ -7,33 +8,57 @@ import FormTheme, {
     FormLabelSizeProperties,
     FormLabelStateProperties,
     FormValidationIconProperties,
+    FormErrorTheme,
+    FormHintTheme,
 } from '../../types/Form';
 import scale from '../../utils/scale';
 import { CSSObject, jsx } from '@emotion/core';
 import typography from '../../utils/typography';
 import VisuallyHidden from '../../components/VisuallyHidden';
 import { MAJOR_STEP } from '../../helpers/constants';
-import { useForm } from '../Form/useForm';
-import { useFormField } from '../Form/useFormField';
-import { FormError } from '../Form/Error';
+import { FormError } from './Error';
 import { FormHint } from './Hint';
 import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
-import { useField } from 'formik';
-import { LegendContext, LegendContextProps } from './useLegend';
 
-export interface LegendBaseProps extends LegendContextProps {
-    /** Icon after text. Accepts SVGR icon or custom JSX. */
-    IconAfter?: SVGRIcon;
+export interface LegendBaseProps {
+    /** Size name from list of sizes defined in theme object at `components.FormLabel.sizes`. */
+    size?: string;
+    /** Hint text. */
+    hint?: string;
+    /** Hint's positioning. */
+    hintPosition?: 'top' | 'bottom';
     /** Icon before text. Accepts SVGR icon or custom JSX. */
     IconBefore?: SVGRIcon;
-    /** Validation icon's positioning. */
-    validationPosition?: 'labelBefore' | 'labelAfter';
-    /** Set optional fill. If get string, also set optional text to `Form.Label`. */
+    /** Icon after text. Accepts SVGR icon or custom JSX. */
+    IconAfter?: SVGRIcon;
+    /** Visually hidden label. Keeps text accessible. */
+    hiddenLegend?: boolean;
+    /** Set optional fill. If get string, also set optional text inside legend. */
     optional?: boolean | string;
+    /** Validation icon's positioning. */
+    validationPosition?: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
+    /** Error's positioning. */
+    errorPosition?: 'top' | 'bottom';
     /** Label content. */
     children: React.ReactNode;
+    /** Set `htmlFor` if Legend use as label. */
+    name?: string;
+    /** Formik meta object (inner) */
+    meta?: FieldMetaProps<string[]>;
+    /** Switch between optional text & asterisk. */
+    required?: 'optional' | 'mark';
+    /** Error icon for validation. */
+    ErrorIcon?: SVGRIcon;
+    /** Success icon for validation. Doesn't make sense without `showSuccess` prop. */
+    SuccessIcon?: SVGRIcon;
+    /** Show success status for validation or not. */
+    showSuccess?: boolean;
     /** Label theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: FormLabelTheme;
+    /** Hint theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __hintTheme?: FormHintTheme;
+    /** Hint theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
+    __errorTheme?: FormErrorTheme;
     /** Additional CSS. */
     css?: CSSObject;
 }
@@ -43,52 +68,40 @@ export type LegendProps<P extends React.ElementType = 'label'> = {
     as?: P;
 } & MergeElementProps<P, LegendBaseProps>;
 
-const Legend = <T extends React.ElementType = 'label'>({
+export const Legend = <T extends React.ElementType = 'label'>({
     as,
+    size = 'md',
     hint,
+    hintPosition = 'top',
     IconAfter,
     IconBefore,
-    size = 'md',
     hiddenLegend = false,
     optional,
     validationPosition = 'labelAfter',
+    errorPosition = 'top',
     children,
     name,
+    meta,
+    required = 'optional',
+    ErrorIcon,
+    SuccessIcon,
+    showSuccess = true,
     css,
     __theme,
+    __hintTheme,
+    __errorTheme,
     ...props
 }: LegendProps<T>) => {
-    delete props.values;
-    delete props.field;
-    delete props.helpers;
-    delete props.type;
-    const legendName = useFormField()?.controlId || name;
-    const legendOptional = useFormField()?.optional || optional;
-    const legendSize = useFormField()?.size || size;
-    const legendValidationPosition = useFormField()?.validationPosition || validationPosition;
-    const legendHiddenLabel = useFormField()?.hiddenLabel || hiddenLegend;
-    console.log(hiddenLegend);
-    const legendHint = useFormField()?.hint || hint;
-    const hintPosition = useFormField()?.hintPosition || 'top';
-    const errorPosition = useForm()?.errorPosition;
-    const required = useForm()?.required || 'optional';
-    const ErrorIcon = useForm()?.ErrorIcon;
-    const showSuccess = useForm()?.showSuccess;
-    const SuccessIcon = useForm()?.SuccessIcon;
-
-    const needForm = typeof useForm() !== 'undefined' ? true : false;
-
     /* Get theme objects. */
     const { componentTheme, usedTheme } = useComponentTheme('FormLabel', __theme);
+
     const labelTheme = componentTheme as FormLabelTheme;
 
     const optionalTheme = labelTheme.optional;
     const markTheme = labelTheme.mark;
 
-    const [, meta] = needForm ? useField(legendName) : [null, null];
-
-    if (!labelTheme.sizes[legendSize]) {
-        console.warn(`Specify "${legendSize}" size. Default values are used instead`);
+    if (!labelTheme.sizes[size]) {
+        console.warn(`Specify "${size}" size. Default values are used instead`);
     }
     const themeProperties = getThemeProperties(labelTheme, 'default');
     const themeDefaults = {
@@ -102,7 +115,7 @@ const Legend = <T extends React.ElementType = 'label'>({
         ...themeProperties,
     };
 
-    const sizeProperties = labelTheme.sizes[legendSize];
+    const sizeProperties = labelTheme.sizes[size];
     const sizeDefaults = {
         iconSize: scale(3),
     };
@@ -118,7 +131,7 @@ const Legend = <T extends React.ElementType = 'label'>({
     const transition = getTransition(tp.time, tp.easing);
     const defaultCSS: CSSObject = {
         display: 'block',
-        marginBottom: legendHiddenLabel ? undefined : scale(1),
+        marginBottom: hiddenLegend ? undefined : scale(1),
         transition,
         ...typography('bodyMd'),
         ...getStateCSS(tp),
@@ -149,14 +162,11 @@ const Legend = <T extends React.ElementType = 'label'>({
     const textStyles: CSSObject = {
         position: 'relative',
         display: 'block',
-        paddingRight:
-            IconAfter || (needForm && legendValidationPosition === 'labelAfter')
-                ? `${sp.iconSize + MAJOR_STEP}px`
-                : undefined,
+        paddingRight: IconAfter || validationPosition === 'labelAfter' ? `${sp.iconSize + MAJOR_STEP}px` : undefined,
         paddingLeft:
             IconBefore ||
-            (legendValidationPosition === 'labelBefore' && needForm && meta?.touched && meta?.error) ||
-            (legendValidationPosition === 'labelBefore' && needForm && meta?.touched && !meta?.error && showSuccess)
+            (validationPosition === 'labelBefore' && meta?.touched && meta?.error) ||
+            (validationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess)
                 ? `${sp.iconSize + MAJOR_STEP}px`
                 : undefined,
     };
@@ -195,7 +205,7 @@ const Legend = <T extends React.ElementType = 'label'>({
 
     let validationIconHorizontalRule;
 
-    if (legendValidationPosition === 'labelBefore') {
+    if (validationPosition === 'labelBefore') {
         validationIconHorizontalRule = 'left';
     } else {
         validationIconHorizontalRule = 'right';
@@ -229,62 +239,79 @@ const Legend = <T extends React.ElementType = 'label'>({
         ...typographyCSS,
     };
 
+    delete props.meta;
     return jsx(
         as || 'label',
         {
-            htmlFor: !as || as === 'label' ? legendName : null,
+            htmlFor: !as || as === 'label' ? name : null,
             css: styles,
             ...props,
         },
-        <LegendContext.Provider value={{ size, hint, name, hiddenLegend }}>
+        <>
             <span css={textStyles}>
-                {legendHiddenLabel ? (
+                {hiddenLegend ? (
                     <VisuallyHidden>{children}</VisuallyHidden>
                 ) : (
                     <span css={labelTextStyles}>{children}</span>
                 )}
                 {IconBefore &&
-                    !legendHiddenLabel &&
-                    !(legendValidationPosition === 'labelBefore' && meta?.touched && meta?.error) &&
-                    !(legendValidationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess) && (
+                    !hiddenLegend &&
+                    !(validationPosition === 'labelBefore' && meta?.touched && meta?.error) &&
+                    !(validationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess) && (
                         <IconBefore css={iconBeforeCSS} />
                     )}
                 {IconAfter &&
-                    !legendHiddenLabel &&
-                    !(legendValidationPosition === 'labelAfter' && meta?.touched && meta?.error) &&
-                    !(legendValidationPosition === 'labelAfter' && meta?.touched && !meta?.error && showSuccess) && (
+                    !hiddenLegend &&
+                    !(validationPosition === 'labelAfter' && meta?.touched && meta?.error) &&
+                    !(validationPosition === 'labelAfter' && meta?.touched && !meta?.error && showSuccess) && (
                         <IconAfter css={iconAfterCSS} />
                     )}
-                {needForm &&
-                    (legendValidationPosition === 'labelAfter' || legendValidationPosition === 'labelBefore') &&
+                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
                     meta?.touched &&
                     meta?.error &&
-                    !legendHiddenLabel &&
+                    !hiddenLegend &&
                     ErrorIcon && <ErrorIcon css={iconErrorStyles} />}
-                {needForm &&
-                    (legendValidationPosition === 'labelAfter' || legendValidationPosition === 'labelBefore') &&
+                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
                     meta?.touched &&
                     !meta?.error &&
                     showSuccess &&
-                    !legendHiddenLabel &&
+                    !hiddenLegend &&
                     SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
-                {legendOptional && required === 'optional' && !legendHiddenLabel && (
-                    <span css={optionalStyles}>{legendOptional}</span>
+                {Boolean(optional) && required === 'optional' && !hiddenLegend && (
+                    <span css={optionalStyles}>{optional}</span>
                 )}
-                {legendOptional && required === 'optional' && legendHiddenLabel && (
-                    <VisuallyHidden>{legendOptional}</VisuallyHidden>
+                {Boolean(optional) && required === 'optional' && hiddenLegend && (
+                    <VisuallyHidden>{optional}</VisuallyHidden>
                 )}
-                {!legendOptional && required === 'mark' && !legendHiddenLabel && (
+                {!optional && required === 'mark' && !hiddenLegend && (
                     <span css={markStyles} aria-hidden="true">
                         *
                     </span>
                 )}
             </span>
-            {legendHint &&
+            {hint &&
                 hintPosition === 'top' &&
-                (legendHiddenLabel ? <VisuallyHidden>{legendHint}</VisuallyHidden> : <FormHint />)}
-            {meta?.error && meta?.touched && errorPosition === 'top' && <FormError err={meta?.error} />}
-        </LegendContext.Provider>,
+                (hiddenLegend ? (
+                    <VisuallyHidden>{hint}</VisuallyHidden>
+                ) : (
+                    <FormHint
+                        size={size}
+                        hint={hint}
+                        __hintTheme={__hintTheme}
+                        hintPosition={hintPosition}
+                        hiddenLegend={hiddenLegend}
+                    />
+                ))}
+            {meta?.error && meta?.touched && errorPosition === 'top' && (
+                <FormError
+                    size={size}
+                    err={meta?.error}
+                    __errorTheme={__errorTheme}
+                    errorPosition={errorPosition}
+                    hiddenLegend={hiddenLegend}
+                />
+            )}
+        </>,
     );
 };
 
