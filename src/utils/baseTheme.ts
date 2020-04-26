@@ -17,31 +17,39 @@ const baseTheme = deepmerge(tokens, {
     global: {
         placeholder: PlaceholderIcon,
         fonts: {
-            fontFace: {
-                'PT Root UI': [
-                    {
-                        woff2: 'fonts/PTRootUI-Regular.woff2',
-                        woff: 'fonts/PTRootUI-Regular.woff',
-                    },
-                    {
-                        woff2: 'fonts/PTRootUI-Medium.woff2',
-                        woff: 'fonts/PTRootUI-Medium.woff',
-                        weight: 500,
-                    },
-                    {
-                        woff2: 'fonts/PTRootUI-Bold.woff2',
-                        woff: 'fonts/PTRootUI-Bold.woff',
-                        weight: 700,
-                    },
-                    {
-                        vf: 'fonts/PTRootUI-VF.woff2',
-                        weight: '300 700',
-                    },
-                ],
+            families: {
+                'PT Root UI': {
+                    stack: FONT_STACK,
+                },
             },
-            stacks: {
-                'PT Root UI': FONT_STACK,
-            },
+            fontFace: [
+                {
+                    '@font-face': {
+                        fontFamily: 'PT Root UI',
+                        src:
+                            'url("../fonts/PTRootUI/PTRootUI-Regular.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Regular.woff") format("woff")',
+                        fontDisplay: 'swap',
+                    },
+                },
+                {
+                    '@font-face': {
+                        fontFamily: 'PT Root UI',
+                        src:
+                            'url("../fonts/PTRootUI/PTRootUI-Medium.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Medium.woff") format("woff")',
+                        fontDisplay: 'swap',
+                        fontWeight: 500,
+                    },
+                },
+                {
+                    '@font-face': {
+                        fontFamily: 'PT Root UI',
+                        src:
+                            'url("../fonts/PTRootUI/PTRootUI-Bold.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Bold.woff") format("woff")',
+                        fontDisplay: 'swap',
+                        fontWeight: 700,
+                    },
+                },
+            ],
         },
         base: {
             selection: {

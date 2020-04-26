@@ -43,28 +43,20 @@ export interface BaseProperties {
     css?: CSSObject;
 }
 
-export interface FontFaceProperties {
-    /** Relative path to font asset in `woff2` format. */
-    woff2?: string;
-    /** Relative path to font asset in `woff` format. */
-    woff?: string;
-    /** Relative path to variable font asset in woff2 format. This option activates additional variable fonts rules in `typography` helper. */
-    vf?: string;
-    /** Font weight. */
-    weight?: number | string;
-    /** Italic font style. */
-    italic?: boolean;
-    /** Additional CSS. */
-    css?: CSSObject;
+export interface FontFamilyProperties {
+    /** Fallback fonts for specified font family. */
+    stack?: string;
+    /** Variable font. */
+    vf?: boolean;
 }
 
 export interface FontsProperties {
-    /** Font-face settings for defined fonts styles. */
-    fontFace: Record<string, FontFaceProperties[]>;
-    /** Fallback fonts for specified font family. */
-    stacks?: Record<string, string>;
+    /** Font families settings. Used in `Typography` autokit and `typography` helper. */
+    families?: Record<string, FontFamilyProperties>;
     /** Fluid typography settings. Active by default. Pass `false` to disable completely or array of fonts to disable. */
     fluid?: boolean | string[];
+    /** `@font-face` definitions. */
+    fontFace?: CSSObject[];
 }
 
 export default interface GlobalTheme {

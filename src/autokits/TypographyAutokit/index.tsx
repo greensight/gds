@@ -86,23 +86,29 @@ const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
                     typography
                 </p>
             </div>
-            {globalFontsTheme &&
-                Object.entries(globalFontsTheme.fontFace).map(([fontName, fontAssets]) => {
-                    return (
-                        <dl key={fontName} css={{ marginBottom: scale(2) }}>
-                            <dt css={{ ...baseThemeTypography('bodyBold') }}>Font family</dt>
-                            <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>{fontName}</dd>
-                            <dt css={{ ...baseThemeTypography('bodyBold') }}>Variable font</dt>
-                            <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>
-                                {fontAssets.some(({ vf }) => vf) ? 'true' : 'false'}
-                            </dd>
-                            <dt css={{ ...baseThemeTypography('bodyBold') }}>Font stack</dt>
-                            <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>
-                                {globalFontsTheme?.stacks?.[fontName] || 'sans-serif'}
-                            </dd>
-                        </dl>
-                    );
-                })}
+            {globalFontsTheme?.families ? (
+                Object.entries(globalFontsTheme.families).map(([family, familySettings]) => (
+                    <dl key={family} css={{ marginBottom: scale(2) }}>
+                        <dt css={{ ...baseThemeTypography('bodyBold') }}>Font family</dt>
+                        <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>{family}</dd>
+                        <dt css={{ ...baseThemeTypography('bodyBold') }}>Variable font</dt>
+                        <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>
+                            {familySettings.vf ? 'true' : 'false'}
+                        </dd>
+                        <dt css={{ ...baseThemeTypography('bodyBold') }}>Font stack</dt>
+                        <dd css={{ ...baseThemeTypography('body'), marginLeft: scale(4) }}>
+                            {familySettings.stack || 'sans-serif'}
+                        </dd>
+                    </dl>
+                ))
+            ) : (
+                <div css={baseThemeTypography('body')}>
+                    <span role="img" aria-label="Error">
+                        ⛔️
+                    </span>{' '}
+                    Specify <strong>global.fonts.families</strong> in theme settings to add fonts info in autokit.
+                </div>
+            )}
         </div>
     );
 };

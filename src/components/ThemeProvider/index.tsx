@@ -19,45 +19,8 @@ export interface ThemeProviderProps {
  */
 const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
     const global = theme.global || baseTheme.global;
-    const fonts = global.fonts || baseTheme.global.fonts;
+    const fontFaceStyles = global.fonts?.fontFace || [];
     const { selection, focus, body, css } = global.base || baseTheme.global.base;
-
-    const fontStyles = Object.entries(fonts.fontFace).map(([family, types]) =>
-        types.map(({ woff2, woff, vf, weight, italic, css }) => {
-            const woff2Src = woff2 ? `url(${woff2}) format('woff2')` : undefined;
-            const woffSrc = woff ? `url(${woff}) format('woff')` : undefined;
-            const vfSrc = vf
-                ? `url(${vf}) format('woff2 supports variations'), url(${vf}) format('woff2-variations')`
-                : undefined;
-
-            if (!vf) {
-                if (!woff2)
-                    console.warn(
-                        `Add woff2 asset to ${family} font (weight: ${weight || 400}${italic ? ' italic: true' : ''})`,
-                    );
-                if (!woff)
-                    console.warn(
-                        `Add woff asset to ${family} font (weight: ${weight || 400}${italic ? ' italic: true' : ''})`,
-                    );
-            } else {
-                if (woff2) console.warn(`You don't need to specify woff2 asset with ${family} variable font`);
-                if (woff) console.warn(`You don't need to specify woff asset with ${family} variable font`);
-            }
-
-            const src = !vfSrc ? [woff2Src, woffSrc].join(', ') : vfSrc;
-
-            return {
-                '@font-face': {
-                    fontFamily: `${family}${vf ? ' VF' : ''}`,
-                    src,
-                    fontDisplay: 'swap',
-                    fontWeight: weight,
-                    fontStyle: italic && 'italic',
-                    ...css,
-                },
-            } as CSSObject;
-        }),
-    );
 
     const baseStyles: CSSObject[] = [
         {
@@ -121,10 +84,9 @@ const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
             },
         },
     ];
-
     return (
         <EmotionThemeProvider theme={theme as Theme}>
-            <EmotionGlobal styles={[fontStyles, baseStyles, css]} />
+            <EmotionGlobal styles={[fontFaceStyles, baseStyles, css]} />
             {children}
         </EmotionThemeProvider>
     );

@@ -32,10 +32,10 @@ const typography = (name: string | undefined, theme: Theme = baseTheme as Theme)
     const typographyStyle = theme.typography.styles[name];
     const fontName = typographyStyle.desktop.fontFamily;
     const globalFontsTheme = theme.global?.fonts;
-    const stack = globalFontsTheme?.stacks?.[fontName] || 'sans-serif';
+    const stack = globalFontsTheme?.families?.[fontName]?.stack || 'sans-serif';
     let fontFamilyStyles: CSSObject = { fontFamily: `"${fontName}", ${stack}` };
 
-    const isVf = globalFontsTheme?.fontFace[fontName]?.some(({ vf }) => vf);
+    const isVf = globalFontsTheme?.families?.[fontName]?.vf;
     if (isVf) {
         fontFamilyStyles = {
             ...fontFamilyStyles,
