@@ -25,7 +25,17 @@ export interface FormLabelProps {
  * Consume props from `Form` and `Form.Field` compoents.
  */
 export const FormLabel = ({ IconBefore, IconAfter, children, css }: FormLabelProps) => {
-    const { controlId, optional, size, validationPosition, hiddenLabel, hint, hintPosition } = useFormField();
+    const {
+        controlId,
+        optional,
+        size,
+        validationPosition,
+        hiddenLabel,
+        hint,
+        hintPosition,
+        __errorTheme,
+        __hintTheme,
+    } = useFormField();
     const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon } = useForm();
     const [, meta] = useField(controlId);
 
@@ -46,6 +56,8 @@ export const FormLabel = ({ IconBefore, IconAfter, children, css }: FormLabelPro
             SuccessIcon={SuccessIcon}
             IconAfter={IconAfter}
             IconBefore={IconBefore}
+            __hintTheme={__hintTheme}
+            __errorTheme={__errorTheme}
             css={css}
         >
             {children}

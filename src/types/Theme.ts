@@ -3,7 +3,8 @@ import LayoutTheme from './Layout';
 import GlobalTheme from './Global';
 import ButtonTheme from './Button';
 import { RadioItemTheme } from './Radio';
-import FormTheme, { FormLabelTheme, FormHintTheme, FormInputTheme, FormErrorTheme } from './Form';
+import FormTheme, { FormHintTheme, FormInputTheme, FormErrorTheme } from './Form';
+import LegendTheme from './Legend';
 
 export type PalettesTheme = Record<string, string[]>;
 export type ColorsTheme = Record<string, string>;
@@ -25,10 +26,10 @@ export interface Tokens {
 export interface ComponentsTheme {
     /** `Button` component theme settings. */
     Button?: ButtonTheme;
+    /** `Legend` component theme settings. */
+    Legend?: LegendTheme;
     /** `Form` component theme settings. */
     Form?: FormTheme;
-    /** `FormLabel` component theme settings. */
-    FormLabel?: FormLabelTheme;
     /** `FormHint` component theme settings. */
     FormHint?: FormHintTheme;
     /** `FormInput` component theme settings. */

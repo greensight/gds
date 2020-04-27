@@ -10,7 +10,7 @@ import scale from '../../utils/scale';
 export interface FormHintProps extends Omit<React.HTMLProps<HTMLSpanElement>, 'size'> {
     /** Hint text. */
     hint?: string;
-    /** Size name from list of sizes defined in theme object at `components.FormLabel.sizes`. */
+    /** Size name from list of sizes defined in theme object at `components.FormError.sizes`. */
     size?: string;
     /** Error's positioning. */
     hintPosition?: 'top' | 'bottom';

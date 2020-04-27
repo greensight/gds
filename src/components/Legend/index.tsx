@@ -2,26 +2,24 @@ import React from 'react';
 import { FieldMetaProps } from 'formik';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
-import FormTheme, {
-    FormLabelTheme,
-    FormLabelThemeProperties,
-    FormLabelSizeProperties,
-    FormLabelStateProperties,
-    FormValidationIconProperties,
-    FormErrorTheme,
-    FormHintTheme,
-} from '../../types/Form';
+import FormTheme, { FormValidationIconProperties, FormErrorTheme, FormHintTheme } from '../../types/Form';
+import LegendTheme, {
+    LegendThemeProperties,
+    LegendSizeProperties,
+    LegendStateProperties,
+    LegendOptionalThemeProperties,
+    LegendMarkThemeProperties,
+} from '../../types/Legend';
 import scale from '../../utils/scale';
 import { CSSObject, jsx } from '@emotion/core';
 import typography from '../../utils/typography';
 import VisuallyHidden from '../../components/VisuallyHidden';
-import { MAJOR_STEP } from '../../helpers/constants';
 import { FormError } from './Error';
 import { FormHint } from './Hint';
 import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
 
 export interface LegendBaseProps {
-    /** Size name from list of sizes defined in theme object at `components.FormLabel.sizes`. */
+    /** Size name from list of sizes defined in theme object at `components.Legend.sizes`. */
     size?: string;
     /** Hint text. */
     hint?: string;
@@ -31,6 +29,10 @@ export interface LegendBaseProps {
     IconBefore?: SVGRIcon;
     /** Icon after text. Accepts SVGR icon or custom JSX. */
     IconAfter?: SVGRIcon;
+    /** Block type. Use 100% of parent width. */
+    block?: boolean;
+    /** Horizontal flow of label component. */
+    horizontalAlignment?: 'left' | 'center' | 'right';
     /** Visually hidden label. Keeps text accessible. */
     hiddenLegend?: boolean;
     /** Set optional fill. If get string, also set optional text inside legend. */
@@ -54,7 +56,7 @@ export interface LegendBaseProps {
     /** Show success status for validation or not. */
     showSuccess?: boolean;
     /** Label theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
-    __theme?: FormLabelTheme;
+    __theme?: LegendTheme;
     /** Hint theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __hintTheme?: FormHintTheme;
     /** Hint theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
@@ -75,6 +77,8 @@ export const Legend = <T extends React.ElementType = 'label'>({
     hintPosition = 'top',
     IconAfter,
     IconBefore,
+    block = false,
+    horizontalAlignment = 'left',
     hiddenLegend = false,
     optional,
     validationPosition = 'labelAfter',
@@ -93,24 +97,23 @@ export const Legend = <T extends React.ElementType = 'label'>({
     ...props
 }: LegendProps<T>) => {
     /* Get theme objects. */
-    const { componentTheme, usedTheme } = useComponentTheme('FormLabel', __theme);
+    const { componentTheme, usedTheme } = useComponentTheme('Legend', __theme);
 
-    const labelTheme = componentTheme as FormLabelTheme;
-
-    const optionalTheme = labelTheme.optional;
-    const markTheme = labelTheme.mark;
+    const labelTheme = componentTheme as LegendTheme;
 
     if (!labelTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
     const themeProperties = getThemeProperties(labelTheme, 'default');
     const themeDefaults = {
+        borderWidth: themeProperties.border ? 1 : 0,
+        borderStyle: 'solid',
         color: baseTheme.colors.black,
         fill: baseTheme.colors.black,
         time: 200,
         easing: 'ease',
     };
-    const tp: RequiredBy<FormLabelThemeProperties, keyof typeof themeDefaults> = {
+    const tp: RequiredBy<LegendThemeProperties, keyof typeof themeDefaults> = {
         ...themeDefaults,
         ...themeProperties,
     };
@@ -118,8 +121,10 @@ export const Legend = <T extends React.ElementType = 'label'>({
     const sizeProperties = labelTheme.sizes[size];
     const sizeDefaults = {
         iconSize: scale(3),
+        iconOffset: scale(1),
+        padding: 0,
     };
-    const sp: RequiredBy<FormLabelSizeProperties, keyof typeof sizeDefaults> = {
+    const sp: RequiredBy<LegendSizeProperties, keyof typeof sizeDefaults> = {
         ...sizeDefaults,
         ...sizeProperties,
     };
@@ -127,10 +132,14 @@ export const Legend = <T extends React.ElementType = 'label'>({
     /* Define CSS rules from theme properties for default state. */
     const typographyName = sp.typography;
     const typographyCSS = typography(typographyName, usedTheme);
-
     const transition = getTransition(tp.time, tp.easing);
     const defaultCSS: CSSObject = {
         display: 'block',
+        width: '100%',
+        padding: sp.padding,
+        borderWidth: tp.borderWidth,
+        borderStyle: tp.borderStyle,
+        borderRadius: tp.borderRadius,
         marginBottom: hiddenLegend ? undefined : scale(1),
         transition,
         ...typography('bodyMd'),
@@ -140,6 +149,7 @@ export const Legend = <T extends React.ElementType = 'label'>({
 
     /* Define CSS rules from theme properties for other states. */
     const themeHoverProperties = getThemeProperties(labelTheme, 'hover');
+
     const statesCSS: CSSObject = {
         ':hover': {
             ...getStateCSS(themeHoverProperties),
@@ -159,31 +169,68 @@ export const Legend = <T extends React.ElementType = 'label'>({
 
     const styles = [defaultCSS, statesCSS, validationCSS, css];
 
-    const textStyles: CSSObject = {
+    const textDefaultStyles: CSSObject = {
         position: 'relative',
-        display: 'block',
-        paddingRight: IconAfter || validationPosition === 'labelAfter' ? `${sp.iconSize + MAJOR_STEP}px` : undefined,
+        display: 'inline-block',
+        paddingRight:
+            IconAfter ||
+            (validationPosition === 'labelAfter' && meta?.touched && meta?.error) ||
+            (validationPosition === 'labelAfter' && meta?.touched && !meta?.error && showSuccess)
+                ? `${sp.iconSize + sp.iconOffset}px`
+                : undefined,
         paddingLeft:
             IconBefore ||
             (validationPosition === 'labelBefore' && meta?.touched && meta?.error) ||
             (validationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess)
-                ? `${sp.iconSize + MAJOR_STEP}px`
+                ? `${sp.iconSize + sp.iconOffset}px`
                 : undefined,
     };
 
+    const blockStyles: CSSObject = { display: 'block', width: '100%' };
+
+    const textStyles = [textDefaultStyles, block && blockStyles];
+
+    const textWrapperCSS: CSSObject = {
+        display: 'block',
+        textAlign: horizontalAlignment,
+    };
+
     /* Define CSS rules from theme properties for optional text. */
+    const optionalThemeDefault = {
+        color: baseTheme.colors.black,
+    };
+
+    const optionalThemeProperties = getAdditionalThemeProperties(labelTheme, 'optional', 'default');
+
+    const optionalTP: RequiredBy<LegendOptionalThemeProperties, keyof typeof optionalThemeDefault> = {
+        ...optionalThemeDefault,
+        ...optionalThemeProperties,
+    };
+
     const optionalDefaultStyles: CSSObject = {
         fontSize: '0.8em',
+        ...getAdditionalStateCSS(optionalTP),
     };
-    const themeOptionalProperties = getAdditionalProperty(labelTheme, 'optional');
-    const optionalStyles = [optionalDefaultStyles, getStateCSS(themeOptionalProperties), optionalTheme?.css];
+
+    const optionalStyles = [optionalDefaultStyles];
 
     /* Define CSS rules from theme properties for mark. */
-    const markDefaultStyles: CSSObject = {
-        color: baseTheme.colors.error,
+    const markThemeDefault = {
+        color: baseTheme.colors.black,
     };
-    const themeMarkProperties = getAdditionalProperty(labelTheme, 'mark');
-    const markStyles = [markDefaultStyles, getStateCSS(themeMarkProperties), markTheme?.css];
+
+    const markThemeProperties = getAdditionalThemeProperties(labelTheme, 'mark', 'default');
+
+    const markTP: RequiredBy<LegendMarkThemeProperties, keyof typeof markThemeDefault> = {
+        ...markThemeDefault,
+        ...markThemeProperties,
+    };
+
+    const markDefaultStyles: CSSObject = {
+        ...getAdditionalStateCSS(markTP),
+    };
+
+    const markStyles = [markDefaultStyles];
 
     const iconAfterCSS: CSSObject = {
         position: 'absolute',
@@ -248,46 +295,48 @@ export const Legend = <T extends React.ElementType = 'label'>({
             ...props,
         },
         <>
-            <span css={textStyles}>
-                {hiddenLegend ? (
-                    <VisuallyHidden>{children}</VisuallyHidden>
-                ) : (
-                    <span css={labelTextStyles}>{children}</span>
-                )}
-                {IconBefore &&
-                    !hiddenLegend &&
-                    !(validationPosition === 'labelBefore' && meta?.touched && meta?.error) &&
-                    !(validationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess) && (
-                        <IconBefore css={iconBeforeCSS} />
+            <span css={textWrapperCSS}>
+                <span css={textStyles}>
+                    {hiddenLegend ? (
+                        <VisuallyHidden>{children}</VisuallyHidden>
+                    ) : (
+                        <span css={labelTextStyles}>{children}</span>
                     )}
-                {IconAfter &&
-                    !hiddenLegend &&
-                    !(validationPosition === 'labelAfter' && meta?.touched && meta?.error) &&
-                    !(validationPosition === 'labelAfter' && meta?.touched && !meta?.error && showSuccess) && (
-                        <IconAfter css={iconAfterCSS} />
+                    {IconBefore &&
+                        !hiddenLegend &&
+                        !(validationPosition === 'labelBefore' && meta?.touched && meta?.error) &&
+                        !(validationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess) && (
+                            <IconBefore css={iconBeforeCSS} />
+                        )}
+                    {IconAfter &&
+                        !hiddenLegend &&
+                        !(validationPosition === 'labelAfter' && meta?.touched && meta?.error) &&
+                        !(validationPosition === 'labelAfter' && meta?.touched && !meta?.error && showSuccess) && (
+                            <IconAfter css={iconAfterCSS} />
+                        )}
+                    {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
+                        meta?.touched &&
+                        meta?.error &&
+                        !hiddenLegend &&
+                        ErrorIcon && <ErrorIcon css={iconErrorStyles} />}
+                    {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
+                        meta?.touched &&
+                        !meta?.error &&
+                        showSuccess &&
+                        !hiddenLegend &&
+                        SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
+                    {Boolean(optional) && required === 'optional' && !hiddenLegend && (
+                        <span css={optionalStyles}>{optional}</span>
                     )}
-                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
-                    meta?.touched &&
-                    meta?.error &&
-                    !hiddenLegend &&
-                    ErrorIcon && <ErrorIcon css={iconErrorStyles} />}
-                {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
-                    meta?.touched &&
-                    !meta?.error &&
-                    showSuccess &&
-                    !hiddenLegend &&
-                    SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
-                {Boolean(optional) && required === 'optional' && !hiddenLegend && (
-                    <span css={optionalStyles}>{optional}</span>
-                )}
-                {Boolean(optional) && required === 'optional' && hiddenLegend && (
-                    <VisuallyHidden>{optional}</VisuallyHidden>
-                )}
-                {!optional && required === 'mark' && !hiddenLegend && (
-                    <span css={markStyles} aria-hidden="true">
-                        *
-                    </span>
-                )}
+                    {Boolean(optional) && required === 'optional' && hiddenLegend && (
+                        <VisuallyHidden>{optional}</VisuallyHidden>
+                    )}
+                    {!optional && required === 'mark' && !hiddenLegend && (
+                        <span css={markStyles} aria-hidden="true">
+                            *
+                        </span>
+                    )}
+                </span>
             </span>
             {hint &&
                 hintPosition === 'top' &&
@@ -315,22 +364,34 @@ export const Legend = <T extends React.ElementType = 'label'>({
     );
 };
 
-const getStateCSS = ({ color, fill, css }: FormLabelStateProperties) => ({
+const getStateCSS = ({ border, color, fill, bg, shadow, css }: LegendStateProperties) => ({
     color,
     fill,
+    borderColor: border,
+    backgroundColor: bg,
+    boxShadow: shadow,
     ...css,
 });
 
-const getThemeProperties = (
-    labelTheme: FormLabelTheme,
-    state: ComponentStates | 'success' | 'error' | 'default',
-): FormLabelThemeProperties | FormLabelStateProperties => {
-    const themeProperties = labelTheme.base[state];
+const getAdditionalStateCSS = ({ color, css }: LegendOptionalThemeProperties | LegendMarkThemeProperties) => ({
+    color,
+    ...css,
+});
+
+const getAdditionalThemeProperties = (
+    labelTheme: LegendTheme,
+    component: 'optional' | 'mark',
+    state: ComponentStates | 'default',
+): LegendOptionalThemeProperties | LegendMarkThemeProperties => {
+    const themeProperties = labelTheme.theme[component][state];
     return { ...themeProperties };
 };
 
-const getAdditionalProperty = (labelTheme: FormLabelTheme, property: 'optional' | 'mark'): FormLabelThemeProperties => {
-    const themeProperties = labelTheme[property];
+const getThemeProperties = (
+    labelTheme: LegendTheme,
+    state: ComponentStates | 'success' | 'error' | 'default',
+): LegendThemeProperties | LegendStateProperties => {
+    const themeProperties = labelTheme.theme['label'][state];
     return { ...themeProperties };
 };
 

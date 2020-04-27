@@ -131,52 +131,61 @@ const baseTheme = deepmerge(tokens, {
                 },
             },
         },
+        Legend: {
+            theme: {
+                label: {
+                    default: {
+                        color: colors.black,
+                        fill: colors.black,
+                    },
+                    hover: {
+                        color: colors.black,
+                        fill: colors.brand,
+                    },
+                    error: {
+                        color: colors.error,
+                        fill: colors.error,
+                    },
+                    success: {
+                        color: colors.success,
+                        fill: colors.black,
+                    },
+                },
+                optional: {
+                    default: {
+                        color: colors.grey20,
+                    },
+                },
+                mark: {
+                    default: {
+                        color: colors.error,
+                    },
+                },
+            },
+            sizes: {
+                lg: {
+                    iconSize: scale(4),
+                    iconOffset: scale(1),
+                    typography: 'labelLg',
+                },
+                md: {
+                    iconSize: scale(3),
+                    iconOffset: scale(1),
+                    typography: 'labelMd',
+                },
+                sm: {
+                    iconSize: scale(2),
+                    iconOffset: scale(1),
+                    typography: 'labelSm',
+                },
+            },
+        },
         Form: {
             errorIcon: {
                 fill: colors.error,
             },
             successIcon: {
                 fill: colors.success,
-            },
-        },
-        FormLabel: {
-            base: {
-                default: {
-                    color: colors.black,
-                    fill: colors.black,
-                },
-                hover: {
-                    color: colors.black,
-                    fill: colors.brand,
-                },
-                error: {
-                    color: colors.error,
-                    fill: colors.error,
-                },
-                success: {
-                    color: colors.success,
-                    fill: colors.black,
-                },
-            },
-            sizes: {
-                lg: {
-                    iconSize: scale(4),
-                    typography: 'labelLg',
-                },
-                md: {
-                    iconSize: scale(3),
-                    typography: 'labelMd',
-                },
-                sm: {
-                    iconSize: scale(2),
-                    typography: 'labelSm',
-                },
-            },
-            optional: {
-                color: colors.grey20,
-            },
-            mark: {
-                color: colors.error,
             },
         },
         FormHint: {
@@ -200,6 +209,11 @@ const baseTheme = deepmerge(tokens, {
         },
         FormInput: {
             base: {
+                default: {
+                    half: false,
+                },
+            },
+            theme: {
                 default: {
                     color: colors.black,
                     fill: colors.black,

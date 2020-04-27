@@ -19,13 +19,6 @@ import {
     FormInputThemeProperties,
     FormInputStateProperties,
     FormInputSizeProperties,
-    FormLabelTheme,
-    FormLabelStates,
-    FormLabelThemeProperties,
-    FormLabelStateProperties,
-    FormLabelSizeProperties,
-    FormLabelOptionalProperties,
-    FormLabelMarkProperties,
     FormHintTheme,
     FormHintSizeProperties,
     FormHintThemeProperties,
@@ -49,30 +42,35 @@ import {
         });
         return (
             <Form
-                errorPosition={radios('errorPosition', ['top', 'bottom'], 'top')}
-                required={radios('required', ['optional', 'mark'], 'optional')}
+                errorPosition={radios('errorPosition', ['top', 'bottom'], 'top', 'Form')}
+                required={radios('required', ['optional', 'mark'], 'optional', 'Form')}
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={action('Submit')}
                 css={{ width: '25vw', minWidth: '320px' }}
                 data-vadyan="{title: 'Это форма Вадяна'}"
-                showSuccess={boolean('Show success status', true)}
+                showSuccess={boolean('Show success status', true, 'Form')}
                 SuccessIcon={SuccessIcon}
                 ErrorIcon={ErrorIcon}
             >
                 <p style={{ marginBottom: scale(2) }}>Это форма Вадяна.</p>
                 <Form.Field
                     controlId="exampleInput1"
-                    size={radios('size', ['lg', 'md', 'sm'], 'md')}
-                    hint={boolean('Hint', true) ? text('Hint text', 'Подсказка к полю 1') : undefined}
-                    hintPosition={radios('hintPosition', ['top', 'bottom'], 'top')}
-                    hiddenLabel={boolean('Hidden Label', false)}
+                    size={radios('size', ['lg', 'md', 'sm'], 'md', 'Form.Field 1')}
+                    hint={
+                        boolean('Hint', true, 'Form.Field 1')
+                            ? text('Hint text', 'Подсказка к полю 1', 'Form.Field 1')
+                            : undefined
+                    }
+                    hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field 1')}
+                    hiddenLabel={boolean('Hidden Label', false, 'Form.Field 1')}
                     validationPosition={radios(
                         'validationPosition',
                         ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
                         'labelAfter',
+                        'Form.Field 1',
                     )}
-                    optional="(Необязательное поле)"
+                    optional={text('Optional text', '(Необязательное поле)', 'Form.Field 1')}
                     style={{ marginBottom: scale(2) }}
                 >
                     <Form.Label
@@ -80,7 +78,7 @@ import {
                         IconAfter={boolean('Label icon after', true) && baseTheme.global.placeholder}
                         __theme={
                             boolean('Use custom LabelTheme', false)
-                                ? object('themeObj', baseTheme.components.FormLabel)
+                                ? object('themeObj', baseTheme.components.Legend)
                                 : undefined
                         }
                     >
@@ -100,24 +98,29 @@ import {
                 </Form.Field>
                 <Form.Field
                     controlId="exampleInput2"
-                    size={radios('size', ['lg', 'md', 'sm'], 'md')}
-                    hint={boolean('Hint', true) ? text('Hint text', 'Подсказка к полю 2') : undefined}
-                    hintPosition={radios('hintPosition', ['top', 'bottom'], 'top')}
-                    hiddenLabel={boolean('Hidden Label', false)}
+                    size={radios('size', ['lg', 'md', 'sm'], 'md', 'Form.Field 2')}
+                    hint={
+                        boolean('Hint', true, 'Form.Field 2')
+                            ? text('Hint text', 'Подсказка к полю 2', 'Form.Field 2')
+                            : undefined
+                    }
+                    hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field 2')}
+                    hiddenLabel={boolean('Hidden Label', false, 'Form.Field 2')}
                     validationPosition={radios(
                         'validationPosition',
                         ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
                         'labelAfter',
+                        'Form.Field 2',
                     )}
                     style={{ marginBottom: scale(2) }}
                     __errorTheme={
-                        boolean('Use custom ErorrTheme', false)
-                            ? object('errorThemeObj', baseTheme.components.FormError)
+                        boolean('Use custom ErorrTheme', false, 'Form.Field 2')
+                            ? object('errorThemeObj', baseTheme.components.FormError, 'Form.Field 2')
                             : undefined
                     }
                     __hintTheme={
-                        boolean('Use custom HintTheme', false)
-                            ? object('hintThemeObj', baseTheme.components.FormHint)
+                        boolean('Use custom HintTheme', false, 'Form.Field 2')
+                            ? object('hintThemeObj', baseTheme.components.FormHint, 'Form.Field 2')
                             : undefined
                     }
                 >
@@ -641,22 +644,6 @@ Live validation имеет ряд проблем с UX, но её отсутст
 </Preview>
 
 ## Form.Label
-
-⛔ Компонент `Form.Label` использует контекст `Form` и `Form.Field`, поэтому использовать компонент вне их нельзя.
-
-## Theme
-
-<Props
-    components={{
-        FormLabelTheme,
-        FormLabelStates,
-        FormLabelThemeProperties,
-        FormLabelStateProperties,
-        FormLabelSizeProperties,
-        FormLabelOptionalProperties,
-        FormLabelMarkProperties,
-    }}
-/>
 
 ## Use Cases
 

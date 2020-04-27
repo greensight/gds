@@ -42,7 +42,16 @@ const FormInput = <T extends React.ElementType = 'input'>(
     { IconBefore, IconAfter, __theme, css, ...props }: FormInputProps<T>,
     ref: React.Ref<HTMLInputElement>,
 ) => {
-    const { controlId, optional, size, hint, hintPosition, validationPosition } = useFormField();
+    const {
+        controlId,
+        optional,
+        size,
+        hint,
+        hintPosition,
+        validationPosition,
+        __hintTheme,
+        __errorTheme,
+    } = useFormField();
     const { errorPosition, showSuccess, ErrorIcon, SuccessIcon } = useForm();
 
     /* Get theme objects. */
@@ -81,7 +90,7 @@ const FormInput = <T extends React.ElementType = 'input'>(
     /* Define CSS rules from theme properties for default state. */
     const typographyName = sp.typography;
     const typographyCSS = typography(typographyName, usedTheme);
-    const borderRadius = tp.borderRadius;
+    const borderRadius = !tp.half ? tp.borderRadius : sp.height / 2;
     const height = sp.height;
     const padding = `${sp.padding}`;
     const transition = getTransition(tp.time, tp.easing);
@@ -242,10 +251,22 @@ const FormInput = <T extends React.ElementType = 'input'>(
                     SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
             </div>
             {meta.error && meta.touched && errorPosition === 'bottom' && (
-                <FormError err={meta.error} id={`error-${controlId}`} size={size} errorPosition={errorPosition} />
+                <FormError
+                    err={meta.error}
+                    id={`error-${controlId}`}
+                    size={size}
+                    errorPosition={errorPosition}
+                    __errorTheme={__errorTheme}
+                />
             )}
             {hint && hintPosition === 'bottom' && (
-                <FormHint size={size} hint={hint} hintPosition={hintPosition} id={`hint-${controlId}`} />
+                <FormHint
+                    size={size}
+                    hint={hint}
+                    hintPosition={hintPosition}
+                    id={`hint-${controlId}`}
+                    __hintTheme={__hintTheme}
+                />
             )}
         </>
     );
@@ -267,8 +288,9 @@ const getThemeProperties = (
     inputTheme: FormInputTheme,
     state: ComponentStates | 'success' | 'error' | 'default',
 ): FormInputThemeProperties | FormInputStateProperties => {
-    const themeProperties = inputTheme.base[state];
-    return { ...themeProperties };
+    const themeProperties = inputTheme.theme[state];
+    const baseProperties = inputTheme.base?.[state];
+    return { ...baseProperties, ...themeProperties };
 };
 
 const getIconProperty = (formTheme: FormTheme, property: 'successIcon' | 'errorIcon'): FormValidationIconProperties => {

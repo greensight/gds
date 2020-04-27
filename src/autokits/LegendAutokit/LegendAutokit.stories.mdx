@@ -1,0 +1,19 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import LegendAutokit from '.';
+
+<Meta title="Autokits / LegendAutokit" component={LegendAutokit} decorators={[paddingDecorator]} />
+
+# Legend
+
+<Preview>
+    <Story name="basic">
+        <LegendAutokit />
+    </Story>
+</Preview>
+
+Автокит для компонента `Legend`. Читает содержимое поля `components.Legend` объекта темы.
+
+## Props
+
+<Props of={LegendAutokit} />

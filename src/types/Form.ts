@@ -23,6 +23,8 @@ export interface FormInputThemeProperties extends FormInputStateProperties {
     borderStyle?: string;
     /** Border radius. */
     borderRadius?: number | string;
+    /** Half mode. Redefines `border-radius` with value equals half of input height. */
+    half?: boolean;
     /** Transition duration. Equals `200` by default. */
     time?: number;
     /** Transition enter duration for hover state. Uses with `time` property to differ enter/exit transition durations. */
@@ -51,68 +53,12 @@ export interface FormInputSizeProperties {
 }
 
 export interface FormInputTheme {
-    /** Common settings for all themes. */
-    base: FormInputStates;
+    /** Common settings for inputs. */
+    base?: FormInputStates;
+    /** Settings for theme. */
+    theme: FormInputStates;
     /** Available sizes. Any input can have size from this list. You must define at least `md` size. */
     sizes: RequireAtLeastOne<Record<string, FormInputSizeProperties>, 'md'>;
-}
-
-export interface FormLabelStateProperties {
-    /** Text color. */
-    color?: string;
-    /** Icon color. */
-    fill?: string;
-    /** Additional CSS. */
-    css?: CSSObject;
-}
-
-export interface FormLabelThemeProperties extends FormLabelStateProperties {
-    /** Transition duration. Equals `200` by default. */
-    time?: number;
-    /** Transition enter duration for hover state. Uses with `time` property to differ enter/exit transition durations. */
-    timeIn?: number;
-    /** Transition easing function. Equals `'ease'` by default. */
-    easing?: string;
-}
-
-export interface FormLabelStates extends Partial<Record<ComponentStates, FormLabelStateProperties>> {
-    default: FormLabelThemeProperties;
-    error?: FormLabelStateProperties;
-    success?: FormLabelStateProperties;
-}
-
-export interface FormLabelSizeProperties {
-    /** Typography style. Can be omitted if `fontSize`, `fontWeight` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'`, `700` and `1` by default. */
-    typography?: string;
-    /** Icon size. Equals `scale(3)` by default. */
-    iconSize?: number;
-    /** Additional CSS. */
-    css?: CSSObject;
-}
-
-export interface FormLabelOptionalProperties {
-    /** Text color. */
-    color?: string;
-    /** Additional CSS. */
-    css?: CSSObject;
-}
-
-export interface FormLabelMarkProperties {
-    /** Asterisk color. */
-    color?: string;
-    /** Additional CSS. */
-    css?: CSSObject;
-}
-
-export interface FormLabelTheme {
-    /** Base rules. */
-    base: FormLabelStates;
-    /** Available sizes. Any label can have size from this list. You must define at least `md` size. */
-    sizes: RequireAtLeastOne<Record<string, FormLabelSizeProperties>, 'md'>;
-    /** Rules for optional text. */
-    optional?: FormLabelOptionalProperties;
-    /** Rules for asterisk. */
-    mark?: FormLabelMarkProperties;
 }
 
 export interface FormHintThemeProperties {
@@ -139,7 +85,7 @@ export interface FormHintThemeProperties {
 export interface FormHintSizeProperties {
     /** Spacing above hint. */
     topGap: number;
-    /** Paddings. Equals `0 by default. */
+    /** Paddings. Equals `0` by default. */
     padding?: string | number;
     /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
     typography?: string;
@@ -178,7 +124,7 @@ export interface FormErrorThemeProperties {
 export interface FormErrorSizeProperties {
     /** Spacing above error. */
     topGap: number;
-    /** Paddings. Equals `0 by default. */
+    /** Paddings. Equals `0` by default. */
     padding?: string | number;
     /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default. */
     typography?: string;

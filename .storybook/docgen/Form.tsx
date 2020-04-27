@@ -5,13 +5,6 @@ import IFormTheme, {
     FormInputStates as IFormInputStates,
     FormInputStateProperties as IFormInputStateProperties,
     FormInputThemeProperties as IFormInputThemeProperties,
-    FormLabelTheme as IFormLabelTheme,
-    FormLabelSizeProperties as IFormLabelSizeProperties,
-    FormLabelStates as IFormLabelStates,
-    FormLabelStateProperties as IFormLabelStateProperties,
-    FormLabelThemeProperties as IFormLabelThemeProperties,
-    FormLabelOptionalProperties as IFormLabelOptionalProperties,
-    FormLabelMarkProperties as IFormLabelMarkProperties,
     FormValidationIconProperties as IFormValidationIconProperties,
     FormHintTheme as IFormHintTheme,
     FormHintSizeProperties as IFormHintSizeProperties,
@@ -34,14 +27,6 @@ export const FormInputSizeProperties: React.FC<IFormInputSizeProperties> = () =>
 export const FormInputStates: React.FC<IFormInputStates> = () => <div />;
 export const FormInputThemeProperties: React.FC<IFormInputThemeProperties> = () => <div />;
 export const FormInputStateProperties: React.FC<IFormInputStateProperties> = () => <div />;
-
-export const FormLabelTheme: React.FC<IFormLabelTheme> = () => <div />;
-export const FormLabelSizeProperties: React.FC<IFormLabelSizeProperties> = () => <div />;
-export const FormLabelStates: React.FC<IFormLabelStates> = () => <div />;
-export const FormLabelThemeProperties: React.FC<IFormLabelThemeProperties> = () => <div />;
-export const FormLabelStateProperties: React.FC<IFormLabelStateProperties> = () => <div />;
-export const FormLabelOptionalProperties: React.FC<IFormLabelOptionalProperties> = () => <div />;
-export const FormLabelMarkProperties: React.FC<IFormLabelMarkProperties> = () => <div />;
 
 export const FormHintTheme: React.FC<IFormHintTheme> = () => <div />;
 export const FormHintSizeProperties: React.FC<IFormHintSizeProperties> = () => <div />;

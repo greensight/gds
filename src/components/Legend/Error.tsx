@@ -9,7 +9,7 @@ import { RequiredBy } from '../../types/Utils';
 export interface FormErrorProps extends Omit<React.HTMLProps<HTMLSpanElement>, 'size'> {
     /** Error text. */
     err: string;
-    /** Size name from list of sizes defined in theme object at `components.FormLabel.sizes`. */
+    /** Size name from list of sizes defined in theme object at `components.FormError.sizes`. */
     size?: string;
     /** Error's positioning. */
     errorPosition?: 'top' | 'bottom';

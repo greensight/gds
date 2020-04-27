@@ -20,19 +20,13 @@ import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
         orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio props')}
         alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio props')}
         size={radios('size', ['lg', 'md', 'sm'], 'md', 'Radio props')}
-        isOptional={
-            boolean('Optional', true, 'Radio props')
-                ? text('Optional text', '(необязательно)', 'Radio props')
-                : undefined
-        }
+        isOptional={boolean('Optional', true, 'Radio props')}
     >
         <Legend
             as="legend"
             hint="Подсказка"
-            optional="(Необязательно)"
             IconBefore={baseTheme.global.placeholder}
             IconAfter={baseTheme.global.placeholder}
-            hiddenLegend={boolean('Hidden legend', false)}
         >
             Выберите вариант
         </Legend>
@@ -51,12 +45,9 @@ import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
             Вариант 1
         </Radio.Item>
         <Radio.Item value="second" defaultChecked>
-            Вариант 1
+            Вариант 2
         </Radio.Item>
-        <Radio.Item value="link">
-            Я прочитал и принимаю <a href="/">Пользовательское соглашение</a> и{' '}
-            <a href="/">Согласие на обработку персональных данных</a>
-        </Radio.Item>
+        <Radio.Item value="three">Вариант 3 с длинным текстом</Radio.Item>
     </Radio>
 </Story>
 
@@ -71,6 +62,94 @@ import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
 <Props of={Radio} />
 
 ## Use cases
+
+### Basic
+
+Компонент Radio без параметров рендерит `Radio.Item` в колонку, иконка выровнена по центру первой строки, размер "md".
+
+<Preview>
+    <Story name="Basic">
+        <Radio name="basic">
+            <Radio.Item value="basic-first">Вариант 1</Radio.Item>
+            <Radio.Item value="basic-second" defaultChecked>
+                Вариант 2
+            </Radio.Item>
+        </Radio>
+    </Story>
+</Preview>
+
+### Sizes
+
+Размеры для легенды определяются в объекте темы в поле `RadioItem.sizes`. Присвоенные имена становятся доступны через проп `size`. Размер задается `Radio`, а `Radio.Item` получают его через контекст.
+
+**Рекомендуемые имена:** 'lg', 'md', 'sm'.
+
+<Preview>
+    <Story name="Large size">
+        <Radio name="Large size" size="lg">
+            <Radio.Item value="large-first">Вариант 1</Radio.Item>
+            <Radio.Item value="large-second" defaultChecked>
+                Вариант 2
+            </Radio.Item>
+        </Radio>
+    </Story>
+    <Story id="components-radio--basic" />
+    <Story name="Small size">
+        <Radio name="Small size" size="sm">
+            <Radio.Item value="small-first">Вариант 1</Radio.Item>
+            <Radio.Item value="small-second" defaultChecked>
+                Вариант 2
+            </Radio.Item>
+        </Radio>
+    </Story>
+</Preview>
+
+### Orientation
+
+`Radio.Item` могут располагаться в колонку, а могут в ряд. Для управления потоком `Radio.Item` получает проп `orientation` через контекст `Radio`. По умолчанию проп имеет значение `vertical`.
+
+<Preview>
+    <Story id="components-radio--basic" />
+    <Story name="Horizontal">
+        <Radio name="Horizontal" orientation="horizontal">
+            <Radio.Item value="orientation-first">Вариант 1</Radio.Item>
+            <Radio.Item value="orientation-second" defaultChecked>
+                Вариант 2
+            </Radio.Item>
+        </Radio>
+    </Story>
+</Preview>
+
+### Alignment
+
+Иконку радио у `Radio.Item` можно выровнять по первой или последней строке, а также по центру блока с текстом. Для управления выравниванием иконки `Radio.Item` получает проп `фдшптьуте` через контекст `Radio`. По умолчанию проп имеет значение `top`.
+
+<Preview>
+    <Story name="Alignment top">
+        <Radio name="Alignment top">
+            <Radio.Item value="alignment-t-first">Вариант 1</Radio.Item>
+            <Radio.Item value="alignment-t-second" defaultChecked>
+                Вариант 2 с длинным текстом, который будет пересен на 2 строки, а может и больше
+            </Radio.Item>
+        </Radio>
+    </Story>
+    <Story name="Alignment center">
+        <Radio name="Alignment center" alignment="center">
+            <Radio.Item value="alignment-c-first">Вариант 1</Radio.Item>
+            <Radio.Item value="alignment-c-second" defaultChecked>
+                Вариант 2 с длинным текстом, который будет пересен на 2 строки, а может и больше
+            </Radio.Item>
+        </Radio>
+    </Story>
+    <Story name="Alignment bottom">
+        <Radio name="Alignment bottom" alignment="bottom">
+            <Radio.Item value="alignment-b-first">Вариант 1</Radio.Item>
+            <Radio.Item value="alignment-b-second" defaultChecked>
+                Вариант 2 с длинным текстом, который будет пересен на 2 строки, а может и больше
+            </Radio.Item>
+        </Radio>
+    </Story>
+</Preview>
 
 ### With Form
 

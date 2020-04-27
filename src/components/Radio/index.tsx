@@ -9,8 +9,6 @@ export interface RadioCompositionProps {
 }
 
 export interface RadioProps extends RadioContextProps {
-    /** Hint text. */
-    hint?: string;
     /** Formik field object (inner) */
     field?: FieldInputProps<string[]>;
     /** Formik meta object (inner) */
