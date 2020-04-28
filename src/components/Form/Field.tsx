@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormFieldContext, FormFieldContextProps } from './useFormField';
-
+import { useField, useFormikContext } from 'formik';
+import { useForm } from './useForm';
 export interface FormFieldProps extends FormFieldContextProps, Omit<React.HTMLProps<HTMLDivElement>, 'size'> {
     /** Field content. */
     children: React.ReactNode;
@@ -27,6 +28,16 @@ export const FormField = ({
     __errorTheme,
     ...props
 }: FormFieldProps) => {
+    const { values } = useFormikContext<any[]>();
+    const [field, meta, helpers] = useField(controlId);
+    const { errorPosition } = useForm();
+    const inputProps = {
+        type: 'text',
+        name: controlId,
+        required: !optional,
+        ...props,
+    };
+
     return (
         <FormFieldContext.Provider
             value={{
@@ -37,11 +48,27 @@ export const FormField = ({
                 hint,
                 hiddenLabel,
                 validationPosition,
+                errorPosition,
                 __hintTheme,
                 __errorTheme,
             }}
         >
-            <div {...props}>{children}</div>
+            <div {...props}>
+                {React.Children.map(children, (child) => {
+                    if (React.isValidElement(child)) {
+                        return React.cloneElement(child, {
+                            values,
+                            field,
+                            meta,
+                            helpers,
+                            errorPosition,
+                            id: (child?.type as React.FC)?.displayName !== 'Legend' ? name : '',
+                            ...inputProps,
+                            ...child.props,
+                        });
+                    }
+                })}
+            </div>
         </FormFieldContext.Provider>
     );
 };

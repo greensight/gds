@@ -6,25 +6,32 @@ import { useForm } from './useForm';
 import { useFormField } from './useFormField';
 import Legend from '../Legend';
 
-export interface FormLabelProps {
+export interface FormLabelBaseProps {
     /** Icon after text. Accepts SVGR icon or custom JSX. */
     IconAfter?: SVGRIcon;
     /** Icon before text. Accepts SVGR icon or custom JSX. */
     IconBefore?: SVGRIcon;
+    /** Block type. Use 100% of parent width. */
+    block?: boolean;
     /** Label content. */
     children: React.ReactNode;
     /** Additional CSS. */
     css?: CSSObject;
 }
 
+export type FormLabelProps<P extends React.ElementType = 'label'> = {
+    /** Use your own React component for render.*/
+    as?: P;
+} & MergeElementProps<P, FormLabelBaseProps>;
+
 /**
  * FormLabel component.
  *
- * Render <label /> element. Can contain icons, error message and hint.
+ * Render Legend component. Can contain icons, error message and hint.
  *
  * Consume props from `Form` and `Form.Field` compoents.
  */
-export const FormLabel = ({ IconBefore, IconAfter, children, css }: FormLabelProps) => {
+export const FormLabel = ({ as, IconBefore, IconAfter, block, children, css }: FormLabelProps) => {
     const {
         controlId,
         optional,
@@ -41,6 +48,7 @@ export const FormLabel = ({ IconBefore, IconAfter, children, css }: FormLabelPro
 
     return (
         <Legend
+            as={as}
             size={size}
             name={controlId}
             optional={optional}
@@ -56,6 +64,7 @@ export const FormLabel = ({ IconBefore, IconAfter, children, css }: FormLabelPro
             SuccessIcon={SuccessIcon}
             IconAfter={IconAfter}
             IconBefore={IconBefore}
+            block={block}
             __hintTheme={__hintTheme}
             __errorTheme={__errorTheme}
             css={css}

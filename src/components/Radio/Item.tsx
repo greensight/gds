@@ -30,8 +30,6 @@ export interface RadioItemProps extends React.HTMLProps<HTMLInputElement> {
     helpers?: FieldHelperProps<string>;
     /** Values of Formik */
     values?: FormikValues;
-    /** Text position relative radio. */
-    labelRight?: boolean;
     /** Custom icon for inner circle. */
     IconInner?: SVGRIcon;
     /** Custom icon for outer circle. */
@@ -46,7 +44,6 @@ export const RadioItem = ({
     name,
     field,
     value,
-    labelRight = true,
     IconInner,
     IconOuter,
     children,
@@ -54,7 +51,7 @@ export const RadioItem = ({
     css,
     ...props
 }: RadioItemProps) => {
-    const { orientation, alignment, size } = useRadio();
+    const { orientation, alignment, size, labelRight, defaultValue } = useRadio();
 
     /* Get theme objects. */
     const { componentTheme, usedTheme } = useComponentTheme('RadioItem', __theme);
@@ -110,6 +107,8 @@ export const RadioItem = ({
     };
 
     const sizeDefaults = {
+        paddingVertical: 0,
+        paddingHorizontal: 0,
         outerSize: scale(3),
         innerSize: scale(1),
         outerOffset: scale(1),
@@ -126,38 +125,26 @@ export const RadioItem = ({
     const typographyCSS = typography(typographyName, usedTheme);
 
     const transition = getTransition(tp.time, tp.easing);
-    const paddingRule = `padding${labelRight ? 'Left' : 'Right'}`;
     const innerBorderRadius = tInnerP.borderRadius ? tInnerP.borderRadius : '50%';
     const outerBorderRadius = tOuterP.borderRadius ? tOuterP.borderRadius : '50%';
 
     const horizontalRule = labelRight ? 'left' : 'right';
     const verticalRule = alignment !== 'bottom' ? 'top' : 'bottom';
 
-    const topOuter =
-        alignment !== 'center'
-            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                  .minLineHeight *
-                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                      .textHeight -
-                  sp.outerSize) /
-              2
-            : `calc(50% - ${sp.outerSize / 2}px)`;
-    const topInner =
-        alignment !== 'center'
-            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                  .minLineHeight *
-                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                      .textHeight -
-                  sp.outerSize) /
-                  2 +
-              sp.outerSize / 2 -
-              sp.innerSize / 2
-            : `calc(50% - ${sp.innerSize / 2}px)`;
-
-    const paddingVertical =
+    const verticalOffset =
         sp.outerSize <=
         getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp).textHeight
-            ? undefined
+            ? sp.paddingVertical
+            : sp.paddingVertical >
+              Math.ceil(
+                  (sp.outerSize -
+                      getLineHeight(
+                          typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
+                          sp,
+                      ).textHeight) /
+                      2,
+              )
+            ? sp.paddingVertical
             : Math.ceil(
                   (sp.outerSize -
                       getLineHeight(
@@ -167,15 +154,39 @@ export const RadioItem = ({
                       2,
               );
 
+    const topOuter =
+        alignment !== 'center'
+            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                  .minLineHeight *
+                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                      .textHeight +
+                  (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
+                  sp.outerSize) /
+              2
+            : `calc(50% - ${sp.outerSize / 2}px)`;
+    const topInner =
+        alignment !== 'center'
+            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                  .minLineHeight *
+                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                      .textHeight +
+                  (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
+                  sp.outerSize) /
+                  2 +
+              sp.outerSize / 2 -
+              sp.innerSize / 2
+            : `calc(50% - ${sp.innerSize / 2}px)`;
+
     const defaultCSS: CSSObject = {
         position: 'relative',
         display: 'inline-block',
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
         borderRadius: tp.borderRadius,
-        paddingTop: paddingVertical,
-        paddingBottom: paddingVertical,
-        [paddingRule]: sp.outerSize + sp.outerOffset,
+        paddingTop: verticalOffset,
+        paddingBottom: verticalOffset,
+        paddingLeft: labelRight ? sp.paddingHorizontal + sp.outerSize + sp.outerOffset : sp.paddingHorizontal,
+        paddingRight: !labelRight ? sp.paddingHorizontal + sp.outerSize + sp.outerOffset : sp.paddingHorizontal,
         ...typographyCSS,
         transition,
         ...getLabelStateCSS(tp),
@@ -195,7 +206,7 @@ export const RadioItem = ({
             borderStyle: tOuterP.borderStyle,
             borderRadius: outerBorderRadius,
             [verticalRule]: topOuter,
-            [horizontalRule]: 0,
+            [horizontalRule]: sp.paddingHorizontal,
             transition,
             ...getCircleStateCSS(tOuterP, false),
         },
@@ -211,7 +222,7 @@ export const RadioItem = ({
             borderStyle: tInnerP.borderStyle,
             borderRadius: innerBorderRadius,
             [verticalRule]: topInner,
-            [horizontalRule]: sp.outerSize / 2 - sp.innerSize / 2,
+            [horizontalRule]: sp.paddingHorizontal + sp.outerSize / 2 - sp.innerSize / 2,
             transition,
             ...getCircleStateCSS(tInnerP, false),
         },
@@ -363,6 +374,7 @@ export const RadioItem = ({
     const marginRule = `margin${orientation === 'vertical' ? 'Bottom' : 'Right'}`;
     const wrapperStyles: CSSObject = {
         display: orientation === 'vertical' ? 'block' : 'inline-block',
+        verticalAlign: orientation === 'horizontal' ? 'top' : undefined,
         marginBottom: orientation === 'horizontal' ? sp.verticalGap : undefined,
         '&:not(:last-child)': {
             [marginRule]: orientation === 'vertical' ? sp.verticalGap : sp.horizontalGap,
@@ -370,15 +382,27 @@ export const RadioItem = ({
     };
 
     const id = `${name}-${value}`;
+    const isChecked = props?.values ? props.values[name] === value : defaultValue === value;
     delete props.values;
     delete props.meta;
     delete props.helpers;
+    delete props.errorPosition;
+
     return (
         <div css={wrapperStyles}>
-            <input css={inputStyles} {...field} {...props} type="radio" name={name} id={id} value={value} />
+            <input
+                css={inputStyles}
+                {...field}
+                {...props}
+                type="radio"
+                name={name}
+                id={id}
+                value={value}
+                defaultChecked={isChecked}
+            />
             <label htmlFor={id} css={styles}>
-                {IconInner && <IconInner css={innerIconStyles} />}
                 {IconOuter && <IconOuter css={outerIconStyles} />}
+                {IconInner && <IconInner css={innerIconStyles} />}
                 {children}
             </label>
         </div>
@@ -397,9 +421,9 @@ const getCircleStateCSS = (
     { color, border, shadow, transform, css }: RadioItemCircleStateProperties,
     isIcon: boolean,
 ) => {
-    const fillRule = isIcon ? 'fill' : 'background';
-    const borderRule = isIcon ? 'fill' : 'borderColor';
-    const shadowRule = isIcon ? 'filter' : 'boxShadow';
+    const fillRule = color ? (isIcon ? 'fill' : 'background') : undefined;
+    const borderRule = isIcon ? undefined : 'borderColor';
+    const shadowRule = shadow ? (isIcon ? 'filter' : 'boxShadow') : undefined;
     const shadowValue = shadow ? (isIcon ? `drop-shadow(${shadow.replace('inset', '')})` : shadow) : undefined;
 
     return {

@@ -329,17 +329,21 @@ const baseTheme = deepmerge(tokens, {
                 },
                 inner: {
                     default: {
+                        border: colors.black,
                         color: colors.black,
                         transform: 'scale(0)',
                     },
                     hover: {
+                        border: colors.black,
                         color: colors.black,
                     },
                     focus: {
+                        border: colors.black,
                         color: colors.black,
                         shadow: '0 0 3px rgba(100,0,0,0.9)',
                     },
                     disabled: {
+                        border: colors.grey20,
                         color: colors.grey20,
                     },
                     checked: {

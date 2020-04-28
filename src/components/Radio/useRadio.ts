@@ -5,6 +5,10 @@ export interface RadioContextProps {
     orientation?: 'vertical' | 'horizontal';
     /** Vertical alignment for radio icon */
     alignment?: 'top' | 'center' | 'bottom';
+    /** Default checked value. Use outside Form. */
+    defaultValue?: string;
+    /** Text position relative radio. */
+    labelRight?: boolean;
     /** Size name from list of sizes defined in theme object at `components.Button.sizes`. */
     size: string;
 }

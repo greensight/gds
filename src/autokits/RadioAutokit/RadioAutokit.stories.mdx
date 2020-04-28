@@ -1,0 +1,19 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import paddingDecorator from '../../../.storybook/decorators/paddingDecorator';
+import RadioAutokit from '.';
+
+<Meta title="Autokits / RadioAutokit" component={RadioAutokit} decorators={[paddingDecorator]} />
+
+# Legend
+
+<Preview>
+    <Story name="basic">
+        <RadioAutokit />
+    </Story>
+</Preview>
+
+Автокит для компонента `Radio`. Читает содержимое поля `components.RadioItem` объекта темы.
+
+## Props
+
+<Props of={RadioAutokit} />

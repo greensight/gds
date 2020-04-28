@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { CSSObject } from '@emotion/core';
-import { useField } from 'formik';
+import { useField, useFormikContext } from 'formik';
 import { useForm } from './useForm';
 import { useFormField } from './useFormField';
 import { Radio } from '../Radio';
@@ -24,7 +24,8 @@ export const FormRadio = ({ children, css }: FormRadioProps) => {
     const { controlId, optional, size } = useFormField();
     const { errorPosition } = useForm();
     const [field, meta, helpers] = useField(controlId);
-
+    const { values } = useFormikContext<any[]>();
+    console.log(values);
     return (
         <Radio
             size={size}

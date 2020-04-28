@@ -5,6 +5,7 @@ import baseTheme from '../../utils/baseTheme';
 import * as Yup from 'yup';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import Form from './';
+import Radio from '../../components/Radio';
 import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
 import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 import Button from '../../components/Button';
@@ -36,9 +37,11 @@ import {
         const initialValues = {
             exampleInput1: 'Некое значение',
             exampleInput2: '',
+            radioExample: 'first',
         };
         const validationSchema = Yup.object().shape({
             exampleInput2: Yup.string().required('Текст что-то забыли'),
+            radioExample: Yup.string().required('Нужно что-то выбрать'),
         });
         return (
             <Form
@@ -139,6 +142,75 @@ import {
                                 : undefined
                         }
                     />
+                </Form.Field>
+                <Form.Field
+                    controlId="radioExample"
+                    size={radios('size', ['lg', 'md', 'sm'], 'md', 'Form.Field 3')}
+                    hint={
+                        boolean('Hint', true, 'Form.Field 3')
+                            ? text('Hint text', 'Подсказка к полю 2', 'Form.Field 3')
+                            : undefined
+                    }
+                    hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field 3')}
+                    hiddenLabel={boolean('Hidden Label', false, 'Form.Field 3')}
+                    validationPosition={radios(
+                        'validationPosition',
+                        ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
+                        'labelAfter',
+                        'Form.Field 3',
+                    )}
+                    style={{ marginBottom: scale(2) }}
+                    __errorTheme={
+                        boolean('Use custom ErorrTheme', false, 'Form.Field 3')
+                            ? object('errorThemeObj', baseTheme.components.FormError, 'Form.Field 3')
+                            : undefined
+                    }
+                    __hintTheme={
+                        boolean('Use custom HintTheme', false, 'Form.Field 3')
+                            ? object('hintThemeObj', baseTheme.components.FormHint, 'Form.Field 2')
+                            : undefined
+                    }
+                >
+                    <Form.Radio
+                        orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio')}
+                        alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio')}
+                    >
+                        <Form.Label
+                            as="legend"
+                            IconBefore={baseTheme.global.placeholder}
+                            IconAfter={baseTheme.global.placeholder}
+                        >
+                            Выберите вариант
+                        </Form.Label>
+                        <Radio.Item
+                            value="first"
+                            disabled={boolean('Disabled', true, 'Radio 1 props')}
+                            IconInner={
+                                boolean('Custom inner icon', false, 'Radio 1 props') && baseTheme.global.placeholder
+                            }
+                        >
+                            {text('Label', 'Вариант 1', 'Radio 1 props')}
+                        </Radio.Item>
+                        <Radio.Item
+                            value="second"
+                            disabled={boolean('Disabled', false, 'Radio 2 props')}
+                            IconInner={
+                                boolean('Custom inner icon', false, 'Radio 2 props') && baseTheme.global.placeholder
+                            }
+                        >
+                            {text(
+                                'Label',
+                                'Вариант с очень длинным названием, который, осевидно, займёт две строки или даже больше',
+                                'Radio 2 props',
+                            )}
+                        </Radio.Item>
+                        <Radio.Item value="third" disabled={boolean('Disabled', false, 'Radio 3 props')}>
+                            {text('Label', 'Вариант 3', 'Radio 3 props')}
+                        </Radio.Item>
+                        <Radio.Item value="fourth" disabled={boolean('Disabled', false, 'Radio 4 props')}>
+                            {text('Label', 'Вариант 4', 'Radio 4 props')}
+                        </Radio.Item>
+                    </Form.Radio>
                 </Form.Field>
                 <Button type="submit">Submit</Button>
             </Form>

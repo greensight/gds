@@ -1,8 +1,15 @@
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 import { text, radios, boolean, object } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
+import * as Yup from 'yup';
 import Legend from '.';
 import baseTheme from '../../utils/baseTheme';
+import Form from '../../components/Form';
+import Button from '../../components/Button';
+import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
+import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
+import scale from '../../utils/scale';
 import {
     LegendTheme,
     LegendSizeProperties,
@@ -190,5 +197,69 @@ import {
         <Legend name="optional" optional="(optional)">
             Пример лейбла/легенды
         </Legend>
+    </Story>
+</Preview>
+
+### With Form
+
+<Preview>
+    <Story name="Inside Form">
+        {() => {
+            const initialValues = {
+                exampleInput: '',
+            };
+            const validationSchema = Yup.object().shape({
+                exampleInput: Yup.string().required('Обязательное поле'),
+            });
+            return (
+                <Form
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    style={{ width: '25vw', minWidth: '320px' }}
+                    ErrorIcon={ErrorIcon}
+                    SuccessIcon={SuccessIcon}
+                    showSuccess={boolean('showSuccess', true, 'Form')}
+                    required={radios('required', ['optional', 'mark'], 'mark', 'Form')}
+                    errorPosition={radios('errorPosition', ['top', 'bottom'], 'top', 'Form')}
+                >
+                    <Form.Field
+                        controlId="exampleInput"
+                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Form.Field')}
+                        hint={
+                            boolean('Hint', true, 'Form.Field')
+                                ? text('Hint text', 'Подсказка к полю 1', 'Form.Field')
+                                : undefined
+                        }
+                        hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field')}
+                        hiddenLabel={boolean('Hidden Label', false, 'Form.Field')}
+                        validationPosition={radios(
+                            'validationPosition',
+                            ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
+                            'labelAfter',
+                            'Form.Field',
+                        )}
+                        style={{ marginBottom: scale(2) }}
+                    >
+                        <Form.Label
+                            as={text('Tag', 'label')}
+                            IconBefore={boolean('Icon before', true) && baseTheme.global.placeholder}
+                            IconAfter={boolean('Icon after', true) && baseTheme.global.placeholder}
+                            block={boolean('Block', false)}
+                            horizontalAlignment={radios('Horizontal align', ['left', 'center', 'right'], 'left')}
+                            __theme={
+                                boolean('Use custom theme', false)
+                                    ? object('themeObj', baseTheme.components.Legend)
+                                    : undefined
+                            }
+                        >
+                            Лейбл
+                        </Form.Label>
+                        <Form.Input />
+                    </Form.Field>
+                    <Button type="submit">Submit</Button>
+                </Form>
+            );
+        }}
     </Story>
 </Preview>

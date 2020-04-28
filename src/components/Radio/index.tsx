@@ -18,9 +18,7 @@ export interface RadioProps extends RadioContextProps {
     /** Name of radio */
     name: string;
     /** Set optional fill to fieldset. */
-    isOptional: boolean;
-    /** Error's positioning. */
-    errorPosition?: 'top' | 'bottom';
+    isOptional?: boolean;
     /** Radio content. */
     children: React.ReactNode;
 }
@@ -32,10 +30,11 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     orientation = 'vertical',
     alignment = 'top',
     size = 'md',
+    defaultValue = '',
+    labelRight = true,
     field,
     meta,
     helpers,
-    errorPosition = 'top',
     ...props
 }) => {
     const fieldsetProps = {
@@ -44,7 +43,7 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     };
 
     return (
-        <RadioContext.Provider value={{ orientation, alignment, size }}>
+        <RadioContext.Provider value={{ orientation, alignment, size, labelRight, defaultValue }}>
             <fieldset {...fieldsetProps}>
                 <div>
                     {React.Children.map(children, (child) => {
@@ -59,7 +58,7 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
                         }
                     })}
                 </div>
-                {meta?.error && meta?.touched && errorPosition === 'bottom' && (
+                {meta?.error && meta?.touched && props?.errorPosition === 'bottom' && (
                     <FormError size={size} err={meta?.error} />
                 )}
             </fieldset>
