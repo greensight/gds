@@ -10,8 +10,6 @@ export interface FormFieldContextProps {
     hint?: string;
     /** Set `htmlFor` to `Form.Label` and `id` and `name` to `Form.Input`. */
     controlId: string;
-    /** Visually hidden label. Keeps text accessible. */
-    hiddenLabel?: boolean;
     /** Validation icon's positioning. */
     validationPosition?: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
     /** Set optional fill to `Form.Input`. If get string, also set optional text to `Form.Label`. */

@@ -48,7 +48,7 @@ const FocusError = () => {
 
 export const Form: React.FC<FormProps> & FormCompositionProps = ({
     errorPosition = 'top',
-    required = 'optional',
+    requiredRule = 'optional',
     SuccessIcon,
     ErrorIcon,
     showSuccess = true,
@@ -59,7 +59,7 @@ export const Form: React.FC<FormProps> & FormCompositionProps = ({
     ...props
 }) => {
     return (
-        <FormContext.Provider value={{ errorPosition, required, showSuccess, ErrorIcon, SuccessIcon }}>
+        <FormContext.Provider value={{ errorPosition, requiredRule, showSuccess, ErrorIcon, SuccessIcon }}>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                 {() => (
                     <FormikForm noValidate {...props}>

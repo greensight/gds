@@ -43,7 +43,7 @@ export const FormLabel = ({ as, IconBefore, IconAfter, block, children, css }: F
         __errorTheme,
         __hintTheme,
     } = useFormField();
-    const { errorPosition, required, ErrorIcon, showSuccess, SuccessIcon } = useForm();
+    const { errorPosition, requiredRule, ErrorIcon, showSuccess, SuccessIcon } = useForm();
     const [, meta] = useField(controlId);
 
     return (
@@ -58,7 +58,7 @@ export const FormLabel = ({ as, IconBefore, IconAfter, block, children, css }: F
             hiddenLegend={hiddenLabel}
             hint={hint}
             hintPosition={hintPosition}
-            required={required}
+            requiredRule={requiredRule}
             ErrorIcon={ErrorIcon}
             showSuccess={showSuccess}
             SuccessIcon={SuccessIcon}

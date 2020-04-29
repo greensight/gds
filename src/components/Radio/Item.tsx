@@ -9,6 +9,7 @@ import {
     RadioItemSizeProperties,
 } from '../../types/Radio';
 import baseTheme from '../../utils/baseTheme';
+
 import { useRadio } from './useRadio';
 import { FieldInputProps, FieldMetaProps, FieldHelperProps, FormikValues } from 'formik';
 import scale from '../../utils/scale';
@@ -55,6 +56,9 @@ export const RadioItem = ({
 
     /* Get theme objects. */
     const { componentTheme, usedTheme } = useComponentTheme('RadioItem', __theme);
+    const global = usedTheme.global || baseTheme.global;
+    const { focus } = global.base || baseTheme.global.base;
+
     const radioItemTheme = componentTheme as RadioItemTheme;
     if (!radioItemTheme.sizes[size]) console.warn(`Specify "${size}" size. Default values are used instead`);
 
@@ -194,9 +198,6 @@ export const RadioItem = ({
     };
 
     const defaultOuterCSS: CSSObject = {
-        'input:focus + &::before': {
-            outline: `2px solid ${baseTheme.colors.brand}`,
-        },
         '&::before': {
             content: IconOuter ? 'none' : '""',
             position: 'absolute',
@@ -286,9 +287,17 @@ export const RadioItem = ({
                 ...getCircleStateCSS(themeInnerHoverProperties, false),
             },
         },
+        '.js-focus-visible input:focus:not(.focus-visible) + &': {
+            '&::before': {
+                outline: 'none',
+            },
+        },
         'input:focus + &': {
             ...getLabelStateCSS(themeFocusProperties),
             '&::before': {
+                outline: `${focus?.width || 2}px solid ${focus?.color || baseTheme.colors.black}`,
+                outlineOffset: focus?.offset,
+                ...focus?.css,
                 ...getCircleStateCSS(themeOuterFocusProperties, false),
             },
             '&::after': {
@@ -335,7 +344,13 @@ export const RadioItem = ({
             ...getCircleStateCSS(themeOuterHoverProperties, true),
         },
         'input:focus + label &': {
+            outline: `${focus?.width || 2}px solid ${focus?.color || baseTheme.colors.black}`,
+            outlineOffset: focus?.offset,
+            ...focus?.css,
             ...getCircleStateCSS(themeOuterFocusProperties, true),
+        },
+        '.js-focus-visible input:focus:not(.focus-visible) + label &': {
+            outline: 'none',
         },
         'input:checked + label &': {
             ...getCircleStateCSS(themeOuterCheckedProperties, true),

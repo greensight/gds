@@ -220,41 +220,46 @@ import {
                     ErrorIcon={ErrorIcon}
                     SuccessIcon={SuccessIcon}
                     showSuccess={boolean('showSuccess', true, 'Form')}
-                    required={radios('required', ['optional', 'mark'], 'mark', 'Form')}
+                    requiredRule={radios('requiredRule', ['optional', 'mark'], 'mark', 'Form')}
                     errorPosition={radios('errorPosition', ['top', 'bottom'], 'top', 'Form')}
                 >
                     <Form.Field
                         controlId="exampleInput"
-                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Form.Field')}
+                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field')}
                         hint={
-                            boolean('Hint', true, 'Form.Field')
-                                ? text('Hint text', 'Подсказка к полю 1', 'Form.Field')
+                            boolean('Hint', true, 'Field')
+                                ? text('Hint text', 'Подсказка к полю 1', 'Field')
                                 : undefined
                         }
-                        hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field')}
-                        hiddenLabel={boolean('Hidden Label', false, 'Form.Field')}
+                        hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Field')}
+                        hiddenLabel={boolean('Hidden Label', false, 'Field')}
                         validationPosition={radios(
                             'validationPosition',
                             ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
                             'labelAfter',
-                            'Form.Field',
+                            'Field',
                         )}
                         style={{ marginBottom: scale(2) }}
                     >
-                        <Form.Label
+                        <Legend
                             as={text('Tag', 'label')}
-                            IconBefore={boolean('Icon before', true) && baseTheme.global.placeholder}
-                            IconAfter={boolean('Icon after', true) && baseTheme.global.placeholder}
-                            block={boolean('Block', false)}
-                            horizontalAlignment={radios('Horizontal align', ['left', 'center', 'right'], 'left')}
+                            IconBefore={boolean('Icon before', true, 'Legend') && baseTheme.global.placeholder}
+                            IconAfter={boolean('Icon after', true, 'Legend') && baseTheme.global.placeholder}
+                            block={boolean('Block', false, 'Legend')}
+                            horizontalAlignment={radios(
+                                'Horizontal align',
+                                ['left', 'center', 'right'],
+                                'left',
+                                'Legend',
+                            )}
                             __theme={
-                                boolean('Use custom theme', false)
+                                boolean('Use custom theme', false, 'Legend')
                                     ? object('themeObj', baseTheme.components.Legend)
                                     : undefined
                             }
                         >
                             Лейбл
-                        </Form.Label>
+                        </Legend>
                         <Form.Input />
                     </Form.Field>
                     <Button type="submit">Submit</Button>

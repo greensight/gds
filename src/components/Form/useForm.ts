@@ -6,7 +6,7 @@ export interface FormContextProps {
     /** Error's positioning. */
     errorPosition?: 'top' | 'bottom';
     /** Switch between optional text & asterisk. */
-    required?: 'optional' | 'mark';
+    requiredRule?: 'optional' | 'mark';
     /** Error icon for validation. */
     ErrorIcon?: SVGRIcon;
     /** Success icon for validation. Doesn't make sense without `showSuccess` prop. */

@@ -3,6 +3,7 @@ import { FieldMetaProps, FieldHelperProps, FieldInputProps } from 'formik';
 import RadioItem, { RadioItemProps } from './Item';
 import { RadioContext, RadioContextProps } from './useRadio';
 import { FormError } from '../Legend/Error';
+import { FormHint } from '../Legend/Hint';
 
 export interface RadioCompositionProps {
     Item: React.FC<RadioItemProps>;
@@ -26,6 +27,8 @@ export interface RadioProps extends RadioContextProps {
 export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     children,
     name,
+    hint,
+    hintPosition,
     isOptional = false,
     orientation = 'vertical',
     alignment = 'top',
@@ -49,6 +52,9 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
                     {React.Children.map(children, (child) => {
                         if (React.isValidElement(child)) {
                             return React.cloneElement(child, {
+                                size,
+                                hint,
+                                hintPosition,
                                 name,
                                 field,
                                 meta,
@@ -61,6 +67,7 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
                 {meta?.error && meta?.touched && props?.errorPosition === 'bottom' && (
                     <FormError size={size} err={meta?.error} />
                 )}
+                {hint && hintPosition === 'bottom' && <FormHint size={size} hint={hint} hintPosition={hintPosition} />}
             </fieldset>
         </RadioContext.Provider>
     );

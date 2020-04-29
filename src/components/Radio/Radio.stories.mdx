@@ -280,7 +280,7 @@ import {
         {() => {
             const initialValues = {
                 formRadio1: '',
-                formRadio2: 'formRadio2-first',
+                formRadio2: 'formRadio2-third',
             };
             const validationSchema = Yup.object().shape({
                 formRadio1: Yup.string().required('Обязательное поле'),
@@ -295,24 +295,48 @@ import {
                     ErrorIcon={ErrorIcon}
                     SuccessIcon={SuccessIcon}
                     showSuccess={boolean('showSuccess', true, 'Form')}
-                    required={radios('required', ['optional', 'mark'], 'mark', 'Form')}
+                    requiredRule={radios('requiredRule', ['optional', 'mark'], 'mark', 'Form')}
                     errorPosition={radios('errorPosition', ['top', 'bottom'], 'top', 'Form')}
                 >
                     <Form.Field
                         controlId="formRadio1"
                         hint="Вариант не предвыбран"
-                        hiddenLabel={boolean('Hidden Legend', false, 'Field')}
-                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field')}
+                        hintPosition={radios('Hint position', ['top', 'bottom'], 'top', 'Field 1')}
+                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field 1')}
+                        validationPosition={radios(
+                            'validationPosition',
+                            ['labelBefore', 'labelAfter'],
+                            'labelAfter',
+                            'Field 1',
+                        )}
                     >
                         <Radio
-                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio')}
-                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio')}
+                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio 1')}
+                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio 1')}
                         >
-                            <Form.Label as="legend">Выберите вариант</Form.Label>
+                            <Legend
+                                as="legend"
+                                hiddenLegend={boolean('Hidden Legend', false, 'Legend 1')}
+                                IconBefore={
+                                    boolean('Legend icon before', true, 'Legend 1') && baseTheme.global.placeholder
+                                }
+                                IconAfter={
+                                    boolean('Legend icon after', true, 'Legend 1') && baseTheme.global.placeholder
+                                }
+                                block={boolean('Block', false, 'Legend 1')}
+                                horizontalAlignment={radios(
+                                    'Horizontal align',
+                                    ['left', 'center', 'right'],
+                                    'left',
+                                    'Legend 1',
+                                )}
+                            >
+                                Выберите вариант
+                            </Legend>
                             <Radio.Item value="formRadio1-first">Вариант 1</Radio.Item>
                             <Radio.Item value="formRadio1-second">Вариант 2</Radio.Item>
                             <Radio.Item value="formRadio1-third" disabled>
-                                Вариант 3
+                                Вариант 3 с длинным текстом для тестирования вертикального выравнивания бокса
                             </Radio.Item>
                         </Radio>
                     </Form.Field>
@@ -320,17 +344,36 @@ import {
                     <Form.Field
                         controlId="formRadio2"
                         hint="Вариант предвыбран"
-                        hiddenLabel={boolean('Hidden Legend', false, 'Field')}
-                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field')}
+                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field 2')}
                     >
                         <Radio
-                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio')}
-                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio')}
+                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio 2')}
+                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio 2')}
                         >
-                            <Form.Label as="legend">Выберите вариант</Form.Label>
+                            <Legend
+                                as="legend"
+                                hiddenLegend={boolean('Hidden Legend', false, 'Legend 2')}
+                                IconBefore={
+                                    boolean('Legend icon before', true, 'Legend 2') && baseTheme.global.placeholder
+                                }
+                                IconAfter={
+                                    boolean('Legend icon after', true, 'Legend 2') && baseTheme.global.placeholder
+                                }
+                                block={boolean('Block', false, 'Legend 2')}
+                                horizontalAlignment={radios(
+                                    'Horizontal align',
+                                    ['left', 'center', 'right'],
+                                    'left',
+                                    'Legend 2',
+                                )}
+                            >
+                                Выберите вариант
+                            </Legend>
                             <Radio.Item value="formRadio2-first">Варинат 1</Radio.Item>
                             <Radio.Item value="formRadio2-second">Варинат 2</Radio.Item>
-                            <Radio.Item value="formRadio2-third">Вариант 3</Radio.Item>
+                            <Radio.Item value="formRadio2-third" disabled>
+                                Вариант 3 с длинным текстом для тестирования вертикального выравнивания бокса
+                            </Radio.Item>
                         </Radio>
                     </Form.Field>
                     <br />

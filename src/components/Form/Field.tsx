@@ -20,7 +20,6 @@ export const FormField = ({
     hintPosition = 'top',
     hint,
     controlId,
-    hiddenLabel = false,
     validationPosition = 'labelAfter',
     optional,
     children,
@@ -30,7 +29,15 @@ export const FormField = ({
 }: FormFieldProps) => {
     const { values } = useFormikContext<any[]>();
     const [field, meta, helpers] = useField(controlId);
-    const { errorPosition } = useForm();
+    const { errorPosition, requiredRule, showSuccess, ErrorIcon, SuccessIcon } = useForm();
+    const legendProps = {
+        errorPosition,
+        requiredRule,
+        showSuccess,
+        ErrorIcon,
+        SuccessIcon,
+    };
+
     const inputProps = {
         type: 'text',
         name: controlId,
@@ -46,7 +53,6 @@ export const FormField = ({
                 size,
                 hintPosition,
                 hint,
-                hiddenLabel,
                 validationPosition,
                 errorPosition,
                 __hintTheme,
@@ -57,6 +63,10 @@ export const FormField = ({
                 {React.Children.map(children, (child) => {
                     if (React.isValidElement(child)) {
                         return React.cloneElement(child, {
+                            size,
+                            hint,
+                            hintPosition,
+                            validationPosition,
                             values,
                             field,
                             meta,
@@ -64,6 +74,7 @@ export const FormField = ({
                             errorPosition,
                             id: (child?.type as React.FC)?.displayName !== 'Legend' ? name : '',
                             ...inputProps,
+                            ...legendProps,
                             ...child.props,
                         });
                     }

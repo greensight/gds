@@ -48,7 +48,7 @@ export interface LegendBaseProps {
     /** Formik meta object (inner) */
     meta?: FieldMetaProps<string[]>;
     /** Switch between optional text & asterisk. */
-    required?: 'optional' | 'mark';
+    requiredRule?: 'optional' | 'mark';
     /** Error icon for validation. */
     ErrorIcon?: SVGRIcon;
     /** Success icon for validation. Doesn't make sense without `showSuccess` prop. */
@@ -86,7 +86,7 @@ export const Legend = <T extends React.ElementType = 'label'>({
     children,
     name,
     meta,
-    required = 'optional',
+    requiredRule = 'optional',
     ErrorIcon,
     SuccessIcon,
     showSuccess = true,
@@ -140,7 +140,7 @@ export const Legend = <T extends React.ElementType = 'label'>({
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
         borderRadius: tp.borderRadius,
-        marginBottom: hiddenLegend ? undefined : scale(1),
+        marginBottom: errorPosition === 'bottom' && hiddenLegend ? undefined : scale(1),
         transition,
         ...typography('bodyMd'),
         ...getStateCSS(tp),
@@ -171,7 +171,7 @@ export const Legend = <T extends React.ElementType = 'label'>({
 
     const textDefaultStyles: CSSObject = {
         position: 'relative',
-        display: 'inline-block',
+        display: hiddenLegend ? 'block' : 'inline-block',
         paddingRight:
             IconAfter ||
             (validationPosition === 'labelAfter' && meta?.touched && meta?.error) ||
@@ -325,13 +325,13 @@ export const Legend = <T extends React.ElementType = 'label'>({
                         showSuccess &&
                         !hiddenLegend &&
                         SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
-                    {Boolean(optional) && required === 'optional' && !hiddenLegend && (
+                    {Boolean(optional) && requiredRule === 'optional' && !hiddenLegend && (
                         <span css={optionalStyles}>{optional}</span>
                     )}
-                    {Boolean(optional) && required === 'optional' && hiddenLegend && (
+                    {Boolean(optional) && requiredRule === 'optional' && hiddenLegend && (
                         <VisuallyHidden>{optional}</VisuallyHidden>
                     )}
-                    {!optional && required === 'mark' && !hiddenLegend && (
+                    {!optional && requiredRule === 'mark' && !hiddenLegend && (
                         <span css={markStyles} aria-hidden="true">
                             *
                         </span>
