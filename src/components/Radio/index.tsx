@@ -32,6 +32,7 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     isOptional = false,
     orientation = 'vertical',
     alignment = 'top',
+    position = 'side',
     size = 'md',
     defaultValue = '',
     labelRight = true,
@@ -46,7 +47,7 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     };
 
     return (
-        <RadioContext.Provider value={{ orientation, alignment, size, labelRight, defaultValue }}>
+        <RadioContext.Provider value={{ orientation, alignment, size, labelRight, position, defaultValue }}>
             <fieldset {...fieldsetProps}>
                 <div>
                     {React.Children.map(children, (child) => {

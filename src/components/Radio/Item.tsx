@@ -52,7 +52,7 @@ export const RadioItem = ({
     css,
     ...props
 }: RadioItemProps) => {
-    const { orientation, alignment, size, labelRight, defaultValue } = useRadio();
+    const { orientation, alignment, size, labelRight, position, defaultValue } = useRadio();
 
     /* Get theme objects. */
     const { componentTheme, usedTheme } = useComponentTheme('RadioItem', __theme);
@@ -133,7 +133,7 @@ export const RadioItem = ({
     const outerBorderRadius = tOuterP.borderRadius ? tOuterP.borderRadius : '50%';
 
     const horizontalRule = labelRight ? 'left' : 'right';
-    const verticalRule = alignment !== 'bottom' ? 'top' : 'bottom';
+    const verticalRule = position === 'side' ? (alignment !== 'bottom' ? 'top' : 'bottom') : position;
 
     const verticalOffset =
         sp.outerSize <=
@@ -159,18 +159,36 @@ export const RadioItem = ({
               );
 
     const topOuter =
-        alignment !== 'center'
-            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                  .minLineHeight *
-                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                      .textHeight +
-                  (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
-                  sp.outerSize) /
-              2
-            : `calc(50% - ${sp.outerSize / 2}px)`;
+        position === 'side'
+            ? alignment !== 'center'
+                ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                      .minLineHeight *
+                      getLineHeight(
+                          typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
+                          sp,
+                      ).textHeight +
+                      (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
+                      sp.outerSize) /
+                  2
+                : `calc(50% - ${sp.outerSize / 2}px)`
+            : verticalOffset;
     const topInner =
-        alignment !== 'center'
-            ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+        position === 'side'
+            ? alignment !== 'center'
+                ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                      .minLineHeight *
+                      getLineHeight(
+                          typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
+                          sp,
+                      ).textHeight +
+                      (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
+                      sp.outerSize) /
+                      2 +
+                  sp.outerSize / 2 -
+                  sp.innerSize / 2
+                : `calc(50% - ${sp.innerSize / 2}px)`
+            : verticalOffset +
+              (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
                   .minLineHeight *
                   getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
                       .textHeight +
@@ -178,8 +196,7 @@ export const RadioItem = ({
                   sp.outerSize) /
                   2 +
               sp.outerSize / 2 -
-              sp.innerSize / 2
-            : `calc(50% - ${sp.innerSize / 2}px)`;
+              sp.innerSize / 2;
 
     const defaultCSS: CSSObject = {
         position: 'relative',
@@ -187,10 +204,20 @@ export const RadioItem = ({
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
         borderRadius: tp.borderRadius,
-        paddingTop: verticalOffset,
-        paddingBottom: verticalOffset,
-        paddingLeft: labelRight ? sp.paddingHorizontal + sp.outerSize + sp.outerOffset : sp.paddingHorizontal,
-        paddingRight: !labelRight ? sp.paddingHorizontal + sp.outerSize + sp.outerOffset : sp.paddingHorizontal,
+        paddingTop: position === 'top' ? verticalOffset + sp.outerOffset + sp.outerSize : verticalOffset,
+        paddingBottom: position === 'bottom' ? verticalOffset + sp.outerOffset + sp.outerSize : verticalOffset,
+        paddingLeft:
+            position === 'side'
+                ? labelRight
+                    ? sp.paddingHorizontal + sp.outerSize + sp.outerOffset
+                    : sp.paddingHorizontal
+                : sp.paddingHorizontal,
+        paddingRight:
+            position === 'side'
+                ? !labelRight
+                    ? sp.paddingHorizontal + sp.outerSize + sp.outerOffset
+                    : sp.paddingHorizontal
+                : sp.paddingHorizontal,
         ...typographyCSS,
         transition,
         ...getLabelStateCSS(tp),
@@ -207,7 +234,7 @@ export const RadioItem = ({
             borderStyle: tOuterP.borderStyle,
             borderRadius: outerBorderRadius,
             [verticalRule]: topOuter,
-            [horizontalRule]: sp.paddingHorizontal,
+            [horizontalRule]: position === 'side' ? sp.paddingHorizontal : `calc(50% - ${sp.outerSize / 2}px)`,
             transition,
             ...getCircleStateCSS(tOuterP, false),
         },
@@ -223,7 +250,10 @@ export const RadioItem = ({
             borderStyle: tInnerP.borderStyle,
             borderRadius: innerBorderRadius,
             [verticalRule]: topInner,
-            [horizontalRule]: sp.paddingHorizontal + sp.outerSize / 2 - sp.innerSize / 2,
+            [horizontalRule]:
+                position === 'side'
+                    ? sp.paddingHorizontal + sp.outerSize / 2 - sp.innerSize / 2
+                    : `calc(50% - ${sp.innerSize / 2}px)`,
             transition,
             ...getCircleStateCSS(tInnerP, false),
         },

@@ -3,8 +3,10 @@ import React, { createContext, useContext } from 'react';
 export interface RadioContextProps {
     /** Orientation for Radio items. */
     orientation?: 'vertical' | 'horizontal';
-    /** Vertical alignment for radio icon */
+    /** Vertical alignment for radio icon (for side position) */
     alignment?: 'top' | 'center' | 'bottom';
+    /** Box position */
+    position: 'side' | 'top' | 'bottom';
     /** Default checked value. Use outside Form. */
     defaultValue?: string;
     /** Text position relative radio. */
