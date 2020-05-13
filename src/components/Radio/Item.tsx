@@ -158,45 +158,25 @@ export const RadioItem = ({
                       2,
               );
 
+    console.log(verticalOffset);
+
     const topOuter =
         position === 'side'
             ? alignment !== 'center'
-                ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                      .minLineHeight *
-                      getLineHeight(
-                          typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
-                          sp,
-                      ).textHeight +
-                      (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
+                ? verticalOffset +
+                  (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
+                      .textHeight -
                       sp.outerSize) /
-                  2
+                      2
                 : `calc(50% - ${sp.outerSize / 2}px)`
             : verticalOffset;
+
     const topInner =
         position === 'side'
             ? alignment !== 'center'
-                ? (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                      .minLineHeight *
-                      getLineHeight(
-                          typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
-                          sp,
-                      ).textHeight +
-                      (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
-                      sp.outerSize) /
-                      2 +
-                  sp.outerSize / 2 -
-                  sp.innerSize / 2
+                ? topOuter + (sp.outerSize - sp.innerSize) / 2
                 : `calc(50% - ${sp.innerSize / 2}px)`
-            : verticalOffset +
-              (getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                  .minLineHeight *
-                  getLineHeight(typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined, sp)
-                      .textHeight +
-                  (verticalOffset === sp.paddingVertical ? sp.paddingVertical : 0) -
-                  sp.outerSize) /
-                  2 +
-              sp.outerSize / 2 -
-              sp.innerSize / 2;
+            : verticalOffset + sp.outerSize / 2 - sp.innerSize / 2;
 
     const defaultCSS: CSSObject = {
         position: 'relative',
