@@ -164,16 +164,19 @@ const baseTheme = deepmerge(tokens, {
             },
             sizes: {
                 lg: {
+                    padding: 0,
                     iconSize: scale(4),
                     iconOffset: scale(1),
                     typography: 'labelLg',
                 },
                 md: {
+                    padding: 0,
                     iconSize: scale(3),
                     iconOffset: scale(1),
                     typography: 'labelMd',
                 },
                 sm: {
+                    padding: 0,
                     iconSize: scale(2),
                     iconOffset: scale(1),
                     typography: 'labelSm',
@@ -353,6 +356,8 @@ const baseTheme = deepmerge(tokens, {
             },
             sizes: {
                 sm: {
+                    paddingVertical: 0,
+                    paddingHorizontal: 0,
                     outerSize: scale(2),
                     innerSize: scale(1),
                     outerOffset: scale(1),
@@ -361,6 +366,8 @@ const baseTheme = deepmerge(tokens, {
                     typography: 'labelSm',
                 },
                 md: {
+                    paddingVertical: 0,
+                    paddingHorizontal: 0,
                     outerSize: scale(3),
                     innerSize: scale(1),
                     outerOffset: scale(1),
@@ -369,6 +376,8 @@ const baseTheme = deepmerge(tokens, {
                     typography: 'labelMd',
                 },
                 lg: {
+                    paddingVertical: 0,
+                    paddingHorizontal: 0,
                     outerSize: scale(4),
                     innerSize: 11,
                     outerOffset: scale(1),

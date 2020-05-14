@@ -78,7 +78,7 @@ export interface RadioItemSizeProperties {
     innerSize?: number;
     /** Offset between big circle and label. Equals `scale(1)` by default. */
     outerOffset?: number;
-    /** Paddings vertical. Equals `0` by default. If outerSize bigger than label lineHeight minimal vertical padding will be calculated automatically. */
+    /** Paddings vertical. Equals `0` by default. If outerSize bigger than label lineHeight minimal vertical padding will be calculated automatically. Vertical padding for side with box increases on `outerSize + outerOffset` px. */
     paddingVertical?: number;
     /** Paddings horizontal. Equals `0` by default. Horizontal padding for side with box increases on `outerSize + outerOffset` px. */
     paddingHorizontal?: number;

@@ -1,5 +1,16 @@
 import React, { useEffect } from 'react';
-import { Formik, Form as FormikForm, FormikFormProps, FormikValues, FormikHelpers, useFormikContext } from 'formik';
+import {
+    Formik,
+    Form as FormikForm,
+    FormikFormProps,
+    FormikValues,
+    FormikHelpers,
+    FieldInputProps,
+    FieldMetaProps,
+    FieldHelperProps,
+    useFormikContext,
+} from 'formik';
+
 import * as Yup from 'yup';
 import FormField, { FormFieldProps } from './Field';
 import FormInput, { FormInputProps } from './Input';
@@ -23,6 +34,19 @@ export interface FormProps extends FormContextProps, FormikFormProps {
     validationSchema?: Yup.Schema<any> | (() => Yup.Schema<any>);
     /** Formik submit handler. */
     onSubmit: (values: FormikValues, formikHelpers: FormikHelpers<FormikValues>) => void | Promise<any>;
+}
+
+export interface FormikProps<T> extends Omit<React.HTMLProps<HTMLInputElement>, 'size'> {
+    /** `values` from `useFormikContext` */
+    values: FormikValues;
+    /** `field` from `useField` */
+    field: FieldInputProps<T>;
+    /** `meta` from `useField` */
+    meta: FieldMetaProps<T>;
+    /** `helpers` from `useField` */
+    helpers: FieldHelperProps<T>;
+    /** Field id. Equals name */
+    id?: string;
 }
 
 /**

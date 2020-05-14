@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormFieldContext, FormFieldContextProps } from './useFormField';
 import { useField, useFormikContext } from 'formik';
+import { FormikProps } from './';
 import { useForm } from './useForm';
 export interface FormFieldProps extends FormFieldContextProps, Omit<React.HTMLProps<HTMLDivElement>, 'size'> {
     /** Field content. */
@@ -30,13 +31,13 @@ export const FormField = ({
     const { values } = useFormikContext<any[]>();
     const [field, meta, helpers] = useField(controlId);
     const { errorPosition, requiredRule, showSuccess, ErrorIcon, SuccessIcon } = useForm();
-    const legendProps = {
-        errorPosition,
-        requiredRule,
-        showSuccess,
-        ErrorIcon,
-        SuccessIcon,
-    };
+    // const legendProps = {
+    //     errorPosition,
+    //     requiredRule,
+    //     showSuccess,
+    //     ErrorIcon,
+    //     SuccessIcon,
+    // };
 
     const inputProps = {
         type: 'text',
@@ -54,7 +55,6 @@ export const FormField = ({
                 hintPosition,
                 hint,
                 validationPosition,
-                errorPosition,
                 __hintTheme,
                 __errorTheme,
             }}
@@ -62,21 +62,28 @@ export const FormField = ({
             <div {...props}>
                 {React.Children.map(children, (child) => {
                     if (React.isValidElement(child)) {
-                        return React.cloneElement(child, {
-                            size,
-                            hint,
-                            hintPosition,
-                            validationPosition,
+                        const formikProps: FormikProps<any> = {
                             values,
                             field,
                             meta,
                             helpers,
+                            size,
+                            optional,
+                            hint,
+                            hintPosition,
+                            validationPosition,
                             errorPosition,
-                            id: (child?.type as React.FC)?.displayName !== 'Legend' ? name : '',
+                            ErrorIcon,
+                            showSuccess,
+                            SuccessIcon,
+                            requiredRule,
+                            controlId,
+                            ...((child?.type as React.FC)?.displayName !== 'Legend' ? { id: name } : {}),
+
                             ...inputProps,
-                            ...legendProps,
                             ...child.props,
-                        });
+                        };
+                        return React.cloneElement(child, { formikProps });
                     }
                 })}
             </div>

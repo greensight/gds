@@ -6,7 +6,7 @@ export interface RadioContextProps {
     /** Vertical alignment for radio icon (for side position) */
     alignment?: 'top' | 'center' | 'bottom';
     /** Box position */
-    position: 'side' | 'top' | 'bottom';
+    position?: 'side' | 'top' | 'bottom';
     /** Default checked value. Use outside Form. */
     defaultValue?: string;
     /** Text position relative radio. */

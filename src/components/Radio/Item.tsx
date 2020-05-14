@@ -11,7 +11,7 @@ import {
 import baseTheme from '../../utils/baseTheme';
 
 import { useRadio } from './useRadio';
-import { FieldInputProps, FieldMetaProps, FieldHelperProps, FormikValues } from 'formik';
+import { FieldInputProps } from 'formik';
 import scale from '../../utils/scale';
 import typography from '../../utils/typography';
 import useComponentTheme from '../../helpers/useComponentTheme';
@@ -25,12 +25,6 @@ export interface RadioItemProps extends React.HTMLProps<HTMLInputElement> {
     field?: FieldInputProps<string>;
     /** Value of radio item */
     value: string;
-    /** Formik meta object (inner) */
-    meta?: FieldMetaProps<any>;
-    /** Formik helpers object (inner) */
-    helpers?: FieldHelperProps<string>;
-    /** Values of Formik */
-    values?: FormikValues;
     /** Custom icon for inner circle. */
     IconInner?: SVGRIcon;
     /** Custom icon for outer circle. */
@@ -48,11 +42,13 @@ export const RadioItem = ({
     IconInner,
     IconOuter,
     children,
+    checked,
+    onChange,
     __theme,
     css,
     ...props
 }: RadioItemProps) => {
-    const { orientation, alignment, size, labelRight, position, defaultValue } = useRadio();
+    const { orientation, alignment, size, labelRight, position } = useRadio();
 
     /* Get theme objects. */
     const { componentTheme, usedTheme } = useComponentTheme('RadioItem', __theme);
@@ -133,7 +129,8 @@ export const RadioItem = ({
     const outerBorderRadius = tOuterP.borderRadius ? tOuterP.borderRadius : '50%';
 
     const horizontalRule = labelRight ? 'left' : 'right';
-    const verticalRule = position === 'side' ? (alignment !== 'bottom' ? 'top' : 'bottom') : position;
+    const verticalRule =
+        position === 'side' ? (alignment !== 'bottom' ? 'top' : 'bottom') : position === 'top' ? 'top' : 'bottom';
 
     const verticalOffset =
         sp.outerSize <=
@@ -158,8 +155,6 @@ export const RadioItem = ({
                       2,
               );
 
-    console.log(verticalOffset);
-
     const topOuter =
         position === 'side'
             ? alignment !== 'center'
@@ -174,7 +169,7 @@ export const RadioItem = ({
     const topInner =
         position === 'side'
             ? alignment !== 'center'
-                ? topOuter + (sp.outerSize - sp.innerSize) / 2
+                ? +topOuter + (sp.outerSize - sp.innerSize) / 2
                 : `calc(50% - ${sp.innerSize / 2}px)`
             : verticalOffset + sp.outerSize / 2 - sp.innerSize / 2;
 
@@ -246,7 +241,10 @@ export const RadioItem = ({
             width: sp.innerSize,
             height: sp.innerSize,
             [verticalRule]: topInner,
-            [horizontalRule]: sp.outerSize / 2 - sp.innerSize / 2,
+            [horizontalRule]:
+                position === 'side'
+                    ? sp.paddingHorizontal + sp.outerSize / 2 - sp.innerSize / 2
+                    : `calc(50% - ${sp.innerSize / 2}px)`,
             transition,
             ...getCircleStateCSS(tInnerP, true),
         },
@@ -258,7 +256,7 @@ export const RadioItem = ({
             width: sp.outerSize,
             height: sp.outerSize,
             [verticalRule]: topOuter,
-            [horizontalRule]: 0,
+            [horizontalRule]: position === 'side' ? sp.paddingHorizontal : `calc(50% - ${sp.outerSize / 2}px)`,
             transition,
             ...getCircleStateCSS(tOuterP, true),
         },
@@ -407,12 +405,11 @@ export const RadioItem = ({
     };
 
     const id = `${name}-${value}`;
-    const isChecked = props?.values ? props.values[name] === value : defaultValue === value;
-    delete props.values;
-    delete props.meta;
-    delete props.helpers;
-    delete props.errorPosition;
-
+    const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (field) field.onChange(e);
+        if (onChange) onChange(e);
+    };
+    delete props.formikProps;
     return (
         <div css={wrapperStyles}>
             <input
@@ -423,7 +420,8 @@ export const RadioItem = ({
                 name={name}
                 id={id}
                 value={value}
-                defaultChecked={isChecked}
+                checked={checked}
+                onChange={changeHandler}
             />
             <label htmlFor={id} css={styles}>
                 {IconOuter && <IconOuter css={outerIconStyles} />}
@@ -446,14 +444,13 @@ const getCircleStateCSS = (
     { color, border, shadow, transform, css }: RadioItemCircleStateProperties,
     isIcon: boolean,
 ) => {
-    const fillRule = color ? (isIcon ? 'fill' : 'background') : undefined;
-    const borderRule = isIcon ? undefined : 'borderColor';
-    const shadowRule = shadow ? (isIcon ? 'filter' : 'boxShadow') : undefined;
+    const fillRule = isIcon ? 'fill' : 'background';
+    const shadowRule = isIcon ? 'filter' : 'boxShadow';
     const shadowValue = shadow ? (isIcon ? `drop-shadow(${shadow.replace('inset', '')})` : shadow) : undefined;
 
     return {
         [fillRule]: color,
-        [borderRule]: border,
+        borderColor: isIcon ? undefined : border,
         [shadowRule]: shadowValue,
         transform,
         ...css,

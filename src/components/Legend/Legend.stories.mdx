@@ -109,7 +109,7 @@ import {
 <Preview>
     <Story name="Hint">
         <Legend name="hint" hint="Hint">
-            Пример лейбла/легенды
+            Legend
         </Legend>
     </Story>
 </Preview>
@@ -190,13 +190,33 @@ import {
 
 ### Optional text
 
-Опциональный текст, указывающий на необязательность поля, к которому относится легенда.
+Опциональный текст, указывающий на необязательность поля, к которому относится легенда. Имеет смысл только при использовании внутри Form
 
 <Preview>
     <Story name="Optional">
-        <Legend name="optional" optional="(optional)">
-            Пример лейбла/легенды
-        </Legend>
+        {() => {
+            const initialValues = {
+                exampleInput: '',
+            };
+            const validationSchema = Yup.object().shape({
+                exampleInput: Yup.string().required('Обязательное поле'),
+            });
+            return (
+                <Form
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={action('Submit')}
+                    style={{ width: '25vw', minWidth: '320px' }}
+                    requiredRule="optional"
+                >
+                    <Form.Field controlId="exampleInput">
+                        <Legend name="optional" optional="(optional)">
+                            Legend
+                        </Legend>
+                    </Form.Field>
+                </Form>
+            );
+        }}
     </Story>
 </Preview>
 
@@ -231,8 +251,11 @@ import {
                                 ? text('Hint text', 'Подсказка к полю 1', 'Field')
                                 : undefined
                         }
-                        hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Field')}
-                        hiddenLabel={boolean('Hidden Label', false, 'Field')}
+                        hintPosition={
+                            boolean('Hint', true, 'Field')
+                                ? radios('hintPosition', ['top', 'bottom'], 'top', 'Field')
+                                : undefined
+                        }
                         validationPosition={radios(
                             'validationPosition',
                             ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
@@ -242,10 +265,11 @@ import {
                         style={{ marginBottom: scale(2) }}
                     >
                         <Legend
-                            as={text('Tag', 'label')}
+                            as={text('Tag', 'label', 'Legend')}
                             IconBefore={boolean('Icon before', true, 'Legend') && baseTheme.global.placeholder}
                             IconAfter={boolean('Icon after', true, 'Legend') && baseTheme.global.placeholder}
                             block={boolean('Block', false, 'Legend')}
+                            hiddenLegend={boolean('Hidden Label', false, 'Legend')}
                             horizontalAlignment={radios(
                                 'Horizontal align',
                                 ['left', 'center', 'right'],
@@ -254,7 +278,7 @@ import {
                             )}
                             __theme={
                                 boolean('Use custom theme', false, 'Legend')
-                                    ? object('themeObj', baseTheme.components.Legend)
+                                    ? object('themeObj', baseTheme.components.Legend, 'Legend')
                                     : undefined
                             }
                         >

@@ -197,26 +197,6 @@ const FormAutokit = ({ SuccessIcon, ErrorIcon, onSubmit }: FormAutokitProps) => 
                     </Form.Field>
                 ))}
             </Layout>
-            <div css={{ ...typography('title'), marginBottom: scale(2) }}>Hidden label</div>
-            <Layout
-                cols={{ xxxl: Object.keys(inputTheme.sizes).length, xxs: 1 }}
-                gap={scale(2)}
-                justify="start"
-                align="start"
-                css={{ marginBottom: scale(2) }}
-            >
-                {Object.keys(inputTheme.sizes).map((sizeName, index) => (
-                    <Form.Field
-                        key={sizeName}
-                        controlId={`field-hidden-${index + 1}`}
-                        size={sizeName}
-                        hiddenLabel={true}
-                    >
-                        <Legend>Скрытый лейбл</Legend>
-                        <Form.Input />
-                    </Form.Field>
-                ))}
-            </Layout>
             <div css={{ ...typography('title'), marginBottom: scale(2) }}>Optional text</div>
             <Layout
                 cols={{ xxxl: Object.keys(inputTheme.sizes).length, xxs: 1 }}

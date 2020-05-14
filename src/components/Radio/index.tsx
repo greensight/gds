@@ -1,27 +1,27 @@
 import React from 'react';
-import { FieldMetaProps, FieldHelperProps, FieldInputProps } from 'formik';
 import RadioItem, { RadioItemProps } from './Item';
 import { RadioContext, RadioContextProps } from './useRadio';
 import { FormError } from '../Legend/Error';
 import { FormHint } from '../Legend/Hint';
+import { FormikProps } from '../../components/Form';
 
 export interface RadioCompositionProps {
     Item: React.FC<RadioItemProps>;
 }
 
 export interface RadioProps extends RadioContextProps {
-    /** Formik field object (inner) */
-    field?: FieldInputProps<string[]>;
-    /** Formik meta object (inner) */
-    meta?: FieldMetaProps<string[]>;
-    /** Formik helpers (inner) */
-    helpers?: FieldHelperProps<string[]>;
     /** Name of radio */
     name: string;
     /** Set optional fill to fieldset. */
     isOptional?: boolean;
     /** Radio content. */
     children: React.ReactNode;
+    /** Hint's positioning. */
+    hintPosition?: 'top' | 'bottom';
+    /** Hint text. */
+    hint?: string;
+    /** Formik props from cloneElement in Form.Field */
+    formikProps?: FormikProps<string>;
 }
 
 export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
@@ -34,39 +34,49 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
     alignment = 'top',
     position = 'side',
     size = 'md',
-    defaultValue = '',
+    defaultValue: initialSelectedValue,
     labelRight = true,
-    field,
-    meta,
-    helpers,
+    formikProps,
     ...props
 }) => {
     const fieldsetProps = {
-        'aria-invalid': meta?.touched && meta?.error ? true : undefined,
+        'aria-invalid': formikProps?.meta?.touched && formikProps?.meta?.error ? true : undefined,
         'aria-required': isOptional ? undefined : true,
+    };
+    size = formikProps?.size || size;
+    hint = formikProps?.hint || hint;
+    name = formikProps?.controlId || name;
+    hintPosition = formikProps?.hintPosition || hintPosition;
+
+    const [defaultValue, setSelectedValue] = React.useState(initialSelectedValue);
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedValue(e.currentTarget.value);
     };
 
     return (
-        <RadioContext.Provider value={{ orientation, alignment, size, labelRight, position, defaultValue }}>
+        <RadioContext.Provider value={{ orientation, alignment, size, labelRight, position }}>
             <fieldset {...fieldsetProps}>
                 <div>
                     {React.Children.map(children, (child) => {
-                        if (React.isValidElement(child)) {
-                            return React.cloneElement(child, {
-                                size,
-                                hint,
-                                hintPosition,
-                                name,
-                                field,
-                                meta,
-                                helpers,
-                                ...props,
-                            });
-                        }
+                        const checked =
+                            (formikProps?.values && name && formikProps?.values[name] === child.props.value) ||
+                            (defaultValue && defaultValue === child.props.value) ||
+                            false;
+
+                        return React.cloneElement(child, {
+                            size,
+                            name,
+                            formikProps,
+                            checked,
+                            onChange,
+                            field: formikProps?.field,
+                            ...props,
+                        });
                     })}
                 </div>
-                {meta?.error && meta?.touched && props?.errorPosition === 'bottom' && (
-                    <FormError size={size} err={meta?.error} />
+                {formikProps?.meta?.error && formikProps?.meta?.touched && formikProps?.errorPosition === 'bottom' && (
+                    <FormError size={size} err={formikProps?.meta?.error} />
                 )}
                 {hint && hintPosition === 'bottom' && <FormHint size={size} hint={hint} hintPosition={hintPosition} />}
             </fieldset>

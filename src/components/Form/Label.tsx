@@ -4,6 +4,7 @@ import { CSSObject } from '@emotion/core';
 import { useField } from 'formik';
 import { useForm } from './useForm';
 import { useFormField } from './useFormField';
+import { SVGRIcon, MergeElementProps } from '../../types/Utils';
 import Legend from '../Legend';
 
 export interface FormLabelBaseProps {
@@ -15,6 +16,8 @@ export interface FormLabelBaseProps {
     block?: boolean;
     /** Label content. */
     children: React.ReactNode;
+    /** Visually hidden label */
+    hiddenLabel: boolean;
     /** Additional CSS. */
     css?: CSSObject;
 }
@@ -31,13 +34,12 @@ export type FormLabelProps<P extends React.ElementType = 'label'> = {
  *
  * Consume props from `Form` and `Form.Field` compoents.
  */
-export const FormLabel = ({ as, IconBefore, IconAfter, block, children, css }: FormLabelProps) => {
+export const FormLabel = ({ as, hiddenLabel = false, IconBefore, IconAfter, block, children, css }: FormLabelProps) => {
     const {
         controlId,
         optional,
         size,
         validationPosition,
-        hiddenLabel,
         hint,
         hintPosition,
         __errorTheme,

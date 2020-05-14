@@ -128,6 +128,34 @@ const RadioAutokit = ({ text = 'Option', Icon }: RadioAutokitProps) => {
                     <Radio
                         key={sizeName}
                         size={sizeName}
+                        name={`position-t-${sizeName}-${index + 1}`}
+                        position="top"
+                        defaultValue="three"
+                    >
+                        <Radio.Item value="first">{`${text} ${sizeName}`}</Radio.Item>
+                        <Radio.Item value="second">{`${text} ${sizeName}`}</Radio.Item>
+                        <Radio.Item value="three" disabled>{`${text} ${sizeName}`}</Radio.Item>
+                    </Radio>
+                ))}
+
+                {Object.keys(radioItemTheme.sizes).map((sizeName, index) => (
+                    <Radio
+                        key={sizeName}
+                        size={sizeName}
+                        name={`position-b-${sizeName}-${index + 1}`}
+                        position="bottom"
+                        defaultValue="three"
+                    >
+                        <Radio.Item value="first">{`${text} ${sizeName}`}</Radio.Item>
+                        <Radio.Item value="second">{`${text} ${sizeName}`}</Radio.Item>
+                        <Radio.Item value="three" disabled>{`${text} ${sizeName}`}</Radio.Item>
+                    </Radio>
+                ))}
+
+                {Object.keys(radioItemTheme.sizes).map((sizeName, index) => (
+                    <Radio
+                        key={sizeName}
+                        size={sizeName}
                         name={`custom-box-${sizeName}-${index + 1}`}
                         defaultValue="three"
                     >

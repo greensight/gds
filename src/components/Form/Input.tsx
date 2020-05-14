@@ -201,7 +201,9 @@ const FormInput = <T extends React.ElementType = 'input'>(
         const errorId = meta.touched && meta.error && errorPosition === 'bottom' ? `error-${controlId}` : undefined;
         return hintId && errorId ? `${hintId} ${errorId}` : hintId || errorId;
     };
-    delete props.style;
+
+    delete props.formikProps;
+
     const inputProps = {
         type: 'text',
         name: controlId,
@@ -225,11 +227,6 @@ const FormInput = <T extends React.ElementType = 'input'>(
     };
 
     const fieldStyles = [fieldBaseStyles, fieldDisabledStyles];
-    delete inputProps.values;
-    delete inputProps.meta;
-    delete inputProps.helpers;
-    delete inputProps.errorPosition;
-    delete inputProps.field;
 
     return (
         <>

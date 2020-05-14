@@ -1,5 +1,4 @@
 import React from 'react';
-import { FieldMetaProps } from 'formik';
 import baseTheme from '../../utils/baseTheme';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import FormTheme, { FormValidationIconProperties, FormErrorTheme, FormHintTheme } from '../../types/Form';
@@ -16,6 +15,7 @@ import typography from '../../utils/typography';
 import VisuallyHidden from '../../components/VisuallyHidden';
 import { FormError } from './Error';
 import { FormHint } from './Hint';
+import { FormikProps } from '../../components/Form';
 import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
 
 export interface LegendBaseProps {
@@ -37,24 +37,12 @@ export interface LegendBaseProps {
     hiddenLegend?: boolean;
     /** Set optional fill. If get string, also set optional text inside legend. */
     optional?: boolean | string;
-    /** Validation icon's positioning. */
-    validationPosition?: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
-    /** Error's positioning. */
-    errorPosition?: 'top' | 'bottom';
     /** Label content. */
     children: React.ReactNode;
     /** Set `htmlFor` if Legend use as label. */
     name?: string;
-    /** Formik meta object (inner) */
-    meta?: FieldMetaProps<string[]>;
-    /** Switch between optional text & asterisk. */
-    requiredRule?: 'optional' | 'mark';
-    /** Error icon for validation. */
-    ErrorIcon?: SVGRIcon;
-    /** Success icon for validation. Doesn't make sense without `showSuccess` prop. */
-    SuccessIcon?: SVGRIcon;
-    /** Show success status for validation or not. */
-    showSuccess?: boolean;
+    /** Formik props from cloneElement in Form.Field */
+    formikProps?: FormikProps<string | string[]>;
     /** Label theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: LegendTheme;
     /** Hint theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
@@ -81,15 +69,9 @@ export const Legend = <T extends React.ElementType = 'label'>({
     horizontalAlignment = 'left',
     hiddenLegend = false,
     optional,
-    validationPosition = 'labelAfter',
-    errorPosition = 'top',
     children,
     name,
-    meta,
-    requiredRule = 'optional',
-    ErrorIcon,
-    SuccessIcon,
-    showSuccess = true,
+    formikProps,
     css,
     __theme,
     __hintTheme,
@@ -100,7 +82,11 @@ export const Legend = <T extends React.ElementType = 'label'>({
     const { componentTheme, usedTheme } = useComponentTheme('Legend', __theme);
 
     const labelTheme = componentTheme as LegendTheme;
+    size = formikProps?.size || size;
+    hint = formikProps?.hint || hint;
+    hintPosition = formikProps?.hintPosition || hintPosition;
 
+    optional = formikProps?.optional || optional;
     if (!labelTheme.sizes[size]) {
         console.warn(`Specify "${size}" size. Default values are used instead`);
     }
@@ -140,7 +126,7 @@ export const Legend = <T extends React.ElementType = 'label'>({
         borderWidth: tp.borderWidth,
         borderStyle: tp.borderStyle,
         borderRadius: tp.borderRadius,
-        marginBottom: errorPosition === 'bottom' && hiddenLegend ? undefined : scale(1),
+        //marginBottom: errorPosition === 'bottom' && hiddenLegend ? undefined : scale(1),
         transition,
         ...typography('bodyMd'),
         ...getStateCSS(tp),
@@ -163,8 +149,11 @@ export const Legend = <T extends React.ElementType = 'label'>({
     const themeErrorProperties = getThemeProperties(labelTheme, 'error');
     const themeSuccessProperties = getThemeProperties(labelTheme, 'success');
     const validationCSS: CSSObject = {
-        ...(meta?.touched && meta?.error && getStateCSS(themeErrorProperties)),
-        ...(meta?.touched && !meta?.error && showSuccess && getStateCSS(themeSuccessProperties)),
+        ...(formikProps?.meta?.touched && formikProps?.meta?.error && getStateCSS(themeErrorProperties)),
+        ...(formikProps?.meta?.touched &&
+            !formikProps?.meta?.error &&
+            formikProps?.showSuccess &&
+            getStateCSS(themeSuccessProperties)),
     };
 
     const styles = [defaultCSS, statesCSS, validationCSS, css];
@@ -174,14 +163,24 @@ export const Legend = <T extends React.ElementType = 'label'>({
         display: hiddenLegend ? 'block' : 'inline-block',
         paddingRight:
             IconAfter ||
-            (validationPosition === 'labelAfter' && meta?.touched && meta?.error) ||
-            (validationPosition === 'labelAfter' && meta?.touched && !meta?.error && showSuccess)
+            (formikProps?.validationPosition === 'labelAfter' &&
+                formikProps?.meta?.touched &&
+                formikProps?.meta?.error) ||
+            (formikProps?.validationPosition === 'labelAfter' &&
+                formikProps?.meta?.touched &&
+                !formikProps?.meta?.error &&
+                formikProps?.showSuccess)
                 ? `${sp.iconSize + sp.iconOffset}px`
                 : undefined,
         paddingLeft:
             IconBefore ||
-            (validationPosition === 'labelBefore' && meta?.touched && meta?.error) ||
-            (validationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess)
+            (formikProps?.validationPosition === 'labelBefore' &&
+                formikProps?.meta?.touched &&
+                formikProps?.meta?.error) ||
+            (formikProps?.validationPosition === 'labelBefore' &&
+                formikProps?.meta?.touched &&
+                !formikProps?.meta?.error &&
+                formikProps?.showSuccess)
                 ? `${sp.iconSize + sp.iconOffset}px`
                 : undefined,
     };
@@ -252,7 +251,7 @@ export const Legend = <T extends React.ElementType = 'label'>({
 
     let validationIconHorizontalRule;
 
-    if (validationPosition === 'labelBefore') {
+    if (formikProps?.validationPosition === 'labelBefore') {
         validationIconHorizontalRule = 'left';
     } else {
         validationIconHorizontalRule = 'right';
@@ -286,11 +285,10 @@ export const Legend = <T extends React.ElementType = 'label'>({
         ...typographyCSS,
     };
 
-    delete props.meta;
     return jsx(
         as || 'label',
         {
-            htmlFor: !as || as === 'label' ? name : null,
+            htmlFor: !as || as === 'label' ? formikProps?.name || name : null,
             css: styles,
             ...props,
         },
@@ -300,42 +298,64 @@ export const Legend = <T extends React.ElementType = 'label'>({
                     {hiddenLegend ? (
                         <VisuallyHidden>{children}</VisuallyHidden>
                     ) : (
-                        <span css={labelTextStyles}>{children}</span>
-                    )}
-                    {IconBefore &&
-                        !hiddenLegend &&
-                        !(validationPosition === 'labelBefore' && meta?.touched && meta?.error) &&
-                        !(validationPosition === 'labelBefore' && meta?.touched && !meta?.error && showSuccess) && (
-                            <IconBefore css={iconBeforeCSS} />
-                        )}
-                    {IconAfter &&
-                        !hiddenLegend &&
-                        !(validationPosition === 'labelAfter' && meta?.touched && meta?.error) &&
-                        !(validationPosition === 'labelAfter' && meta?.touched && !meta?.error && showSuccess) && (
-                            <IconAfter css={iconAfterCSS} />
-                        )}
-                    {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
-                        meta?.touched &&
-                        meta?.error &&
-                        !hiddenLegend &&
-                        ErrorIcon && <ErrorIcon css={iconErrorStyles} />}
-                    {(validationPosition === 'labelAfter' || validationPosition === 'labelBefore') &&
-                        meta?.touched &&
-                        !meta?.error &&
-                        showSuccess &&
-                        !hiddenLegend &&
-                        SuccessIcon && <SuccessIcon css={iconSuccessStyles} />}
-                    {Boolean(optional) && requiredRule === 'optional' && !hiddenLegend && (
-                        <span css={optionalStyles}>{optional}</span>
-                    )}
-                    {Boolean(optional) && requiredRule === 'optional' && hiddenLegend && (
-                        <VisuallyHidden>{optional}</VisuallyHidden>
-                    )}
-                    {!optional && requiredRule === 'mark' && !hiddenLegend && (
-                        <span css={markStyles} aria-hidden="true">
-                            *
+                        <span css={labelTextStyles}>
+                            {children}
+                            {!optional && formikProps?.requiredRule === 'mark' && !hiddenLegend && (
+                                <span css={markStyles} aria-hidden="true">
+                                    {'\u00A0'}*
+                                </span>
+                            )}
+                            {Boolean(optional) && formikProps?.requiredRule === 'optional' && !hiddenLegend && (
+                                <span css={optionalStyles}>
+                                    {'\u00A0'}
+                                    {optional}
+                                </span>
+                            )}
                         </span>
                     )}
+                    {Boolean(optional) && formikProps?.requiredRule === 'optional' && hiddenLegend && (
+                        <VisuallyHidden>{optional}</VisuallyHidden>
+                    )}
+
+                    {IconBefore &&
+                        !hiddenLegend &&
+                        !(
+                            formikProps?.validationPosition === 'labelBefore' &&
+                            formikProps?.meta?.touched &&
+                            formikProps?.meta?.error
+                        ) &&
+                        !(
+                            formikProps?.validationPosition === 'labelBefore' &&
+                            formikProps?.meta?.touched &&
+                            !formikProps?.meta?.error &&
+                            formikProps?.showSuccess
+                        ) && <IconBefore css={iconBeforeCSS} />}
+                    {IconAfter &&
+                        !hiddenLegend &&
+                        !(
+                            formikProps?.validationPosition === 'labelAfter' &&
+                            formikProps?.meta?.touched &&
+                            formikProps?.meta?.error
+                        ) &&
+                        !(
+                            formikProps?.validationPosition === 'labelAfter' &&
+                            formikProps?.meta?.touched &&
+                            !formikProps?.meta?.error &&
+                            formikProps?.showSuccess
+                        ) && <IconAfter css={iconAfterCSS} />}
+                    {(formikProps?.validationPosition === 'labelAfter' ||
+                        formikProps?.validationPosition === 'labelBefore') &&
+                        formikProps?.meta?.touched &&
+                        formikProps?.meta?.error &&
+                        !hiddenLegend &&
+                        formikProps?.ErrorIcon && <formikProps.ErrorIcon css={iconErrorStyles} />}
+                    {(formikProps?.validationPosition === 'labelAfter' ||
+                        formikProps?.validationPosition === 'labelBefore') &&
+                        formikProps?.meta?.touched &&
+                        !formikProps?.meta?.error &&
+                        formikProps?.showSuccess &&
+                        !hiddenLegend &&
+                        formikProps?.SuccessIcon && <formikProps.SuccessIcon css={iconSuccessStyles} />}
                 </span>
             </span>
             {hint &&
@@ -351,12 +371,12 @@ export const Legend = <T extends React.ElementType = 'label'>({
                         hiddenLegend={hiddenLegend}
                     />
                 ))}
-            {meta?.error && meta?.touched && errorPosition === 'top' && (
+            {formikProps?.meta?.error && formikProps?.meta?.touched && formikProps?.errorPosition === 'top' && (
                 <FormError
                     size={size}
-                    err={meta?.error}
+                    err={formikProps?.meta?.error}
                     __errorTheme={__errorTheme}
-                    errorPosition={errorPosition}
+                    errorPosition={formikProps?.errorPosition}
                     hiddenLegend={hiddenLegend}
                 />
             )}
