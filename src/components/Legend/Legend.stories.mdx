@@ -188,31 +188,56 @@ import {
     </Story>
 </Preview>
 
-### Optional text
+### Optional
 
-Опциональный текст, указывающий на необязательность поля, к которому относится легенда. Имеет смысл только при использовании внутри Form
+Указание обязательности заполнения поля, к которому относится легенда. Это может быть текст, указывающий на необязательность заполнения поля, или астериск. Паттерн отображения обязательности определяеься на уровне Form, поэтому проп `optional` имеет смысл внутри Form.
 
 <Preview>
     <Story name="Optional">
         {() => {
             const initialValues = {
-                exampleInput: '',
+                optionalInput1: '',
+                optionalInput2: '',
             };
-            const validationSchema = Yup.object().shape({
-                exampleInput: Yup.string().required('Обязательное поле'),
-            });
             return (
                 <Form
                     initialValues={initialValues}
-                    validationSchema={validationSchema}
                     onSubmit={action('Submit')}
                     style={{ width: '25vw', minWidth: '320px' }}
                     requiredRule="optional"
                 >
-                    <Form.Field controlId="exampleInput">
-                        <Legend name="optional" optional="(optional)">
-                            Legend
+                    <Form.Field controlId="optionalInput1">
+                        <Legend as="legend" optional="(optional)">
+                            Legend 1
                         </Legend>
+                    </Form.Field>
+                    <Form.Field controlId="optionalInput2">
+                        <Legend as="legend">Legend 2</Legend>
+                    </Form.Field>
+                </Form>
+            );
+        }}
+    </Story>
+    <Story name="Mark">
+        {() => {
+            const initialValues = {
+                markInput1: '',
+                markInput2: '',
+            };
+            return (
+                <Form
+                    initialValues={initialValues}
+                    onSubmit={action('Submit')}
+                    style={{ width: '25vw', minWidth: '320px' }}
+                    requiredRule="mark"
+                >
+                    <Form.Field controlId="markInput1">
+                        <Legend as="legend" optional={true}>
+                            Legend 1
+                        </Legend>
+                    </Form.Field>
+                    <Form.Field controlId="markInput2">
+                        <Legend as="legend">Legend 2</Legend>
                     </Form.Field>
                 </Form>
             );

@@ -14,15 +14,11 @@ import {
 import * as Yup from 'yup';
 import FormField, { FormFieldProps } from './Field';
 import FormInput, { FormInputProps } from './Input';
-import FormRadio, { FormRadioProps } from './Radio';
 import { FormContext, FormContextProps } from './useForm';
-import FormLabel, { FormLabelProps } from './Label';
 
 export interface FormCompositionProps {
     Field: React.FC<FormFieldProps>;
     Input: React.FC<FormInputProps>;
-    Label: React.FC<FormLabelProps>;
-    Radio: React.FC<FormRadioProps>;
 }
 
 export interface FormProps extends FormContextProps, FormikFormProps {
@@ -45,8 +41,28 @@ export interface FormikProps<T> extends Omit<React.HTMLProps<HTMLInputElement>, 
     meta: FieldMetaProps<T>;
     /** `helpers` from `useField` */
     helpers: FieldHelperProps<T>;
-    /** Field id. Equals name */
-    id?: string;
+    /** Error's positioning. */
+    errorPosition?: 'top' | 'bottom';
+    /** Switch between optional text & asterisk. */
+    requiredRule?: 'optional' | 'mark';
+    /** Error icon for validation. */
+    ErrorIcon?: SVGRIcon;
+    /** Success icon for validation. Doesn't make sense without `showSuccess` prop. */
+    SuccessIcon?: SVGRIcon;
+    /** Show success status for validation or not. */
+    showSuccess?: boolean;
+    /** Size name from list of sizes defined in theme object at `components.FormInput.sizes`. */
+    size: string;
+    /** Hint's positioning. */
+    hintPosition?: 'top' | 'bottom';
+    /** Hint text. */
+    hint?: string;
+    /** Set `htmlFor` to `Form.Label` and `id` and `name` to `Form.Input`. */
+    controlId: string;
+    /** Validation icon's positioning. */
+    validationPosition?: 'labelBefore' | 'labelAfter' | 'inputBefore' | 'inputAfter';
+    /** Set optional fill to `Form.Input`. If get string, also set optional text to `Form.Label`. */
+    optional?: boolean | string;
 }
 
 /**
@@ -97,9 +113,6 @@ export const Form: React.FC<FormProps> & FormCompositionProps = ({
 };
 
 Form.Input = React.forwardRef(FormInput);
-
-Form.Radio = FormRadio;
 Form.Field = FormField;
-Form.Label = FormLabel;
 
 export default Form;

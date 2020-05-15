@@ -14,8 +14,6 @@ export interface RadioProps extends RadioContextProps {
     name: string;
     /** Set optional fill to fieldset. */
     isOptional?: boolean;
-    /** Radio content. */
-    children: React.ReactNode;
     /** Hint's positioning. */
     hintPosition?: 'top' | 'bottom';
     /** Hint text. */
@@ -60,8 +58,8 @@ export const Radio: React.FC<RadioProps> & RadioCompositionProps = ({
                 <div>
                     {React.Children.map(children, (child) => {
                         const checked =
-                            (formikProps?.values && name && formikProps?.values[name] === child.props.value) ||
-                            (defaultValue && defaultValue === child.props.value) ||
+                            (formikProps?.values && name && formikProps?.values[name] === child?.props.value) ||
+                            (defaultValue && defaultValue === child?.props.value) ||
                             false;
 
                         return React.cloneElement(child, {

@@ -17,6 +17,7 @@ import typography from '../../utils/typography';
 import useComponentTheme from '../../helpers/useComponentTheme';
 import { ComponentStates, SVGRIcon, RequiredBy } from '../../types/Utils';
 import { TypographyProperties } from '../../types/Typography';
+import { FormikProps } from '../../components/Form';
 
 export interface RadioItemProps extends React.HTMLProps<HTMLInputElement> {
     /** Radio group name (inner) */
@@ -31,6 +32,8 @@ export interface RadioItemProps extends React.HTMLProps<HTMLInputElement> {
     IconOuter?: SVGRIcon;
     /** RadioItem theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: RadioItemTheme;
+    /** Formik props from cloneElement in Form.Field */
+    formikProps?: FormikProps<string>;
     /** Additional CSS. */
     css?: CSSObject;
 }
@@ -43,6 +46,7 @@ export const RadioItem = ({
     IconOuter,
     children,
     checked,
+    formikProps,
     onChange,
     __theme,
     css,
@@ -382,7 +386,7 @@ export const RadioItem = ({
         !IconOuter && defaultOuterCSS,
         !IconInner && defaultInnerCSS,
         statesCSS,
-        props?.meta?.touched && props?.meta?.error && errorCSS,
+        formikProps?.meta?.touched && formikProps?.meta?.error && errorCSS,
         css,
     ];
 
@@ -403,13 +407,11 @@ export const RadioItem = ({
             [marginRule]: orientation === 'vertical' ? sp.verticalGap : sp.horizontalGap,
         },
     };
-
     const id = `${name}-${value}`;
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (field) field.onChange(e);
         if (onChange) onChange(e);
     };
-    delete props.formikProps;
     return (
         <div css={wrapperStyles}>
             <input

@@ -11,7 +11,7 @@ export interface RadioContextProps {
     defaultValue?: string;
     /** Text position relative radio. */
     labelRight?: boolean;
-    /** Size name from list of sizes defined in theme object at `components.Button.sizes`. */
+    /** Size name from list of sizes defined in theme object at `components.RadioItem.sizes`. */
     size: string;
 }
 

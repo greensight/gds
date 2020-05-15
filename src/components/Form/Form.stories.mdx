@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import Form from './';
 import Radio from '../../components/Radio';
+import Legend from '../../components/Legend';
 import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
 import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 import Button from '../../components/Button';
@@ -66,7 +67,6 @@ import {
                             : undefined
                     }
                     hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field 1')}
-                    hiddenLabel={boolean('Hidden Label', false, 'Form.Field 1')}
                     validationPosition={radios(
                         'validationPosition',
                         ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
@@ -76,25 +76,17 @@ import {
                     optional={text('Optional text', '(Необязательное поле)', 'Form.Field 1')}
                     style={{ marginBottom: scale(2) }}
                 >
-                    <Form.Label
-                        IconBefore={boolean('Label icon before', true) && baseTheme.global.placeholder}
-                        IconAfter={boolean('Label icon after', true) && baseTheme.global.placeholder}
-                        __theme={
-                            boolean('Use custom LabelTheme', false)
-                                ? object('themeObj', baseTheme.components.Legend)
-                                : undefined
-                        }
-                    >
+                    <Legend IconBefore={baseTheme.global.placeholder} IconAfter={baseTheme.global.placeholder}>
                         Лейбл 1
-                    </Form.Label>
+                    </Legend>
                     <Form.Input
                         onFocus={action('onFocus')}
-                        IconBefore={boolean('Input icon before', true) && baseTheme.global.placeholder}
-                        IconAfter={boolean('Input icon after', true) && baseTheme.global.placeholder}
-                        disabled={boolean('Disabled', false)}
+                        IconBefore={boolean('Input icon before', true, 'Form.Input 1') && baseTheme.global.placeholder}
+                        IconAfter={boolean('Input icon after', true, 'Form.Input 1') && baseTheme.global.placeholder}
+                        disabled={boolean('Disabled', false, 'Form.Input 1')}
                         __theme={
-                            boolean('Use custom InputTheme', false)
-                                ? object('themeObj', baseTheme.components.FormInput)
+                            boolean('Use custom InputTheme', false, 'Form.Input 1')
+                                ? object('themeObj', baseTheme.components.FormInput, 'Form.Input 1')
                                 : undefined
                         }
                     />
@@ -108,7 +100,6 @@ import {
                             : undefined
                     }
                     hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field 2')}
-                    hiddenLabel={boolean('Hidden Label', false, 'Form.Field 2')}
                     validationPosition={radios(
                         'validationPosition',
                         ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
@@ -127,18 +118,15 @@ import {
                             : undefined
                     }
                 >
-                    <Form.Label
-                        IconBefore={boolean('Label icon before', true) && baseTheme.global.placeholder}
-                        IconAfter={boolean('Label icon after', true) && baseTheme.global.placeholder}
-                    >
+                    <Legend IconBefore={baseTheme.global.placeholder} IconAfter={baseTheme.global.placeholder}>
                         Лейбл 2
-                    </Form.Label>
+                    </Legend>
                     <Form.Input
-                        IconBefore={boolean('Input icon before', true) && baseTheme.global.placeholder}
-                        IconAfter={boolean('Input icon after', true) && baseTheme.global.placeholder}
+                        IconBefore={boolean('Input icon before', true, 'Form.Input 2') && baseTheme.global.placeholder}
+                        IconAfter={boolean('Input icon after', true, 'Form.Input 2') && baseTheme.global.placeholder}
                         __theme={
-                            boolean('Use custom InputTheme', false)
-                                ? object('themeObj', baseTheme.components.FormInput)
+                            boolean('Use custom InputTheme', false, 'Form.Input 2')
+                                ? object('themeObj', baseTheme.components.FormInput, 'Form.Input 2')
                                 : undefined
                         }
                     />
@@ -148,15 +136,14 @@ import {
                     size={radios('size', ['lg', 'md', 'sm'], 'md', 'Form.Field 3')}
                     hint={
                         boolean('Hint', true, 'Form.Field 3')
-                            ? text('Hint text', 'Подсказка к полю 2', 'Form.Field 3')
+                            ? text('Hint text', 'Подсказка радиокнопкам', 'Form.Field 3')
                             : undefined
                     }
                     hintPosition={radios('hintPosition', ['top', 'bottom'], 'top', 'Form.Field 3')}
-                    hiddenLabel={boolean('Hidden Label', false, 'Form.Field 3')}
                     validationPosition={radios(
                         'validationPosition',
-                        ['labelBefore', 'labelAfter', 'inputBefore', 'inputAfter'],
-                        'labelAfter',
+                        ['labelBefore', 'labelAfter'],
+                        'labelBefore',
                         'Form.Field 3',
                     )}
                     style={{ marginBottom: scale(2) }}
@@ -167,50 +154,27 @@ import {
                     }
                     __hintTheme={
                         boolean('Use custom HintTheme', false, 'Form.Field 3')
-                            ? object('hintThemeObj', baseTheme.components.FormHint, 'Form.Field 2')
+                            ? object('hintThemeObj', baseTheme.components.FormHint, 'Form.Field 3')
                             : undefined
                     }
                 >
-                    <Form.Radio
-                        orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio')}
-                        alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio')}
-                    >
-                        <Form.Label
+                    <Radio>
+                        <Legend
                             as="legend"
                             IconBefore={baseTheme.global.placeholder}
                             IconAfter={baseTheme.global.placeholder}
                         >
                             Выберите вариант
-                        </Form.Label>
-                        <Radio.Item
-                            value="first"
-                            disabled={boolean('Disabled', true, 'Radio 1 props')}
-                            IconInner={
-                                boolean('Custom inner icon', false, 'Radio 1 props') && baseTheme.global.placeholder
-                            }
-                        >
-                            {text('Label', 'Вариант 1', 'Radio 1 props')}
+                        </Legend>
+                        <Radio.Item value="first" disabled>
+                            Вариант 1
                         </Radio.Item>
-                        <Radio.Item
-                            value="second"
-                            disabled={boolean('Disabled', false, 'Radio 2 props')}
-                            IconInner={
-                                boolean('Custom inner icon', false, 'Radio 2 props') && baseTheme.global.placeholder
-                            }
-                        >
-                            {text(
-                                'Label',
-                                'Вариант с очень длинным названием, который, осевидно, займёт две строки или даже больше',
-                                'Radio 2 props',
-                            )}
+                        <Radio.Item value="second">
+                            Вариант с очень длинным названием, который, осевидно, займёт две строки или даже больше
                         </Radio.Item>
-                        <Radio.Item value="third" disabled={boolean('Disabled', false, 'Radio 3 props')}>
-                            {text('Label', 'Вариант 3', 'Radio 3 props')}
-                        </Radio.Item>
-                        <Radio.Item value="fourth" disabled={boolean('Disabled', false, 'Radio 4 props')}>
-                            {text('Label', 'Вариант 4', 'Radio 4 props')}
-                        </Radio.Item>
-                    </Form.Radio>
+                        <Radio.Item value="third">Вариант 3</Radio.Item>
+                        <Radio.Item value="fourth">Вариант 4</Radio.Item>
+                    </Radio>
                 </Form.Field>
                 <Button type="submit">Submit</Button>
             </Form>
@@ -225,7 +189,7 @@ import {
 
 1. `Form.Field` - обёртка для лейбла и поля.
 
-2. `Form.Label` - лейбл.
+2. `Legend` - лейбл.
 
 3. `Form.Input` - поле ввода.
 
@@ -271,9 +235,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 ## Props of Form
 
-<Props
-    components={{ Form: FormProps, 'Form.Field': Form.Field, 'Form.Label': Form.Label, 'Form.Input': FormInputProps }}
-/>
+<Props components={{ Form: FormProps, 'Form.Field': Form.Field, Legend: Legend, 'Form.Input': FormInputProps }} />
 
 ## Theme of Form
 
@@ -284,7 +246,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 ### Optional
 
 Определение на уровне `Form` отметки об обязательности или опциональности полей через проп `required`.
-По умолчанию выбрана опциональное заполнение `required="optional"`. Этот проп через контекст использует `Form.Label`,
+По умолчанию выбрана опциональное заполнение `required="optional"`. Этот проп через контекст использует `Legend`,
 в котором рендерится отметка обязательности или опциональный текст.
 
 🏆 Предпочтительнее использовать пометки _(optional)_ (менее контрастным курсивом) вместо астерисков у обязательных полей,
@@ -310,7 +272,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Optional">
         <Form showSuccess={false}>
             <Form.Field controlId="requiredField1" optional="(необязательное поле)">
-                <Form.Label>Лейбл</Form.Label>
+                <Legend>Лейбл</Legend>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -318,7 +280,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Mark">
         <Form required="mark" showSuccess={false}>
             <Form.Field controlId="requiredField2">
-                <Form.Label>Лейбл</Form.Label>
+                <Legend>Лейбл</Legend>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -327,7 +289,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 ### Error Position
 
-Проп `errorPosition` передается компонентам `Form.Label` и `Form.Input`, где, в зависимости от значения, происходит
+Проп `errorPosition` передается компонентам `Legend` и `Form.Input`, где, в зависимости от значения, происходит
 рендеринг текста об ошибке.
 
 🏆 Ошибки валидации предпочтительно выводить над полями в лейбле. Так они не будут скрыты блоками с автозаполнением,
@@ -356,7 +318,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     showSuccess={false}
                 >
                     <Form.Field controlId="errorLabel1">
-                        <Form.Label>Лейбл</Form.Label>
+                        <Legend>Лейбл</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -383,7 +345,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     errorPosition="bottom"
                 >
                     <Form.Field controlId="errorLabel2">
-                        <Form.Label>Лейбл</Form.Label>
+                        <Legend>Лейбл</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -403,7 +365,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 Позиционирование иконки валидации задается пропом `Form.Field` `validationPosition`. Доступно 4 варианта:
 в лейбле до или после текста, в поле до или после значения. По умолчанию иконка расположена в лейбле после текста.
 
-Пропсы `SuccessIcon`, `ErrorIcon` и `validationPosition` передаются компонентам `Form.Label` и `Form.Input`, где,
+Пропсы `SuccessIcon`, `ErrorIcon` и `validationPosition` передаются компонентам `Legend` и `Form.Input`, где,
 в зависимости от значений, происходит рендеринг иконок валидации.
 
 🏆 Иконки валидации лучше не размещать слева от текста, так как при их появлении произойдет скачок текста по горизонтали.
@@ -431,7 +393,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon1">
-                        <Form.Label>Иконка валидации после текста</Form.Label>
+                        <Legend>Иконка валидации после текста</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -459,7 +421,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon2" validationPosition="labelBefore">
-                        <Form.Label>Иконка валидации до текста</Form.Label>
+                        <Legend>Иконка валидации до текста</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -487,7 +449,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon3" validationPosition="inputAfter">
-                        <Form.Label>Иконка валидации в поле после значения</Form.Label>
+                        <Legend>Иконка валидации в поле после значения</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -515,7 +477,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="validationIcon4" validationPosition="inputBefore">
-                        <Form.Label>Иконка валидации в поле до значения</Form.Label>
+                        <Legend>Иконка валидации в поле до значения</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -529,7 +491,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 ### Show Success
 
 Показ успешной валидации для полей формы задается через проп `showSuccess` компонента `Form`.
-По умолчанию статус успеха показан. Проп передается через контекст компонентам `Form.Label` и `Form.Input`,
+По умолчанию статус успеха показан. Проп передается через контекст компонентам `Legend` и `Form.Input`,
 в которых может быть отображен статус валидации.
 
 ❗️ Если вы используете показ успеха, то вместе с иконкой для ошибки вы должны передать `Form`
@@ -555,7 +517,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="successLabel1">
-                        <Form.Label>Лейбл</Form.Label>
+                        <Legend>Лейбл</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -583,7 +545,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="successLabel2">
-                        <Form.Label>Лейбл</Form.Label>
+                        <Legend>Лейбл</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -596,7 +558,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 ## Form.Field
 
-`Form.Field` принимает проп `controlId`, который передается `Form.Label` и `Form.Input`. Для лейбла он используется в качестве
+`Form.Field` принимает проп `controlId`, который передается `Legend` и `Form.Input`. Для лейбла он используется в качестве
 атрибута `for`, для поля - в качестве `id` и `name`.
 
 ✅ Компонент `Form.Field` используется только внутри `Form`, он принимает пропсы, которые передает через контекст своим детям.
@@ -609,7 +571,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 Размеры для `Form.Field` определяются в объекте темы в полях `FormInput.sizes`.
 Для них заведены разные поля, так как может различаться типографика.
-Присвоенные имена становятся доступны через проп `size` и передаются компонентам `Form.Label` и `Form.Input`.
+Присвоенные имена становятся доступны через проп `size` и передаются компонентам `Legend` и `Form.Input`.
 
 **Рекомендуемые имена:** 'lg', 'md', 'sm'.
 
@@ -617,7 +579,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Large size">
         <Form showSuccess={false}>
             <Form.Field controlId="sizeLg" size="lg">
-                <Form.Label>Поле Lg</Form.Label>
+                <Legend>Поле Lg</Legend>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -625,7 +587,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Medium size">
         <Form showSuccess={false}>
             <Form.Field controlId="sizeMd" size="md">
-                <Form.Label>Поле Mg</Form.Label>
+                <Legend>Поле Mg</Legend>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -633,7 +595,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Small size">
         <Form showSuccess={false}>
             <Form.Field controlId="sizeSm" size="sm">
-                <Form.Label>Поле Sm</Form.Label>
+                <Legend>Поле Sm</Legend>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -644,9 +606,9 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 Добавление текста подсказки к полю `Form.Field` доступно через проп `hint`.
 
-Позиционирование подсказки доступно через проп `hintPosition`, он может располагаться в `Form.Label` или в `Form.Input`.
+Позиционирование подсказки доступно через проп `hintPosition`, он может располагаться в `Legend` или в `Form.Input`.
 
-Пропсы `hintPosition` и `hint` передаются `Form.Label` и `Form.Input`, где на их основе происходит условный рендеринг подсказки.
+Пропсы `hintPosition` и `hint` передаются `Legend` и `Form.Input`, где на их основе происходит условный рендеринг подсказки.
 
 🏆 По умолчанию подсказка позиционируется внутри лейбла. Это создает большую область кликабельности,
 подсказка в лейбле не закрывается блоками с автозаполнением, нет необходимости связывать
@@ -658,7 +620,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Hint Top">
         <Form showSuccess={false}>
             <Form.Field controlId="hintTop" hint="Текст подсказки сверху">
-                <Form.Label>Поле с подсказкой</Form.Label>
+                <Legend>Поле с подсказкой</Legend>
                 <Form.Input />
             </Form.Field>
         </Form>
@@ -666,62 +628,20 @@ Live validation имеет ряд проблем с UX, но её отсутст
     <Story name="Hint Bottom">
         <Form showSuccess={false}>
             <Form.Field controlId="hintBottom" hint="Текст подсказки снизу" hintPosition="bottom">
-                <Form.Label>Поле с подсказкой</Form.Label>
+                <Legend>Поле с подсказкой</Legend>
                 <Form.Input />
             </Form.Field>
         </Form>
     </Story>
 </Preview>
 
-### Hidden label
-
-Доступно поле со скрытым лейблом через проп `Form.Field` `hiddenLabel={true}`. Пропс передаётся в `Form.Label`.
-
-♿️ Текст лейбла, а также его прочее содержимое (иконка, подсказка, текст опциональности, звездочка обязательности)
-визуально скрываются. При этом текст лейбла остается доступен для скринридеров.
-
-❗️ Текст об ошибке, расположенный в скрытом лейбле, будет показан.
-
-❗️ Иконки валидации в скрытом лейбле не отображаются. В случае скрытого лейбла иконки валидации лучше располагать в поле ввода.
-
-<Preview>
-    <Story name="Hidden label">
-        {() => {
-            const initialValues = {
-                hiddenLabel: '',
-            };
-            const validationSchema = Yup.object().shape({
-                hiddenLabel: Yup.string().required('Текст что-то забыли'),
-            });
-            return (
-                <Form
-                    errorPosition="top"
-                    required="optional"
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={action('Submit')}
-                    SuccessIcon={SuccessIcon}
-                    ErrorIcon={ErrorIcon}
-                >
-                    <Form.Field controlId="hiddenLabel" hiddenLabel={true} validationPosition="inputAfter">
-                        <Form.Label>Визуально скрытый лейбл</Form.Label>
-                        <Form.Input />
-                    </Form.Field>
-                    <br />
-                    <Button type="submit">Submit</Button>
-                </Form>
-            );
-        }}
-    </Story>
-</Preview>
-
-## Form.Label
+## Legend
 
 ## Use Cases
 
 ### Label Icons
 
-В лейбле могут располагаться 2 иконки: до текста и после текста. Они добавляются `Form.Label` через проп `IconBefore`
+В лейбле могут располагаться 2 иконки: до текста и после текста. Они добавляются `Legend` через проп `IconBefore`
 и `iconAfter`. Под иконку бронируется место, зависящее от текущего пропа `size`, полученного через контекст от `Form.Field`.
 
 ❗️ Если расположение иконки лейбла совпадает с расположением иконки валидации, то иконка валидации заменит иконку лейбла.
@@ -747,7 +667,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon1" validationPosition="labelAfter">
-                        <Form.Label IconAfter={baseTheme.global.placeholder}>Лейбл с иконкой после текста</Form.Label>
+                        <Legend IconAfter={baseTheme.global.placeholder}>Лейбл с иконкой после текста</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -775,7 +695,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
-                        <Form.Label IconBefore={baseTheme.global.placeholder}>Лейбл с иконкой до текста</Form.Label>
+                        <Legend IconBefore={baseTheme.global.placeholder}>Лейбл с иконкой до текста</Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -803,9 +723,9 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="labelIcon3" validationPosition="labelAfter">
-                        <Form.Label IconAfter={baseTheme.global.placeholder} IconBefore={baseTheme.global.placeholder}>
+                        <Legend IconAfter={baseTheme.global.placeholder} IconBefore={baseTheme.global.placeholder}>
                             Лейбл с двумя иконками
-                        </Form.Label>
+                        </Legend>
                         <Form.Input />
                     </Form.Field>
                     <br />
@@ -864,7 +784,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon1" validationPosition="inputAfter">
-                        <Form.Label>Поле с иконкой до текста</Form.Label>
+                        <Legend>Поле с иконкой до текста</Legend>
                         <Form.Input IconBefore={baseTheme.global.placeholder} />
                     </Form.Field>
                     <br />
@@ -892,7 +812,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon2" validationPosition="inputBefore">
-                        <Form.Label>Поле с иконкой после текста</Form.Label>
+                        <Legend>Поле с иконкой после текста</Legend>
                         <Form.Input IconAfter={baseTheme.global.placeholder} />
                     </Form.Field>
                     <br />
@@ -920,7 +840,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
                     ErrorIcon={ErrorIcon}
                 >
                     <Form.Field controlId="inputIcon3" validationPosition="inputAfter">
-                        <Form.Label>Поле с двумя иконками</Form.Label>
+                        <Legend>Поле с двумя иконками</Legend>
                         <Form.Input
                             IconAfter={baseTheme.global.placeholder}
                             IconBefore={baseTheme.global.placeholder}
@@ -948,7 +868,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
             return (
                 <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={action('Submit')}>
                     <Form.Field controlId="inputDisabled">
-                        <Form.Label>Заблокированное поле</Form.Label>
+                        <Legend>Заблокированное поле</Legend>
                         <Form.Input disabled IconBefore={baseTheme.global.placeholder} />
                     </Form.Field>
                 </Form>
@@ -963,7 +883,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 ### FormHint
 
-Компонент `FormHint` используется для подсказки. Подсказка может быть показана внутри `Form.Label` или под полем внутри `Form.Input`. Компонент использует пропсы, полученные через контекст от `Form.Field`.
+Компонент `FormHint` используется для подсказки. Подсказка может быть показана внутри `Legend` или под полем внутри `Form.Input`. Компонент использует пропсы, полученные через контекст от `Form.Field`.
 
 ### Theme FormHint
 
@@ -971,7 +891,7 @@ Live validation имеет ряд проблем с UX, но её отсутст
 
 ### FormError
 
-Компонент `FormError` используется для сообщения об ошибке валидации. Ошибка может быть показана внутри `Form.Label` или под полем внутри `Form.Input`. Компонент использует пропсы, полученные через контекст от `Form.Field`.
+Компонент `FormError` используется для сообщения об ошибке валидации. Ошибка может быть показана внутри `Legend` или под полем внутри `Form.Input`. Компонент использует пропсы, полученные через контекст от `Form.Field`.
 
 ### Theme FormError
 

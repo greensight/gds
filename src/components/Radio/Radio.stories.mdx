@@ -6,8 +6,10 @@ import baseTheme from '../../utils/baseTheme';
 import Button from '../../components/Button';
 import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import Radio from '.';
+import scale from '../../utils/scale';
 import Form from '../../components/Form';
 import Legend from '../../components/Legend';
+import Layout from '../../components/Layout';
 import ErrorIcon from '../../icons/tokens/medium/errorTriangle.svg';
 import SuccessIcon from '../../icons/tokens/medium/checkCircle.svg';
 import {
@@ -329,7 +331,6 @@ import {
             };
             const validationSchema = Yup.object().shape({
                 formRadio1: Yup.string().required('Обязательное поле'),
-                formRadio2: Yup.string().required('Обязательное поле'),
             });
             return (
                 <Form
@@ -355,10 +356,7 @@ import {
                             'Field 1',
                         )}
                     >
-                        <Radio
-                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio 1')}
-                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio 1')}
-                        >
+                        <Radio>
                             <Legend
                                 as="legend"
                                 hiddenLegend={boolean('Hidden Legend', false, 'Legend 1')}
@@ -386,15 +384,8 @@ import {
                         </Radio>
                     </Form.Field>
                     <br />
-                    <Form.Field
-                        controlId="formRadio2"
-                        hint="Вариант предвыбран"
-                        size={radios('size', ['lg', 'md', 'sm'], 'md', 'Field 2')}
-                    >
-                        <Radio
-                            orientation={radios('Orientation', ['vertical', 'horizontal'], 'vertical', 'Radio 2')}
-                            alignment={radios('Alignment', ['top', 'center', 'bottom'], 'top', 'Radio 2')}
-                        >
+                    <Form.Field controlId="formRadio2" hint="Вариант предвыбран" optional="(необязательно)">
+                        <Radio>
                             <Legend
                                 as="legend"
                                 hiddenLegend={boolean('Hidden Legend', false, 'Legend 2')}
