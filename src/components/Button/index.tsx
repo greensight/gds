@@ -98,7 +98,7 @@ const Button = <T extends React.ElementType = 'button'>(
     const typographyName = sp.typography;
     const typographyCSS = typography(typographyName, usedTheme);
     const pv = getVerticalPaddings(
-        typographyName ? usedTheme.typography?.styles[typographyName].desktop : undefined,
+        typographyName ? usedTheme.typography?.styles[typographyName]?.desktop : undefined,
         sp,
         tp,
         !!Icon,
