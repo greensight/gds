@@ -9,7 +9,7 @@ addParameters({
     options: { showRoots: true },
     grid: { cellSize: 8 },
     viewport: { viewports: INITIAL_VIEWPORTS },
-    backgrounds: Object.entries(baseTheme.colors).map(([name, value]) => ({ name, value })),
+    backgrounds: { values: Object.entries(baseTheme.colors).map(([name, value]) => ({ name, value })) },
 });
 
 addDecorator(withKnobs);
