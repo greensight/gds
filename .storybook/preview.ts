@@ -13,5 +13,5 @@ addParameters({
 });
 
 addDecorator(withKnobs);
-addDecorator(withA11y);
+addDecorator(withA11y as any);
 addDecorator(themeDecorator);
