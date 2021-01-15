@@ -36,7 +36,7 @@ module.exports = {
         },
     },
     rules: {
-        '@typescript-eslint/ban-ts-ignore': 1,
+        '@typescript-eslint/ban-ts-comment': 0,
         '@typescript-eslint/camelcase': 0,
         '@typescript-eslint/explicit-function-return-type': 0,
         '@typescript-eslint/no-explicit-any': 0,
