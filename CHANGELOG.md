@@ -1,3 +1,8 @@
+## 2.1.2 (December 21, 2020)
+
+-   Fix @storybook/addon-backgrounds.
+-   Storybook обновлён до версии 6.1.1
+
 ## 2.1.1 (December 14, 2020)
 
 -   React обновлён до 17-ой версии.
