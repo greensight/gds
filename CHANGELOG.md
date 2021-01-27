@@ -1,3 +1,7 @@
+## 2.1.3 (January 26, 2021)
+
+-   Change icons path from @icons/... to @svg/...
+
 ## 2.1.2 (December 21, 2020)
 
 -   Fix @storybook/addon-backgrounds.
