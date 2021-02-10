@@ -19,5 +19,5 @@ export { default as useTheme } from './utils/useTheme';
 export { default as scale } from './utils/scale';
 export { default as typography } from './utils/typography';
 
-export { PartialBy, RequiredBy, RequireAtLeastOne, MergeElementProps, ComponentStates } from './types/Utils';
-export { default as Theme, ComponentsTheme, PalettesTheme, ColorsTheme, ShadowsTheme } from './types/Theme';
+export type { PartialBy, RequiredBy, RequireAtLeastOne, MergeElementProps, ComponentStates } from './types/Utils';
+export type { default as Theme, ComponentsTheme, PalettesTheme, ColorsTheme, ShadowsTheme } from './types/Theme';
