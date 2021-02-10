@@ -1,3 +1,7 @@
+## 2.1.4 (February 10, 2021)
+
+-   Export additional types
+
 ## 2.1.3 (January 26, 2021)
 
 -   Change icons path from @icons/... to @svg/...
