@@ -1,5 +1,5 @@
 import React from 'react';
-import { jsx, CSSObject } from '@emotion/core';
+import { jsx, CSSObject } from '@emotion/react';
 import typography from '../../utils/typography';
 import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';

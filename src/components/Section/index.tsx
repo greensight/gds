@@ -1,5 +1,5 @@
 import React from 'react';
-import { CSSObject } from '@emotion/core';
+import { CSSObject } from '@emotion/react';
 import Container from '../../components/Container';
 import useCSSProperty from '../../helpers/useCSSProperty';
 import { AllowMedia } from '../../types/Layout';
