@@ -1,5 +1,3 @@
-/// <reference types="@emotion/react/types/css-prop" />
-
 export { default as ThemeProvider } from './components/ThemeProvider';
 export { default as Layout } from './components/Layout';
 export { default as Section } from './components/Section';

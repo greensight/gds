@@ -18,15 +18,15 @@ import baseTheme from './baseTheme';
  * export default typography;
  * ```
  */
-const typography = (name: string | undefined, theme: Theme = baseTheme as Theme): CSSObject | undefined => {
+const typography = (name: string | undefined, theme: Theme = baseTheme as Theme): CSSObject => {
     if (!name) {
         console.warn('"name" argument is not defined.');
-        return;
+        return {};
     }
 
     if (!theme.typography || !theme.typography.styles[name]) {
         console.warn(`Typography style ${name} is not defined.`);
-        return;
+        return {};
     }
 
     const typographyStyle = theme.typography.styles[name];

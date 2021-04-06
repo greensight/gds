@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Global as EmotionGlobal, CSSObject, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import 'focus-visible';
 import 'normalize.css';
@@ -10,7 +10,7 @@ export interface ThemeProviderProps {
     /** Theme object. */
     theme: Theme | typeof baseTheme;
     /** Project code with access to provided theme. */
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 /**

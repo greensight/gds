@@ -1,13 +1,14 @@
 {
+    "plugins": ["@emotion"],
     "presets": [
         [
             "@babel/preset-react",
             {
-                "runtime": "automatic"
+                "runtime": "automatic",
+                "importSource": "@emotion/react"
             }
         ],
         "@babel/typescript",
-        "@emotion/babel-preset-css-prop",
         [
             "@babel/preset-env",
             {

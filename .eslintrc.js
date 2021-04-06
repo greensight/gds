@@ -19,7 +19,7 @@ module.exports = {
         'plugin:mdx/recommended',
         'plugin:prettier/recommended',
     ],
-    plugins: ['@typescript-eslint', 'react-hooks'],
+    plugins: ['@typescript-eslint', 'react-hooks', '@emotion/eslint-plugin'],
     env: {
         browser: true,
         es6: true,
@@ -49,6 +49,8 @@ module.exports = {
         'react/display-name': 0,
         'react-hooks/rules-of-hooks': 2,
         'react-hooks/exhaustive-deps': 1,
+        'react/jsx-uses-react': 0,
+        'react/react-in-jsx-scope': 0,
     },
     overrides: [
         {

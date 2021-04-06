@@ -1,4 +1,3 @@
-import React from 'react';
 import Color from './Color';
 import Layout from '../../components/Layout';
 import useTheme from '../../utils/useTheme';
