@@ -1,3 +1,18 @@
+## 3.0.0 (April 14, 2021)
+
+### Braking changes:
+
+    Emotion 10 -> (Emotion 11)[https://emotion.sh/docs/emotion-11#package-renaming]
+    NOT COMPATIBLE WITH EMOTION 10! If you want to use @greensight/gds with your project you must use Emotion 11+ (or not to use Emotion at all). Cause style conflicts and bugs.
+
+    Disable typescript for storybook files (issue)[https://github.com/emotion-js/emotion/issues/1257], because Storybook v6 references @emotion/core v10 as dependency that has global css type yet, and it occurs type error if we pass css style of object. it conflicts with @emotion/react v11. If you use storybook v6, the only solution is to remove @emotion/core/types.
+
+### Updates
+
+-   Update storybook
+-   Update yarn
+-   Update typescript
+
 ## 2.1.4 (February 10, 2021)
 
 -   Export additional types
