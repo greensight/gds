@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "2.1.4",
+    "version": "3.0.0",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
@@ -61,11 +61,12 @@
         "!/.storybook"
     ],
     "dependencies": {
-        "@emotion/core": "^10.0.28",
+        "@emotion/react": "^11.1.5",
+        "@emotion/serialize": "^1.0.1",
+        "@emotion/utils": "^1.0.0",
         "@tippy.js/react": "^3.1.1",
         "@types/react": "17.0.0",
         "deepmerge": "^4.2.2",
-        "emotion-theming": "^10.0.27",
         "focus-visible": "^5.0.2",
         "normalize.css": "^8.0.1",
         "tippy.js": "^5.2.1"
@@ -74,26 +75,24 @@
         "@babel/core": "^7.12.10",
         "@babel/preset-env": "^7.12.10",
         "@babel/preset-react": "^7.12.10",
-        "@babel/preset-typescript": "^7.12.7",
+        "@babel/preset-typescript": "^7.13.0",
         "@babel/runtime": "^7.12.5",
         "@babel/types": "^7.12.10",
-        "@emotion/babel-preset-css-prop": "^10.0.27",
-        "@emotion/css": "^10.0.27",
-        "@emotion/serialize": "^0.11.16",
-        "@emotion/utils": "^0.11.3",
+        "@emotion/babel-plugin": "^11.2.0",
+        "@emotion/eslint-plugin": "^11.2.0",
         "@mdx-js/loader": "^1.5.8",
         "@mdx-js/react": "^1.5.8",
         "@rollup/plugin-json": "^4.0.2",
         "@rollup/plugin-node-resolve": "^7.1.1",
-        "@storybook/addon-a11y": "^6.0.26",
-        "@storybook/addon-actions": "^6.0.26",
-        "@storybook/addon-backgrounds": "^6.0.26",
-        "@storybook/addon-docs": "^6.0.26",
-        "@storybook/addon-knobs": "^6.0.26",
-        "@storybook/addon-viewport": "^6.0.26",
-        "@storybook/client-api": "^6.0.26",
-        "@storybook/react": "^6.0.26",
-        "@storybook/storybook-deployer": "^2.8.3",
+        "@storybook/addon-a11y": "^6.2.8",
+        "@storybook/addon-actions": "^6.2.8",
+        "@storybook/addon-backgrounds": "^6.2.8",
+        "@storybook/addon-docs": "^6.2.8",
+        "@storybook/addon-knobs": "^6.2.8",
+        "@storybook/addon-viewport": "^6.2.8",
+        "@storybook/client-api": "^6.2.8",
+        "@storybook/react": "^6.2.8",
+        "@storybook/storybook-deployer": "^2.8.7",
         "@svgr/rollup": "^5.4.0",
         "@svgr/webpack": "^5.4.0",
         "@types/babel__core": "7.1.10",
@@ -122,7 +121,7 @@
         "eslint-import-resolver-node": "^0.3.4",
         "eslint-plugin-import": "^2.22.1",
         "eslint-plugin-jsx-a11y": "^6.3.1",
-        "eslint-plugin-mdx": "^1.8.2",
+        "eslint-plugin-mdx": "^1.12.0",
         "eslint-plugin-prettier": "^3.3.0",
         "eslint-plugin-react": "^7.21.3",
         "eslint-plugin-react-hooks": "^4.1.2",
@@ -140,9 +139,9 @@
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-postcss": "^2.5.0",
         "serve": "^11.3.2",
-        "storybook-addon-designs": "^5.4.2",
+        "storybook-addon-designs": "^5.4.5",
         "ts-node": "^9.0.0",
-        "typescript": "^4.0.3",
+        "typescript": "^4.2.3",
         "webpack": "^4.42.2",
         "worker-loader": "^2.0.0"
     },
@@ -151,6 +150,6 @@
         "react-dom": "17.0.0"
     },
     "engines": {
-        "node": ">= 11.7.0"
+        "node": ">= 14.0.0"
     }
 }

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface VisuallyHiddenProps {
     /** Hidden content. */
     children: React.ReactNode;
