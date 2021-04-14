@@ -7,7 +7,8 @@
         "resolveJsonModule": true,
         "noEmit": true,
         "strict": true,
-        "jsxImportSource": "@emotion/react"
+        "jsxImportSource": "@emotion/react",
+        "skipLibCheck": true
     },
-    "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
+    "include": ["src"]
 }
