@@ -1,4 +1,4 @@
-import { CSSObject } from '@emotion/react';
+import { CSSObject } from '@emotion/core';
 import useTheme from '../utils/useTheme';
 import baseTheme from '../utils/baseTheme';
 import isObject from './isObject';
@@ -22,16 +22,16 @@ const useCSSProperty = <T>({
     condition?: boolean;
     /** Transform function. Applies before property value assignment. */
     transform?: (props: Record<keyof T, any>) => string | number;
-}): CSSObject => {
+}): CSSObject | undefined => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
     const breakpoints = layoutTheme.breakpoints;
 
-    if (condition !== undefined && !condition) return {};
+    if (condition !== undefined && !condition) return;
 
     const propsValues = Object.values(props);
     const isUndefined = propsValues.every((value) => value === undefined);
-    if (isUndefined) return {};
+    if (isUndefined) return;
 
     const mediaProp: Partial<Record<Breakpoint, any>> | undefined = propsValues.find((value) => isObject(value));
     if (!mediaProp) return setValue(name, props, transform);

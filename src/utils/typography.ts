@@ -1,4 +1,4 @@
-import { CSSObject } from '@emotion/react';
+import { CSSObject } from '@emotion/core';
 import { TypographyProperties } from '../types/Typography';
 import Theme from '../types/Theme';
 import { PartialBy } from '../types/Utils';
@@ -18,15 +18,15 @@ import baseTheme from './baseTheme';
  * export default typography;
  * ```
  */
-const typography = (name: string | undefined, theme: Theme = baseTheme as Theme): CSSObject => {
+const typography = (name: string | undefined, theme: Theme = baseTheme as Theme): CSSObject | undefined => {
     if (!name) {
         console.warn('"name" argument is not defined.');
-        return {};
+        return;
     }
 
     if (!theme.typography || !theme.typography.styles[name]) {
         console.warn(`Typography style ${name} is not defined.`);
-        return {};
+        return;
     }
 
     const typographyStyle = theme.typography.styles[name];

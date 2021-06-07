@@ -1,5 +1,5 @@
 import React from 'react';
-import { CSSObject } from '@emotion/react';
+import { CSSObject } from '@emotion/core';
 import useTheme from '../../utils/useTheme';
 import baseTheme from '../../utils/baseTheme';
 import useCSSProperty from '../../helpers/useCSSProperty';

@@ -1,4 +1,4 @@
-import { CSSObject } from '@emotion/react';
+import { CSSObject } from '@emotion/core';
 import { ComponentStates, RequireAtLeastOne } from './Utils';
 
 export interface ButtonStateProperties {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { jsx, CSSObject } from '@emotion/react';
+import { jsx, CSSObject } from '@emotion/core';
 import typography from '../../utils/typography';
 import scale from '../../utils/scale';
 import baseTheme from '../../utils/baseTheme';
@@ -209,7 +209,7 @@ const getVerticalPaddings = (
     } else if (cssRule) {
         if (cssRule.fontSize) {
             if (typeof cssRule.fontSize === 'number') {
-                fontSize = cssRule.fontSize as number;
+                fontSize = cssRule.fontSize;
             } else if (typeof cssRule.fontSize === 'string') {
                 if (cssRule.fontSize.endsWith('rem')) {
                     fontSize = parseFloat(cssRule.fontSize) * 16;
@@ -218,7 +218,7 @@ const getVerticalPaddings = (
                 }
             }
         }
-        if (cssRule.lineHeight && typeof cssRule.lineHeight === 'number') lineHeight = cssRule.lineHeight as number;
+        if (cssRule.lineHeight && typeof cssRule.lineHeight === 'number') lineHeight = cssRule.lineHeight;
     }
 
     const textHeight = Math.floor(fontSize * lineHeight);

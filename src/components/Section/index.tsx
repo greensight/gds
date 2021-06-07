@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
-import { CSSObject } from '@emotion/react';
+import React from 'react';
+import { CSSObject } from '@emotion/core';
 import Container from '../../components/Container';
 import useCSSProperty from '../../helpers/useCSSProperty';
 import { AllowMedia } from '../../types/Layout';
 
 export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
     /** Section content. */
-    children: ReactNode;
+    children: React.ReactNode;
     /** Wrap content in container. */
     container?: boolean;
     /** Bottom offset. */

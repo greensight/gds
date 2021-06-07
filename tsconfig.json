@@ -1,14 +1,12 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "jsx": "react-jsx",
+        "jsx": "react",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "noEmit": true,
-        "strict": true,
-        "jsxImportSource": "@emotion/react",
-        "skipLibCheck": true
+        "strict": true
     },
-    "include": ["src"]
+    "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
 }

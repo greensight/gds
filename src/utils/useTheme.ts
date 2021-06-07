@@ -1,4 +1,4 @@
-import { useTheme as useEmotionTheme } from '@emotion/react';
+import { useTheme as useEmotionTheme } from 'emotion-theming';
 import Theme from '../types/Theme';
 
 /**
