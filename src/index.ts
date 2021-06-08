@@ -21,3 +21,4 @@ export { default as typography } from './utils/typography';
 
 export type { PartialBy, RequiredBy, RequireAtLeastOne, MergeElementProps, ComponentStates } from './types/Utils';
 export type { default as Theme, ComponentsTheme, PalettesTheme, ColorsTheme, ShadowsTheme } from './types/Theme';
+export type { ButtonProps } from './components/Button';
