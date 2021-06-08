@@ -1,6 +1,7 @@
 ## 2.2.0 (June 8, 2021)
 
 -   Export button type
+-   Fix dependencies: move axios and chalk to dependencies from dev dependencies
 
 ## 2.1.4 (February 10, 2021)
 
