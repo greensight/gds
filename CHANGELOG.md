@@ -1,3 +1,7 @@
+## 2.2.0 (June 8, 2021)
+
+-   Export button type
+
 ## 2.1.4 (February 10, 2021)
 
 -   Export additional types
