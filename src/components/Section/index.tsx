@@ -1,7 +1,7 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
-import Container from '../../components/Container';
-import useCSSProperty from '../../helpers/useCSSProperty';
+import { Container } from '../../components/Container';
+import { useCSSProperty } from '../../helpers/useCSSProperty';
 import { AllowMedia } from '../../types/Layout';
 
 export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
@@ -26,7 +26,7 @@ export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Component for creating page sections.
  */
-const Section: React.FC<SectionProps> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
+export const Section: React.FC<SectionProps> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
     return (
         <section
             css={[
@@ -42,5 +42,3 @@ const Section: React.FC<SectionProps> = ({ children, container = true, mb, pv, p
         </section>
     );
 };
-
-export default Section;

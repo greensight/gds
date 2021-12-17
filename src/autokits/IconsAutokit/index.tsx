@@ -1,9 +1,9 @@
 import React from 'react';
 import deepmerge from 'deepmerge';
-import Icon from './Icon';
-import Layout from '../../components/Layout';
-import scale from '../../utils/scale';
-import typography from '../../helpers/typography';
+import { Icon } from './Icon';
+import { Layout } from '../../components/Layout';
+import { scale } from '../../utils/scale';
+import { typography } from '../../helpers/typography';
 
 export interface IconsAutokitProps {
     /** Starting heading level. */
@@ -13,7 +13,7 @@ export interface IconsAutokitProps {
 /**
  * Autokit for icons assets from `@icons` directory.
  */
-const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
+export const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
     const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
     const icons = iconsReq.keys().reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
@@ -65,5 +65,3 @@ const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
 
     return <div css={{ ...typography('body'), paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
 };
-
-export default IconsAutokit;

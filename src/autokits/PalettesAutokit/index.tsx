@@ -1,14 +1,14 @@
 import React from 'react';
-import Color from './Color';
-import Layout from '../../components/Layout';
-import useTheme from '../../utils/useTheme';
-import scale from '../../utils/scale';
-import typography from '../../helpers/typography';
+import { Color } from './Color';
+import { Layout } from '../../components/Layout';
+import { useTheme } from '../../utils/useTheme';
+import { scale } from '../../utils/scale';
+import { typography } from '../../helpers/typography';
 
 /**
  * Autokit for palettes tokens `theme.palettes`.
  */
-const PalettesAutokit = () => {
+export const PalettesAutokit = () => {
     const theme = useTheme();
     const { palettes } = theme;
 
@@ -47,5 +47,3 @@ const PalettesAutokit = () => {
         </Layout>
     );
 };
-
-export default PalettesAutokit;

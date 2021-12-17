@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Tippy, { TippyProps } from '@tippy.js/react';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/animations/shift-away.css';
-import baseTheme from '../utils/baseTheme';
-import scale from '../utils/scale';
+import { baseTheme } from '../utils/baseTheme';
+import { scale } from '../utils/scale';
 import CheckCircle from '../icons/tokens/medium/checkCircle.svg';
 
 /**
  * Tooltip with success icon. Helper component for show after successful clipboard copy.
  */
-const Tooltip = ({ children, content, ...props }: TippyProps) => {
+export const Tooltip: FC<TippyProps> = ({ children, content, ...props }) => {
     const { colors } = baseTheme;
 
     return (
@@ -34,5 +34,3 @@ const Tooltip = ({ children, content, ...props }: TippyProps) => {
         </Tippy>
     );
 };
-
-export default Tooltip;

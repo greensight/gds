@@ -1,5 +1,6 @@
 import React from 'react';
-import IButtonTheme, {
+import {
+    ButtonTheme as IButtonTheme,
     ButtonSizeProperties as IButtonSizeProperties,
     ButtonStates as IButtonStates,
     ButtonStateProperties as IButtonStateProperties,

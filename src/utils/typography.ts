@@ -1,8 +1,8 @@
 import { CSSObject } from '@emotion/core';
 import { TypographyProperties } from '../types/Typography';
-import Theme from '../types/Theme';
+import { Theme } from '../types/Theme';
 import { PartialBy } from '../types/Utils';
-import baseTheme from './baseTheme';
+import { baseTheme } from './baseTheme';
 
 /**
  * Helper for typography styles usage. Generate typography CSS rules by style name included mobile version, fluid typography and variable fonts support.
@@ -18,7 +18,7 @@ import baseTheme from './baseTheme';
  * export default typography;
  * ```
  */
-const typography = (name: string | undefined, theme: Theme = baseTheme as Theme): CSSObject | undefined => {
+export const typography = (name: string | undefined, theme: Theme = baseTheme as Theme): CSSObject | undefined => {
     if (!name) {
         console.warn('"name" argument is not defined.');
         return;
@@ -112,5 +112,3 @@ const removeFontFamily = (styles: TypographyProperties) => {
     const filteredStyles = Object.fromEntries(filteredEntries) as Omit<TypographyProperties, 'fontFamily'>;
     return filteredStyles;
 };
-
-export default typography;

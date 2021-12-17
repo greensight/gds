@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import Tooltip from '../../helpers/Tooltip';
-import typography from '../../helpers/typography';
-import copyToClipboard from '../../helpers/copyToClipboard';
+import { scale } from '../../utils/scale';
+import { baseTheme } from '../../utils/baseTheme';
+import { Tooltip } from '../../helpers/Tooltip';
+import { typography } from '../../helpers/typography';
+import { copyToClipboard } from '../../helpers/copyToClipboard';
 
 export interface ShadowProps {
     /** Shadow variable name. */
@@ -12,7 +12,7 @@ export interface ShadowProps {
     value: string;
 }
 
-const Shadow = ({ name, value }: ShadowProps) => {
+export const Shadow = ({ name, value }: ShadowProps) => {
     const { colors } = baseTheme;
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -54,5 +54,3 @@ const Shadow = ({ name, value }: ShadowProps) => {
         </Tooltip>
     );
 };
-
-export default Shadow;

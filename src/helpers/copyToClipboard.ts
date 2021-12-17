@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Copy text to user clipboard.
  */
-const copyToClipboard = (text: string, focusRef?: React.RefObject<HTMLElement>) => {
+export const copyToClipboard = (text: string, focusRef?: React.RefObject<HTMLElement>): void => {
     const selection = document.getSelection();
     if (!selection) return;
     const el = document.createElement('textarea');
@@ -22,5 +22,3 @@ const copyToClipboard = (text: string, focusRef?: React.RefObject<HTMLElement>) 
     }
     if (focusRef && focusRef.current) focusRef.current.focus();
 };
-
-export default copyToClipboard;

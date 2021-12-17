@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import Tooltip from '../../helpers/Tooltip';
-import typography from '../../helpers/typography';
-import copyToClipboard from '../../helpers/copyToClipboard';
+import { scale } from '../../utils/scale';
+import { baseTheme } from '../../utils/baseTheme';
+import { Tooltip } from '../../helpers/Tooltip';
+import { typography } from '../../helpers/typography';
+import { copyToClipboard } from '../../helpers/copyToClipboard';
 import { SVGRIcon } from '../../types/Utils';
 
 export interface IconProps {
@@ -15,7 +15,7 @@ export interface IconProps {
     path: string;
 }
 
-const Icon = ({ name, Component, path }: IconProps) => {
+export const Icon = ({ name, Component, path }: IconProps) => {
     const { colors } = baseTheme;
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -47,5 +47,3 @@ const Icon = ({ name, Component, path }: IconProps) => {
         </Tooltip>
     );
 };
-
-export default Icon;

@@ -1,5 +1,6 @@
 import React from 'react';
-import ITypographyTheme, {
+import {
+    TypographyTheme as ITypographyTheme,
     TypographyProperties as ITypographyProperties,
     TypographyStyle as ITypographyStyle,
 } from '../../src/types/Typography';

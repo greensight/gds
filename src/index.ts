@@ -1,24 +1,24 @@
-export { default as ThemeProvider } from './components/ThemeProvider';
-export { default as Layout } from './components/Layout';
-export { default as Section } from './components/Section';
-export { default as Container } from './components/Container';
-export { default as VisuallyHidden } from './components/VisuallyHidden';
-export { default as Button } from './components/Button';
+export { ThemeProvider } from './components/ThemeProvider';
+export { Layout } from './components/Layout';
+export { Section } from './components/Section';
+export { Container } from './components/Container';
+export { VisuallyHidden } from './components/VisuallyHidden';
+export { Button } from './components/Button';
 
-export { default as PalettesAutokit } from './autokits/PalettesAutokit';
-export { default as ColorsAutokit } from './autokits/ColorsAutokit';
-export { default as TypographyAutokit } from './autokits/TypographyAutokit';
-export { default as IconsAutokit } from './autokits/IconsAutokit';
-export { default as LayoutAutokit } from './autokits/LayoutAutokit';
-export { default as ShadowsAutokit } from './autokits/ShadowsAutokit';
-export { default as ButtonAutokit } from './autokits/ButtonAutokit';
+export { PalettesAutokit } from './autokits/PalettesAutokit';
+export { ColorsAutokit } from './autokits/ColorsAutokit';
+export { TypographyAutokit } from './autokits/TypographyAutokit';
+export { IconsAutokit } from './autokits/IconsAutokit';
+export { LayoutAutokit } from './autokits/LayoutAutokit';
+export { ShadowsAutokit } from './autokits/ShadowsAutokit';
+export { ButtonAutokit } from './autokits/ButtonAutokit';
 
-export { default as baseTheme } from './utils/baseTheme';
-export { default as createTheme } from './utils/createTheme';
-export { default as useTheme } from './utils/useTheme';
-export { default as scale } from './utils/scale';
-export { default as typography } from './utils/typography';
+export { baseTheme } from './utils/baseTheme';
+export { createTheme } from './utils/createTheme';
+export { useTheme } from './utils/useTheme';
+export { scale } from './utils/scale';
+export { typography } from './utils/typography';
 
 export type { PartialBy, RequiredBy, RequireAtLeastOne, MergeElementProps, ComponentStates } from './types/Utils';
-export type { default as Theme, ComponentsTheme, PalettesTheme, ColorsTheme, ShadowsTheme } from './types/Theme';
+export type { Theme, ComponentsTheme, PalettesTheme, ColorsTheme, ShadowsTheme } from './types/Theme';
 export type { ButtonProps } from './components/Button';

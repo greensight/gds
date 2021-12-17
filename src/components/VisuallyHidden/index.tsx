@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 export interface VisuallyHiddenProps {
     /** Hidden content. */
@@ -8,7 +8,7 @@ export interface VisuallyHiddenProps {
 /**
  * Component to wrap components to make them visually hidden. These components still will be available for assistive technologies.
  */
-const VisuallyHidden = ({ children }: VisuallyHiddenProps) => {
+export const VisuallyHidden: FC<VisuallyHiddenProps> = ({ children }) => {
     return (
         <div
             css={{
@@ -26,5 +26,3 @@ const VisuallyHidden = ({ children }: VisuallyHiddenProps) => {
         </div>
     );
 };
-
-export default VisuallyHidden;

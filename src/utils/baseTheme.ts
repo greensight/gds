@@ -2,7 +2,7 @@
 import React from 'react';
 import deepmerge from 'deepmerge';
 import PlaceholderIcon from '../icons/tokens/medium/placeholder.svg';
-import scale from './scale';
+import { scale } from './scale';
 import { FONT_STACK } from '../helpers/constants';
 import tokens from '../../public/tokens.json';
 
@@ -13,7 +13,7 @@ const { colors, shadows } = tokens;
 /**
  * Default GDS theme.
  */
-const baseTheme = deepmerge(tokens, {
+export const baseTheme = deepmerge(tokens, {
     global: {
         placeholder: PlaceholderIcon,
         fonts: {
@@ -141,5 +141,3 @@ const baseTheme = deepmerge(tokens, {
         },
     },
 });
-
-export default baseTheme;
