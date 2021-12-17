@@ -9,6 +9,5 @@
         "strict": true,
         "skipLibCheck": true
     },
-    "include": ["src/**/*", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
-    "exclude": ["node_modules"]
+    "include": ["src/**/*", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
 }
