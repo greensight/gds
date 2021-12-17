@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Global as EmotionGlobal, CSSObject } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import 'focus-visible';
 import 'normalize.css';
-import typography from '../../utils/typography';
-import baseTheme from '../../utils/baseTheme';
-import Theme from '../../types/Theme';
+import { typography } from '../../utils/typography';
+import { baseTheme } from '../../utils/baseTheme';
+import { Theme } from '../../types/Theme';
 
 export interface ThemeProviderProps {
     /** Theme object. */
@@ -17,7 +17,7 @@ export interface ThemeProviderProps {
 /**
  * Component for providing theme context for app.
  */
-const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
+export const ThemeProvider: FC<ThemeProviderProps> = ({ theme, children }) => {
     const global = theme.global || baseTheme.global;
     const fontFaceStyles = global.fonts?.fontFace || [];
     const { selection, focus, body, css } = global.base || baseTheme.global.base;
@@ -91,5 +91,3 @@ const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
         </EmotionThemeProvider>
     );
 };
-
-export default ThemeProvider;

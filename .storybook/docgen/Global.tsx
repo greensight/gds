@@ -1,5 +1,6 @@
 import React from 'react';
-import IGlobalTheme, {
+import {
+    GlobalTheme as IGlobalTheme,
     BaseProperties as IBaseProperties,
     BodyProperties as IBodyProperties,
     FocusProperties as IFocusProperties,

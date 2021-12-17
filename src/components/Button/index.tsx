@@ -1,11 +1,11 @@
 import React from 'react';
 import { jsx, CSSObject } from '@emotion/core';
-import typography from '../../utils/typography';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import useComponentTheme from '../../helpers/useComponentTheme';
-import VisuallyHidden from '../../components/VisuallyHidden';
-import ButtonTheme, { ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
+import { typography } from '../../utils/typography';
+import { scale } from '../../utils/scale';
+import { baseTheme } from '../../utils/baseTheme';
+import { useComponentTheme } from '../../helpers/useComponentTheme';
+import { VisuallyHidden } from '../../components/VisuallyHidden';
+import { ButtonTheme, ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
 import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
 import { TypographyProperties } from '../../types/Typography';
 
@@ -44,7 +44,7 @@ export type ButtonProps<P extends React.ElementType = 'button'> = {
  *
  * Define themes and sizes in theme object (`components.Button`) and use them as `theme` / `size` prop values.
  */
-const Button = <T extends React.ElementType = 'button'>(
+export const Btn = <T extends React.ElementType = 'button'>(
     {
         children,
         theme = 'primary',
@@ -236,4 +236,4 @@ const getTransition = (time: number, easing: string) =>
         .map((name) => `${name} ${easing} ${time}ms`)
         .join(', ');
 
-export default React.forwardRef(Button) as typeof Button;
+export const Button = React.forwardRef(Btn) as typeof Btn;

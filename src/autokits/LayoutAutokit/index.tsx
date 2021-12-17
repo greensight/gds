@@ -1,14 +1,14 @@
 import React from 'react';
-import Item from './Item';
-import Layout from '../../components/Layout';
-import useTheme from '../../utils/useTheme';
-import typography from '../../helpers/typography';
+import { Item } from './Item';
+import { Layout } from '../../components/Layout';
+import { useTheme } from '../../utils/useTheme';
+import { typography } from '../../helpers/typography';
 import { Breakpoint } from '../../types/Layout';
 
 /**
  * Autokit for layout tokens `theme.layout`.
  */
-const LayoutAutokit = () => {
+export const LayoutAutokit = () => {
     const theme = useTheme();
     const { layout } = theme;
 
@@ -32,5 +32,3 @@ const LayoutAutokit = () => {
         </Layout>
     );
 };
-
-export default LayoutAutokit;

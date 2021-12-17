@@ -26,7 +26,7 @@ export interface TypographyStyle {
     mobile?: TypographyProperties;
 }
 
-export default interface TypographyTheme {
+export interface TypographyTheme {
     /** Breakpoint for desktop and mobile styles. Accept 2 numbers in format: [desktop, mobile].*/
     breakpoints: number[];
     /** Named typography styles. */

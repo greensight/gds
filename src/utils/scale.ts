@@ -14,7 +14,7 @@ import { MAJOR_STEP, MINOR_MAX } from '../helpers/constants';
  * export default scale;
  * ```
  */
-const scale = (multiplier: number, isMinor?: boolean, customStep?: number) => {
+export const scale = (multiplier: number, isMinor?: boolean, customStep?: number): number => {
     const majorStep = customStep || MAJOR_STEP;
 
     const truncatedMultiplier = Math.trunc(multiplier);
@@ -41,5 +41,3 @@ const scale = (multiplier: number, isMinor?: boolean, customStep?: number) => {
 
     return value;
 };
-
-export default scale;

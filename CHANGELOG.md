@@ -1,3 +1,7 @@
+## 2.3.0 (December 17, 2021)
+
+-   Fix `Critical dependency` error;
+
 ## 2.2.0 (June 8, 2021)
 
 -   Export button type

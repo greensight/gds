@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { CSSObject } from '@emotion/core';
-import useTheme from '../../utils/useTheme';
-import baseTheme from '../../utils/baseTheme';
-import useCSSProperty from '../../helpers/useCSSProperty';
-import toArray from '../../helpers/toArray';
+import { useTheme } from '../../utils/useTheme';
+import { baseTheme } from '../../utils/baseTheme';
+import { useCSSProperty } from '../../helpers/useCSSProperty';
+import { toArray } from '../../helpers/toArray';
 import { LayoutContext, LayoutContextProps } from './useLayout';
-import LayoutItem, { LayoutItemProps } from './Item';
+import { Item as LayoutItem, LayoutItemProps } from './Item';
 import { AllowMedia } from '../../types/Layout';
 
 export interface LayoutCompositionProps {
@@ -46,7 +46,7 @@ export interface LayoutProps
 /**
  * Component for creating typical grid and flex layouts.
  */
-const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
+export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     children,
     type = 'grid',
     inline,
@@ -195,5 +195,3 @@ const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
 };
 
 Layout.Item = LayoutItem;
-
-export default Layout;

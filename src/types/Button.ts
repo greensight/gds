@@ -52,7 +52,7 @@ export interface ButtonSizeProperties {
     css?: CSSObject;
 }
 
-export default interface ButtonTheme {
+export interface ButtonTheme {
     /** Common settings for all themes. */
     base?: ButtonStates;
     /** Available themes. Any button can have theme from this list. You must define at least `primary` theme. */

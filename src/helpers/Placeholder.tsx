@@ -1,5 +1,5 @@
-import React from 'react';
-import scale from '../utils/scale';
+import React, { FC } from 'react';
+import { scale } from '../utils/scale';
 
 interface PlaceholderProps extends React.HTMLProps<HTMLDivElement> {
     /** Placeholder content. */
@@ -11,7 +11,7 @@ interface PlaceholderProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Helper component for visually show content blocks.
  */
-const Placeholder = ({ children, bg, ...props }: PlaceholderProps) => (
+export const Placeholder: FC<PlaceholderProps> = ({ children, bg, ...props }) => (
     <div
         css={(theme) => ({
             display: 'flex',
@@ -26,5 +26,3 @@ const Placeholder = ({ children, bg, ...props }: PlaceholderProps) => (
         {children}
     </div>
 );
-
-export default Placeholder;

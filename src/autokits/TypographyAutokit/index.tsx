@@ -1,9 +1,9 @@
 import React from 'react';
-import useTheme from '../../utils/useTheme';
-import typography from '../../utils/typography';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import baseThemeTypography from '../../helpers/typography';
+import { useTheme } from '../../utils/useTheme';
+import { typography } from '../../utils/typography';
+import { scale } from '../../utils/scale';
+import { baseTheme } from '../../utils/baseTheme';
+import { typography as baseThemeTypography } from '../../helpers/typography';
 
 export interface TypographyAutokitProps {
     /** Placeholder text. */
@@ -13,7 +13,7 @@ export interface TypographyAutokitProps {
 /**
  * Autokit for typography tokens `theme.typography` and fonts settings `theme.global.fonts`.
  */
-const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
+export const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
     const theme = useTheme();
     const globalFontsTheme = theme.global?.fonts;
     const typographyTheme = theme.typography;
@@ -112,5 +112,3 @@ const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) =
         </div>
     );
 };
-
-export default TypographyAutokit;

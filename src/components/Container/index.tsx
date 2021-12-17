@@ -1,8 +1,8 @@
 import React from 'react';
 import { CSSObject } from '@emotion/core';
-import useCSSProperty from '../../helpers/useCSSProperty';
-import useTheme from '../../utils/useTheme';
-import baseTheme from '../../utils/baseTheme';
+import { useCSSProperty } from '../../helpers/useCSSProperty';
+import { useTheme } from '../../utils/useTheme';
+import { baseTheme } from '../../utils/baseTheme';
 
 export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
     /** Container content. */
@@ -14,7 +14,7 @@ export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Component for creating main page container with `layout` theme parameters. Uses `maxWidth`, `padding`,`marginLeft`, `marginRight`.
  */
-const Container = ({ children, css, ...props }: ContainerProps) => {
+export const Container = ({ children, css, ...props }: ContainerProps) => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
 
@@ -37,5 +37,3 @@ const Container = ({ children, css, ...props }: ContainerProps) => {
         </div>
     );
 };
-
-export default Container;

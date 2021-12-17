@@ -1,7 +1,7 @@
 export type Breakpoint = 'xxxl' | 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | 'xxs' | 'xxxs';
 export type AllowMedia<T> = T | Partial<Record<Breakpoint, T>>;
 
-export default interface LayoutTheme {
+export interface LayoutTheme {
     /** Project breakpoints. */
     breakpoints: Record<Breakpoint, number>;
     /** Columns count. */

@@ -1,14 +1,14 @@
 import React from 'react';
-import Shadow from './Shadow';
-import Layout from '../../components/Layout';
-import useTheme from '../../utils/useTheme';
-import scale from '../../utils/scale';
-import typography from '../../helpers/typography';
+import { Shadow } from './Shadow';
+import { Layout } from '../../components/Layout';
+import { useTheme } from '../../utils/useTheme';
+import { scale } from '../../utils/scale';
+import { typography } from '../../helpers/typography';
 
 /**
  * Autokit for shadows tokens `theme.shadows`.
  */
-const ShadowsAutokit = () => {
+export const ShadowsAutokit = () => {
     const theme = useTheme();
     const { shadows } = theme;
 
@@ -32,5 +32,3 @@ const ShadowsAutokit = () => {
         </Layout>
     );
 };
-
-export default ShadowsAutokit;

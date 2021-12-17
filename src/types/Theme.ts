@@ -1,7 +1,7 @@
-import TypographyTheme from './Typography';
-import LayoutTheme from './Layout';
-import GlobalTheme from './Global';
-import ButtonTheme from './Button';
+import { TypographyTheme } from './Typography';
+import { LayoutTheme } from './Layout';
+import { GlobalTheme } from './Global';
+import { ButtonTheme } from './Button';
 
 export type PalettesTheme = Record<string, string[]>;
 export type ColorsTheme = Record<string, string>;
@@ -25,7 +25,7 @@ export interface ComponentsTheme {
     Button?: ButtonTheme;
 }
 
-export default interface Theme extends Tokens {
+export interface Theme extends Tokens {
     /** Global theme settings. */
     global?: GlobalTheme;
     /** Components theme settings. */

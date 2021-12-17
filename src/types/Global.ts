@@ -59,7 +59,7 @@ export interface FontsProperties {
     fontFace?: CSSObject[];
 }
 
-export default interface GlobalTheme {
+export interface GlobalTheme {
     /** Custom placeholder icon for autokits. Icon must be in `SVGR` format (React component). */
     placeholder?: SVGRIcon;
     /** Global styles. */

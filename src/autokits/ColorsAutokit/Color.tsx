@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import baseTheme from '../../utils/baseTheme';
-import scale from '../../utils/scale';
-import Tooltip from '../../helpers/Tooltip';
-import typography from '../../helpers/typography';
-import copyToClipboard from '../../helpers/copyToClipboard';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
+import { Tooltip } from '../../helpers/Tooltip';
+import { typography } from '../../helpers/typography';
+import { copyToClipboard } from '../../helpers/copyToClipboard';
 
 export interface ColorProps {
     /** Color variable name. */
@@ -12,7 +12,7 @@ export interface ColorProps {
     value: string;
 }
 
-const Color = ({ name, value }: ColorProps) => {
+export const Color = ({ name, value }: ColorProps) => {
     const { colors } = baseTheme;
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -53,5 +53,3 @@ const Color = ({ name, value }: ColorProps) => {
         </Tooltip>
     );
 };
-
-export default Color;

@@ -11,7 +11,7 @@ export type SVGRIcon = React.FC<
     }
 >;
 export type ComponentStates = 'hover' | 'active' | 'disabled' | 'focus';
-export type MergeElementProps<T extends React.ElementType, P extends object = {}> = Omit<
+export type MergeElementProps<T extends React.ElementType, P extends Record<string, any>> = Omit<
     React.ComponentPropsWithRef<T>,
     keyof P
 > &

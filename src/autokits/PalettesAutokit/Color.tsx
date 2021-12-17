@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import baseTheme from '../../utils/baseTheme';
-import scale from '../../utils/scale';
-import Tooltip from '../../helpers/Tooltip';
-import typography from '../../helpers/typography';
-import copyToClipboard from '../../helpers/copyToClipboard';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
+import { Tooltip } from '../../helpers/Tooltip';
+import { typography } from '../../helpers/typography';
+import { copyToClipboard } from '../../helpers/copyToClipboard';
 
 export interface ColorProps {
     /** Color hex value. */
@@ -12,7 +12,7 @@ export interface ColorProps {
     index: number;
 }
 
-const Color = ({ color, index }: ColorProps) => {
+export const Color = ({ color, index }: ColorProps) => {
     const { colors } = baseTheme;
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -51,5 +51,3 @@ const Color = ({ color, index }: ColorProps) => {
         </Tooltip>
     );
 };
-
-export default Color;

@@ -1,11 +1,11 @@
 import React from 'react';
-import Layout from '../../components/Layout';
-import useTheme from '../../utils/useTheme';
-import scale from '../../utils/scale';
-import baseTheme from '../../utils/baseTheme';
-import typography from '../../helpers/typography';
+import { Layout } from '../../components/Layout';
+import { useTheme } from '../../utils/useTheme';
+import { scale } from '../../utils/scale';
+import { baseTheme } from '../../utils/baseTheme';
+import { typography } from '../../helpers/typography';
 import { BREAKPOINTS_NAMES } from '../../helpers/constants';
-import LayoutTheme, { Breakpoint } from '../../types/Layout';
+import { LayoutTheme, Breakpoint } from '../../types/Layout';
 
 export interface ItemProps {
     /** Breakpoint name. */
@@ -14,7 +14,7 @@ export interface ItemProps {
     breakpointValue: number;
 }
 
-const Item = ({ breakpointName, breakpointValue }: ItemProps) => {
+export const Item = ({ breakpointName, breakpointValue }: ItemProps) => {
     const { colors } = baseTheme;
     const theme = useTheme();
     const layout = theme.layout as LayoutTheme;
@@ -87,5 +87,3 @@ const getLayoutValue = (param: LayoutTheme[keyof LayoutTheme], name: Breakpoint)
     });
     return value;
 };
-
-export default Item;

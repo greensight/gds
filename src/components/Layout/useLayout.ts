@@ -15,7 +15,7 @@ export interface LayoutContextProps {
 
 export const LayoutContext = createContext<LayoutContextProps | undefined>(undefined);
 
-const useLayout = (): LayoutContextProps => {
+export const useLayout = (): LayoutContextProps => {
     const context = useContext(LayoutContext);
 
     if (!context) {
@@ -24,5 +24,3 @@ const useLayout = (): LayoutContextProps => {
 
     return context;
 };
-
-export default useLayout;
