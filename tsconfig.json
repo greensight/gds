@@ -6,7 +6,9 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "noEmit": true,
-        "strict": true
+        "strict": true,
+        "skipLibCheck": true
     },
-    "include": ["src", ".storybook/**/*.ts", ".storybook/**/*.tsx"]
+    "include": ["src/**/*", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
+    "exclude": ["node_modules"]
 }
