@@ -5,7 +5,6 @@ export { Container } from './components/Container';
 export { VisuallyHidden } from './components/VisuallyHidden';
 export { Button } from './components/Button';
 
-export { PalettesAutokit } from './autokits/PalettesAutokit';
 export { ColorsAutokit } from './autokits/ColorsAutokit';
 export { TypographyAutokit } from './autokits/TypographyAutokit';
 export { IconsAutokit } from './autokits/IconsAutokit';
