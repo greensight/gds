@@ -1,3 +1,9 @@
+## 2.4.0 (January 10, 2021)
+
+-   Fix Typescript version to solve react-docgen-typescript-loader issues;
+-   Remove Palletes;
+-   Stories updates;
+
 ## 2.3.0 (December 17, 2021)
 
 -   Fix `Critical dependency` error;
