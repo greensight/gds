@@ -1,4 +1,5 @@
-import { CSSObject } from '@emotion/core';
+import { CSSObject } from '@emotion/react';
+
 import { SVGRIcon } from './Utils';
 
 export interface BodyProperties {

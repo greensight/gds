@@ -1,14 +1,15 @@
-import { CSSObject } from '@emotion/core';
-import { useTheme } from '../utils/useTheme';
-import { baseTheme } from '../utils/baseTheme';
-import { isObject } from './isObject';
-import { BREAKPOINTS_NAMES } from './constants';
+import { CSSObject } from '@emotion/react';
+
 import { Breakpoint } from '../types/Layout';
+import { baseTheme } from '../utils/baseTheme';
+import { useTheme } from '../utils/useTheme';
+import { BREAKPOINTS_NAMES } from './constants';
+import { isObject } from './isObject';
 
 /**
  * Calculate CSS Object from component props with `AllowMedia` type (user can pass object with breakpoints through prop). CSS property can be calculated based on multiple props.
  */
-export const useCSSProperty = <T>({
+export const useCSSProperty = <T extends Record<string, any>>({
     name,
     props,
     condition,
@@ -52,7 +53,7 @@ export const useCSSProperty = <T>({
         }, {});
 };
 
-const setValue = <T>(name: string, props: T, transform?: (props: T) => string | number) => {
+const setValue = <T extends Record<string, any>>(name: string, props: T, transform?: (props: T) => string | number) => {
     return {
         [name]: transform ? transform(props) : Object.values(props)[0],
     } as CSSObject;

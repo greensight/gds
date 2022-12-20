@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
-import { scale } from '../../utils/scale';
-import { baseTheme } from '../../utils/baseTheme';
+
 import { Tooltip } from '../../helpers/Tooltip';
-import { typography } from '../../helpers/typography';
 import { copyToClipboard } from '../../helpers/copyToClipboard';
+import { typography } from '../../helpers/typography';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
 
 export interface ShadowProps {
     /** Shadow variable name. */

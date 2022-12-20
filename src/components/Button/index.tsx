@@ -1,13 +1,14 @@
+import { CSSObject, jsx } from '@emotion/react';
 import React from 'react';
-import { jsx, CSSObject } from '@emotion/core';
-import { typography } from '../../utils/typography';
-import { scale } from '../../utils/scale';
-import { baseTheme } from '../../utils/baseTheme';
-import { useComponentTheme } from '../../helpers/useComponentTheme';
+
 import { VisuallyHidden } from '../../components/VisuallyHidden';
-import { ButtonTheme, ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
-import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
+import { useComponentTheme } from '../../helpers/useComponentTheme';
+import { ButtonSizeProperties, ButtonStateProperties, ButtonTheme, ButtonThemeProperties } from '../../types/Button';
 import { TypographyProperties } from '../../types/Typography';
+import { ComponentStates, MergeElementProps, RequiredBy, SVGRIcon } from '../../types/Utils';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
+import { typography } from '../../utils/typography';
 
 export interface ButtonBaseProps {
     /** Button content. */

@@ -1,47 +1,48 @@
-import * as webpack from 'webpack';
 import { resolve } from 'path';
+import ReactDocgenTypescriptPlugin from 'react-docgen-typescript-plugin';
+import * as webpack from 'webpack';
 
-export default ({ config, mode }: { config: webpack.Configuration; mode: 'DEVELOPMENT' | 'PRODUCTION' }) => {
+export default ({ config, mode }: { config: any; mode: 'DEVELOPMENT' | 'PRODUCTION' }) => {
     const iconsDir = resolve(__dirname, '../src/icons');
+    config.plugins.push(new webpack.EnvironmentPlugin({ ICONS_DIR: iconsDir, IS_STORYBOOK: true }));
 
-    if (config.module) {
-        const defaultSvgRule = config.module.rules.find((rule) => rule.test && rule.test.toString().includes('svg'));
-        if (defaultSvgRule) defaultSvgRule.exclude = iconsDir;
-
-        config.module.rules = [
-            ...config.module.rules,
-            {
-                test: /\.tsx?$/,
-                exclude: /node_modules/,
-                use: [
-                    'babel-loader',
-                    {
-                        loader: 'react-docgen-typescript-loader',
-                        options: {
-                            tsconfigPath: resolve(__dirname, '../tsconfig.json'),
-                            propFilter: (prop: any) => !(prop.parent && prop.parent.fileName.includes('.yarn')),
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.svg$/,
-                include: iconsDir,
-                loader: '@svgr/webpack',
-                options: {
-                    svgo: false,
-                    titleProp: true,
-                },
-            },
-        ];
-    }
-
-    config.plugins = [
-        ...(config.plugins || []),
-        new webpack.EnvironmentPlugin({
-            ICONS_DIR: iconsDir,
+    config.plugins.push(
+        new ReactDocgenTypescriptPlugin({
+            tsconfigPath: resolve(__dirname, '../tsconfig.json'),
+            propFilter: (prop: any) => !(prop.parent && prop.parent.fileName.includes('.yarn')),
         }),
-    ];
+    );
+
+    // add svgr support
+    const fileLoaderRule = (config.module.rules as any[]).find((rule) => rule.test && rule.test.test('.svg'));
+    fileLoaderRule.exclude = iconsDir;
+
+    config.module.rules.push({
+        test: /\.svg$/,
+        use: [{ loader: '@svgr/webpack', options: { svgo: false } }],
+    });
+
+    fileLoaderRule.exclude = iconsDir;
+
+    config.module.rules.push({
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+    });
+
+    // const mdxLoaderRenderer = `
+    //     import React from 'react'
+    //     import { jsx } from '@emotion/react'
+    //     import {mdx as _mdx } from '@mdx-js/react'
+    //     const mdx = (name, props, ...children) => {
+    //     return (typeof name === 'string' || typeof name === 'symbol') && !(props && 'css' in props) ? _mdx(name, props, ...children) : jsx(name, props, ...children)
+    //     }
+    //     `;
+
+    // config.module.rules[4].use[1].options = {
+    //     ...config.module.rules[4].use[1].options,
+    //     renderer: mdxLoaderRenderer,
+    // };
 
     config.devtool = mode === 'DEVELOPMENT' && 'source-map';
     config.performance = false;

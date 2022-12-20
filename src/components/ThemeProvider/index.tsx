@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
-import { Global as EmotionGlobal, CSSObject } from '@emotion/core';
-import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
+import { CSSObject, Global as EmotionGlobal, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import 'focus-visible';
 import 'normalize.css';
-import { typography } from '../../utils/typography';
-import { baseTheme } from '../../utils/baseTheme';
+import React, { FC } from 'react';
+
 import { Theme } from '../../types/Theme';
+import { baseTheme } from '../../utils/baseTheme';
+import { typography } from '../../utils/typography';
 
 export interface ThemeProviderProps {
     /** Theme object. */

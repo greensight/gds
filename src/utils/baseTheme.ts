@@ -1,10 +1,12 @@
+import deepmerge from 'deepmerge';
+
 /** Импорт React нужен для tsc. */
 import React from 'react';
-import deepmerge from 'deepmerge';
+
+import tokens from '../../public/tokens.json';
+import { FONT_STACK } from '../helpers/constants';
 import PlaceholderIcon from '../icons/tokens/medium/placeholder.svg';
 import { scale } from './scale';
-import { FONT_STACK } from '../helpers/constants';
-import tokens from '../../public/tokens.json';
 
 const { colors, shadows } = tokens;
 
@@ -26,16 +28,14 @@ export const baseTheme = deepmerge(tokens, {
                 {
                     '@font-face': {
                         fontFamily: 'PT Root UI',
-                        src:
-                            'url("../fonts/PTRootUI/PTRootUI-Regular.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Regular.woff") format("woff")',
+                        src: 'url("../fonts/PTRootUI/PTRootUI-Regular.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Regular.woff") format("woff")',
                         fontDisplay: 'swap',
                     },
                 },
                 {
                     '@font-face': {
                         fontFamily: 'PT Root UI',
-                        src:
-                            'url("../fonts/PTRootUI/PTRootUI-Medium.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Medium.woff") format("woff")',
+                        src: 'url("../fonts/PTRootUI/PTRootUI-Medium.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Medium.woff") format("woff")',
                         fontDisplay: 'swap',
                         fontWeight: 500,
                     },
@@ -43,8 +43,7 @@ export const baseTheme = deepmerge(tokens, {
                 {
                     '@font-face': {
                         fontFamily: 'PT Root UI',
-                        src:
-                            'url("../fonts/PTRootUI/PTRootUI-Bold.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Bold.woff") format("woff")',
+                        src: 'url("../fonts/PTRootUI/PTRootUI-Bold.woff2") format("woff2"), url("../fonts/PTRootUI/PTRootUI-Bold.woff") format("woff")',
                         fontDisplay: 'swap',
                         fontWeight: 700,
                     },

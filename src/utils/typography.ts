@@ -1,6 +1,7 @@
-import { CSSObject } from '@emotion/core';
-import { TypographyProperties } from '../types/Typography';
+import { CSSObject } from '@emotion/react';
+
 import { Theme } from '../types/Theme';
+import { TypographyProperties } from '../types/Typography';
 import { PartialBy } from '../types/Utils';
 import { baseTheme } from './baseTheme';
 

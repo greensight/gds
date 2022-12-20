@@ -1,9 +1,10 @@
 import React from 'react';
-import { Color } from './Color';
+
 import { Layout } from '../../components/Layout';
-import { useTheme } from '../../utils/useTheme';
-import { scale } from '../../utils/scale';
 import { typography } from '../../helpers/typography';
+import { scale } from '../../utils/scale';
+import { useTheme } from '../../utils/useTheme';
+import { Color } from './Color';
 
 /**
  * Autokit for colors tokens `theme.colors`.

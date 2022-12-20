@@ -1,52 +1,66 @@
-import React, { FC } from 'react';
-import { CSSObject } from '@emotion/core';
-import { useTheme } from '../../utils/useTheme';
-import { baseTheme } from '../../utils/baseTheme';
-import { useCSSProperty } from '../../helpers/useCSSProperty';
+import React from 'react';
+
 import { toArray } from '../../helpers/toArray';
-import { LayoutContext, LayoutContextProps } from './useLayout';
-import { Item as LayoutItem, LayoutItemProps } from './Item';
+import { useCSSProperty } from '../../helpers/useCSSProperty';
 import { AllowMedia } from '../../types/Layout';
+import { baseTheme } from '../../utils/baseTheme';
+import { useTheme } from '../../utils/useTheme';
+import { Item as LayoutItem, LayoutItemProps } from './Item';
+import { LayoutContext, LayoutContextProps } from './useLayout';
 
 export interface LayoutCompositionProps {
     Item: React.FC<LayoutItemProps>;
 }
 
-export interface LayoutProps
-    extends LayoutContextProps,
+interface CommonProps
+    extends Omit<LayoutContextProps, 'type' | 'cols' | 'auto'>,
         Omit<React.HTMLProps<HTMLDivElement>, 'cols' | 'rows' | 'type' | 'wrap'> {
     /** Layout items list. */
     children: React.ReactNode;
     /** Inline mode. Changes `display` type.*/
     inline?: AllowMedia<boolean>;
+    /** Main axis alignment. */
+    justify?: AllowMedia<'start' | 'end' | 'center' | 'stretch' | 'space-around' | 'space-between' | 'space-evenly'>;
+    /** Cross axis alignment. */
+    align?: AllowMedia<'start' | 'end' | 'center' | 'stretch' | 'baseline'>;
+    /** Main axis direction. */
+    direction?: AllowMedia<'row' | 'column' | 'unset'>;
+}
+
+interface GridProps extends Pick<LayoutContextProps, 'auto' | 'cols'> {
     /** Rows. For grids only. */
     rows?: AllowMedia<number | string | (number | string)[]>;
     /** Areas. For grids only. */
     areas?: AllowMedia<string | string[]>;
-    /** Main axis alignment. */
-    justify?: AllowMedia<'start' | 'end' | 'center' | 'stretch' | 'space-around' | 'space-between' | 'space-evenly'>;
-    /** Cross axis alignment. */
-    align?: AllowMedia<'start' | 'end' | 'center' | 'stretch'>;
     /** Auto rows size. For grids only. */
     autoRows?: AllowMedia<number | string | (number | string)[]>;
     /** Auto cols size. For grids only. */
     autoCols?: AllowMedia<number | string | (number | string)[]>;
-    /** Main axis direction. */
-    direction?: AllowMedia<'row' | 'column'>;
     /** Dense mode. For grids only. */
     dense?: AllowMedia<boolean>;
+}
+
+interface FlexProps {
     /** Reverse directions. For flex only. */
     reverse?: AllowMedia<boolean>;
     /** Multiline mode. For flex only. */
     wrap?: AllowMedia<boolean>;
-    /** Additional CSS. */
-    css?: CSSObject;
 }
+
+type Neverize<T extends Record<any, any>> = {
+    [key in keyof T]?: never;
+};
+
+type InstristicProps =
+    | ({ type?: AllowMedia<'grid'> } & (GridProps & Neverize<FlexProps>))
+    | ({ type?: AllowMedia<'flex'> } & (FlexProps & Neverize<GridProps>));
+
+export type LayoutProps = CommonProps & InstristicProps;
 
 /**
  * Component for creating typical grid and flex layouts.
  */
-export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
+export const Layout = ({
     children,
     type = 'grid',
     inline,
@@ -65,7 +79,9 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
     auto,
     css,
     ...props
-}) => {
+}: LayoutProps & Partial<LayoutCompositionProps>) => {
+    console.log('rendering layout. cols=', cols);
+
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
     gap = gap ?? layoutTheme.gap;
@@ -174,7 +190,7 @@ export const Layout: React.FC<LayoutProps> & LayoutCompositionProps = ({
                     useCSSProperty({
                         name: 'flexDirection',
                         props: { direction, reverse },
-                        condition: type === 'flex' && (direction === 'column' || !!reverse),
+                        condition: type === 'flex',
                         transform: ({ direction, reverse }) =>
                             `${direction === 'column' ? 'column' : 'row'}${reverse ? '-reverse' : ''}`,
                     }),

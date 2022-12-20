@@ -16,7 +16,7 @@ module.exports = {
         'plugin:import/errors',
         'plugin:import/warnings',
         'plugin:import/typescript',
-        'plugin:mdx/recommended',
+        // 'plugin:mdx/recommended',
         'plugin:prettier/recommended',
     ],
     plugins: ['@typescript-eslint', 'react-hooks'],
@@ -43,6 +43,7 @@ module.exports = {
         '@typescript-eslint/no-var-requires': 0,
         '@typescript-eslint/no-unused-vars': [1, { varsIgnorePattern: 'React|CSSObject' }],
         '@typescript-eslint/no-use-before-define': 0,
+        'react/no-unknown-property': ['error', { ignore: ['css'] }],
         'import/no-named-as-default': 0,
         'import/no-unresolved': [2, { ignore: ['@'] }],
         'react/prop-types': 0,
@@ -50,10 +51,11 @@ module.exports = {
         'react-hooks/rules-of-hooks': 2,
         'react-hooks/exhaustive-deps': 1,
     },
-    overrides: [
-        {
-            files: ['*.mdx'],
-            extends: ['plugin:mdx/overrides'],
-        },
-    ],
+    ignorePatterns: ['**/*.mdx'],
+    // overrides: [
+    //     {
+    //         files: ['*.mdx'],
+    //         extends: ['plugin:mdx/overrides'],
+    //     },
+    // ],
 };

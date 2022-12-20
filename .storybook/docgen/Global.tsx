@@ -1,12 +1,13 @@
 import React from 'react';
+
 import {
-    GlobalTheme as IGlobalTheme,
     BaseProperties as IBaseProperties,
     BodyProperties as IBodyProperties,
     FocusProperties as IFocusProperties,
-    SelectionProperties as ISelectionProperties,
-    FontsProperties as IFontsProperties,
     FontFamilyProperties as IFontFamilyProperties,
+    FontsProperties as IFontsProperties,
+    GlobalTheme as IGlobalTheme,
+    SelectionProperties as ISelectionProperties,
 } from '../../src/types/Global';
 
 export const GlobalTheme: React.FC<IGlobalTheme> = () => <div />;

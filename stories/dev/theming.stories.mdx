@@ -1,5 +1,6 @@
-import { Meta, Props } from '@storybook/addon-docs/blocks';
-import { Theme, Tokens, ComponentsTheme } from '../../.storybook/docgen/Theme';
+import { Meta, Props } from '@storybook/addon-docs';
+
+import { ComponentsTheme, Theme, Tokens } from '../../.storybook/docgen/Theme';
 
 <Meta title="Dev / Theming" />
 
@@ -27,6 +28,7 @@ GDS - это мультибрендовая дизайн-система. Для 
 
 ```js
 import { createTheme } from '@greensight/gds';
+
 import tokens from '../../../public/tokens.json';
 
 const theme = createTheme({
@@ -42,6 +44,7 @@ export default theme;
 
 ```js
 import { createTheme } from '@greensight/gds';
+
 import tokens from '../../../public/tokens.json';
 import PlaceholderIcon from '../images/icons/tokens/medium/placeholder.svg';
 
@@ -109,6 +112,7 @@ export default theme;
 
 ```js
 import { createTheme, scale } from '@greensight/gds';
+
 import tokens from '../../../public/tokens.json';
 import PlaceholderIcon from '../images/icons/tokens/medium/placeholder.svg';
 

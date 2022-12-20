@@ -1,12 +1,13 @@
+import { DEFAULT_EXTENSIONS } from '@babel/core';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import resolve from '@rollup/plugin-node-resolve';
+import svgr from '@svgr/rollup';
 import fs from 'fs';
 import path from 'path';
-import { DEFAULT_EXTENSIONS } from '@babel/core';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import svgr from '@svgr/rollup';
-import json from '@rollup/plugin-json';
 import postcss from 'rollup-plugin-postcss';
-import babel from 'rollup-plugin-babel';
+
 import pkg from './package.json';
 
 const getEntries = (prefix, isFile) =>

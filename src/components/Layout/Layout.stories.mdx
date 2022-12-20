@@ -1,164 +1,209 @@
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { radios, boolean, text, array, select, number } from '@storybook/addon-knobs';
-import { scale } from '../../utils/scale';
-import { Placeholder } from '../../helpers/Placeholder';
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs';
+
 import { Layout } from '.';
 import { LayoutProps } from '../../../.storybook/docgen/Layout';
+import { Placeholder } from '../../helpers/Placeholder';
+import { scale } from '../../utils/scale';
 
 <Meta title="Components / Helpers / Layout" component={Layout} />
 
 # Layout
 
-<Story name="Knobs">
-    {() => {
-        const itemsCount = number(
-            'Items count (demo)',
-            6,
-            {
-                range: true,
+<Story
+    name="Flex"
+    args={{
+        itemsCount: 3,
+        reverse: true,
+        wrap: true,
+        inline: false,
+        justify: 'space-between',
+        align: 'center',
+        direction: 'row',
+        rowGap: 8,
+        columnGap: 8,
+    }}
+    argTypes={{
+        itemsCount: {
+            name: 'Items count (demo)',
+            control: {
+                type: 'range',
                 min: 2,
                 max: 16,
                 step: 1,
             },
-            'Layout',
+        },
+        reverse: {
+            name: 'Reverse order',
+            control: 'boolean',
+        },
+        wrap: {
+            name: 'Allow wrapping',
+            control: 'boolean',
+        },
+        inline: {
+            name: 'Inline display',
+            control: 'boolean',
+        },
+        justify: {
+            name: 'Alignment (horizontal)',
+            options: ['', 'start', 'end', 'center', 'stretch', 'space-around', 'space-between', 'space-evenly'],
+        },
+        align: {
+            name: 'Alignment (vertical)',
+            options: ['', 'start', 'end', 'center', 'stretch', 'baseline'],
+        },
+        direction: {
+            name: 'Direction',
+            control: 'radio',
+            options: ['column', 'row'],
+        },
+    }}
+>
+    {({ itemsCount, columnGap, rowGap, ...props }) => {
+        const layoutProps = {
+            type: 'flex',
+            gap: [columnGap || 0, rowGap || 0],
+            ...props,
+        };
+        return (
+            <Layout {...layoutProps}>
+                {new Array(itemsCount).fill('').map((_, index) => {
+                    index++;
+                    return (
+                        <Layout.Item key={index}>
+                            <Placeholder>Item {index}</Placeholder>
+                        </Layout.Item>
+                    );
+                })}
+            </Layout>
         );
-        const type = radios('Type', ['grid', 'flex'], 'grid', 'Layout');
-        const cols = number(
-            'Columns count',
-            12,
-            {
-                range: true,
-                min: 1,
+    }}
+</Story>
+
+<Story
+    name="Grid"
+    args={{
+        itemsCount: 12,
+        inline: false,
+        justify: 'space-between',
+        align: 'center',
+        direction: 'unset',
+        dense: false,
+        cols: 12,
+        auto: 0,
+        rows: 0,
+        areas: [],
+        autoRows: [],
+        autoCols: [],
+        rowGap: 8,
+        columnGap: 8,
+    }}
+    argTypes={{
+        itemsCount: {
+            name: 'Items count (demo)',
+            control: {
+                type: 'range',
+                min: 2,
                 max: 16,
                 step: 1,
             },
-            'Layout',
-        );
-        const columnGap = number(
-            'Gap (columns)',
-            16,
-            {
-                min: 0,
-                max: 160,
-                step: 4,
-            },
-            'Layout',
-        );
-        const rowGap = number(
-            'Gap (rows)',
-            16,
-            {
-                min: 0,
-                max: 160,
-                step: 4,
-            },
-            'Layout',
-        );
-        const justify = select(
-            'Alignment (horizontal)',
-            ['', 'start', 'end', 'center', 'stretch', 'space-around', 'space-between', 'space-evenly'],
-            '',
-            'Layout',
-        );
-        const align = select('Alignment (vertical)', ['', 'start', 'end', 'center', 'stretch'], '', 'Layout');
-        const auto = number(
-            'Auto mode',
-            0,
-            {
+        },
+        inline: {
+            name: 'Inline display',
+            control: 'boolean',
+        },
+        justify: {
+            name: 'Alignment (horizontal)',
+            options: ['', 'start', 'end', 'center', 'stretch', 'space-around', 'space-between', 'space-evenly'],
+        },
+        align: {
+            name: 'Alignment (vertical)',
+            options: ['', 'start', 'end', 'center', 'stretch'],
+        },
+        direction: {
+            name: 'Grid auto flow',
+            control: 'radio',
+            options: ['column', 'row', 'unset'],
+        },
+        dense: {
+            name: 'Grid auto flow dense',
+            control: 'boolean',
+        },
+        auto: {
+            name: 'Auto mode',
+            control: {
+                type: 'range',
                 min: 0,
                 max: 400,
                 step: 8,
             },
-            'Layout',
-        );
-        const inline = boolean('inline', false, 'Layout (hardcore)');
-        const colsHard = text('cols', '', 'Layout (hardcore)');
-        const rows = text('rows', '', 'Layout (hardcore)');
-        const areas = array('areas (grid)', [], ', ', 'Layout (hardcore)');
-        const direction = radios('direction', ['row', 'column'], 'row', 'Layout (hardcore)');
-        const reverse = boolean('reverse (flex)', false, 'Layout (hardcore)');
-        const wrap = boolean('wrap (flex)', true, 'Layout (hardcore)');
-        const autoRows = text('autoRows (grid)', '', 'Layout (hardcore)');
-        const autoCols = text('autoCols (grid)', '', 'Layout (hardcore)');
-        const dense = boolean('dense (grid)', false, 'Layout (hardcore)');
+        },
+        cols: {
+            name: 'Columns count',
+            control: {
+                type: 'range',
+                min: 1,
+                max: 16,
+                step: 1,
+            },
+        },
+        columnGap: {
+            name: 'Gap (columns)',
+            control: {
+                type: 'range',
+                min: 0,
+                max: 160,
+                step: 4,
+            },
+        },
+        rows: {
+            name: 'Rows count',
+            control: {
+                type: 'range',
+                min: 0,
+                max: 10,
+                step: 1,
+            },
+        },
+        rowGap: {
+            name: 'Gap (rows)',
+            control: {
+                type: 'range',
+                min: 0,
+                max: 160,
+                step: 4,
+            },
+        },
+        justify: {
+            name: 'Alignment (horizontal)',
+            options: ['', 'start', 'end', 'center', 'stretch', 'space-around', 'space-between', 'space-evenly'],
+        },
+        align: {
+            name: 'Alignment (vertical)',
+            options: ['', 'start', 'end', 'center', 'stretch'],
+        },
+    }}
+>
+    {({ itemsCount, rowGap, columnGap, areas, autoCols, autoRows, auto, cols, rows, ...props }) => {
         const layoutProps = {
-            type,
-            cols: colsHard || cols,
-            inline,
-            rows,
+            type: 'grid',
+            gap: [columnGap || 0, rowGap || 0],
             areas: areas.length ? areas : undefined,
-            gap: [rowGap, columnGap],
-            justify,
-            align,
-            direction,
-            reverse,
-            wrap,
-            autoRows,
-            autoCols,
-            dense,
-            auto: auto !== 0 ? auto : undefined,
-        };
-        const col = number(
-            'Columns count',
-            1,
-            {
-                range: true,
-                min: 1,
-                max: 16,
-                step: 1,
-            },
-            'All items',
-        );
-        const row = number(
-            'Rows count',
-            1,
-            {
-                range: true,
-                min: 1,
-                max: 16,
-                step: 1,
-            },
-            'All items',
-        );
-        const colHard = text('col', '', 'All items (hardcore)');
-        const rowHard = text('row', '', 'All items (hardcore)');
-        const grow = boolean('grow', false, 'All items (hardcore)');
-        const allItemsProps = {
-            col: colHard || col,
-            row: rowHard || row,
-            grow,
+            ...(!autoCols?.length && {
+                cols,
+            }),
+            rows: rows || undefined,
+            autoCols: autoCols?.length ? autoCols : undefined,
+            autoRows: autoRows?.length ? autoRows : undefined,
+            auto,
+            ...props,
         };
         return (
             <Layout {...layoutProps}>
-                {new Array(itemsCount).fill('').map((item, index) => {
+                {new Array(itemsCount).fill('').map((_, index) => {
                     index++;
-                    const col = text(`Item ${index} col`, '', 'Item (hardcore)') || allItemsProps.col;
-                    const row = text(`Item ${index} row`, '', 'Item (hardcore)') || allItemsProps.row;
-                    const area = text(`Item ${index} area (grid)`, '', 'Item (hardcore)');
-                    const justify = select(
-                        `Item ${index} justify`,
-                        ['', 'start', 'end', 'center', 'stretch'],
-                        '',
-                        'Item (hardcore)',
-                    );
-                    const align = select(
-                        `Item ${index} align`,
-                        ['', 'start', 'end', 'center', 'stretch'],
-                        '',
-                        'Item (hardcore)',
-                    );
-                    const order = number(`Item ${index} order`, 0, {}, 'Item (hardcore)');
-                    const itemProps = {
-                        col,
-                        row,
-                        area,
-                        justify,
-                        align,
-                        order,
-                        grow: allItemsProps.grow,
-                    };
                     return (
-                        <Layout.Item key={index} {...itemProps}>
+                        <Layout.Item key={index}>
                             <Placeholder>Item {index}</Placeholder>
                         </Layout.Item>
                     );

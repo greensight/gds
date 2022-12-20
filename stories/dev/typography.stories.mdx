@@ -1,5 +1,6 @@
-import { Meta, Props } from '@storybook/addon-docs/blocks';
-import { TypographyTheme, TypographyStyle, TypographyProperties } from '../../.storybook/docgen/Typography';
+import { Meta, Props } from '@storybook/addon-docs';
+
+import { TypographyProperties, TypographyStyle, TypographyTheme } from '../../.storybook/docgen/Typography';
 
 <Meta title="Dev / Typography" />
 
@@ -61,6 +62,7 @@ _Формула fluid typography_
 
 ```js
 import { typography as gdsTypography } from '@greensight/gds';
+
 import theme from './theme';
 
 const typography = (name) => gdsTypography(name, theme);

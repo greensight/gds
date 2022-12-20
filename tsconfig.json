@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "target": "ESNext",
+        "types": ["node", "webpack-env", "@emotion/react/types/css-prop"],
         "jsx": "react",
         "moduleResolution": "node",
         "esModuleInterop": true,

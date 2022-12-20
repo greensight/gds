@@ -1,9 +1,10 @@
 import React from 'react';
-import { useTheme } from '../../utils/useTheme';
-import { typography } from '../../utils/typography';
-import { scale } from '../../utils/scale';
-import { baseTheme } from '../../utils/baseTheme';
+
 import { typography as baseThemeTypography } from '../../helpers/typography';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
+import { typography } from '../../utils/typography';
+import { useTheme } from '../../utils/useTheme';
 
 export interface TypographyAutokitProps {
     /** Placeholder text. */
