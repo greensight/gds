@@ -30,7 +30,7 @@ export interface ButtonBaseProps {
     /** Button theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: ButtonTheme;
     /** Additional CSS. back compatibility with @emotion/core */
-    css?: unknown;
+    css?: any;
 }
 
 export type ButtonProps<P extends React.ElementType = 'button'> = {
