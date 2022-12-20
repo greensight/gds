@@ -29,8 +29,6 @@ export interface ButtonBaseProps {
     external?: boolean;
     /** Button theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: ButtonTheme;
-    /** Additional CSS. back compatibility with @emotion/core */
-    css?: any;
 }
 
 export type ButtonProps<P extends React.ElementType = 'button'> = {
@@ -58,6 +56,8 @@ export const Btn = <T extends React.ElementType = 'button'>(
         as,
         external = false,
         __theme,
+        /** Additional CSS. back compatibility with @emotion/core */
+        // @ts-ignore
         css,
         ...props
     }: ButtonProps<T>,
@@ -147,6 +147,7 @@ export const Btn = <T extends React.ElementType = 'button'>(
         borderRadius: '50%',
         padding: `${pv}px ${(sp.height - sp.iconSize - tp.borderWidth) / 2}px`,
     };
+    // @ts-ignore
     const styles = [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css];
 
     /* Define CSS rules for icon. */
