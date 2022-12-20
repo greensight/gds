@@ -29,8 +29,8 @@ export interface ButtonBaseProps {
     external?: boolean;
     /** Button theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: ButtonTheme;
-    /** Additional CSS. */
-    css?: CSSObject;
+    /** Additional CSS. back compatibility with @emotion/core */
+    css?: unknown;
 }
 
 export type ButtonProps<P extends React.ElementType = 'button'> = {
