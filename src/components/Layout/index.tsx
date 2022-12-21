@@ -80,8 +80,6 @@ export const Layout = ({
     css,
     ...props
 }: LayoutProps & Partial<LayoutCompositionProps>) => {
-    console.log('rendering layout. cols=', cols);
-
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
     gap = gap ?? layoutTheme.gap;
