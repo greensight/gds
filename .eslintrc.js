@@ -16,7 +16,6 @@ module.exports = {
         'plugin:import/errors',
         'plugin:import/warnings',
         'plugin:import/typescript',
-        // 'plugin:mdx/recommended',
         'plugin:prettier/recommended',
     ],
     plugins: ['@typescript-eslint', 'react-hooks'],
@@ -52,10 +51,4 @@ module.exports = {
         'react-hooks/exhaustive-deps': 1,
     },
     ignorePatterns: ['**/*.mdx'],
-    // overrides: [
-    //     {
-    //         files: ['*.mdx'],
-    //         extends: ['plugin:mdx/overrides'],
-    //     },
-    // ],
 };
