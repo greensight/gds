@@ -20,8 +20,6 @@ export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
     pb?: AllowMedia<number>;
     /** Background color. */
     bg?: AllowMedia<string>;
-    /** Additional CSS. */
-    css?: CSSObject;
 }
 
 /**

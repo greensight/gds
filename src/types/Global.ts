@@ -10,7 +10,7 @@ export interface BodyProperties {
     /** Background color. */
     bg?: string;
     /** Additional CSS. */
-    css?: CSSObject;
+    css?: any;
 }
 
 export interface FocusProperties {
@@ -21,7 +21,7 @@ export interface FocusProperties {
     /** Outline offset. */
     offset?: number;
     /** Additional CSS. */
-    css?: CSSObject;
+    css?: any;
 }
 
 export interface SelectionProperties {
@@ -30,7 +30,7 @@ export interface SelectionProperties {
     /** Background color. */
     bg?: string;
     /** Additional CSS. */
-    css?: CSSObject;
+    css?: any;
 }
 
 export interface BaseProperties {
@@ -41,7 +41,7 @@ export interface BaseProperties {
     /** Selection styles. */
     selection?: SelectionProperties;
     /** Additional CSS. */
-    css?: CSSObject;
+    css?: any;
 }
 
 export interface FontFamilyProperties {

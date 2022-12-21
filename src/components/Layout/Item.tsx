@@ -22,8 +22,6 @@ export interface LayoutItemProps extends React.HTMLProps<HTMLDivElement> {
     order?: AllowMedia<number>;
     /** Expand on all available space. For flex only.  */
     grow?: AllowMedia<boolean | number>;
-    /** Additional CSS. */
-    css?: CSSObject;
 }
 
 /**

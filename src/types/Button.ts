@@ -12,7 +12,7 @@ export interface ButtonStateProperties {
     /** Shadow. Mostly for `active` state. */
     shadow?: string;
     /** Additional CSS. */
-    css?: CSSObject;
+    css?: any;
 }
 
 export interface ButtonThemeProperties extends ButtonStateProperties {
@@ -50,7 +50,7 @@ export interface ButtonSizeProperties {
     /** Typography style. Can be omitted if `fontSize` and `lineHeight` properties are defined via `css` settings. Equals `'1rem'` and `1.4` by default.*/
     typography?: string;
     /** Additional CSS. */
-    css?: CSSObject;
+    css?: any;
 }
 
 export interface ButtonTheme {

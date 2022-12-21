@@ -1,4 +1,3 @@
-import { CSSObject } from '@emotion/react';
 import React from 'react';
 
 import { useCSSProperty } from '../../helpers/useCSSProperty';
@@ -8,8 +7,6 @@ import { useTheme } from '../../utils/useTheme';
 export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
     /** Container content. */
     children: React.ReactNode;
-    /** Additional CSS. */
-    css?: CSSObject;
 }
 
 /**
