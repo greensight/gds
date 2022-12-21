@@ -1,3 +1,10 @@
+## 2.5.0 (December 21, 2022)
+
+- 🔥 Update babel, rollup, webpack, typescript, eslint, prettier, storybook to latest versions;
+- ⚙️ Fix issues with `align` and `direction` properties of `Layout` component;
+- Migrate stories to work with sb 6.5: remove addon-knobs in favor of `args` and `argTypes`;
+- Improve types of `Layout` component;
+
 ## 2.4.0 (January 10, 2021)
 
 -   Fix Typescript version to solve react-docgen-typescript-loader issues;
