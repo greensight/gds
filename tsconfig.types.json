@@ -1,10 +1,12 @@
 {
     "compilerOptions": {
         "declaration": true,
+        "types": ["node", "webpack-env", "@emotion/react/types/css-prop"],
         "declarationDir": "types",
         "emitDeclarationOnly": true,
         "target": "ESNext",
-        "jsx": "react",
+        "jsx": "preserve",
+        "jsxImportSource": "@emotion/react",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "resolveJsonModule": true,

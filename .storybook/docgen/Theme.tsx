@@ -1,5 +1,6 @@
 import React from 'react';
-import { Theme as ITheme, Tokens as ITokens, ComponentsTheme as IComponentsTheme } from '../../src/types/Theme';
+
+import { ComponentsTheme as IComponentsTheme, Theme as ITheme, Tokens as ITokens } from '../../src/types/Theme';
 
 export const Theme: React.FC<ITheme> = () => <div />;
 export const Tokens: React.FC<ITokens> = () => <div />;

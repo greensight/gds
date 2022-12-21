@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
+
+import { Tooltip } from '../../helpers/Tooltip';
+import { copyToClipboard } from '../../helpers/copyToClipboard';
+import { typography } from '../../helpers/typography';
 import { baseTheme } from '../../utils/baseTheme';
 import { scale } from '../../utils/scale';
-import { Tooltip } from '../../helpers/Tooltip';
-import { typography } from '../../helpers/typography';
-import { copyToClipboard } from '../../helpers/copyToClipboard';
 
 export interface ColorProps {
     /** Color variable name. */

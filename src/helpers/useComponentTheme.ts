@@ -1,6 +1,6 @@
-import { useTheme } from '../utils/useTheme';
+import { ComponentsTheme, Theme } from '../types/Theme';
 import { baseTheme } from '../utils/baseTheme';
-import { Theme, ComponentsTheme } from '../types/Theme';
+import { useTheme } from '../utils/useTheme';
 
 /**
  * Custom hook returns used component and project themes based on custom theme exist check. Use it for all components defined in `ComponentsTheme`.

@@ -1,7 +1,7 @@
-import { TypographyTheme } from './Typography';
-import { LayoutTheme } from './Layout';
-import { GlobalTheme } from './Global';
 import { ButtonTheme } from './Button';
+import { GlobalTheme } from './Global';
+import { LayoutTheme } from './Layout';
+import { TypographyTheme } from './Typography';
 
 export type PalettesTheme = Record<string, string[]>;
 export type ColorsTheme = Record<string, string>;

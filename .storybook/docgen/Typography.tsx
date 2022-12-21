@@ -1,8 +1,9 @@
 import React from 'react';
+
 import {
-    TypographyTheme as ITypographyTheme,
     TypographyProperties as ITypographyProperties,
     TypographyStyle as ITypographyStyle,
+    TypographyTheme as ITypographyTheme,
 } from '../../src/types/Typography';
 
 export const TypographyTheme: React.FC<ITypographyTheme> = () => <div />;

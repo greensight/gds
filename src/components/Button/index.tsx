@@ -1,13 +1,14 @@
+import { CSSObject, jsx } from '@emotion/react';
 import React from 'react';
-import { jsx, CSSObject } from '@emotion/core';
-import { typography } from '../../utils/typography';
-import { scale } from '../../utils/scale';
-import { baseTheme } from '../../utils/baseTheme';
-import { useComponentTheme } from '../../helpers/useComponentTheme';
+
 import { VisuallyHidden } from '../../components/VisuallyHidden';
-import { ButtonTheme, ButtonThemeProperties, ButtonSizeProperties, ButtonStateProperties } from '../../types/Button';
-import { ComponentStates, SVGRIcon, RequiredBy, MergeElementProps } from '../../types/Utils';
+import { useComponentTheme } from '../../helpers/useComponentTheme';
+import { ButtonSizeProperties, ButtonStateProperties, ButtonTheme, ButtonThemeProperties } from '../../types/Button';
 import { TypographyProperties } from '../../types/Typography';
+import { ComponentStates, MergeElementProps, RequiredBy, SVGRIcon } from '../../types/Utils';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
+import { typography } from '../../utils/typography';
 
 export interface ButtonBaseProps {
     /** Button content. */
@@ -28,8 +29,6 @@ export interface ButtonBaseProps {
     external?: boolean;
     /** Button theme object for internal testing purposes. Uses in Storybook knobs to play with theme. */
     __theme?: ButtonTheme;
-    /** Additional CSS. */
-    css?: CSSObject;
 }
 
 export type ButtonProps<P extends React.ElementType = 'button'> = {
@@ -57,6 +56,8 @@ export const Btn = <T extends React.ElementType = 'button'>(
         as,
         external = false,
         __theme,
+        /** Additional CSS. back compatibility with @emotion/core */
+        // @ts-ignore
         css,
         ...props
     }: ButtonProps<T>,
@@ -146,6 +147,7 @@ export const Btn = <T extends React.ElementType = 'button'>(
         borderRadius: '50%',
         padding: `${pv}px ${(sp.height - sp.iconSize - tp.borderWidth) / 2}px`,
     };
+    // @ts-ignore
     const styles = [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css];
 
     /* Define CSS rules for icon. */

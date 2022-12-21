@@ -1,18 +1,18 @@
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { radios, boolean, object, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
-import { scale } from '../../utils/scale';
-import { baseTheme } from '../../utils/baseTheme';
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs';
+
 import { Button } from '.';
+import centeredDecorator from '../../../.storybook/decorators/centeredDecorator';
 import {
     ButtonProps,
-    ButtonTheme,
-    ButtonStates,
-    ButtonThemeProperties,
-    ButtonStateProperties,
     ButtonSizeProperties,
+    ButtonStateProperties,
+    ButtonStates,
+    ButtonTheme,
+    ButtonThemeProperties,
 } from '../../../.storybook/docgen/Button';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
 
 <Meta
     title="Components / Button"
@@ -28,23 +28,35 @@ import {
 
 # Button 🤖
 
-<Story name="Knobs">
-    {() => {
+<Story
+    name="Knobs"
+    args={{
+        theme: 'primary',
+        size: 'md',
+        block: false,
+        disabled: false,
+        Icon: baseTheme.global.placeholder,
+        iconAfter: false,
+        hidden: false,
+        useCustomTheme: false,
+        themeObj: baseTheme.components.Button,
+        children: 'Button',
+    }}
+    argTypes={{
+        theme: {
+            control: 'radio',
+            options: ['primary', 'secondary'],
+        },
+        size: {
+            control: 'radio',
+            options: ['sm', 'md', 'lg'],
+        },
+    }}
+>
+    {({ children, useCustomTheme, themeObj, ...args }) => {
         return (
-            <Button
-                theme={radios('theme', ['primary', 'secondary'], 'primary')}
-                size={radios('size', ['lg', 'md', 'sm'], 'md')}
-                block={boolean('block', false)}
-                disabled={boolean('disabled', false)}
-                Icon={boolean('icon', false) && baseTheme.global.placeholder}
-                iconAfter={boolean('iconAfter', false)}
-                hidden={boolean('hidden', false)}
-                onClick={action('onClick')}
-                __theme={
-                    boolean('Use custom theme', false) ? object('themeObj', baseTheme.components.Button) : undefined
-                }
-            >
-                {text('children', 'Button')}
+            <Button {...args} onClick={action('onClick')} __theme={useCustomTheme ? themeObj : undefined}>
+                {children}
             </Button>
         );
     }}

@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
 import Tippy, { TippyProps } from '@tippy.js/react';
-import 'tippy.js/dist/tippy.css';
+import React, { FC } from 'react';
 import 'tippy.js/animations/shift-away.css';
+import 'tippy.js/dist/tippy.css';
+
+import CheckCircle from '../icons/tokens/medium/checkCircle.svg';
 import { baseTheme } from '../utils/baseTheme';
 import { scale } from '../utils/scale';
-import CheckCircle from '../icons/tokens/medium/checkCircle.svg';
 
 /**
  * Tooltip with success icon. Helper component for show after successful clipboard copy.

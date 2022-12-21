@@ -1,17 +1,22 @@
-import { addParameters, addDecorator } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
-import { withA11y } from '@storybook/addon-a11y';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import themeDecorator from './decorators/themeDecorator';
+import React from 'react';
+
+import { ThemeProvider } from '../src/components/ThemeProvider';
 import { baseTheme } from '../src/utils/baseTheme';
 
-addParameters({
+export const parameters = {
     options: { showRoots: true },
     grid: { cellSize: 8 },
     viewport: { viewports: INITIAL_VIEWPORTS },
     backgrounds: { values: Object.entries(baseTheme.colors).map(([name, value]) => ({ name, value })) },
-});
+};
 
-addDecorator(withKnobs);
-addDecorator(withA11y as any);
-addDecorator(themeDecorator);
+export const decorators = [
+    (Story) => {
+        return (
+            <ThemeProvider theme={baseTheme}>
+                <Story />
+            </ThemeProvider>
+        );
+    },
+];

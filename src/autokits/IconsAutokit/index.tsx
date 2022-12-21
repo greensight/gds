@@ -1,9 +1,10 @@
-import React from 'react';
 import deepmerge from 'deepmerge';
-import { Icon } from './Icon';
+import React from 'react';
+
 import { Layout } from '../../components/Layout';
-import { scale } from '../../utils/scale';
 import { typography } from '../../helpers/typography';
+import { scale } from '../../utils/scale';
+import { Icon } from './Icon';
 
 export interface IconsAutokitProps {
     /** Starting heading level. */

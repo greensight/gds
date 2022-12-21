@@ -1,5 +1,6 @@
-import React from 'react';
 import { DecoratorFn } from '@storybook/react';
+import React from 'react';
+
 import { scale } from '../../src/utils/scale';
 
 const centeredDecorator: DecoratorFn = (storyFn) => (

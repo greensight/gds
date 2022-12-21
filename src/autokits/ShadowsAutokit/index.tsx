@@ -1,9 +1,10 @@
 import React from 'react';
-import { Shadow } from './Shadow';
+
 import { Layout } from '../../components/Layout';
-import { useTheme } from '../../utils/useTheme';
-import { scale } from '../../utils/scale';
 import { typography } from '../../helpers/typography';
+import { scale } from '../../utils/scale';
+import { useTheme } from '../../utils/useTheme';
+import { Shadow } from './Shadow';
 
 /**
  * Autokit for shadows tokens `theme.shadows`.

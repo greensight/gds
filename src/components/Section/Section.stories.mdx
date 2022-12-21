@@ -1,36 +1,43 @@
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
-import { boolean, number, color } from '@storybook/addon-knobs';
-import { scale } from '../../utils/scale';
-import { baseTheme } from '../../utils/baseTheme';
-import { Placeholder } from '../../helpers/Placeholder';
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs';
+
 import { Section } from '.';
+import { Placeholder } from '../../helpers/Placeholder';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
 
 <Meta title="Components / Helpers / Section" component={Section} />
 
 # Section
 
-<Story name="Knobs">
-    <Section
-        container={boolean('container', true)}
-        mb={number('mb', 0, {
-            min: 0,
-            max: 160,
-            step: 4,
-        })}
-        pt={number('pt', 0, {
-            min: 0,
-            max: 160,
-            step: 4,
-        })}
-        pb={number('pb', 0, {
-            min: 0,
-            max: 160,
-            step: 4,
-        })}
-        bg={color('bg', '#fff')}
-    >
-        <Placeholder>Here goes section content</Placeholder>
-    </Section>
+<Story
+    name="Knobs"
+    args={{
+        container: true,
+        mb: 0,
+        pt: 0,
+        pb: 0,
+        bg: '#fff',
+    }}
+    argTypes={{
+        mb: {
+            control: { type: 'number', min: 0, max: 160, step: 4 },
+        },
+        pt: {
+            control: { type: 'number', min: 0, max: 160, step: 4 },
+        },
+        pb: {
+            control: { type: 'number', min: 0, max: 160, step: 4 },
+        },
+        bg: {
+            control: 'color',
+        },
+    }}
+>
+    {(args) => (
+        <Section {...args}>
+            <Placeholder>Here goes section content</Placeholder>
+        </Section>
+    )}
 </Story>
 
 Обычно при разметке основного контента страницы он делится на разделы через тег section. Для упрощения этого процесса предусмотрен компонент `Section`.

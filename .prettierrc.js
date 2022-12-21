@@ -3,4 +3,7 @@ module.exports = {
     singleQuote: true,
     tabWidth: 4,
     trailingComma: 'all',
+    importOrder: ['^[./]', '^[../]'],
+    importOrderSeparation: true,
+    importOrderSortSpecifiers: true,
 };
