@@ -30,20 +30,6 @@ export default ({ config, mode }: { config: any; mode: 'DEVELOPMENT' | 'PRODUCTI
         use: ['babel-loader'],
     });
 
-    // const mdxLoaderRenderer = `
-    //     import React from 'react'
-    //     import { jsx } from '@emotion/react'
-    //     import {mdx as _mdx } from '@mdx-js/react'
-    //     const mdx = (name, props, ...children) => {
-    //     return (typeof name === 'string' || typeof name === 'symbol') && !(props && 'css' in props) ? _mdx(name, props, ...children) : jsx(name, props, ...children)
-    //     }
-    //     `;
-
-    // config.module.rules[4].use[1].options = {
-    //     ...config.module.rules[4].use[1].options,
-    //     renderer: mdxLoaderRenderer,
-    // };
-
     config.devtool = mode === 'DEVELOPMENT' && 'source-map';
     config.performance = false;
 
