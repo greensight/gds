@@ -1,0 +1,185 @@
+import { action } from '@storybook/addon-actions';
+import { Meta, Preview, Props, Source, Story } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { createButtonWithTheme, BaseButton } from '.';
+import { extractCSSOption } from '../../helpers/theming';
+import { typography } from '../../helpers/typography';
+import { baseTheme } from '../../utils/baseTheme';
+import { scale } from '../../utils/scale';
+
+<Meta title="Components / Future / Button" component={BaseButton} />
+
+# Button
+
+<Story
+    name="Basic"
+    args={{
+        block: false,
+        disabled: false,
+        Icon: baseTheme.global.placeholder,
+        iconAfter: false,
+        hidden: false,
+        theme: 'basic',
+        variant: 'ghost',
+        size: 'md',
+    }}
+    argTypes={{
+        theme: {
+            control: 'radio',
+            options: ['basic'],
+        },
+        variant: {
+            control: 'radio',
+            options: ['ghost', 'primary'],
+        },
+        size: {
+            control: 'radio',
+            options: ['md'],
+        },
+    }}
+>
+    {({ theme: themeName, ...args }) => {
+        const basicTheme = {
+            button: (state) => {
+                const sized = {
+                    sm: {
+                        ...typography('buttonSm'),
+                        borderRadius: 14,
+                    },
+                    md: {
+                        ...typography('buttonMd'),
+                        lineHeight: 1,
+                        borderRadius: scale(2),
+                    },
+                    lg: {
+                        ...typography('buttonLg'),
+                        borderRadius: scale(2),
+                    },
+                };
+                const varianted = {
+                    primary: {
+                        color: '#fff',
+                        background: 'grey',
+                        ':hover': {
+                            background: 'darkgrey',
+                        },
+                    },
+                    ghost: {
+                        border: '2px solid grey',
+                        ':hover': {
+                            background: '#fafafa',
+                        },
+                    },
+                };
+                return {
+                    padding: 16,
+                    display: 'inline-flex',
+                    width: 'fit-content',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    ...(state.block && {
+                        display: 'block',
+                        width: '100%',
+                    }),
+                    ...(state.rounded && {
+                        borderRadius: 12,
+                    }),
+                    ...extractCSSOption(sized, state.size),
+                    ...extractCSSOption(varianted, state.variant),
+                };
+            },
+            icon: (state) => {
+                const marginRule = `margin${!state.iconAfter ? 'Right' : 'Left'}`;
+                const invMarginRule = `margin${state.iconAfter ? 'Right' : 'Left'}`;
+                const iconCSS = {
+                    [marginRule]: !state.hidden ? (state.hasChildren ? 1 : -1) * scale(1, true) : undefined,
+                    [invMarginRule]: !state.hidden ? -scale(1, true) : undefined,
+                    width: scale(3, true),
+                    height: scale(3, true),
+                };
+                return { ...iconCSS, fill: 'currentcolor' };
+            },
+        };
+        const themes = {
+            basic: basicTheme,
+        };
+        const Button = createButtonWithTheme();
+        return (
+            <Button {...args} theme={themes[themeName]} onClick={action('onClick')}>
+                I'm a button
+            </Button>
+        );
+    }}
+</Story>
+
+Новая кнопка со статически типизированной темизацией.
+
+<Source
+    language="jsx"
+    dark
+    format
+    code={dedent`
+        enum Variants {
+            primary = 'primary',
+        }
+        enum Sizes {
+            sm = 'sm',
+        }
+        const basicButtonTheme = {
+            button: {
+                background: 'red',
+                color: 'white',
+            },
+            icon: {
+                width: 16,
+                height: 16,
+            }
+        }
+        const buttonThemes = {
+            basic: basicButtonTheme,
+        };
+        const Button = createButtonWithTheme<typeof Variants, typeof Sizes>();
+        export const Page = () => (
+            <Button
+                as="a"
+                href="#"
+                size="sm"
+                variant="primary"
+                theme={buttonThemes.basic}
+            >
+                Content
+            </Button>
+        );`}
+/>
+
+<Story name="Example">
+    {() => {
+        const basicButtonTheme = {
+            button: {
+                background: 'red',
+                color: 'white',
+            },
+            icon: {
+                width: 16,
+                height: 16,
+            },
+        };
+        const buttonThemes = {
+            basic: basicButtonTheme,
+        };
+        const Button = createButtonWithTheme();
+        return (
+            <Button
+                as="a"
+                href="#"
+                size="sm"
+                variant="primary"
+                theme={buttonThemes.basic}
+                Icon={baseTheme.global.placeholder}
+            >
+                Content
+            </Button>
+        );
+    }}
+</Story>
