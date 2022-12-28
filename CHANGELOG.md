@@ -1,3 +1,8 @@
+## 3.0.0-beta (December 28, 2022)
+-   🔥 New experimental theming conventions ([read more](?path=/docs/dev-theming2-0--page));
+-   🔥 New type-safe `createMediaQueries()` function;
+-   ✨ FutureButton component as an examplel of new theming conventions.
+
 ## 2.5.0 (December 21, 2022)
 
 - 🔥 Update babel, rollup, webpack, typescript, eslint, prettier, storybook to latest versions;

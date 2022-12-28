@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import { Meta, Preview, Props, Source, Story } from '@storybook/addon-docs';
 import dedent from 'ts-dedent';
 
-import { createButtonWithTheme, BaseButton } from '.';
+import { BaseButton, createButtonWithTheme } from '.';
 import { extractCSSOption } from '../../helpers/theming';
 import { typography } from '../../helpers/typography';
 import { baseTheme } from '../../utils/baseTheme';
@@ -73,7 +73,7 @@ import { scale } from '../../utils/scale';
                     },
                 };
                 return {
-                    padding: 16,
+                    padding: scale(2),
                     display: 'inline-flex',
                     width: 'fit-content',
                     justifyContent: 'center',
@@ -128,13 +128,18 @@ import { scale } from '../../utils/scale';
         }
         const basicButtonTheme = {
             button: {
-                background: 'red',
-                color: 'white',
+                border: '1px dashed #333333',
+                padding: scale(2),
+                color: 'black',
+                display: 'flex',
+                gap: scale(1, true),
+                alignItems: 'center',
+                width: 'fit-content',
             },
             icon: {
-                width: 16,
-                height: 16,
-            }
+                width: scale(2),
+                height: scale(2),
+            },
         }
         const buttonThemes = {
             basic: basicButtonTheme,
@@ -157,12 +162,17 @@ import { scale } from '../../utils/scale';
     {() => {
         const basicButtonTheme = {
             button: {
-                background: 'red',
-                color: 'white',
+                border: '1px dashed #333333',
+                padding: scale(2),
+                color: 'black',
+                display: 'flex',
+                gap: scale(1, true),
+                alignItems: 'center',
+                width: 'fit-content',
             },
             icon: {
-                width: 16,
-                height: 16,
+                width: scale(2),
+                height: scale(2),
             },
         };
         const buttonThemes = {
@@ -177,9 +187,34 @@ import { scale } from '../../utils/scale';
                 variant="primary"
                 theme={buttonThemes.basic}
                 Icon={baseTheme.global.placeholder}
+                onClick={(e) => {
+                    e.preventDefault();
+                }}
             >
                 Content
             </Button>
         );
     }}
 </Story>
+
+<Source
+    language="jsx"
+    dark
+    format
+    code={dedent`
+        export interface ButtonState {
+            // скрыт ли текст кнопки
+            hidden: boolean;
+            // выключена ли кнопка
+            disabled: boolean;
+            // передан ли children
+            hasChildren: boolean;
+            // растягивать ли кнопку
+            block: boolean;
+            // иконка справа?
+            iconAfter: boolean;
+            // включено скругление иконки?
+            rounded: boolean;
+        }
+    `}
+/>
