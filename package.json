@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "2.5.1",
+    "version": "3.0.0-beta",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
@@ -69,7 +69,8 @@
         "deepmerge": "^4.2.2",
         "focus-visible": "^5.0.2",
         "normalize.css": "^8.0.1",
-        "tippy.js": "^5.2.1"
+        "tippy.js": "^5.2.1",
+        "ts-dedent": "^2.2.0"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",

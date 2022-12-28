@@ -1,0 +1,316 @@
+import { Meta, Props } from '@storybook/addon-docs';
+
+import { ComponentsTheme, Theme, Tokens } from '../../.storybook/docgen/Theme';
+
+<Meta title="Dev / Theming2.0" />
+
+# Theming
+
+*Новвоведение версии 3.0.0-beta*
+
+Разработан новый экспериментальный подход к темизации компонентов.
+Идея подхода базируется на пяти понятиях: `состояние`, `подкомпонент`, `тема`, `вариант`, `размер`.
+
+**Подкомпонент** - составная часть компонента. Для компонента "кнопка" это - текст и иконка. Для селекта это - поле для ввода, стрелка, список опций, группа опций, опция
+
+**Состояние** - набор параметров, определяющих внешний вид компонента. Например, `block` - растягивать ли компонент до ширины родителя, `rounded` - скруглять ли углы, `hasError` - имеется ли ошибка в компоненте, `disabled` - выключен ли для редактирования компонент, и т.д.
+
+**Тема** - словарик, где ключ - это название подкомпонента, а значение - функция, принимающая на вход **состояние**, и возвращающая CSSObject
+
+**Пример:**
+
+```js
+export const basicTheme: MyComponentTheme = {
+    subComponentA: (state) => {
+        if (state.disabled) return { background: 'grey', cursor: 'not-allowed' };
+
+        return {
+            background: 'green',
+            cursor: 'pointer',
+        };
+    },
+};
+```
+
+**Вариант** - цветовая вариация компонента. Например, `primary`, `secondary`, `danger`, `ghost`
+
+**Размер** - вариация размера компонента. Например, `sm`, `md`, `lg`
+
+### Какие проблемы решает новый подход
+
+1. Становится возможным явное разделение представления и логики компонента. Можно выделить нестилизованные компоненты, и сделать полноценную UI-библиотеку на базе GDS.
+2. Появляется возможность создавать разные темы для одного компонента. Полезно для проектов, где есть публичный и административный раздел, с отличающимися по виду компонентами.
+3. Открывается возможность переиспользовать стили для разных подкомпонентов в разных темах
+4. Появляется возможность описывать различные параметры состояния компонента, и менять в соответствие с ними внешний вид подкомпонентов. Каждый компонент и его состояние уникальны, предыдущий же подход не учитывал это наблюдение.
+
+### Правила, предъявляемые к темам и компонентам
+
+1. Компонент **не должен** внутри себя определять какие-либо стили, которые нельзя переопределить через тему
+2. Компонент **должен** иметь конечный набор подкомпонентов, и параметров, описывающих его состояние
+3. Темы компонентов **должны** именоваться согласно разделу, в котором они расположены
+4. Каждая тема компонента **должна** поддерживать `варианты` и `размеры` компонента, или, по крайней мере, иметь fallback облик для неподдерживаемых `вариантов` и `размеров`.
+
+### Инструкция по переводу компонента на новую темизацию:
+
+1. Удалить из кода компонента и всех его подкомпонентов стили, имеющие в себе:
+
+    1. scale(), typography(), color
+    2. медиа-запросы
+    3. условные выражения вида
+
+    ```js
+    ...(condition && {
+        cssProperty: 'someValue'
+    })
+    ```
+
+2. Создать интерфейс, описывающий все параметры состояния компонента, пример:
+
+```js
+export interface ButtonState {
+    // скрыт ли текст кнопки
+    hidden: boolean;
+    // выключена ли кнопка
+    disabled: boolean;
+    // передан ли children
+    hasChildren: boolean;
+    // растягивать ли кнопку
+    block: boolean;
+    // иконка справа?
+    iconAfter: boolean;
+    // включено скругление иконки?
+    rounded: boolean;
+}
+```
+
+3. Создать вспомогательный тип для объединения размера, варианта и состояния:
+
+```js
+export type ButtonStateFull<V extends EnumLike, S extends EnumLike> = BaseThemeState<V, S> & ButtonState;
+```
+
+4. Создать интерфейс темы, в котором определятся все подкомпоненты:
+
+```js
+export interface ButtonTheme<V extends EnumLike, S extends EnumLike> {
+    button: StyleDefinition<ButtonStateFull<V, S>>;
+    icon: StyleDefinition<ButtonStateFull<V, S>>;
+}
+```
+
+5. Создать интерфейс пропов компонента:
+
+```js
+export interface ButtonProps<V extends EnumLike, S extends EnumLike>
+    extends Partial<BaseThemeState<V, S, ButtonTheme<V, S>>>, // важный момент
+        Partial<ButtonState> { // важный момент
+    children?: ReactNode;
+    Icon?: SVGRIcon | FC<any>;
+    external?: boolean;
+    // ...etc
+}
+```
+
+6. Изменить определение самого компонента для работы с generic `вариантом` и `размером`:
+
+```js
+export const BaseButton = <V extends EnumLike, S extends EnumLike>(
+    {
+        children,
+        block = false,
+        theme, // theme, variant, size будут
+        size, // будет типизированы дальше, поэтому не имеют значения по-умолчанию
+        variant,
+        Icon,
+        iconAfter = false, // важно дать значения по-умолчанию для параметров состояния,
+        hidden = false, // чтобы избежать null check внутри темы
+        type = 'button',
+        external = false,
+        disabled = false,
+        rounded = true,
+        css,
+        ...props
+    }: ButtonProps<V, S>,
+    ref: Ref<HTMLButtonElement>,
+) => {
+```
+
+Внутри же компонента необходимо создать объект состояния:
+
+```js
+const state = useMemo<ButtonStateFull<V, S>>(
+    () => ({
+        disabled,
+        hasChildren,
+        hidden,
+        size,
+        variant,
+        block,
+        iconAfter,
+        rounded,
+    }),
+    [block, disabled, hasChildren, hidden, iconAfter, size, variant, rounded],
+);
+
+if (!theme) {
+    throw new Error('[Button] theme is required');
+}
+
+const { button: totalCSS, icon: iconCSS } = useThemeCSS(theme!, state);
+```
+
+7. При необходимости использования `ref` обернуть в `forwardRef`:
+
+```js
+const ButtonRef = forwardRef(BaseButton) as typeof BaseButton;
+```
+
+8. Создать функцию, которая насыщает generic'и компонента `вариантами` и `размерами`, определяя тип для темы и статически типизируя `варианты` и `размеры`:
+
+```js
+export const createButtonWithTheme = <V extends EnumLike, S extends EnumLike>(
+    defaultTheme: ButtonTheme<V, S>, // тема по-умолчанию
+    defaultVariant: V | keyof V, // вариант по-умолчанию
+    defaultSize: S | keyof S, // размер по-умолчанию
+) => {
+    type ButtonReturn = ReturnType<typeof ButtonRef>;
+
+    const ThemedButton = (({ theme = defaultTheme, variant = defaultVariant, size = defaultSize, ...props }, ref) => (
+        <ButtonRef ref={ref} theme={theme} variant={variant} size={size} {...props} />
+    )) as (props: ButtonProps<V, S>, ref: Ref<HTMLButtonElement>) => ButtonReturn;
+
+    (ThemedButton as any).displayName = 'Button';
+
+    return forwardRef(ThemedButton) as typeof ThemedButton;
+};
+```
+
+9. Создаем (или меняем) структуру папок компонента
+
+```
+components/
+    ComponentName/
+        themes/
+            basic.ts
+        index.ts
+        types.ts
+```
+
+Содержимое basic.ts:
+
+```js
+import { ButtonTheme, OptionizedCSS, colors, extractCSSOption, scale, typography } from '@scripts/gds';
+
+import { createButtonWithTheme } from '../path/to/my/component';
+
+// Конечный набор вариантов компонента
+export enum ButtonVariant {
+    primary = 'primary',
+    secondary = 'secondary',
+    outline = 'outline',
+    fill = 'fill',
+    ghost = 'ghost',
+    dangerous = 'dangerous',
+}
+
+// Конечный набор размеров компонента
+export enum ButtonSize {
+    sm = 'sm',
+    md = 'md',
+}
+
+// Определяем тему
+const basicTheme: ButtonTheme<typeof ButtonVariant, typeof ButtonSize> = {
+    button: state => {
+        const sized: OptionizedCSS<typeof ButtonSize> = {
+            sm: {
+                padding: `${scale(1, true) + 0.5}px ${scale(1)}px`,
+                ...(typography('button') as any),
+            },
+            md: {
+                // other dimensions..
+            },
+        };
+
+        const varianted: OptionizedCSS<typeof ButtonVariant> = {
+            primary: {
+                backgroundColor: colors.primary,
+                color: colors.white,
+                ':hover': {
+                    backgroundColor: colors.primaryHover,
+                },
+                ...(state.disabled && {
+                    backgroundColor: colors.grey200,
+                    color: colors.grey800,
+                }),
+            },
+            secondary: {
+                // other colors...
+            },
+        };
+
+        return {
+            /// common styles...
+            ...extractCSSOption(sized, state.size),
+            ...extractCSSOption(varianted, state.variant),
+        };
+    },
+    icon: state => {
+        /// return styles..
+    },
+};
+
+export const BUTTON_THEMES = {
+    basic: basicTheme,
+    // можно расширять для других разделов. можно выносить файл с темой в отдельный файл и переиспользовать
+    custom: {
+        ...basicTheme,
+        icon: (state) => {
+            const css = basicTheme.icon(state);
+
+            return {
+                ...css,
+                background: 'red', // перезаписываем лишь одно свойство для одного компонента из темы basic
+            };
+        },
+    }
+}
+```
+
+10. Осталось объявить в удобном файле итоговый компонент.
+Для компонентов внутри проекта, рекомендуется объявлять компонент в файле самого компонента(components/ComponentName/index.tsx), импортируя темы, варианты и размеры (в примере - BUTTON_THEMES, ButtonVariant и ButtonSize)
+Для компонентов, объявленных в GDS, рекомендуется перенести scripts/themes/[componentName].ts в components/ComponentName/themes/, и объявлять компонент в components/ComponentName/index.tsx
+
+```js
+export const Button = createButtonWithTheme<typeof ButtonVariant, typeof ButtonSize>(
+    BUTTON_THEMES.basic,
+    ButtonVariant.primary,
+    ButtonSize.md
+);
+```
+
+11. Теперь в файле scripts/gds.ts необходимо создать константу для работы с медиа запросами
+
+```js
+import {
+    // ...
+    createMediaQueries,
+} from '@greensight/gds';
+
+import tokens from '../../public/tokens.json';
+
+const {
+    layout: { breakpoints },
+} = tokens;
+
+export const MEDIA_QUERIES = createMediaQueries(breakpoints);
+```
+
+Готово! Теперь у вас есть компонент кнопки
+
+Можете начинать использовать:
+```js
+<FutureButton variant="primary" size="sm">
+    Я новая кнопка
+</FutureButton>
+```
