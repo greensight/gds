@@ -5,9 +5,61 @@ const axios = require('axios');
 const { red } = require('chalk');
 const figma = require('./figma');
 
+const ignorantRegex = new RegExp(` fill="(${['none', 'transparent', ''].join('|')})"`, 'g');
+const getColorInformation = (dirtySvg) => {
+    let isBiColor = false;
+    let isMultiColor = false;
+
+    const svg = dirtySvg.replace(ignorantRegex, '');
+
+    const matches = [...svg.matchAll(/ fill="(.*?)"/g)];
+    const uniqueColors = new Set(matches.map((e) => e[1].toLowerCase()));
+
+    const isBlackAndWhite =
+        uniqueColors.size === 2 &&
+        ((uniqueColors.has('black') && uniqueColors.has('white')) ||
+            (uniqueColors.has('black') && uniqueColors.has('#fff')) ||
+            (uniqueColors.has('black') && uniqueColors.has('#ffffff')) ||
+            (uniqueColors.has('#000') && uniqueColors.has('white')) ||
+            (uniqueColors.has('#000') && uniqueColors.has('#fff')) ||
+            (uniqueColors.has('#000') && uniqueColors.has('#ffffff')) ||
+            (uniqueColors.has('#000000') && uniqueColors.has('white')) ||
+            (uniqueColors.has('#000000') && uniqueColors.has('#fff')) ||
+            (uniqueColors.has('#000000') && uniqueColors.has('#ffffff')));
+
+    if (isBlackAndWhite) {
+        isBiColor = true;
+    } else if (uniqueColors.size >= 2) {
+        isMultiColor = true;
+    }
+
+    return {
+        isBiColor,
+        isMultiColor,
+        uniqueColors,
+        matches,
+        svg,
+    };
+};
+
 class RemoveFillStream extends Transform {
+    constructor(iconUrl) {
+        super();
+
+        this.iconUrl = iconUrl;
+    }
+
     _transform(data, encoding, callback) {
-        this.push(data.toString().replace(/ fill=".*?"/g, ''));
+        const { svg, isMultiColor } = getColorInformation(data.toString());
+
+        if (isMultiColor) {
+            this.push(svg);
+
+            callback();
+            return;
+        }
+
+        this.push(svg.replace(/ fill=".*?"/g, ''));
         callback();
     }
 }
@@ -33,7 +85,7 @@ async function loadImage(icon, iconsDir) {
     }
     const writeStream = fs.createWriteStream(resolve(path));
     const response = await axios(icon.url, { responseType: 'stream' });
-    response.data.pipe(new RemoveFillStream()).pipe(writeStream);
+    response.data.pipe(new RemoveFillStream(icon.name)).pipe(writeStream);
 
     return new Promise((resolve, reject) => {
         writeStream.on('finish', () => {

@@ -18,7 +18,7 @@ async function loadTokens() {
         try {
             config = JSON.parse(configContent);
         } catch (error) {
-            console.log(red('Config file must contain an object literal'));
+            console.error(red('Config file must contain an object literal'));
             process.exit(1);
         }
 
@@ -31,7 +31,7 @@ async function loadTokens() {
         if (!tokens) tokens = tokensFullList;
 
         if (!config.figmaToken) {
-            console.log(
+            console.error(
                 red(
                     'Add "figmaToken" property to your config. See details: https://www.figma.com/developers/api#authentication',
                 ),
@@ -40,7 +40,7 @@ async function loadTokens() {
         }
 
         if (!config.figmaId) {
-            console.log(
+            console.error(
                 red(
                     `Add "figmaId" property to your config. Get it from Figma file link: https://www.figma.com/file/${bold(
                         'FIGMA_ID',
@@ -52,9 +52,13 @@ async function loadTokens() {
 
         config = { ...defaults, ...config, tokens };
 
+        console.log('Getting tokens:', tokens);
+
         getTokens(config);
     } catch {
-        console.log(red('Add "gds.config.json" config file in root directory or set another location with "-c" flag'));
+        console.error(
+            red('Add "gds.config.json" config file in root directory or set another location with "-c" flag'),
+        );
     }
 }
 
