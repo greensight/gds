@@ -5,9 +5,50 @@ const axios = require('axios');
 const { red } = require('chalk');
 const figma = require('./figma');
 
+const ignorantRegex = new RegExp(` fill="(${['none', 'transparent', ''].join('|')})"`, 'g');
+const getColorInformation = (dirtySvg) => {
+    const svg = dirtySvg.replace(ignorantRegex, '');
+
+    const matches = [...svg.matchAll(/ fill="(.*?)"/g)];
+    const uniqueColors = new Set(matches.map((e) => e[1].toLowerCase()));
+
+    const blackCodes = ['black', '#000', '#000000'];
+    const whiteCodes = ['white', '#fff', '#ffffff'];
+
+    const isBlackAndWhite =
+        uniqueColors.size === 2 &&
+        blackCodes.some((black) => uniqueColors.has(black)) &&
+        whiteCodes.some((white) => uniqueColors.has(white));
+
+    return {
+        isBiColor: isBlackAndWhite,
+        isMultiColor: !isBlackAndWhite && uniqueColors.size >= 2,
+        uniqueColors,
+        matches,
+        svg,
+    };
+};
+
 class RemoveFillStream extends Transform {
+    constructor(iconUrl) {
+        super();
+
+        this.iconUrl = iconUrl;
+    }
+
     _transform(data, encoding, callback) {
-        this.push(data.toString().replace(/ fill=".*?"/g, ''));
+        // TODO: добавить опцию в настройки, обрезать ли fill у ЧБ-иконок;
+        // добавить массив имен иконок в настройки, чтобы не обрезать у них fill.
+        const { svg, isMultiColor, isBiColor } = getColorInformation(data.toString());
+
+        if (isMultiColor) {
+            this.push(svg);
+
+            callback();
+            return;
+        }
+
+        this.push(svg.replace(/ fill=".*?"/g, ''));
         callback();
     }
 }
@@ -33,7 +74,7 @@ async function loadImage(icon, iconsDir) {
     }
     const writeStream = fs.createWriteStream(resolve(path));
     const response = await axios(icon.url, { responseType: 'stream' });
-    response.data.pipe(new RemoveFillStream()).pipe(writeStream);
+    response.data.pipe(new RemoveFillStream(icon.name)).pipe(writeStream);
 
     return new Promise((resolve, reject) => {
         writeStream.on('finish', () => {

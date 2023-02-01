@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "3.0.0-beta",
+    "version": "3.0.1-beta",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
@@ -121,7 +121,7 @@
         "@types/webpack-env": "^1.18.0",
         "@typescript-eslint/eslint-plugin": "^5.37.0",
         "@typescript-eslint/parser": "^5.37.0",
-        "@yarnpkg/pnpify": "^2.3.2",
+        "@yarnpkg/pnpify": "^2.4.0",
         "babel-loader": "^8.1.0",
         "core-js": "^3.6.5",
         "eslint": "^8",
@@ -159,5 +159,5 @@
     "engines": {
         "node": ">= 11.7.0"
     },
-    "packageManager": "yarn@3.1.1"
+    "packageManager": "yarn@3.3.1"
 }

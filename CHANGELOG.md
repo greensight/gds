@@ -1,3 +1,6 @@
+## 3.0.1-beta (February 01, 2023)
+-   Fix colorful icons being corrupted during `yarn tokens` command
+
 ## 3.0.0-beta (December 28, 2022)
 -   🔥 New experimental theming conventions ([read more](?path=/docs/dev-theming2-0--page));
 -   🔥 New type-safe `createMediaQueries()` function;
