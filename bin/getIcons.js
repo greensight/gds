@@ -7,35 +7,22 @@ const figma = require('./figma');
 
 const ignorantRegex = new RegExp(` fill="(${['none', 'transparent', ''].join('|')})"`, 'g');
 const getColorInformation = (dirtySvg) => {
-    let isBiColor = false;
-    let isMultiColor = false;
-
     const svg = dirtySvg.replace(ignorantRegex, '');
 
     const matches = [...svg.matchAll(/ fill="(.*?)"/g)];
     const uniqueColors = new Set(matches.map((e) => e[1].toLowerCase()));
 
+    const blackCodes = ['black', '#000', '#000000'];
+    const whiteCodes = ['white', '#fff', '#ffffff'];
+
     const isBlackAndWhite =
         uniqueColors.size === 2 &&
-        ((uniqueColors.has('black') && uniqueColors.has('white')) ||
-            (uniqueColors.has('black') && uniqueColors.has('#fff')) ||
-            (uniqueColors.has('black') && uniqueColors.has('#ffffff')) ||
-            (uniqueColors.has('#000') && uniqueColors.has('white')) ||
-            (uniqueColors.has('#000') && uniqueColors.has('#fff')) ||
-            (uniqueColors.has('#000') && uniqueColors.has('#ffffff')) ||
-            (uniqueColors.has('#000000') && uniqueColors.has('white')) ||
-            (uniqueColors.has('#000000') && uniqueColors.has('#fff')) ||
-            (uniqueColors.has('#000000') && uniqueColors.has('#ffffff')));
-
-    if (isBlackAndWhite) {
-        isBiColor = true;
-    } else if (uniqueColors.size >= 2) {
-        isMultiColor = true;
-    }
+        blackCodes.some((black) => uniqueColors.has(black)) &&
+        whiteCodes.some((white) => uniqueColors.has(white));
 
     return {
-        isBiColor,
-        isMultiColor,
+        isBiColor: isBlackAndWhite,
+        isMultiColor: !isBlackAndWhite && uniqueColors.size >= 2,
         uniqueColors,
         matches,
         svg,
@@ -50,7 +37,9 @@ class RemoveFillStream extends Transform {
     }
 
     _transform(data, encoding, callback) {
-        const { svg, isMultiColor } = getColorInformation(data.toString());
+        // TODO: добавить опцию в настройки, обрезать ли fill у ЧБ-иконок;
+        // добавить массив имен иконок в настройки, чтобы не обрезать у них fill.
+        const { svg, isMultiColor, isBiColor } = getColorInformation(data.toString());
 
         if (isMultiColor) {
             this.push(svg);
