@@ -23,6 +23,8 @@ import { scale } from '../../utils/scale';
         theme: 'basic',
         variant: 'ghost',
         size: 'md',
+        typography: 'bodyMd',
+        wrap: false,
     }}
     argTypes={{
         theme: {
@@ -35,7 +37,11 @@ import { scale } from '../../utils/scale';
         },
         size: {
             control: 'radio',
-            options: ['md'],
+            options: ['sm', 'md', 'lg'],
+        },
+        typography: {
+            control: 'select',
+            options: ['bodyMd', 'bodyLg'],
         },
     }}
 >
@@ -85,18 +91,36 @@ import { scale } from '../../utils/scale';
                     ...(state.rounded && {
                         borderRadius: 12,
                     }),
+                    ...(state.wrap && {
+                        overflowWrap: 'break-word',
+                        wordBreak: 'break-word',
+                    }),
                     ...extractCSSOption(sized, state.size),
                     ...extractCSSOption(varianted, state.variant),
                 };
             },
             icon: (state) => {
+                const sized = {
+                    sm: {
+                        width: scale(3, true),
+                        height: scale(3, true),
+                    },
+                    md: {
+                        width: scale(4, true),
+                        height: scale(4, true),
+                    },
+                    lg: {
+                        width: scale(6, true),
+                        height: scale(6, true),
+                    },
+                };
                 const marginRule = `margin${!state.iconAfter ? 'Right' : 'Left'}`;
                 const invMarginRule = `margin${state.iconAfter ? 'Right' : 'Left'}`;
                 const iconCSS = {
                     [marginRule]: !state.hidden ? (state.hasChildren ? 1 : -1) * scale(1, true) : undefined,
                     [invMarginRule]: !state.hidden ? -scale(1, true) : undefined,
-                    width: scale(3, true),
-                    height: scale(3, true),
+                    ...extractCSSOption(sized, state.size),
+                    flexShrink: 0
                 };
                 return { ...iconCSS, fill: 'currentcolor' };
             },
@@ -104,11 +128,24 @@ import { scale } from '../../utils/scale';
         const themes = {
             basic: basicTheme,
         };
-        const Button = createButtonWithTheme();
+        const Button = createButtonWithTheme(basicTheme, 'primary', 'md', (font) => ({
+            fontSize: 14,
+            ...(font === 'bodyLg' && {
+                fontSize: 21,
+            }),
+        }));
         return (
-            <Button {...args} theme={themes[themeName]} onClick={action('onClick')}>
-                I'm a button
-            </Button>
+            <div
+                style={{
+                    ...(args.wrap && {
+                        maxWidth: 100,
+                    }),
+                }}
+            >
+                <Button {...args} theme={themes[themeName]} onClick={action('onClick')}>
+                    I'm a button
+                </Button>
+            </div>
         );
     }}
 </Story>
