@@ -32,7 +32,7 @@ import type { ButtonProps, ButtonStateFull, ButtonTheme } from './types';
  * </Button>
  *);
  */
-export const BaseButton = <V extends EnumLike, S extends EnumLike, T extends ElementType = 'button'>(
+export const BaseButton = <V extends EnumLike, S extends EnumLike, Typography, T extends ElementType = 'button'>(
     {
         children,
         block = false,
@@ -48,12 +48,15 @@ export const BaseButton = <V extends EnumLike, S extends EnumLike, T extends Ele
         disabled = false,
         rounded = true,
         css,
+        typography,
+        wrap = false,
+        getTypographyCSS,
         ...props
-    }: ButtonProps<V, S, T>,
+    }: ButtonProps<V, S, Typography, T>,
     ref: Ref<HTMLButtonElement>,
 ) => {
     const hasChildren = !!children;
-    const state = useMemo<ButtonStateFull<V, S>>(
+    const state = useMemo<ButtonStateFull<V, S, Typography>>(
         () => ({
             disabled,
             hasChildren,
@@ -63,8 +66,10 @@ export const BaseButton = <V extends EnumLike, S extends EnumLike, T extends Ele
             block,
             iconAfter,
             rounded,
+            typography,
+            wrap,
         }),
-        [block, disabled, hasChildren, hidden, iconAfter, size, variant, rounded],
+        [disabled, hasChildren, hidden, size, variant, block, iconAfter, rounded, typography, wrap],
     );
 
     if (!theme) {
@@ -76,6 +81,8 @@ export const BaseButton = <V extends EnumLike, S extends EnumLike, T extends Ele
 
     const icon = Icon ? <Icon css={iconCSS} /> : null;
 
+    console.log({ typography, getTypographyCSS });
+
     return jsx(
         as || 'button',
         {
@@ -83,7 +90,7 @@ export const BaseButton = <V extends EnumLike, S extends EnumLike, T extends Ele
             type: !as || as === 'button' ? type : null,
             target: external ? '_blank' : null,
             rel: external ? 'nofollow noopener' : null,
-            css: [totalCSS, css],
+            css: [totalCSS, typography && getTypographyCSS ? getTypographyCSS(typography) : {}, css],
             disabled,
             ...props,
         },
@@ -97,23 +104,34 @@ export const BaseButton = <V extends EnumLike, S extends EnumLike, T extends Ele
 
 const ButtonRef = forwardRef(BaseButton) as typeof BaseButton;
 
-export const createButtonWithTheme = <V extends EnumLike, S extends EnumLike>(
-    defaultTheme: ButtonTheme<V, S>,
+export const createButtonWithTheme = <V extends EnumLike, S extends EnumLike, Typography>(
+    defaultTheme: ButtonTheme<V, S, Typography>,
     defaultVariant: V | keyof V,
     defaultSize: S | keyof S,
+    getTypographyCSS: ButtonProps<V, S, Typography>['getTypographyCSS'],
 ) => {
     type ButtonReturn = ReturnType<typeof ButtonRef>;
 
-    const ThemedButton = (({ theme = defaultTheme, variant = defaultVariant, size = defaultSize, ...props }, ref) => (
-        <ButtonRef ref={ref} theme={theme} variant={variant} size={size} {...props} />
+    const renderThemedButton = ((
+        { theme = defaultTheme, variant = defaultVariant, size = defaultSize, ...props },
+        ref,
+    ) => (
+        <ButtonRef
+            ref={ref}
+            getTypographyCSS={getTypographyCSS}
+            theme={theme as any}
+            variant={variant as any}
+            size={size as any}
+            {...(props as any)}
+        />
     )) as <T extends React.ElementType<any> = 'button'>(
-        props: ButtonProps<V, S, T>,
+        props: ButtonProps<V, S, Typography, T>,
         ref: Ref<HTMLButtonElement>,
     ) => ButtonReturn;
 
-    (ThemedButton as any).displayName = 'Button';
+    (renderThemedButton as any).displayName = 'Button';
 
-    return forwardRef(ThemedButton) as typeof ThemedButton;
+    return forwardRef(renderThemedButton) as typeof renderThemedButton;
 };
 
 export type { ButtonProps, ButtonBaseProps, ButtonState, ButtonTheme } from './types';

@@ -1,3 +1,6 @@
+## 3.0.2-beta (April 05, 2023)
+-   Add new state fields for FutureButton and typography function argument
+
 ## 3.0.1-beta (February 01, 2023)
 -   Fix colorful icons being corrupted during `yarn tokens` command
 
