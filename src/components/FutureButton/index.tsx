@@ -81,8 +81,6 @@ export const BaseButton = <V extends EnumLike, S extends EnumLike, Typography, T
 
     const icon = Icon ? <Icon css={iconCSS} /> : null;
 
-    console.log({ typography, getTypographyCSS });
-
     return jsx(
         as || 'button',
         {
