@@ -102,6 +102,9 @@ export const BaseButton = <V extends EnumLike, S extends EnumLike, Typography, T
 
 const ButtonRef = forwardRef(BaseButton) as typeof BaseButton;
 
+/**
+ * Proxy component setting initial values for theme, variant, and size for button in the used project.
+ */
 export const createButtonWithTheme = <V extends EnumLike, S extends EnumLike, Typography>(
     defaultTheme: ButtonTheme<V, S, Typography>,
     defaultVariant: V | keyof V,
@@ -110,6 +113,7 @@ export const createButtonWithTheme = <V extends EnumLike, S extends EnumLike, Ty
 ) => {
     type ButtonReturn = ReturnType<typeof ButtonRef>;
 
+    // as any нужны т.к. в новых версиях ts ругается в целом на такой компонент
     const renderThemedButton = ((
         { theme = defaultTheme, variant = defaultVariant, size = defaultSize, ...props },
         ref,
