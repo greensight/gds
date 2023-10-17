@@ -1,13 +1,16 @@
 {
     "name": "@greensight/gds",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
         "Greensight",
         "Design System"
     ],
-    "repository": "https://github.com/greensight/gds",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/greensight/gds.git"
+    },
     "homepage": "https://github.com/greensight/gds",
     "license": "MIT",
     "sideEffects": false,
@@ -159,5 +162,8 @@
     "engines": {
         "node": ">= 11.7.0"
     },
-    "packageManager": "yarn@3.3.1"
+    "packageManager": "yarn@3.3.1",
+    "bugs": {
+        "url": "https://github.com/greensight/gds/issues"
+    }
 }
