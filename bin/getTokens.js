@@ -39,6 +39,7 @@ async function getTokens(config) {
     const axios = figma(config.figmaToken);
     let response;
     try {
+        console.log('requesting...');
         response = await axios(`files/${config.figmaId}`);
     } catch (err) {
         if (err.response.status === 403) {

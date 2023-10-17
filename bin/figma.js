@@ -6,6 +6,7 @@ const figmaAxios = (figmaToken) =>
         headers: {
             'X-Figma-Token': figmaToken,
         },
+        timeout: 10000,
     });
 
 module.exports = figmaAxios;
