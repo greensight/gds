@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { resolve } = require('path');
-const { Transform } = require('stream');
-const axios = require('axios');
+const { Transform, Readable } = require('stream');
+const fetch = require('node-fetch-commonjs');
 const { red } = require('chalk');
 const figma = require('./figma');
 
@@ -53,6 +53,21 @@ class RemoveFillStream extends Transform {
     }
 }
 
+const responseToReadable = (response) => {
+    const reader = response.body.getReader();
+    const rs = new Readable();
+    rs._read = async () => {
+        const result = await reader.read();
+        if (!result.done) {
+            rs.push(Buffer.from(result.value));
+        } else {
+            rs.push(null);
+            return;
+        }
+    };
+    return rs;
+};
+
 async function getImageLinks(iconsData, figmaToken, figmaId) {
     const iconIds = iconsData.map(({ id }) => id).join(',');
     const axios = figma(figmaToken);
@@ -73,8 +88,9 @@ async function loadImage(icon, iconsDir) {
         path = `${iconsDir}/${name}.svg`;
     }
     const writeStream = fs.createWriteStream(resolve(path));
-    const response = await axios(icon.url, { responseType: 'stream' });
-    response.data.pipe(new RemoveFillStream(icon.name)).pipe(writeStream);
+
+    const response = fetch(icon.url);
+    response.pipe(new RemoveFillStream(icon.name)).pipe(writeStream);
 
     return new Promise((resolve, reject) => {
         writeStream.on('finish', () => {
