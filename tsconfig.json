@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "types": ["node", "webpack-env", "@emotion/react/types/css-prop"],
+        "types": ["node", "webpack-env", "@emotion/react/types/css-prop", "vite/client"],
         "jsx": "react",
+        "module": "es2020",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "resolveJsonModule": true,
