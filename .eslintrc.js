@@ -35,6 +35,7 @@ module.exports = {
         },
     },
     rules: {
+        '@typescript-eslint/no-namespace': 0,
         '@typescript-eslint/ban-ts-comment': 0,
         '@typescript-eslint/camelcase': 0,
         '@typescript-eslint/explicit-function-return-type': 0,

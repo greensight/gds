@@ -1,4 +1,4 @@
-import Tippy, { TippyProps } from '@tippy.js/react';
+import Tippy, { TippyProps } from '@tippyjs/react';
 import React, { FC } from 'react';
 import 'tippy.js/animations/shift-away.css';
 import 'tippy.js/dist/tippy.css';

@@ -38,9 +38,11 @@ async function getToken(type, page, config) {
 async function getTokens(config) {
     const axios = figma(config.figmaToken);
     let response;
+    let interval;
     try {
-        console.log('requesting...');
+        console.log('requesting... This might take a minute...');
         response = await axios(`files/${config.figmaId}`);
+        clearInterval(interval);
     } catch (err) {
         if (err.response.status === 403) {
             console.error(red(`${err.message}. Check your "figmaToken"`));
@@ -53,7 +55,7 @@ async function getTokens(config) {
         process.exit(1);
     }
 
-    const page = response.data.document.children.find(({ name }) => name === config.page);
+    const page = response.document.children.find(({ name }) => name === config.page);
     if (!page) {
         const childrenNames = response.data.document.children.map((e) => e.name);
         console.log(red(`Cannot find page "${config.page}". Existing pages:`));
