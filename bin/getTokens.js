@@ -57,7 +57,7 @@ async function getTokens(config) {
 
     const page = response.document.children.find(({ name }) => name === config.page);
     if (!page) {
-        const childrenNames = response.data.document.children.map((e) => e.name);
+        const childrenNames = response.document.children.map((e) => e.name);
         console.log(red(`Cannot find page "${config.page}". Existing pages:`));
         console.log(red(childrenNames.join('\n')));
         process.exit(1);

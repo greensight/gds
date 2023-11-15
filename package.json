@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "3.0.6",
+    "version": "3.0.9",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
@@ -67,7 +67,7 @@
         "@emotion/react": "11.11.1",
         "@emotion/styled": "11.11.0",
         "@tippyjs/react": "4.2.6",
-        "chalk": "5.3.0",
+        "chalk": "4.1.1",
         "deepmerge": "^4.2.2",
         "focus-visible": "^5.0.2",
         "node-fetch-commonjs": "^3.3.2",
