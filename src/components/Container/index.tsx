@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { useCSSProperty } from '../../helpers/useCSSProperty';
 import { baseTheme } from '../../utils/baseTheme';
@@ -16,21 +16,23 @@ export const Container = ({ children, css, ...props }: ContainerProps) => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
 
+    const maxWidthCSS = useCSSProperty({ name: 'maxWidth', props: { value: layoutTheme.container } });
+    const paddingCSS = useCSSProperty({
+        name: 'padding',
+        props: { value: layoutTheme.padding },
+        transform: ({ value }) => `0 ${value}px`,
+    });
+
+    const marginLeftCSS = useCSSProperty({ name: 'marginLeft', props: { value: layoutTheme.marginLeft } });
+    const marginRightCSS = useCSSProperty({ name: 'marginRight', props: { value: layoutTheme.marginRight } });
+
+    const styles = useMemo(
+        () => [maxWidthCSS, paddingCSS, marginLeftCSS, marginRightCSS, css],
+        [css, marginLeftCSS, marginRightCSS, maxWidthCSS, paddingCSS],
+    );
+
     return (
-        <div
-            css={[
-                useCSSProperty({ name: 'maxWidth', props: { value: layoutTheme.container } }),
-                useCSSProperty({
-                    name: 'padding',
-                    props: { value: layoutTheme.padding },
-                    transform: ({ value }) => `0 ${value}px`,
-                }),
-                useCSSProperty({ name: 'marginLeft', props: { value: layoutTheme.marginLeft } }),
-                useCSSProperty({ name: 'marginRight', props: { value: layoutTheme.marginRight } }),
-                css,
-            ]}
-            {...props}
-        >
+        <div css={styles} {...props}>
             {children}
         </div>
     );

@@ -1,5 +1,5 @@
 import { CSSObject } from '@emotion/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Container } from '../../components/Container';
 import { useCSSProperty } from '../../helpers/useCSSProperty';
@@ -26,17 +26,22 @@ export interface SectionProps extends React.HTMLProps<HTMLDivElement> {
  * Component for creating page sections.
  */
 export const Section: React.FC<SectionProps> = ({ children, container = true, mb, pv, pt, pb, bg, css, ...props }) => {
+    const marginBottom = useCSSProperty({ name: 'marginBottom', props: { mb } });
+    const paddingTop = useCSSProperty({ name: 'paddingTop', props: { pv, pt }, transform: ({ pv, pt }) => pv ?? pt });
+    const paddingBottom = useCSSProperty({
+        name: 'paddingBottom',
+        props: { pv, pb },
+        transform: ({ pv, pb }) => pv ?? pb,
+    });
+    const background = useCSSProperty({ name: 'background', props: { bg } });
+
+    const styles = useMemo(
+        () => [marginBottom, paddingTop, paddingBottom, background, css],
+        [background, css, marginBottom, paddingBottom, paddingTop],
+    );
+
     return (
-        <section
-            css={[
-                useCSSProperty({ name: 'marginBottom', props: { mb } }),
-                useCSSProperty({ name: 'paddingTop', props: { pv, pt }, transform: ({ pv, pt }) => pv ?? pt }),
-                useCSSProperty({ name: 'paddingBottom', props: { pv, pb }, transform: ({ pv, pb }) => pv ?? pb }),
-                useCSSProperty({ name: 'background', props: { bg } }),
-                css,
-            ]}
-            {...props}
-        >
+        <section css={styles} {...props}>
             {container ? <Container>{children}</Container> : children}
         </section>
     );

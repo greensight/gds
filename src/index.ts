@@ -31,3 +31,4 @@ export * from './helpers/theming';
 export type { PartialBy, RequiredBy, RequireAtLeastOne, MergeElementProps, ComponentStates } from './types/Utils';
 export type { Theme, ComponentsTheme, PalettesTheme, ColorsTheme, ShadowsTheme } from './types/Theme';
 export type { ButtonProps } from './components/Button';
+export type { LayoutProps } from './components/Layout';

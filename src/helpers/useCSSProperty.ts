@@ -1,10 +1,14 @@
 import { CSSObject } from '@emotion/react';
+import { useMemo } from 'react';
 
 import { Breakpoint } from '../types/Layout';
 import { baseTheme } from '../utils/baseTheme';
 import { useTheme } from '../utils/useTheme';
 import { BREAKPOINTS_NAMES } from './constants';
 import { isObject } from './isObject';
+
+const BREAKPOINT_INDICES = new Map<string, number>();
+BREAKPOINTS_NAMES.forEach((e, i) => BREAKPOINT_INDICES.set(e, i));
 
 /**
  * Calculate CSS Object from component props with `AllowMedia` type (user can pass object with breakpoints through prop). CSS property can be calculated based on multiple props.
@@ -28,29 +32,36 @@ export const useCSSProperty = <T extends Record<string, any>>({
     const layoutTheme = layout || baseTheme.layout;
     const breakpoints = layoutTheme.breakpoints;
 
-    if (condition !== undefined && !condition) return;
+    return useMemo(() => {
+        if (condition !== undefined && !condition) return;
 
-    const propsValues = Object.values(props);
-    const isUndefined = propsValues.every((value) => value === undefined);
-    if (isUndefined) return;
+        const propsValues = Object.values(props);
+        const isUndefined = propsValues.every((value) => value === undefined);
+        if (isUndefined) return;
 
-    const mediaProp: Partial<Record<Breakpoint, any>> | undefined = propsValues.find((value) => isObject(value));
-    if (!mediaProp) return setValue(name, props, transform);
+        const mediaProp = propsValues.find((value) => isObject(value));
+        if (!mediaProp) return setValue(name, props, transform);
 
-    return (Object.keys(mediaProp) as Breakpoint[])
-        .sort((a, b) => BREAKPOINTS_NAMES.indexOf(a) - BREAKPOINTS_NAMES.indexOf(b))
-        .reduce((acc, bp) => {
-            const nameIndex = BREAKPOINTS_NAMES.indexOf(bp);
-            const nextBp = nameIndex !== -1 && BREAKPOINTS_NAMES[nameIndex - 1];
-            const breakpointProps = Object.fromEntries(
-                Object.entries(props).map(([key, value]) => [key, !isObject(value) ? value : value[bp]]),
-            ) as Record<keyof T, any>;
-            const rule = setValue(name, breakpointProps, transform);
-            return {
-                ...acc,
-                ...(nextBp ? { [`@media (max-width: ${breakpoints[nextBp] - 1}px)`]: rule } : rule),
-            };
-        }, {});
+        return (Object.keys(mediaProp) as Breakpoint[])
+            .sort((a, b) => BREAKPOINT_INDICES.get(a)! - BREAKPOINT_INDICES.get(b)!)
+            .reduce((acc, bp) => {
+                const nameIndex = BREAKPOINT_INDICES.get(bp)!;
+                const nextBp = nameIndex !== -1 && BREAKPOINTS_NAMES[nameIndex - 1];
+
+                const breakpointProps = {} as Record<keyof T, any>;
+                for (const key in props) {
+                    const value = props[key];
+                    breakpointProps[key] = !isObject(value) ? value : value[bp];
+                }
+
+                const rule = setValue(name, breakpointProps, transform);
+
+                return {
+                    ...acc,
+                    ...(nextBp ? { [`@media (max-width: ${breakpoints[nextBp] - 1}px)`]: rule } : rule),
+                };
+            }, {});
+    }, [breakpoints, condition, name, props, transform]);
 };
 
 const setValue = <T extends Record<string, any>>(name: string, props: T, transform?: (props: T) => string | number) => {

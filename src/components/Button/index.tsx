@@ -1,5 +1,5 @@
 import { CSSObject, jsx } from '@emotion/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { VisuallyHidden } from '../../components/VisuallyHidden';
 import { useComponentTheme } from '../../helpers/useComponentTheme';
@@ -35,6 +35,13 @@ export type ButtonProps<P extends React.ElementType = 'button'> = {
     /** Use your own React component for render. Main usage: pass `a` for external links or pass `Link` from `react-router` for routes management. */
     as?: P;
 } & MergeElementProps<P, ButtonBaseProps>;
+
+const sizeDefaults = {
+    height: scale(6),
+    padding: scale(3),
+    iconSize: scale(3),
+    iconOffset: scale(1),
+};
 
 /**
  * Button component.
@@ -72,91 +79,123 @@ export const Btn = <T extends React.ElementType = 'button'>(
     /* Get theme default state properties and merge them with default values. */
     const themeProperties = getThemeProperties(buttonTheme, theme, 'default');
     const sizeProperties = buttonTheme.sizes[size];
-    const themeDefaults = {
-        borderWidth: themeProperties.border ? 1 : 0,
-        borderStyle: 'solid',
-        time: 200,
-        easing: 'ease',
-        color: baseTheme.colors.white,
-        bg: baseTheme.colors.black,
-    };
-    const tp: RequiredBy<ButtonThemeProperties, keyof typeof themeDefaults> = {
-        ...themeDefaults,
-        ...themeProperties,
-    };
-    const sizeDefaults = {
-        height: scale(6),
-        padding: scale(3),
-        iconSize: scale(3),
-        iconOffset: scale(1),
-    };
-    const sp: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = {
-        ...sizeDefaults,
-        ...sizeProperties,
-    };
+    const themeDefaults = useMemo(
+        () => ({
+            borderWidth: themeProperties.border ? 1 : 0,
+            borderStyle: 'solid',
+            time: 200,
+            easing: 'ease',
+            color: baseTheme.colors.white,
+            bg: baseTheme.colors.black,
+        }),
+        [themeProperties.border],
+    );
+    const tp: RequiredBy<ButtonThemeProperties, keyof typeof themeDefaults> = useMemo(
+        () => ({
+            ...themeDefaults,
+            ...themeProperties,
+        }),
+        [themeDefaults, themeProperties],
+    );
+
+    const sp: RequiredBy<ButtonSizeProperties, keyof typeof sizeDefaults> = useMemo(
+        () => ({
+            ...sizeDefaults,
+            ...sizeProperties,
+        }),
+        [sizeProperties],
+    );
 
     /* Define CSS rules from theme properties for default state. */
     const typographyName = sp.typography;
     const typographyCSS = typography(typographyName, usedTheme);
-    const pv = getVerticalPaddings(
-        typographyName ? usedTheme.typography?.styles[typographyName]?.desktop : undefined,
-        sp,
-        tp,
-        !!Icon,
+    const pv = useMemo(
+        () =>
+            getVerticalPaddings(
+                typographyName ? usedTheme.typography?.styles[typographyName]?.desktop : undefined,
+                sp,
+                tp,
+                !!Icon,
+            ),
+        [Icon, sp, tp, typographyName, usedTheme.typography?.styles],
     );
     const borderRadius = !tp.half ? tp.borderRadius : sp.height / 2;
     const padding = `${pv}px ${sp.padding}px`;
-    const transition = getTransition(tp.time, tp.easing);
-    const defaultCSS: CSSObject = {
-        display: 'inline-flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: tp.borderWidth,
-        borderStyle: tp.borderStyle,
-        ...typographyCSS,
-        borderRadius,
-        padding,
-        transition,
-        ...getStateCSS(tp),
-        ...sp.css,
-    };
+    const transition = useMemo(() => getTransition(tp.time, tp.easing), [tp.easing, tp.time]);
+    const defaultCSS: CSSObject = useMemo(
+        () => ({
+            display: 'inline-flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderWidth: tp.borderWidth,
+            borderStyle: tp.borderStyle,
+            ...typographyCSS,
+            borderRadius,
+            padding,
+            transition,
+            ...getStateCSS(tp),
+            ...sp.css,
+        }),
+        [borderRadius, padding, sp.css, tp, transition, typographyCSS],
+    );
 
     /* Define CSS rules from theme properties for other states. */
     const themeHoverProperties = getThemeProperties(buttonTheme, theme, 'hover');
     const themeActiveProperties = getThemeProperties(buttonTheme, theme, 'active');
     const themeDisabledProperties = getThemeProperties(buttonTheme, theme, 'disabled');
     const themeFocusProperties = getThemeProperties(buttonTheme, theme, 'focus');
-    const statesCSS: CSSObject = {
-        ':hover': {
-            ...getStateCSS(themeHoverProperties),
-            ...(tp.timeIn && {
-                transition: getTransition(tp.timeIn, tp.easing),
-            }),
-        },
-        ':active': getStateCSS(themeActiveProperties),
-        ':disabled': {
-            ...getStateCSS(themeDisabledProperties),
-            cursor: 'not-allowed',
-        },
-        ':focus': getStateCSS(themeFocusProperties),
-    };
+    const statesCSS: CSSObject = useMemo(
+        () => ({
+            ':hover': {
+                ...getStateCSS(themeHoverProperties),
+                ...(tp.timeIn && {
+                    transition: getTransition(tp.timeIn, tp.easing),
+                }),
+            },
+            ':active': getStateCSS(themeActiveProperties),
+            ':disabled': {
+                ...getStateCSS(themeDisabledProperties),
+                cursor: 'not-allowed',
+            },
+            ':focus': getStateCSS(themeFocusProperties),
+        }),
+        [
+            themeActiveProperties,
+            themeDisabledProperties,
+            themeFocusProperties,
+            themeHoverProperties,
+            tp.easing,
+            tp.timeIn,
+        ],
+    );
 
     /* Build CSS object combined with rules from props. */
-    const blockStyles = { display: 'flex', width: '100%' };
-    const hiddenRoundStyles = {
-        borderRadius: '50%',
-        padding: `${pv}px ${(sp.height - sp.iconSize - tp.borderWidth) / 2}px`,
-    };
+    const blockStyles = useMemo(() => ({ display: 'flex', width: '100%' }), []);
+
+    const hiddenRoundStyles = useMemo(
+        () => ({
+            borderRadius: '50%',
+            padding: `${pv}px ${(sp.height - sp.iconSize - tp.borderWidth) / 2}px`,
+        }),
+        [pv, sp.height, sp.iconSize, tp.borderWidth],
+    );
+
     // @ts-ignore
-    const styles = [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css];
+    const styles = useMemo(
+        () => [defaultCSS, statesCSS, block && blockStyles, hidden && tp.round && hiddenRoundStyles, css],
+        [block, blockStyles, css, defaultCSS, hidden, hiddenRoundStyles, statesCSS, tp.round],
+    );
 
     /* Define CSS rules for icon. */
-    const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}`;
-    const iconCSS = {
-        [marginRule]: !hidden ? sp.iconOffset : undefined,
-        width: sp.iconSize,
-        height: sp.iconSize,
-    };
+    const marginRule = `margin${!iconAfter ? 'Right' : 'Left'}` as const;
+    const iconCSS = useMemo<CSSObject>(
+        () => ({
+            [marginRule]: !hidden ? sp.iconOffset : undefined,
+            width: sp.iconSize,
+            height: sp.iconSize,
+        }),
+        [hidden, marginRule, sp.iconOffset, sp.iconSize],
+    );
 
     return jsx(
         as || 'button',

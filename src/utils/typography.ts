@@ -4,6 +4,15 @@ import { Theme } from '../types/Theme';
 import { TypographyProperties } from '../types/Typography';
 import { PartialBy } from '../types/Utils';
 import { baseTheme } from './baseTheme';
+import { fastEquals } from './fastEquals';
+
+const cache = new Map<
+    string,
+    {
+        theme: Theme;
+        css: CSSObject;
+    }
+>();
 
 /**
  * Helper for typography styles usage. Generate typography CSS rules by style name included mobile version, fluid typography and variable fonts support.
@@ -28,6 +37,11 @@ export const typography = (name: string | undefined, theme: Theme = baseTheme as
     if (!theme.typography || !theme.typography.styles[name]) {
         console.warn(`Typography style ${name} is not defined.`);
         return;
+    }
+
+    const cached = cache.get(name);
+    if (cached && fastEquals(cached.theme, theme)) {
+        return cached?.css;
     }
 
     const typographyStyle = theme.typography.styles[name];
@@ -93,12 +107,19 @@ export const typography = (name: string | undefined, theme: Theme = baseTheme as
         };
     }
 
-    return {
+    const result = {
         ...fontFamilyStyles,
         ...mainStyles,
         ...fluidStyles,
         [mq[1]]: mqMobileStyles,
     };
+
+    cache.set(name, {
+        css: result,
+        theme,
+    });
+
+    return result;
 };
 
 const pxToRem = (px: number) => px / 16;
