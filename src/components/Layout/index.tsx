@@ -51,7 +51,9 @@ type DiscriminatedProps =
     | ({ type?: AllowMedia<'grid'> } & (GridProps & Neverize<FlexProps>))
     | ({ type?: AllowMedia<'flex'> } & (FlexProps & Neverize<GridProps>));
 
-export type LayoutProps = CommonProps & (GridProps | FlexProps);
+export interface LayoutProps extends CommonProps, GridProps, FlexProps {
+    type?: 'grid' | 'flex';
+}
 
 type DiscriminatedLayoutProps = CommonProps & DiscriminatedProps;
 
