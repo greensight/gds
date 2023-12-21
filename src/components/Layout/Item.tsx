@@ -27,99 +27,104 @@ export interface LayoutItemProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Inner `Layout` component for creating layout cells.
  */
-export const Item: FC<LayoutItemProps> = ({ children, col, row, area, justify, align, order, grow, css, ...props }) => {
-    const { type, gap, cols, auto } = useLayout();
+export const Item: FC<LayoutItemProps> = ({
+    children,
+    col: colProp,
+    row: rowProp,
+    area: areaProp,
+    justify,
+    align: alignProp,
+    order: orderProp,
+    grow: growProp,
+    css,
+    ...props
+}) => {
+    const context = useLayout();
 
-    const gridColumnCSS = useCSSProperty({
+    const gridColumn = useCSSProperty({
         name: 'gridColumn',
-        props: { col },
-        condition: type === 'grid',
+        props: { col: colProp },
+        condition: context.type === 'grid',
         transform: ({ col }) => {
             if (Array.isArray(col)) return `${col[0]} / ${col[1]}`;
             if (Number.isInteger(col)) return `span ${col}`;
             return col;
         },
     });
-    const gridRowCSS = useCSSProperty({
+
+    const gridRow = useCSSProperty({
         name: 'gridRow',
-        props: { row },
-        condition: type === 'grid',
+        props: { row: rowProp },
+        condition: context.type === 'grid',
         transform: ({ row }) => {
             if (Array.isArray(row)) return `${row[0]} / ${row[1]}`;
             if (Number.isInteger(row)) return `span ${row}`;
             return row;
         },
     });
-    const gridAreaCSS = useCSSProperty({ name: 'gridArea', props: { area }, condition: type === 'grid' });
-    const justifySelfCSS = useCSSProperty({ name: 'justifySelf', props: { justify }, condition: type === 'grid' });
-    const alignSelfCSS = useCSSProperty({
+
+    const gridArea = useCSSProperty({
+        name: 'gridArea',
+        props: { area: areaProp },
+        condition: context.type === 'grid',
+    });
+
+    const justifySelf = useCSSProperty({
+        name: 'justifySelf',
+        props: { justify },
+        condition: context.type === 'grid',
+    });
+
+    const alignSelf = useCSSProperty({
         name: 'alignSelf',
-        props: { align },
+        props: { align: alignProp },
         transform: ({ align }) => {
-            if (type === 'flex' && (align === 'start' || align === 'end')) return `flex-${align}`;
+            if (context.type === 'flex' && (align === 'start' || align === 'end')) return `flex-${align}`;
             return align;
         },
     });
-    const orderCSS = useCSSProperty({ name: 'order', props: { order } });
-    const flexGrowCSS = useCSSProperty({
+
+    const order = useCSSProperty({ name: 'order', props: { order: orderProp } });
+
+    const flexGrow = useCSSProperty({
         name: 'flexGrow',
-        props: { grow, auto },
-        condition: type === 'flex',
+        props: { grow: growProp, auto: context.auto },
+        condition: context.type === 'flex',
         transform: ({ grow, auto }) => {
             if (auto) return 1;
             return !Number.isInteger(grow) ? Number(grow) : grow;
         },
     });
-    const paddingCSS = useCSSProperty({
+
+    const padding = useCSSProperty({
         name: 'padding',
-        props: { gap },
-        condition: type === 'flex',
+        props: { gap: context.gap },
+        condition: context.type === 'flex',
         transform: ({ gap }) => {
             if (Array.isArray(gap)) return `${gap[0]}px 0 0 ${gap[1]}px`;
             return `${gap}px 0 0 ${gap}px`;
         },
     });
-    const flexBasisCSS = useCSSProperty({
+
+    const flexBasis = useCSSProperty({
         name: 'flexBasis',
-        props: { col, auto },
-        condition: type === 'flex',
+        props: { col: colProp, auto: context.auto },
+        condition: context.type === 'flex',
         transform: ({ col, auto }) => {
             if (auto) return auto;
-            if (typeof cols === 'number' && Number.isInteger(Number(col)))
-                return `${Math.floor((100 * col * 100) / cols) / 100}%`;
+            if (typeof context.cols === 'number' && Number.isInteger(Number(col)))
+                return `${Math.floor((100 * col * 100) / context.cols) / 100}%`;
             return col;
         },
     });
 
-    const styles = useMemo(
-        () => [
-            gridColumnCSS,
-            orderCSS,
-            flexGrowCSS,
-            paddingCSS,
-            flexBasisCSS,
-            alignSelfCSS,
-            gridAreaCSS,
-            justifySelfCSS,
-            gridRowCSS,
-            css,
-        ],
-        [
-            alignSelfCSS,
-            css,
-            flexBasisCSS,
-            flexGrowCSS,
-            gridAreaCSS,
-            gridColumnCSS,
-            gridRowCSS,
-            justifySelfCSS,
-            orderCSS,
-            paddingCSS,
-        ],
+    const layoutItemCss = useMemo(
+        () => [padding, order, flexGrow, flexBasis, justifySelf, alignSelf, gridColumn, gridRow, gridArea, css],
+        [padding, order, flexGrow, flexBasis, justifySelf, alignSelf, gridColumn, gridRow, gridArea, css],
     );
 
     return (
-        <div css={styles} {...props}>
+        <div css={layoutItemCss} {...props}>
             {children}
         </div>
     );

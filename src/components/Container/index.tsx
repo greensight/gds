@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 
 import { useCSSProperty } from '../../helpers/useCSSProperty';
 import { baseTheme } from '../../utils/baseTheme';
@@ -12,7 +12,7 @@ export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
 /**
  * Component for creating main page container with `layout` theme parameters. Uses `maxWidth`, `padding`,`marginLeft`, `marginRight`.
  */
-export const Container = ({ children, css, ...props }: ContainerProps) => {
+export const Container: FC<ContainerProps> = ({ children, css, ...props }) => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
 

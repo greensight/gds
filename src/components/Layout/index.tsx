@@ -5,12 +5,8 @@ import { useCSSProperty } from '../../helpers/useCSSProperty';
 import { AllowMedia } from '../../types/Layout';
 import { baseTheme } from '../../utils/baseTheme';
 import { useTheme } from '../../utils/useTheme';
-import { Item as LayoutItem, LayoutItemProps } from './Item';
+import { Item as LayoutItem } from './Item';
 import { LayoutContext, LayoutContextProps } from './useLayout';
-
-export interface LayoutCompositionProps {
-    Item: React.FC<LayoutItemProps>;
-}
 
 export interface CommonProps
     extends Omit<LayoutContextProps, 'type' | 'cols' | 'auto'>,
@@ -62,42 +58,46 @@ type DiscriminatedLayoutProps = CommonProps & DiscriminatedProps;
 /**
  * Component for creating typical grid and flex layouts.
  */
-export const Layout = ({
-    children,
-    type = 'grid',
-    inline,
-    cols,
-    rows,
-    areas,
-    gap,
-    justify,
-    align,
-    autoRows,
-    autoCols,
-    direction,
-    dense,
-    reverse,
-    wrap = true,
-    auto,
+const LayoutComponent = ({
+    type: typeProp = 'grid',
+    inline: inlineProp,
+    cols: colsProp,
+    rows: rowsProp,
+    areas: areasProp,
+    gap: gapProp,
+    justify: justifyProp,
+    align: alignProp,
+    autoRows: autoRowsProp,
+    autoCols: autoColsProp,
+    direction: directionProp,
+    dense: denseProp,
+    reverse: reverseProp,
+    wrap: wrapProp = true,
+    auto: autoProp,
     css,
+    children,
     ...props
-}: DiscriminatedLayoutProps & Partial<LayoutCompositionProps>) => {
+}: DiscriminatedLayoutProps) => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
-    gap = gap ?? layoutTheme.gap;
-    cols = cols ?? layoutTheme.cols;
+    const defaultGap = gapProp ?? layoutTheme.gap;
+    const defaultCols = colsProp ?? layoutTheme.cols;
 
-    const context = useMemo(() => ({ type, gap, cols, auto }), [auto, cols, gap, type]);
+    const context = useMemo(
+        () => ({ type: typeProp, gap: defaultGap, cols: defaultCols, auto: autoProp }),
+        [typeProp, autoProp, defaultGap, defaultCols],
+    );
 
-    const displayCSS = useCSSProperty({
+    const display = useCSSProperty({
         name: 'display',
-        props: { type, inline },
+        props: { type: context.type, inline: inlineProp },
         transform: ({ type, inline }) => (inline ? `inline-${type}` : type),
     });
-    const gridTemplateColumnsCSS = useCSSProperty({
+
+    const gridTemplateColumns = useCSSProperty({
         name: 'gridTemplateColumns',
-        props: { cols, auto },
-        condition: type === 'grid' && !areas,
+        props: { cols: context.cols, auto: context.auto },
+        condition: context.type === 'grid' && !areasProp,
         transform: ({ cols, auto }) => {
             if (auto) return `repeat(auto-fill, minmax(${auto}px, 1fr))`;
             if (Number.isInteger(cols)) return `repeat(${cols}, 1fr)`;
@@ -105,10 +105,11 @@ export const Layout = ({
             return arr.map((val) => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
         },
     });
-    const gridTemplateRowsCSS = useCSSProperty({
+
+    const gridTemplateRows = useCSSProperty({
         name: 'gridTemplateRows',
-        props: { rows },
-        condition: type === 'grid' && !areas,
+        props: { rows: rowsProp },
+        condition: context.type === 'grid' && !areasProp,
         transform: ({ rows }) => {
             if (Number.isInteger(rows)) return `repeat(${rows}, 1fr)`;
             const arr = toArray(rows);
@@ -116,143 +117,154 @@ export const Layout = ({
         },
     });
 
-    const gridTemplateAreasCSS = useCSSProperty({
+    const gridTemplateAreas = useCSSProperty({
         name: 'gridTemplateAreas',
-        props: { areas },
-        condition: type === 'grid',
+        props: { areas: areasProp },
+        condition: context.type === 'grid',
         transform: ({ areas }) => {
             const arr = toArray(areas);
             return arr.map((val) => `"${val}"`).join(' ');
         },
     });
 
-    const gridGapCSS = useCSSProperty({
+    const gridGap = useCSSProperty({
         name: 'gridGap',
-        props: { gap },
-        condition: type === 'grid',
+        props: { gap: context.gap },
+        condition: context.type === 'grid',
         transform: ({ gap }) => {
             if (Array.isArray(gap)) return `${gap[0]}px ${gap[1]}px`;
             return gap;
         },
     });
 
-    const marginCSS = useCSSProperty({
+    const margin = useCSSProperty({
         name: 'margin',
-        props: { gap },
-        condition: type === 'flex',
+        props: { gap: context.gap },
+        condition: context.type === 'flex',
         transform: ({ gap }) => {
             if (Array.isArray(gap)) return `-${gap[0]}px 0 0 -${gap[1]}px`;
             return `-${gap}px 0 0 -${gap}px`;
         },
     });
 
-    const justifyItemsCSS = useCSSProperty({ name: 'justifyItems', props: { justify }, condition: type === 'grid' });
+    const justifyItems = useCSSProperty({
+        name: 'justifyItems',
+        props: { justify: justifyProp },
+        condition: context.type === 'grid',
+    });
 
-    const justifyContentCSS = useCSSProperty({
+    const justifyContent = useCSSProperty({
         name: 'justifyContent',
-        props: { justify },
-        condition: type === 'flex',
+        props: { justify: justifyProp },
+        condition: context.type === 'flex',
         transform: ({ justify }) => {
             if (justify === 'start' || justify === 'end') return `flex-${justify}`;
             return justify;
         },
     });
 
-    const alignItemsCSS = useCSSProperty({
+    const alignItems = useCSSProperty({
         name: 'alignItems',
-        props: { align },
+        props: { align: alignProp },
         transform: ({ align }) => {
-            if (type === 'flex' && (align === 'start' || align === 'end')) return `flex-${align}`;
+            if (context.type === 'flex' && (align === 'start' || align === 'end')) return `flex-${align}`;
             return align;
         },
     });
 
-    const gridAutoRowsCSS = useCSSProperty({
+    const gridAutoRows = useCSSProperty({
         name: 'gridAutoRows',
-        props: { autoRows },
-        condition: type === 'grid',
+        props: { autoRows: autoRowsProp },
+        condition: context.type === 'grid',
         transform: ({ autoRows }) => {
             const arr = toArray(autoRows);
             return arr.map((val) => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
         },
     });
 
-    const gridAutoColumnsCSS = useCSSProperty({
+    const gridAutoColumns = useCSSProperty({
         name: 'gridAutoColumns',
-        props: { autoCols },
-        condition: type === 'grid',
+        props: { autoCols: autoColsProp },
+        condition: context.type === 'grid',
         transform: ({ autoCols }) => {
             const arr = toArray(autoCols);
             return arr.map((val) => (Number.isInteger(val) ? `${val}fr` : val)).join(' ');
         },
     });
 
-    const gridAutoFlowCSS = useCSSProperty({
+    const gridAutoFlow = useCSSProperty({
         name: 'gridAutoFlow',
-        props: { direction, dense },
-        condition: type === 'grid' && (direction === 'column' || !!dense),
+        props: { direction: directionProp, dense: denseProp },
+        condition: context.type === 'grid' && (directionProp === 'column' || !!denseProp),
         transform: ({ direction, dense }) => `${direction === 'column' ? 'column' : ''}${dense ? ' dense' : ''}`.trim(),
     });
 
-    const flexDirectionCSS = useCSSProperty({
+    const flexDirection = useCSSProperty({
         name: 'flexDirection',
-        props: { direction, reverse },
-        condition: type === 'flex',
+        props: { direction: directionProp, reverse: reverseProp },
+        condition: context.type === 'flex',
         transform: ({ direction, reverse }) =>
             `${direction === 'column' ? 'column' : 'row'}${reverse ? '-reverse' : ''}`,
     });
 
-    const flexWrapCSS = useCSSProperty({
+    const flexWrap = useCSSProperty({
         name: 'flexWrap',
-        props: { wrap },
-        condition: type === 'flex',
+        props: { wrap: wrapProp },
+        condition: context.type === 'flex',
         transform: ({ wrap }) => (wrap ? 'wrap' : 'nowrap'),
     });
 
-    const styles = useMemo(
+    const layoutCss = useMemo(
         () => [
-            alignItemsCSS,
-            flexWrapCSS,
-            gridAutoColumnsCSS,
-            flexDirectionCSS,
-            gridAutoFlowCSS,
-            marginCSS,
-            gridGapCSS,
-            justifyItemsCSS,
-            justifyContentCSS,
-            gridTemplateAreasCSS,
-            gridAutoRowsCSS,
-            gridTemplateRowsCSS,
-            gridTemplateColumnsCSS,
-            displayCSS,
+            display,
+            margin,
+
+            flexWrap,
+            flexDirection,
+            justifyItems,
+            justifyContent,
+            alignItems,
+
+            gridTemplateColumns,
+            gridTemplateRows,
+            gridTemplateAreas,
+            gridAutoColumns,
+            gridAutoRows,
+            gridAutoFlow,
+            gridGap,
+
             css,
         ],
         [
-            alignItemsCSS,
+            display,
+            margin,
+            flexWrap,
+            flexDirection,
+            justifyItems,
+            justifyContent,
+            alignItems,
+            gridTemplateColumns,
+            gridTemplateRows,
+            gridTemplateAreas,
+            gridAutoColumns,
+            gridAutoRows,
+            gridAutoFlow,
+            gridGap,
             css,
-            displayCSS,
-            flexDirectionCSS,
-            flexWrapCSS,
-            gridAutoColumnsCSS,
-            gridAutoFlowCSS,
-            gridAutoRowsCSS,
-            gridGapCSS,
-            gridTemplateAreasCSS,
-            gridTemplateColumnsCSS,
-            gridTemplateRowsCSS,
-            justifyContentCSS,
-            justifyItemsCSS,
-            marginCSS,
         ],
     );
 
     return (
         <LayoutContext.Provider value={context}>
-            <div css={styles} {...props}>
+            <div css={layoutCss} {...props}>
                 {children}
             </div>
         </LayoutContext.Provider>
     );
 };
 
-Layout.Item = LayoutItem;
+const Layout = Object.assign(LayoutComponent, {
+    Item: LayoutItem,
+});
+
+export { Layout };
