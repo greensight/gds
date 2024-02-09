@@ -9,10 +9,7 @@ export interface ContainerProps extends React.HTMLProps<HTMLDivElement> {
     children: React.ReactNode;
 }
 
-/**
- * Component for creating main page container with `layout` theme parameters. Uses `maxWidth`, `padding`,`marginLeft`, `marginRight`.
- */
-export const Container: FC<ContainerProps> = ({ children, css, ...props }) => {
+export const useContainerCSS = () => {
     const { layout } = useTheme();
     const layoutTheme = layout || baseTheme.layout;
 
@@ -26,10 +23,18 @@ export const Container: FC<ContainerProps> = ({ children, css, ...props }) => {
     const marginLeftCSS = useCSSProperty({ name: 'marginLeft', props: { value: layoutTheme.marginLeft } });
     const marginRightCSS = useCSSProperty({ name: 'marginRight', props: { value: layoutTheme.marginRight } });
 
-    const styles = useMemo(
-        () => [maxWidthCSS, paddingCSS, marginLeftCSS, marginRightCSS, css],
-        [css, marginLeftCSS, marginRightCSS, maxWidthCSS, paddingCSS],
+    return useMemo(
+        () => [maxWidthCSS!, paddingCSS!, marginLeftCSS!, marginRightCSS!],
+        [marginLeftCSS, marginRightCSS, maxWidthCSS, paddingCSS],
     );
+};
+
+/**
+ * Component for creating main page container with `layout` theme parameters. Uses `maxWidth`, `padding`,`marginLeft`, `marginRight`.
+ */
+export const Container: FC<ContainerProps> = ({ children, css, ...props }) => {
+    const themeStyles = useContainerCSS();
+    const styles = useMemo(() => [...themeStyles, css], [themeStyles, css]);
 
     return (
         <div css={styles} {...props}>

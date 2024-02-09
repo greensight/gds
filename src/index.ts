@@ -3,7 +3,7 @@ import { createButtonWithTheme } from './components/FutureButton';
 export { ThemeProvider } from './components/ThemeProvider';
 export { Layout } from './components/Layout';
 export { Section } from './components/Section';
-export { Container } from './components/Container';
+export { Container, useContainerCSS } from './components/Container';
 export { VisuallyHidden } from './components/VisuallyHidden';
 export { Button } from './components/Button';
 export { createButtonWithTheme as createFutureButtonWithTheme };
