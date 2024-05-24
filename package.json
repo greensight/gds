@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "3.0.14",
+    "version": "3.1.0",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
@@ -24,8 +24,8 @@
         "bin/*"
     ],
     "bin": {
-        "gds-tokens": "bin/index.js",
-        "gds-scss-tokens": "bin/scss/index.js"
+        "gds-scss-tokens": "bin/scss/index.js",
+        "gds-tokens": "bin/index.js"
     },
     "scripts": {
         "build": "run-s clear build:main",

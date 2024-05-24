@@ -1,20 +1,27 @@
+## 3.1.0 (May 24, 2024)
+
+-   Add scss tokens
+
 ## 3.0.2-beta (April 05, 2023)
+
 -   Add new state fields for FutureButton and typography function argument
 
 ## 3.0.1-beta (February 01, 2023)
+
 -   Fix colorful icons being corrupted during `yarn tokens` command
 
 ## 3.0.0-beta (December 28, 2022)
+
 -   🔥 New experimental theming conventions ([read more](?path=/docs/dev-theming2-0--page));
 -   🔥 New type-safe `createMediaQueries()` function;
 -   ✨ FutureButton component as an examplel of new theming conventions.
 
 ## 2.5.0 (December 21, 2022)
 
-- 🔥 Update babel, rollup, webpack, typescript, eslint, prettier, storybook to latest versions;
-- ⚙️ Fix issues with `align` and `direction` properties of `Layout` component;
-- Migrate stories to work with sb 6.5: remove addon-knobs in favor of `args` and `argTypes`;
-- Improve types of `Layout` component;
+-   🔥 Update babel, rollup, webpack, typescript, eslint, prettier, storybook to latest versions;
+-   ⚙️ Fix issues with `align` and `direction` properties of `Layout` component;
+-   Migrate stories to work with sb 6.5: remove addon-knobs in favor of `args` and `argTypes`;
+-   Improve types of `Layout` component;
 
 ## 2.4.0 (January 10, 2021)
 
