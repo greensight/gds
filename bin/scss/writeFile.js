@@ -3,15 +3,12 @@ const { resolve } = require('path');
 const { red, green } = require('chalk');
 const prettier = require('prettier');
 
-async function sdf({ name, fileData, config }) {
+async function writeFile({ name, fileData, config }) {
     const fullScssDir = resolve(config.scssDir);
     await fs.promises.mkdir(fullScssDir, { recursive: true });
-
+    const file = await prettier.format(fileData, { printWidth: 120, singleQuote: true, tabWidth: 4, parser: 'scss' });
     try {
-        await fs.promises.writeFile(
-            `${fullScssDir}/${name}.module.scss`,
-            prettier.format(fileData, { printWidth: 120, singleQuote: true, tabWidth: 4, parser: 'scss' }),
-        );
+        await fs.promises.writeFile(`${fullScssDir}/${name}.module.scss`, file);
         console.log(green(`${name} are ready to use: ${config.tokensDir}/${name}.module.scss`));
     } catch (err) {
         console.error(red(err.message));
@@ -20,4 +17,4 @@ async function sdf({ name, fileData, config }) {
     }
 }
 
-module.exports = sdf;
+module.exports = writeFile;

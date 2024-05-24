@@ -1,8 +1,8 @@
-import { resolve } from 'path';
-import ReactDocgenTypescriptPlugin from 'react-docgen-typescript-plugin';
-import * as webpack from 'webpack';
+const { resolve } = require('path');
+const ReactDocgenTypescriptPlugin = require('react-docgen-typescript-plugin').default;
+const webpack = require('webpack');
 
-export default ({ config, mode }: { config: any; mode: 'DEVELOPMENT' | 'PRODUCTION' }) => {
+const webpackConfig = ({ config, mode }: { config: any; mode: 'DEVELOPMENT' | 'PRODUCTION' }) => {
     const iconsDir = resolve(__dirname, '../src/icons');
     config.plugins.push(new webpack.EnvironmentPlugin({ ICONS_DIR: iconsDir, IS_STORYBOOK: true }));
 
@@ -55,3 +55,5 @@ export default ({ config, mode }: { config: any; mode: 'DEVELOPMENT' | 'PRODUCTI
 
     return config;
 };
+
+module.exports = webpackConfig;

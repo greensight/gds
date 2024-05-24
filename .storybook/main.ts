@@ -1,4 +1,4 @@
-export default {
+const config = {
     stories: [
         '../stories/intro/welcome.stories.mdx',
         '../stories/intro/*.stories.mdx',
@@ -30,3 +30,5 @@ export default {
         reactDocgen: 'none',
     },
 };
+
+module.exports = config;

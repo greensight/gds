@@ -1,6 +1,12 @@
 const writeFile = require('./writeFile');
 
-const getVars = (vars) => Object.keys(vars).reduce((acc, key) => `${acc}$${key}: ${vars[key]};\n`, '');
+const getVars = (vars, prefix) =>
+    Object.keys(vars).reduce((acc, key) => {
+        const name = prefix ? `${prefix}-${key}` : key;
+        const value = vars[key];
+
+        return `${acc}$${name}: ${value};\n`;
+    }, '');
 
 const DEFAULT_VARIABLES = {
     gs: 8,
@@ -16,13 +22,13 @@ function serializeVariables(config, tokens) {
     const defaultVariables = Object.entries(DEFAULT_VARIABLES)
         .map(([key, value]) => `$${key}: ${value}px;`)
         .join('\n');
-    const colorVars = getVars(colors);
-    const shadowsVars = getVars(shadows);
+    const colorVars = getVars(colors, 'cl');
+    const shadowsVars = getVars(shadows, 'shadow');
     const breakpointVars = getVars(breakpoints);
 
-    const vars = [defaultVariables, colorVars, shadowsVars, breakpointVars];
+    const fileData = [defaultVariables, colorVars, shadowsVars, breakpointVars].join('\n');
 
-    writeFile({ name: 'variables', fileData: vars.join('\n'), config });
+    writeFile({ name: 'variables', fileData, config });
 }
 
 module.exports = serializeVariables;

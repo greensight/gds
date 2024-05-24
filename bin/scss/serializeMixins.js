@@ -65,15 +65,15 @@ async function serializeMixins(config, tokens) {
         return styles.join('\n');
     };
 
-    const vars = [
+    const fileData = [
         mediaMinMq(),
         mediaMq(),
         ...Object.entries(typography.styles).map(([key, value]) =>
             getTypographyMixin(key, value, typography.breakpoints),
         ),
-    ];
+    ].join('\n');
 
-    writeFile({ name: 'mixins', fileData: vars.join('\n'), config });
+    writeFile({ name: 'mixins', fileData, config });
 }
 
 module.exports = serializeMixins;

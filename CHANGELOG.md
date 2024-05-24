@@ -1,3 +1,7 @@
+## 3.1.3 (May 24, 2024)
+
+-   Changed variables name
+
 ## 3.1.0 (May 24, 2024)
 
 -   Add scss tokens

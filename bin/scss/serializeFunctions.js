@@ -10,9 +10,9 @@ async function serializeFunctions(config) {
         const mixinFooter = '}';
         return [mixinHead, mixinVars, mixinBody, mixinFooter].join('\n');
     };
-    const vars = [imports, scale()];
+    const fileData = [imports, scale()].join('\n');
 
-    writeFile({ name: 'functions', fileData: vars.join('\n'), config });
+    writeFile({ name: 'functions', fileData, config });
 }
 
 module.exports = serializeFunctions;
