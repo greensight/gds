@@ -2,9 +2,9 @@ const fs = require('fs');
 const { red } = require('chalk');
 const { resolve } = require('path');
 
-const getVariables = require('./getVariables');
-const getFunctions = require('./getFunctions');
-const getMixins = require('./getMixins');
+const serializeVariables = require('./serializeVariables');
+const serializeFunctions = require('./serializeFunctions');
+const serializeMixins = require('./serializeMixins');
 
 async function loadSCSS() {
     let configPath = resolve('gds.config.json');
@@ -37,7 +37,11 @@ async function loadSCSS() {
             process.exit(1);
         }
 
-        await Promise.all([getVariables(config, tokens), getMixins(config, tokens), getFunctions(config)]);
+        await Promise.all([
+            serializeVariables(config, tokens),
+            serializeMixins(config, tokens),
+            serializeFunctions(config),
+        ]);
     } catch {
         console.error(
             red('Add "gds.config.json" config file in root directory or set another location with "-c" flag'),

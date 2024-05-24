@@ -11,7 +11,7 @@ const getStyles = (styles) =>
 
 const pxToRem = (px) => px / 16;
 
-async function getMixins(config, tokens) {
+async function serializeMixins(config, tokens) {
     const { typography } = tokens;
 
     const mediaMq = () => {
@@ -76,4 +76,4 @@ async function getMixins(config, tokens) {
     writeFile({ name: 'mixins', fileData: vars.join('\n'), config });
 }
 
-module.exports = getMixins;
+module.exports = serializeMixins;

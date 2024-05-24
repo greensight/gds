@@ -1,6 +1,6 @@
 const writeFile = require('./writeFile');
 
-async function getFunctions(config) {
+async function serializeFunctions(config) {
     const imports = "@import './variables.module.scss';\n";
     const scale = () => {
         const mixinHead = '@function scale($value, $minorBool: false) {';
@@ -15,4 +15,4 @@ async function getFunctions(config) {
     writeFile({ name: 'functions', fileData: vars.join('\n'), config });
 }
 
-module.exports = getFunctions;
+module.exports = serializeFunctions;

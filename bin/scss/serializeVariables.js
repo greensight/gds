@@ -6,7 +6,7 @@ const DEFAULT_VARIABLES = {
     gs: 8,
     gsMinor: 4,
 };
-function getVariables(config, tokens) {
+function serializeVariables(config, tokens) {
     const {
         colors,
         shadows,
@@ -25,4 +25,4 @@ function getVariables(config, tokens) {
     writeFile({ name: 'variables', fileData: vars.join('\n'), config });
 }
 
-module.exports = getVariables;
+module.exports = serializeVariables;
