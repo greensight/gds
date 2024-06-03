@@ -1,7 +1,7 @@
 const writeFile = require('./writeFile');
 
 async function serializeFunctions(config) {
-    const imports = "@import './variables.module.scss';\n";
+    const imports = "@import './variables.scss';\n";
     const gs = () => {
         const mixinHead = '@function gs($value, $minorBool: false) {';
         const mixinVars = '$maxMinorValue: 40;';
