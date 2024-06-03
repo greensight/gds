@@ -9,8 +9,8 @@ const getVars = (vars, prefix) =>
     }, '');
 
 const DEFAULT_VARIABLES = {
-    gs: 8,
-    gsMinor: 4,
+    gutterStep: 8,
+    gutterStepMinor: 4,
 };
 function serializeVariables(config, tokens) {
     const {
