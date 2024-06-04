@@ -62,7 +62,7 @@ async function serializeMixins(config, tokens) {
 
         const mixinFooter = `}`;
         styles.push(mixinFooter);
-        return styles.join('\n');
+        return styles.join('\n\n');
     };
 
     const fileData = [

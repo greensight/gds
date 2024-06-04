@@ -10,7 +10,7 @@ async function serializeFunctions(config) {
         const mixinFooter = '}';
         return [mixinHead, mixinVars, mixinBody, mixinFooter].join('\n');
     };
-    const fileData = [imports, gs()].join('\n');
+    const fileData = [imports, gs()].join('\n\n');
 
     writeFile({ name: 'functions', fileData, config });
 }
