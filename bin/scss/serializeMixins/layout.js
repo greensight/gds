@@ -1,4 +1,3 @@
-const imports = ["@use 'sass:map';", "@use 'sass:list';"].join('\n');
 const helpers = [
     `@mixin getProperty($name, $value) {
             @if $value {
@@ -113,7 +112,7 @@ const getBreakpoints = (layoutFromTokens) => {
 };
 
 const getLayoutMixin = (tokens) => {
-    return [imports, helpers, getBreakpoints(tokens.layout), funcsFormMixins, mixins].join('\n');
+    return [helpers, getBreakpoints(tokens.layout), funcsFormMixins, mixins].join('\n');
 };
 
 module.exports = { getLayoutMixin };
