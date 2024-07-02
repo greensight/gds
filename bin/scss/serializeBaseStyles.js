@@ -11,7 +11,7 @@ function serializeBaseStyles(config) {
 
     html,
     body {
-        min-height: '100%';
+        min-height: 100%;
     }
 
     img {
