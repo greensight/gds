@@ -45,6 +45,10 @@ function serializeBaseStyles(config) {
         cursor: pointer;
     }
 
+    a {
+        cursor: pointer;
+    }
+
     input[type='number'] {
         appearance: textfield;
     }
