@@ -1,0 +1,257 @@
+import { action } from '@storybook/addon-actions';
+import { Meta, Preview, Props, Source, Story } from '@storybook/addon-docs';
+import dedent from 'ts-dedent';
+
+import { BaseButton, createButtonWithTheme } from '.';
+import { extractCSSOption } from '../../../helpers/emotion/theming';
+import { typography } from '../../../helpers/emotion/typography';
+import { scale } from '../../../utils/common/scale';
+import { baseTheme } from '../../../utils/emotion/baseTheme';
+
+<Meta title="Components / Emotion / Button" component={BaseButton} />
+
+# Button
+
+<Story
+    name="Basic"
+    args={{
+        block: false,
+        disabled: false,
+        Icon: baseTheme.global.placeholder,
+        iconAfter: false,
+        hidden: false,
+        theme: 'basic',
+        variant: 'ghost',
+        size: 'md',
+        typography: 'bodyMd',
+        wrap: false,
+    }}
+    argTypes={{
+        theme: {
+            control: 'radio',
+            options: ['basic'],
+        },
+        variant: {
+            control: 'radio',
+            options: ['ghost', 'primary'],
+        },
+        size: {
+            control: 'radio',
+            options: ['sm', 'md', 'lg'],
+        },
+        typography: {
+            control: 'select',
+            options: ['bodyMd', 'bodyLg'],
+        },
+    }}
+>
+    {({ theme: themeName, ...args }) => {
+        const basicTheme = {
+            button: (state) => {
+                const sized = {
+                    sm: {
+                        ...typography('buttonSm'),
+                        borderRadius: 14,
+                    },
+                    md: {
+                        ...typography('buttonMd'),
+                        lineHeight: 1,
+                        borderRadius: scale(2),
+                    },
+                    lg: {
+                        ...typography('buttonLg'),
+                        borderRadius: scale(2),
+                    },
+                };
+                const varianted = {
+                    primary: {
+                        color: '#fff',
+                        background: 'grey',
+                        ':hover': {
+                            background: 'darkgrey',
+                        },
+                    },
+                    ghost: {
+                        border: '2px solid grey',
+                        ':hover': {
+                            background: '#fafafa',
+                        },
+                    },
+                };
+                return {
+                    padding: scale(2),
+                    display: 'inline-flex',
+                    width: 'fit-content',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    ...(state.block && {
+                        display: 'block',
+                        width: '100%',
+                    }),
+                    ...(state.rounded && {
+                        borderRadius: 12,
+                    }),
+                    ...(state.wrap && {
+                        overflowWrap: 'break-word',
+                        wordBreak: 'break-word',
+                    }),
+                    ...extractCSSOption(sized, state.size),
+                    ...extractCSSOption(varianted, state.variant),
+                };
+            },
+            icon: (state) => {
+                const sized = {
+                    sm: {
+                        width: scale(3, true),
+                        height: scale(3, true),
+                    },
+                    md: {
+                        width: scale(4, true),
+                        height: scale(4, true),
+                    },
+                    lg: {
+                        width: scale(6, true),
+                        height: scale(6, true),
+                    },
+                };
+                const marginRule = `margin${!state.iconAfter ? 'Right' : 'Left'}`;
+                const invMarginRule = `margin${state.iconAfter ? 'Right' : 'Left'}`;
+                const iconCSS = {
+                    [marginRule]: !state.hidden ? (state.hasChildren ? 1 : -1) * scale(1, true) : undefined,
+                    [invMarginRule]: !state.hidden ? -scale(1, true) : undefined,
+                    ...extractCSSOption(sized, state.size),
+                    flexShrink: 0,
+                };
+                return { ...iconCSS, fill: 'currentcolor' };
+            },
+        };
+        const themes = {
+            basic: basicTheme,
+        };
+        const Button = createButtonWithTheme(basicTheme, 'primary', 'md', (font) => ({
+            fontSize: 14,
+            ...(font === 'bodyLg' && {
+                fontSize: 21,
+            }),
+        }));
+        return (
+            <div
+                style={{
+                    ...(args.wrap && {
+                        maxWidth: 100,
+                    }),
+                }}
+            >
+                <Button {...args} theme={themes[themeName]} onClick={action('onClick')}>
+                    I'm a button
+                </Button>
+            </div>
+        );
+    }}
+</Story>
+
+Новая кнопка со статически типизированной темизацией.
+
+<Source
+    language="jsx"
+    dark
+    format
+    code={dedent`
+        enum Variants {
+            primary = 'primary',
+        }
+        enum Sizes {
+            sm = 'sm',
+        }
+        const basicButtonTheme = {
+            button: {
+                border: '1px dashed #333333',
+                padding: scale(2),
+                color: 'black',
+                display: 'flex',
+                gap: scale(1, true),
+                alignItems: 'center',
+                width: 'fit-content',
+            },
+            icon: {
+                width: scale(2),
+                height: scale(2),
+            },
+        }
+        const buttonThemes = {
+            basic: basicButtonTheme,
+        };
+        const Button = createButtonWithTheme<typeof Variants, typeof Sizes>();
+        export const Page = () => (
+            <Button
+                as="a"
+                href="#"
+                size="sm"
+                variant="primary"
+                theme={buttonThemes.basic}
+            >
+                Content
+            </Button>
+        );`}
+/>
+
+<Story name="Example">
+    {() => {
+        const basicButtonTheme = {
+            button: {
+                border: '1px dashed #333333',
+                padding: scale(2),
+                color: 'black',
+                display: 'flex',
+                gap: scale(1, true),
+                alignItems: 'center',
+                width: 'fit-content',
+            },
+            icon: {
+                width: scale(2),
+                height: scale(2),
+            },
+        };
+        const buttonThemes = {
+            basic: basicButtonTheme,
+        };
+        const Button = createButtonWithTheme();
+        return (
+            <Button
+                as="a"
+                href="#"
+                size="sm"
+                variant="primary"
+                theme={buttonThemes.basic}
+                Icon={baseTheme.global.placeholder}
+                onClick={(e) => {
+                    e.preventDefault();
+                }}
+            >
+                Content
+            </Button>
+        );
+    }}
+</Story>
+
+<Source
+    language="jsx"
+    dark
+    format
+    code={dedent`
+        export interface ButtonState {
+            // скрыт ли текст кнопки
+            hidden: boolean;
+            // выключена ли кнопка
+            disabled: boolean;
+            // передан ли children
+            hasChildren: boolean;
+            // растягивать ли кнопку
+            block: boolean;
+            // иконка справа?
+            iconAfter: boolean;
+            // включено скругление иконки?
+            rounded: boolean;
+        }
+    `}
+/>

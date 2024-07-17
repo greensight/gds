@@ -10,50 +10,73 @@ import postcss from 'rollup-plugin-postcss';
 
 import pkg from './package.json';
 
-const getEntries = (prefix, isFile) =>
+const getEntries = (prefix, isIndexFile) =>
     fs.readdirSync(path.resolve(__dirname, prefix)).reduce((acc, name) => {
         const entryName = path.parse(name).name;
-        const entryPath = isFile ? `${prefix}/${name}` : `${prefix}/${name}/index.tsx`;
+        const entryPath = isIndexFile ? `${prefix}/${name}/index.tsx` : `${prefix}/${name}`;
         return { ...acc, [entryName]: entryPath };
     }, {});
 
-export default [
-    {
-        input: {
-            index: 'src/index.ts',
-            ...getEntries('src/components'),
-            ...getEntries('src/autokits'),
-            ...getEntries('src/utils', true),
-        },
-        output: [
-            {
-                dir: 'esm',
-                format: 'es',
-            },
-            {
-                dir: 'cjs',
-                format: 'cjs',
-            },
-        ],
-        plugins: [
-            resolve({
-                extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-            }),
-            commonjs({
-                exclude: 'src/**',
-            }),
-            babel({
-                exclude: 'node_modules/**',
-                extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
-            }),
-            svgr({
-                svgo: false,
-                titleProp: true,
-            }),
-            json(),
-            postcss(),
-        ],
-        external: Object.keys(pkg.peerDependencies),
-        context: 'null',
+const configOptions = {
+    plugins: [
+        resolve({
+            extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+        }),
+        commonjs({
+            exclude: 'src/**',
+        }),
+        babel({
+            exclude: 'node_modules/**',
+            extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
+        }),
+        svgr({
+            svgo: false,
+            titleProp: true,
+        }),
+        json(),
+        postcss(),
+    ],
+    external: Object.keys(pkg.peerDependencies),
+    context: 'null',
+};
+
+const emotionConfig = {
+    input: {
+        index: 'src/emotion.ts',
+        ...getEntries('src/components/emotion', true),
+        ...getEntries('src/autokits/emotion', true),
+        ...getEntries('src/utils/emotion'),
     },
-];
+    output: [
+        {
+            dir: 'esm/emotion',
+            format: 'es',
+        },
+        {
+            dir: 'cjs/emotion',
+            format: 'cjs',
+        },
+    ],
+    ...configOptions,
+};
+
+const commonConfig = {
+    input: {
+        index: 'src/index.ts',
+        ...getEntries('src/autokits/common', true),
+        ...getEntries('src/utils/common'),
+    },
+    output: [
+        {
+            dir: 'esm',
+            format: 'es',
+        },
+        {
+            dir: 'cjs',
+            format: 'cjs',
+        },
+    ],
+    ...configOptions,
+};
+
+export default [commonConfig, emotionConfig];

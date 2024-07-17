@@ -1,0 +1,55 @@
+import { Meta, Props } from '@storybook/addon-docs';
+
+import {
+    BaseProperties,
+    BodyProperties,
+    FocusProperties,
+    FontFamilyProperties,
+    FontsProperties,
+    GlobalTheme,
+    SelectionProperties,
+} from '../../../.storybook/docgen/Global';
+
+<Meta title="Dev / Emotion / Global" />
+
+# Global
+
+Добавление глобальных стилей производится через `ThemeProvider`. Этот компонент помимо своей основной функции производит вставку `Global` из `emotion`, через который определяются глобальные стили проекта. GDS идёт со встроенными стилями, которые параметризируются через тему, и поддерживает добавление собственных стилей.
+
+Встроенное содержимое:
+
+1. Стили нормализации через [normalize.css](https://necolas.github.io/normalize.css/)
+1. Определения шрифтов
+1. Базовые стили
+
+Помимо этого вы можете передать любой CSS, который должен быть применён глобально.
+
+## Theme
+
+<Props
+    components={{
+        GlobalTheme,
+        BaseProperties,
+        BodyProperties,
+        FocusProperties,
+        SelectionProperties,
+        FontsProperties,
+        FontFamilyProperties,
+    }}
+/>
+
+## Base
+
+Глобальные стили проекта могут быть заданы через `global.base`. `ThemeProvider` вставляет базовые переопределения стилей для тегов и некоторые из них доступны для параметризации: стили выделения, фокуса и основная типографика/цвета (body).
+
+♿️ GDS подключает полифилл [focus-visible](https://github.com/WICG/focus-visible), что позволяет отключить стилизацию обычных фокусов и оставить стилизацию только для фокуса с клавиатуры, т.о. фокусы появляются только тогда, когда они действительно нужны.
+
+## Fonts
+
+Для подключения шрифтов нужно прописать глобальные `@font-face` декларации. Для этого предназначено поле `global.fonts.fontFace`.
+
+В `global.fonts.families` можно указывается использование вариативного шрифта и фолбеки – эти значения используются в хелпере `typography` и автоките `Typography`.
+
+❗️ Хелпер `typography` для вариативных шрифтов ожидает увидеть название в формете **"name VF"**.
+
+В `global.fonts.fluid` можно отключить флюидную типографику для всех стилей или для отдельных.../../../.storybook/docgen/Global
