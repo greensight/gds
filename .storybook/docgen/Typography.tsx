@@ -4,7 +4,7 @@ import {
     TypographyProperties as ITypographyProperties,
     TypographyStyle as ITypographyStyle,
     TypographyTheme as ITypographyTheme,
-} from '../../src/types/Typography';
+} from '../../src/types/emotion/Typography';
 
 export const TypographyTheme: React.FC<ITypographyTheme> = () => <div />;
 export const TypographyProperties: React.FC<ITypographyProperties> = () => <div />;

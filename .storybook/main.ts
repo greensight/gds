@@ -3,7 +3,7 @@ const config = {
         '../stories/intro/welcome.stories.mdx',
         '../stories/intro/*.stories.mdx',
         '../stories/design/*.stories.mdx',
-        '../stories/dev/*.stories.mdx',
+        '../stories/dev/**/*.stories.mdx',
         '../src/components/**/*.stories.mdx',
         '../src/autokits/**/*.stories.mdx',
     ],
