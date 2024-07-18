@@ -1,6 +1,7 @@
 const writeFile = require('./writeFile');
 
 const TITLE = 'container';
+const BREAKPOINT_MAX = 'xxxl';
 const getStyle = (key, value) => {
     return `${key}: ${value};`;
 };
@@ -26,7 +27,7 @@ async function serializeContainerClass(config, tokens) {
     }, {});
 
     const styles = Object.entries(stylesByBreakpoints).reduce((acc, [breakpointKey, breakpointValue]) => {
-        const mediaQuery = breakpointKey !== 'xxxl' ? `@include mq($${breakpointKey})` : '';
+        const mediaQuery = breakpointKey !== BREAKPOINT_MAX ? `@include mq($${breakpointKey})` : '';
         const style = breakpointValue.join(' ');
         return `${acc} ${mediaQuery ? `${mediaQuery} { ${style} }` : style}`;
     }, '');
