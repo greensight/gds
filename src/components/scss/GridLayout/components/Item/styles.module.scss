@@ -1,0 +1,26 @@
+@import '../../../../../scss/responseFunctions.scss';
+
+$breakpointList: (
+    xxl: 1600,
+    xl: 1440,
+    lg: 1280,
+    md: 1024,
+    sm: 768,
+    xs: 568,
+    xxs: 360,
+    xxxs: 320,
+);
+
+$properties: (
+    (
+        'col': 'grid-column',
+        'row': 'grid-template-rows',
+        'justify': 'justify-self',
+        'align': 'align-self',
+        'order': 'order',
+    )
+);
+
+.gridLayoutItem {
+    @include generateResponsiveProperties($breakpointList, $properties);
+}

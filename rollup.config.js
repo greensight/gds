@@ -7,6 +7,7 @@ import svgr from '@svgr/rollup';
 import fs from 'fs';
 import path from 'path';
 import postcss from 'rollup-plugin-postcss';
+import sass from 'rollup-plugin-sass';
 
 import pkg from './package.json';
 
@@ -35,6 +36,7 @@ const configOptions = {
         }),
         json(),
         postcss(),
+        sass(),
     ],
     external: Object.keys(pkg.peerDependencies),
     context: 'null',
@@ -44,7 +46,6 @@ const emotionConfig = {
     input: {
         index: 'src/emotion.ts',
         ...getEntries('src/components/emotion', true),
-        ...getEntries('src/autokits/emotion', true),
         ...getEntries('src/utils/emotion'),
     },
     output: [
@@ -60,10 +61,45 @@ const emotionConfig = {
     ...configOptions,
 };
 
+const scssConfig = {
+    input: {
+        index: 'src/scss.ts',
+        ...getEntries('src/components/scss', true),
+    },
+    output: [
+        {
+            dir: 'esm/scss',
+            format: 'es',
+        },
+        {
+            dir: 'cjs/scss',
+            format: 'cjs',
+        },
+    ],
+    ...configOptions,
+};
+
+const autokitsConfig = {
+    input: {
+        index: 'src/autokits.ts',
+        ...getEntries('src/autokits/common', true),
+        ...getEntries('src/autokits/emotion', true),
+    },
+    output: [
+        {
+            dir: 'esm/autokits',
+            format: 'es',
+        },
+        {
+            dir: 'cjs/autokits',
+            format: 'cjs',
+        },
+    ],
+    ...configOptions,
+};
 const commonConfig = {
     input: {
         index: 'src/index.ts',
-        ...getEntries('src/autokits/common', true),
         ...getEntries('src/utils/common'),
     },
     output: [
@@ -79,4 +115,4 @@ const commonConfig = {
     ...configOptions,
 };
 
-export default [commonConfig, emotionConfig];
+export default [commonConfig, emotionConfig, autokitsConfig, scssConfig];

@@ -1,0 +1,61 @@
+import { Meta } from '@storybook/addon-docs';
+
+import { GridLayout, GridLayoutItem } from '.';
+import { Placeholder } from '../../../helpers/common/Placeholder';
+
+<Meta title="Components / SCSS / Helpers / GridLayout" component={GridLayout} />
+
+# Layout12323
+
+<Story
+    name="GridLayout"
+    args={{
+        itemsCount: 5,
+        cols: 3,
+        gap: 8,
+    }}
+    argTypes={{
+        itemsCount: {
+            name: 'Items count (demo)',
+            control: {
+                type: 'range',
+                min: 2,
+                max: 16,
+                step: 1,
+            },
+        },
+        cols: {
+            name: 'cols',
+            control: {
+                type: 'range',
+                min: 2,
+                max: 16,
+                step: 1,
+            },
+        },
+        gap: {
+            name: 'gap',
+            control: {
+                type: 'range',
+                min: 0,
+                max: 48,
+                step: 1,
+            },
+        },
+    }}
+>
+    {({ itemsCount, ...props }) => {
+        return (
+            <GridLayout {...props}>
+                {new Array(itemsCount).fill('').map((_, index) => {
+                    index++;
+                    return (
+                        <GridLayoutItem key={index}>
+                            <Placeholder>Item {index}</Placeholder>
+                        </GridLayoutItem>
+                    );
+                })}
+            </GridLayout>
+        );
+    }}
+</Story>
