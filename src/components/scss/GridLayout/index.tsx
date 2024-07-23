@@ -11,8 +11,6 @@ import { colsTransform, gapTransform, rowsTransform } from './helpers';
 import styles from './styles.module.scss';
 import { type IGridLayoutProps } from './types';
 
-export { GridLayoutItem } from './components/Item';
-
 /**
  * Компонент сетки на css гридах
  */

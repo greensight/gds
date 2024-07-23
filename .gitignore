@@ -1,6 +1,5 @@
 /node_modules
-/esm
-/cjs
+/dist
 /types
 /docs
 .env
