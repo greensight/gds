@@ -1,8 +1,9 @@
-const content = `{
-    "module": "%path%"
+const getContent = ({ path, types }) => `{
+    "module": "${path}",
+    "types": "${types}"
 }
 `;
 
-const createPackageJson = (path) => content.replace('%path%', path);
+const createPackageJson = (path, types) => getContent({ path, types });
 
 export default createPackageJson;

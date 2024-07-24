@@ -2,6 +2,7 @@ import multiInput from 'rollup-plugin-multi-input';
 import copy from 'rollup-plugin-copy';
 import createPackageJson from './utils/createPackage';
 // import { emotionConfigOptios } from './utils/emotionConfigOptios';
+const folders = ['dist/emotion', 'dist/autokits', 'dist/scss'];
 
 const rootConfig = {
     input: ['dist/**/*.js'],
@@ -15,11 +16,12 @@ const rootConfig = {
                 { src: 'LICENSE.md', dest: 'dist' },
                 { src: 'README.md', dest: 'dist' },
                 { src: 'bin', dest: 'dist' },
-                {
+                ...folders.map((folder) => ({
                     src: 'package.json',
-                    dest: ['dist/emotion', 'dist/autokits'],
-                    transform: () => createPackageJson('./esm/index.js'),
-                },
+                    dest: [folder],
+                    transform: () =>
+                        createPackageJson('./esm/index.js', `../types/${folder.replace('dist/', '')}.d.ts`),
+                })),
             ],
         }),
     ],

@@ -5,15 +5,26 @@ import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import svgr from '@svgr/rollup';
 import path from 'path';
-import sass from 'rollup-plugin-sass';
-import fs, { writeFileSync } from 'fs';
+import postcss from 'rollup-plugin-postcss';
 import multiInput from 'rollup-plugin-multi-input';
+import globby from 'globby';
 import pkg from '../../../package.json';
 
-export const scssConfigOptios = ({ dir }) => ({
+const getComponentDir = (fullPath) => fullPath.split('/components/scss/')[1].replace('styles.module.scss', 'index.css');
+const bundleCss = () => {
+    const files = globby.sync(path.resolve(__dirname, './src/components/**/*.scss'));
+    return files.map((file) =>
+        postcss({
+            include: file,
+            extract: `components/${getComponentDir(file)}`,
+            minimize: true,
+        }),
+    );
+};
+export const scssConfigOptios = () => ({
     plugins: [
         resolve({
-            extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.scss', '.css'],
+            extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         }),
         commonjs({
             exclude: 'src/**',
@@ -29,21 +40,8 @@ export const scssConfigOptios = ({ dir }) => ({
             titleProp: true,
         }),
         json(),
-        sass({
-            output(_, styleNodes) {
-                styleNodes.forEach((styleObj) => {
-                    const filePath = path.resolve(
-                        __dirname,
-                        `./${dir}/components/${styleObj.id.replace(/^.*\/src\/components\/scss\//, '').replace('styles.module.scss', 'index.css')}`,
-                    );
-                    const dirName = path.dirname(filePath);
-                    if (!fs.existsSync(dirName)) {
-                        fs.mkdirSync(dirName, { recursive: true });
-                    }
-                    writeFileSync(filePath, styleObj.content);
-                });
-            },
-        }),
+        // Добавляем вручную .css т.к postcss умеет генерировать только итоговый файл
+        ...bundleCss(),
         multiInput.default({
             transformOutputPath: (output) => {
                 return output.replace('components/scss', 'components');
