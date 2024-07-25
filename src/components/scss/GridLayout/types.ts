@@ -9,10 +9,13 @@ type DirectionType = 'start' | 'end' | 'center' | 'stretch' | 'space-around' | '
 export interface IGridLayoutProps extends Omit<HTMLProps<HTMLDivElement>, 'children' | 'align' | 'cols' | 'rows'> {
     /** Columns settings. */
     cols?: AllowMedia<ValueType>;
+    /** rows settings */
     rows?: AllowMedia<ValueType>;
     /** Gaps settings. */
     gap?: AllowMedia<ValueType>;
+    /** Main axis alignment. */
     justify?: AllowMedia<DirectionType>;
+    /** Cross axis alignment. */
     align?: AllowMedia<DirectionType>;
     children: ReactNode;
 }

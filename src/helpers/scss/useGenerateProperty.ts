@@ -46,7 +46,7 @@ export const useGenerateProperty = ({ props, styles, name }: IUseGeneratePropert
     const mediaStyles = useMemo(
         () =>
             mediaKeys.reduce<Record<string, boolean>>((acc, key) => {
-                // xxxl значения прописаны в базовом стиле, они там есть по умолчанию
+                // xxxl values are written in the basic style, they are there by default
                 if (key === 'xxxl') return acc;
 
                 const dataValue = mediaProperties[key];

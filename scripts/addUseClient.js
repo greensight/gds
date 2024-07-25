@@ -4,9 +4,8 @@ const glob = require('glob');
 
 const directoryPaths = ['./dist/scss/esm', './dist/scss/cjs'];
 
-// Костыль-функция для добавления директивы в файл
+// A crutch function for adding a directive to a file
 const addUseClient = (directories) => {
-    // Находим все JS файлы в директории
     directories.forEach((directory) => {
         glob(path.join(directory, '**/*.js'), (err, files) => {
             if (err) {
@@ -15,7 +14,7 @@ const addUseClient = (directories) => {
             }
 
             files.forEach((file) => {
-                const filePath = path.resolve(file); // Получаем полный путь к файлу
+                const filePath = path.resolve(file);
                 fs.readFile(filePath, 'utf8', (readErr, data) => {
                     if (readErr) {
                         console.error(`Ошибка чтения файла ${filePath}: `, readErr);
@@ -28,7 +27,7 @@ const addUseClient = (directories) => {
                     )
                         return null;
                     if (!data.includes("require('react');")) return null;
-                    // Заменяем содержимое файла, добавляя директиву 'use client'
+                    // Replace the contents of the file by adding the 'use client' directive
                     const updatedData = data.replace(/'use strict';/gm, "'use strict';\n'use client';");
 
                     fs.writeFile(filePath, updatedData, 'utf8', (writeErr) => {
@@ -44,5 +43,4 @@ const addUseClient = (directories) => {
     });
 };
 
-// Вызываем функцию
 addUseClient(directoryPaths);

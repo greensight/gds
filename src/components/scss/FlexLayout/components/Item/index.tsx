@@ -9,7 +9,7 @@ import { type IFlexLayoutItemProps } from './types';
 import { useScssTheme } from '../../../../../utils/scss/useTheme';
 
 /**
- * Компонент айтема сетки на флексах
+ * Flex layout item component
  */
 export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
     justify,
@@ -35,7 +35,7 @@ export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
     });
 
     const flexOrder = useCSSProperty({ value: order ? `${order}` : undefined });
-    console.log('flexOrder=', flexOrder);
+
     const propArray = useMemo(() => {
         const properties = [];
         if (justifySelf) {

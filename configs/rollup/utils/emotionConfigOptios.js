@@ -20,7 +20,7 @@ export const emotionConfigOptios = {
         babel({
             exclude: 'node_modules/**',
             extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
-            // path прописываем относительно rollup.config.js
+            // set path relative to rollup.config.js
             configFile: path.resolve(__dirname, './configs/babel/emotion.config.json'),
         }),
         svgr({

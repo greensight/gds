@@ -1,7 +1,6 @@
 import multiInput from 'rollup-plugin-multi-input';
 import copy from 'rollup-plugin-copy';
 import createPackageJson from './utils/createPackage';
-// import { emotionConfigOptios } from './utils/emotionConfigOptios';
 const folders = ['dist/emotion', 'dist/autokits', 'dist/scss'];
 
 const rootConfig = {

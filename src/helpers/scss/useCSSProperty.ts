@@ -14,7 +14,6 @@ const setValue = <T extends ValueType>(value: T, transform?: (value: T) => Value
 /**
  * Calculate CSS Object from component props with `AllowMedia` type (user can pass object with breakpoints through prop). CSS property can be calculated based on multiple props.
  */
-// export const useCSSProperty = <T extends Record<Breakpoint, ValueType>>({
 export const useCSSProperty = <T extends AllowMedia<ValueType>>({
     value,
     transform,

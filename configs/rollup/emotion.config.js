@@ -6,7 +6,7 @@ const emotionConfig = {
         index: 'src/emotion.ts',
         ...getEntries('src/components/emotion', true),
         ...getEntries('src/utils/emotion'),
-        // Оставляем для обратной зависимости с предыдущей версией
+        // Leave for inverse dependency with the previous version
         ...getEntries('src/utils/common'),
     },
     output: [

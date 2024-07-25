@@ -1,6 +1,6 @@
 import { CSSObject, Global as EmotionGlobal, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 import 'focus-visible';
-// import 'normalize.css';
+import 'normalize.css';
 import React, { FC, useMemo } from 'react';
 
 import { Theme } from '../../../types/emotion/Theme';

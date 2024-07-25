@@ -33,7 +33,7 @@ export const scssConfigOptios = () => ({
         babel({
             exclude: 'node_modules/**',
             extensions: [...DEFAULT_EXTENSIONS, '.ts', '.tsx'],
-            // path прописываем относительно rollup.config.js
+            // set path relative to rollup.config.js
             configFile: path.resolve(__dirname, './configs/babel/scss.config.json'),
         }),
         svgr({
@@ -41,7 +41,7 @@ export const scssConfigOptios = () => ({
             titleProp: true,
         }),
         json(),
-        // Добавляем вручную .css т.к postcss умеет генерировать только итоговый файл
+        // Add .css manually because postcss can only generate the final file
         ...bundleCss(),
         multiInput.default({
             transformOutputPath: (output) => {
