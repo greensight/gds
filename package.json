@@ -1,6 +1,6 @@
 {
     "name": "@greensight/gds",
-    "version": "4.1.2-beta",
+    "version": "4.2.1-beta",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
@@ -21,7 +21,7 @@
     },
     "scripts": {
         "build": "run-s clear build:main",
-        "build:main": "run-p build:types build:rollup",
+        "build:main": "run-p build:types build:rollup && yarn clientScripts",
         "build:rollup": "rollup -c --bundleConfigAsCjs",
         "build:types": "yarn pnpify tsc -p tsconfig.types.json",
         "clear": "rimraf dist types",
@@ -35,7 +35,8 @@
         "tokens": "node bin/index.js",
         "scss-tokens": "node bin/scss/index.js",
         "tokens:dev": "node bin/index.js -c gds-dev.config.json",
-        "tsc": "yarn pnpify tsc"
+        "tsc": "yarn pnpify tsc",
+        "clientScripts": "node scripts/addUseClient"
     },
     "husky": {
         "hooks": {

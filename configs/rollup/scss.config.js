@@ -1,5 +1,4 @@
 import { scssConfigOptios } from './utils/scssConfigOptions';
-import fs from 'fs';
 
 const renameIndexFile = (fileName) => ({
     name: 'rename-index-file',
@@ -18,7 +17,6 @@ const addCSSImport = () => ({
     generateBundle: (_, bundles) => {
         Object.keys(bundles).forEach((bundleName) => {
             const { code } = bundles[bundleName];
-
             // Исключаем .css файлы
             if (!code) {
                 return;
@@ -32,30 +30,6 @@ const addCSSImport = () => ({
         return bundles;
     },
 });
-
-export const getFiles = (entry, extensions = [], excludeExtensions = []) => {
-    let fileNames = [];
-    const dirs = fs.readdirSync(entry);
-
-    dirs.forEach((dir) => {
-        const path = `${entry}/${dir}`;
-
-        if (fs.lstatSync(path).isDirectory()) {
-            fileNames = [...fileNames, ...getFiles(path, extensions, excludeExtensions)];
-
-            return;
-        }
-
-        if (
-            !excludeExtensions.some((exclude) => dir.endsWith(exclude)) &&
-            extensions.some((ext) => dir.endsWith(ext))
-        ) {
-            fileNames.push(path);
-        }
-    });
-
-    return fileNames;
-};
 
 const configInput = ['src/scss.ts', 'src/components/scss/**/*.{ts,tsx}', '!src/components/scss/**/types.{ts,tsx}'];
 const scssESMConfig = {
