@@ -18,6 +18,7 @@ const bundleCss = () => {
             include: file,
             extract: `components/${getComponentDir(file)}`,
             minimize: true,
+            generateScopedName: 'gds_[hash:base64:5]',
         }),
     );
 };

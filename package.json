@@ -33,6 +33,7 @@
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 8080",
         "tokens": "node bin/index.js",
+        "scss-tokens": "node bin/scss/index.js",
         "tokens:dev": "node bin/index.js -c gds-dev.config.json",
         "tsc": "yarn pnpify tsc"
     },
@@ -63,7 +64,7 @@
         "@emotion/react": "11.11.4",
         "@emotion/styled": "11.11.5",
         "@tippyjs/react": "4.2.6",
-        "chalk": "5.3.0",
+        "chalk": "4.1.2",
         "deepmerge": "^4.3.1",
         "focus-visible": "^5.2.0",
         "node-fetch-commonjs": "^3.3.2",

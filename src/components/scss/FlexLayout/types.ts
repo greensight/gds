@@ -1,0 +1,13 @@
+import { type HTMLProps, type ReactNode } from 'react';
+
+import { type AllowMedia, type ValueType } from '../../../types/scss/Layout';
+
+type DirectionType = 'start' | 'end' | 'center' | 'stretch' | 'space-around' | 'space-between' | 'space-evenly';
+
+export interface IFlexLayoutProps extends Omit<HTMLProps<HTMLDivElement>, 'children' | 'align' | 'wrap'> {
+    gap?: AllowMedia<ValueType>;
+    justify?: AllowMedia<DirectionType>;
+    align?: AllowMedia<DirectionType>;
+    wrap?: AllowMedia<boolean>;
+    children: ReactNode;
+}

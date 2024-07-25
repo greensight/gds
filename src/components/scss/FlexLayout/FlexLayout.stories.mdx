@@ -1,15 +1,15 @@
 import { Meta } from '@storybook/addon-docs';
 
-import { GridLayout } from '.';
-import { GridLayoutItem } from './components/Item';
+import { FlexLayout } from '.';
+import { FlexLayoutItem } from './components/Item';
 import { Placeholder } from '../../../helpers/common/Placeholder';
 
-<Meta title="Components / SCSS / Helpers / GridLayout" component={GridLayout} />
+<Meta title="Components / SCSS / Helpers / FlexLayout" component={FlexLayout} />
 
 # Layout12323
 
 <Story
-    name="GridLayout"
+    name="FlexLayout"
     args={{
         itemsCount: 5,
         cols: 3,
@@ -18,15 +18,6 @@ import { Placeholder } from '../../../helpers/common/Placeholder';
     argTypes={{
         itemsCount: {
             name: 'Items count (demo)',
-            control: {
-                type: 'range',
-                min: 2,
-                max: 16,
-                step: 1,
-            },
-        },
-        cols: {
-            name: 'cols',
             control: {
                 type: 'range',
                 min: 2,
@@ -43,20 +34,24 @@ import { Placeholder } from '../../../helpers/common/Placeholder';
                 step: 1,
             },
         },
+        wrap: {
+            name: 'wrap',
+            control: 'boolean',
+        },
     }}
 >
     {({ itemsCount, ...props }) => {
         return (
-            <GridLayout {...props}>
+            <FlexLayout {...props}>
                 {new Array(itemsCount).fill('').map((_, index) => {
                     index++;
                     return (
-                        <GridLayoutItem key={index}>
+                        <FlexLayoutItem key={index}>
                             <Placeholder>Item {index}</Placeholder>
-                        </GridLayoutItem>
+                        </FlexLayoutItem>
                     );
                 })}
-            </GridLayout>
+            </FlexLayout>
         );
     }}
 </Story>

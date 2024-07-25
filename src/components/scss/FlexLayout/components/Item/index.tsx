@@ -5,17 +5,13 @@ import cn from 'classnames';
 import { useCSSProperty } from '../../../../../helpers/scss/useCSSProperty';
 import { useGenerateProperty } from '../../../../../helpers/scss/useGenerateProperty';
 
-import { colTransform, rowTransform } from './helpers';
-
-import { type IGridLayoutItemProps } from './types';
+import { type IFlexLayoutItemProps } from './types';
 import { useScssTheme } from '../../../../../utils/scss/useTheme';
 
 /**
- * Компонент айтема сетки на css гридах
+ * Компонент айтема сетки на флексах
  */
-const GridLayoutItem: FC<IGridLayoutItemProps> = ({
-    col,
-    row,
+export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
     justify,
     align,
     order,
@@ -26,19 +22,9 @@ const GridLayoutItem: FC<IGridLayoutItemProps> = ({
 }) => {
     const {
         styles: {
-            gridLayout: { item: styles },
+            flexLayout: { item: styles },
         },
     } = useScssTheme();
-
-    const gridColumn = useCSSProperty({
-        value: col,
-        transform: colTransform,
-    });
-
-    const gridRow = useCSSProperty({
-        value: row,
-        transform: rowTransform,
-    });
 
     const justifySelf = useCSSProperty({
         value: justify,
@@ -48,43 +34,32 @@ const GridLayoutItem: FC<IGridLayoutItemProps> = ({
         value: align,
     });
 
-    const gridOrder = useCSSProperty({
-        value: order,
-    });
+    const flexOrder = useCSSProperty({ value: order });
 
     const propArray = useMemo(() => {
         const properties = [];
-
-        if (gridColumn) {
-            properties.push({ name: 'col', value: gridColumn });
-        }
-        if (gridRow) {
-            properties.push({ name: 'row', value: gridRow });
-        }
         if (justifySelf) {
             properties.push({ name: 'justify', value: justifySelf });
         }
         if (alignSelf) {
             properties.push({ name: 'align', value: alignSelf });
         }
-        if (gridOrder) {
-            properties.push({ name: 'order', value: gridOrder });
+        if (flexOrder) {
+            properties.push({ name: 'order', value: flexOrder });
         }
 
         return properties;
-    }, [alignSelf, gridColumn, gridRow, justifySelf, gridOrder]);
+    }, [alignSelf, justifySelf, flexOrder]);
 
     const { mediaStyles, vars } = useGenerateProperty({
         props: propArray,
-        name: 'gridLayoutItem',
+        name: 'flexLayoutItem',
         styles,
     });
 
     return (
-        <div className={cn(styles.gridLayoutItem, mediaStyles, className)} style={vars} {...props}>
+        <div className={cn(styles.flexLayoutItem, mediaStyles, className)} style={vars} {...props}>
             {children}
         </div>
     );
 };
-
-export { GridLayoutItem };

@@ -8,8 +8,9 @@ import { useGenerateProperty } from '../../../helpers/scss/useGenerateProperty';
 import { scale } from '../../../utils/common/scale';
 
 import { colsTransform, gapTransform, rowsTransform } from './helpers';
-import styles from './styles.module.scss';
+
 import { type IGridLayoutProps } from './types';
+import { useScssTheme } from '../../../utils/scss/useTheme';
 
 /**
  * Компонент сетки на css гридах
@@ -25,6 +26,12 @@ const GridLayout: FC<IGridLayoutProps> = ({
     children,
     ...props
 }) => {
+    const {
+        styles: {
+            gridLayout: { index: styles },
+        },
+    } = useScssTheme();
+
     const gridTemplateColumns = useCSSProperty({
         value: cols,
         transform: colsTransform,
@@ -63,7 +70,7 @@ const GridLayout: FC<IGridLayoutProps> = ({
     const { mediaStyles, vars } = useGenerateProperty({
         name: 'gridLayout',
         props: propArray,
-        styles,
+        styles: styles,
     });
 
     return (

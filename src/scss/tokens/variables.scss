@@ -1,0 +1,40 @@
+$gutterStep: 8px;
+$gutterStepMinor: 4px;
+$cl-black: #000000;
+$cl-grey0: #121314;
+$cl-grey20: #666a6f;
+$cl-grey40: #a8adb3;
+$cl-grey60: #d6d8db;
+$cl-grey70: #e0e3e8;
+$cl-grey90: #f1f2f5;
+$cl-white: #ffffff;
+$cl-fade: rgba(0, 0, 0, 0.5);
+$cl-brand: #215bf0;
+$cl-brandHover: #1146cc;
+$cl-brandSecond: #ea1414;
+$cl-brandSecondHover: #d40505;
+$cl-error: #f14646;
+$cl-warning: #f0b621;
+$cl-success: #4aa253;
+$cl-tagHit: #68c1dd;
+$cl-tagSale: #f369a3;
+$cl-tagNew: #b6d674;
+
+$shadow-small:
+    1px 1px 3px rgba(18, 19, 20, 0.05),
+    1px 3px 10px rgba(18, 19, 20, 0.05);
+$shadow-big: 4px 10px 35px rgba(18, 19, 20, 0.08);
+$shadow-inner:
+    inset 3px 3px 10px rgba(18, 19, 20, 0.1),
+    inset 2px 2px 5px rgba(18, 19, 20, 0.1),
+    inset 2px 2px 3px rgba(18, 19, 20, 0.08);
+
+$xxxl: 1920;
+$xxl: 1600;
+$xl: 1440;
+$lg: 1280;
+$md: 960;
+$sm: 768;
+$xs: 568;
+$xxs: 360;
+$xxxs: 320;

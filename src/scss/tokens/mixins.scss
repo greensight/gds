@@ -1,0 +1,296 @@
+@use 'sass:map';
+@use 'sass:list';
+@mixin mqMin($breakpoint) {
+    @media (min-width: #{$breakpoint}px) {
+        @content;
+    }
+}
+@mixin mq($breakpoint) {
+    @media (max-width: #{$breakpoint - 1}px) {
+        @content;
+    }
+}
+@mixin buttonLgTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+}
+@mixin buttonMdTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+}
+@mixin buttonSmTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1;
+}
+@mixin captionUppercaseTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+@mixin captionTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+}
+@mixin smallBoldTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.4;
+
+    @media (max-width: 1440px) {
+        font-size: calc(0.75rem + ((100vw - 48rem) / (90 - 48)) * (0.875 - 0.75));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.75rem;
+    }
+}
+@mixin smallTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.4;
+
+    @media (max-width: 1440px) {
+        font-size: calc(0.75rem + ((100vw - 48rem) / (90 - 48)) * (0.875 - 0.75));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.75rem;
+    }
+}
+@mixin bodyBoldTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+
+    @media (max-width: 1440px) {
+        font-size: calc(0.875rem + ((100vw - 48rem) / (90 - 48)) * (1 - 0.875));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.875rem;
+    }
+}
+@mixin bodyTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4;
+
+    @media (max-width: 1440px) {
+        font-size: calc(0.875rem + ((100vw - 48rem) / (90 - 48)) * (1 - 0.875));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 0.875rem;
+    }
+}
+@mixin subheadingTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5;
+
+    @media (max-width: 1440px) {
+        font-size: calc(1.125rem + ((100vw - 48rem) / (90 - 48)) * (1.25 - 1.125));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.125rem;
+    }
+}
+@mixin titleTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.2;
+
+    @media (max-width: 1440px) {
+        font-size: calc(1.125rem + ((100vw - 48rem) / (90 - 48)) * (1.25 - 1.125));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.125rem;
+    }
+}
+@mixin headlineTypography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.2;
+
+    @media (max-width: 1440px) {
+        font-size: calc(1.25rem + ((100vw - 48rem) / (90 - 48)) * (1.5 - 1.25));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.25rem;
+    }
+}
+@mixin h4Typography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 1.75rem;
+    line-height: 1.2;
+
+    @media (max-width: 1440px) {
+        font-size: calc(1.375rem + ((100vw - 48rem) / (90 - 48)) * (1.75 - 1.375));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.375rem;
+    }
+}
+@mixin h3Typography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 1.2;
+
+    @media (max-width: 1440px) {
+        font-size: calc(1.5rem + ((100vw - 48rem) / (90 - 48)) * (2 - 1.5));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 1.5rem;
+    }
+}
+@mixin h2Typography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 1.2;
+
+    @media (max-width: 1440px) {
+        font-size: calc(2.125rem + ((100vw - 48rem) / (90 - 48)) * (3 - 2.125));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 2.125rem;
+    }
+}
+@mixin h1Typography {
+    font-family: 'PT Root UI', sans-serif;
+    font-weight: 700;
+    font-size: 4.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+
+    @media (max-width: 1440px) {
+        font-size: calc(3rem + ((100vw - 48rem) / (90 - 48)) * (4.25 - 3));
+    }
+
+    @media (max-width: 768px) {
+        font-size: 3rem;
+    }
+}
+@import './breakpoints.scss';
+@mixin getProperty($name, $value) {
+    @if $value {
+        #{$name}: $value;
+    }
+}
+@function defaultPropertyFn($property) {
+    @return $property;
+}
+@mixin cssProperty($propertyName, $propertyValue, $fn: defaultPropertyFn) {
+    @if type-of($propertyValue) == 'map' {
+        @each $size, $value in $propertyValue {
+            @if $size == $defaultBreakpoint {
+                @include getProperty($propertyName, call(get-function($fn), $value));
+            }
+
+            @if $size != $defaultBreakpoint {
+                @include mq(map-get($breakpointList, $size)) {
+                    @include getProperty($propertyName, call(get-function($fn), $value));
+                }
+            }
+        }
+    } @else {
+        @include getProperty($propertyName, call(get-function($fn), $propertyValue));
+    }
+}
+@function gridLayoutCellFn($property) {
+    @if type-of($property) == 'number' {
+        @if unit($property) == 'px' {
+            @return $property;
+        } @else {
+            @return repeat($property, 1fr);
+        }
+    }
+    @if type-of($property) == 'list' {
+        @return list.join($property, (), $separator: space);
+    }
+    @if type-of($property) == 'string' {
+        @return $property;
+    }
+    @return null;
+}
+@function layoutGapFn($property) {
+    @if type-of($property) == 'string' {
+        @return $property;
+    }
+    @if type-of($property) == 'list' and length($property) == 2 {
+        @return list.join($property, (), $separator: space);
+    }
+    @return null;
+}
+@function gridLayoutItemCellFn($property) {
+    @if type-of($property) == 'list' and length($property) == 2 {
+        @return #{list.nth($property, 1)} / #{list.nth($property, 2)};
+    }
+
+    @if $property {
+        @return #{span $property};
+    }
+
+    @return null;
+}
+@mixin gridLayout($cols: 12, $gap: gs(3)) {
+    display: grid;
+    @include cssProperty('grid-template-columns', $cols, gridLayoutCellFn);
+    @include cssProperty('gap', $gap, layoutGapFn);
+}
+@mixin gridLayoutRows($rows) {
+    @include cssProperty('grid-template-rows', $rows, gridLayoutCellFn);
+}
+@mixin alignmentLayout($justify, $align) {
+    @include cssProperty('justify-items', $justify);
+    @include cssProperty('align-items', $align);
+}
+@mixin gridLayoutItem($col: false, $row: false) {
+    @include cssProperty('grid-column', $col, gridLayoutItemCellFn);
+    @include cssProperty('grid-row', $row, gridLayoutItemCellFn);
+}
+@mixin alignmentLayoutItem($justify: false, $align: false) {
+    @include cssProperty('justify-self', $justify);
+    @include cssProperty('align-self', $align);
+}
+@mixin orderLayoutItem($order) {
+    @include cssProperty('order', $order);
+}
+@mixin flexLayout($gap) {
+    display: flex;
+    @include cssProperty('gap', $gap, layoutGapFn);
+}
+@mixin section($mb: false, $padding: false, $bg: false) {
+    @include cssProperty('margin-bottom', $mb);
+    @include cssProperty('padding', $padding);
+    @include cssProperty('background-color', $bg);
+}

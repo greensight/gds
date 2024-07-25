@@ -13,7 +13,9 @@ const STYLES_ENUM = Object.freeze({
     padding: (value) => getStyle('padding', `0 ${value}px`),
 });
 
-async function serializeContainerClass(config, tokens) {
+const imports = ["@import './mixins.scss';"].join('\n');
+
+async function serializeContainerMixin(config, tokens) {
     const { layout } = tokens;
 
     const stylesByBreakpoints = Object.keys(layout.breakpoints).reduce((acc, breakpointKey) => {
@@ -31,9 +33,11 @@ async function serializeContainerClass(config, tokens) {
         const style = breakpointValue.join(' ');
         return `${acc} ${mediaQuery ? `${mediaQuery} { ${style} }` : style}`;
     }, '');
-
-    const fileData = `.${TITLE} { ${styles} }`;
-    writeFile({ name: TITLE, fileData, config });
+    const mixin = `@mixin container {
+        .${TITLE} { ${styles} }
+    }`;
+    const fileData = [imports, mixin].join('\n');
+    writeFile({ name: 'containerMixin', fileData, config });
 }
 
-module.exports = serializeContainerClass;
+module.exports = serializeContainerMixin;

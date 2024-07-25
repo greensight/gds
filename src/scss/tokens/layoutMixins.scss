@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use 'sass:list';
 @use 'sass:meta';
+@import './breakpoints.scss';
 @import './mixins.scss';
 
 @function getResponsiveProperty($var, $breakpoints...) {
@@ -66,4 +67,68 @@
     $property: var(--#{$var}-#{$breakpoint});
 
     @return $property;
+}
+
+@mixin gridLayout {
+    $properties: (
+        (
+            'cols': 'grid-template-columns',
+            'rows': 'grid-template-rows',
+            'gap': 'gap',
+            'justify': 'justify-items',
+            'align': 'align-items',
+        )
+    );
+
+    .gridLayout {
+        display: grid;
+        @include generateResponsiveProperties($breakpointList, $properties);
+    }
+}
+
+@mixin gridLayoutItem {
+    $properties: (
+        (
+            'col': 'grid-column',
+            'row': 'grid-template-rows',
+            'justify': 'justify-self',
+            'align': 'align-self',
+            'order': 'order',
+        )
+    );
+
+    .gridLayoutItem {
+        @include generateResponsiveProperties($breakpointList, $properties);
+    }
+}
+
+@mixin flexLayout {
+    $properties: (
+        (
+            'gap': 'gap',
+            'justify': 'justify-items',
+            'align': 'align-items',
+            'wrap': 'flex-wrap',
+        )
+    );
+
+    .flexLayout {
+        @include generateResponsiveProperties($breakpointList, $properties);
+
+        display: flex;
+    }
+}
+
+@mixin flexLayoutItem {
+    $properties: (
+        (
+            'justify': 'justify-self',
+            'align': 'align-self',
+            'order': 'order',
+        )
+    );
+
+    .flexLayoutItem {
+        @include generateResponsiveProperties($breakpointList, $properties);
+    }
 }

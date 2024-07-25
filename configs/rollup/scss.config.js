@@ -75,27 +75,4 @@ const scssESMConfig = {
     ...scssConfigOptios(),
 };
 
-// const scssCJSConfig = {
-//     input: configInput,
-
-//     output: [
-//         {
-//             dir: 'dist/scss/cjs',
-//             format: 'cjs',
-//             plugins: [
-//                 // addCSSImport(),
-//                 // renameIndexFile('scss.js'),
-//                 // postcss({
-//                 //     modules: true, // Это позволит генерировать CSS-модули
-//                 //     extract: true, // Экстрагируйте CSS в отдельные файлы
-//                 //     minimize: true, // Минимизируйте CSS
-//                 // }),
-//             ],
-//             // preserveModules: true,
-//             // preserveModulesRoot: 'src',
-//         },
-//     ],
-//     ...scssConfigOptios({ dir: 'dist/scss/cjs' }),
-// };
-
 export default [scssESMConfig];
