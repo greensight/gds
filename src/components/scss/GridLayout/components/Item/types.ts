@@ -7,13 +7,11 @@ type DirectionType = 'start' | 'end' | 'center' | 'stretch';
 export interface IGridLayoutItemProps extends HTMLProps<HTMLDivElement> {
     /** Item content. */
     children?: ReactNode;
-
     /** Column settings. */
     col?: AllowMedia<ValueType>;
-    /** Row settings. For grids only. */
+    /** Row settings. */
     row?: AllowMedia<ValueType>;
-
-    /** Main axis self alignment. For grids only. */
+    /** Main axis self alignment. */
     justify?: AllowMedia<DirectionType>;
     /** Cross axis self alignment. */
     align?: AllowMedia<DirectionType>;

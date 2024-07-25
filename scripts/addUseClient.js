@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-const directoryPaths = ['./dist/scss/esm/components', './dist/scss/cjs/components'];
+const directoryPaths = ['./dist/scss/esm', './dist/scss/cjs'];
 
-// Функция для добавления директивы в файл
+// Костыль-функция для добавления директивы в файл
 const addUseClient = (directories) => {
     // Находим все JS файлы в директории
     directories.forEach((directory) => {
@@ -21,6 +21,12 @@ const addUseClient = (directories) => {
                         console.error(`Ошибка чтения файла ${filePath}: `, readErr);
                         return;
                     }
+
+                    if (
+                        !data.includes('React.createContext') &&
+                        !filePath.includes(`${directory.replaceAll('.', '')}/components`)
+                    )
+                        return null;
                     if (!data.includes("require('react');")) return null;
                     // Заменяем содержимое файла, добавляя директиву 'use client'
                     const updatedData = data.replace(/'use strict';/gm, "'use strict';\n'use client';");

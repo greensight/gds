@@ -13,7 +13,7 @@ import { type IGridLayoutProps } from './types';
 import { useScssTheme } from '../../../utils/scss/useTheme';
 
 /**
- * Компонент сетки на css гридах
+ * Grid layout component
  */
 const GridLayout: FC<IGridLayoutProps> = ({
     cols = 12,

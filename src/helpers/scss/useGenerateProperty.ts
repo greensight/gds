@@ -63,7 +63,10 @@ export const useGenerateProperty = ({ props, styles, name }: IUseGeneratePropert
                     const properties = mediaProperties[breakpoint];
                     Object.keys(properties).forEach((propertyName) => {
                         const propertyValue = properties[propertyName];
-                        const parsedValue = Number.isNaN(Number(propertyValue)) ? propertyValue : `${propertyValue}px`;
+                        const parsedValue =
+                            Number.isNaN(Number(propertyValue)) || typeof propertyValue === 'string'
+                                ? propertyValue
+                                : `${propertyValue}px`;
                         acc[breakpoint === 'xxxl' ? `--${propertyName}` : `--${propertyName}-${breakpoint}`] =
                             `${parsedValue}`;
                     });

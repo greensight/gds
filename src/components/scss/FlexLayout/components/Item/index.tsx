@@ -34,8 +34,8 @@ export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
         value: align,
     });
 
-    const flexOrder = useCSSProperty({ value: order });
-
+    const flexOrder = useCSSProperty({ value: order ? `${order}` : undefined });
+    console.log('flexOrder=', flexOrder);
     const propArray = useMemo(() => {
         const properties = [];
         if (justifySelf) {

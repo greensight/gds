@@ -46,7 +46,7 @@ import { Placeholder } from '../../../helpers/common/Placeholder';
                 {new Array(itemsCount).fill('').map((_, index) => {
                     index++;
                     return (
-                        <FlexLayoutItem key={index}>
+                        <FlexLayoutItem key={index} order={index === 2 ? -1 : undefined}>
                             <Placeholder>Item {index}</Placeholder>
                         </FlexLayoutItem>
                     );

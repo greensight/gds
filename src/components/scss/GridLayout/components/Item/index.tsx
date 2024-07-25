@@ -11,7 +11,7 @@ import { type IGridLayoutItemProps } from './types';
 import { useScssTheme } from '../../../../../utils/scss/useTheme';
 
 /**
- * Компонент айтема сетки на css гридах
+ * Grid layout item component
  */
 const GridLayoutItem: FC<IGridLayoutItemProps> = ({
     col,
@@ -49,7 +49,7 @@ const GridLayoutItem: FC<IGridLayoutItemProps> = ({
     });
 
     const gridOrder = useCSSProperty({
-        value: order,
+        value: order ? `${order}` : undefined,
     });
 
     const propArray = useMemo(() => {

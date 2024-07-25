@@ -1,7 +1,7 @@
 export { GridLayout } from './components/scss/GridLayout';
 export { GridLayoutItem } from './components/scss/GridLayout/components/Item';
-export { Section as SectionSCSS } from './components/scss/Section';
-export { Container as ContainerSCSS } from './components/scss/Container';
+export { Section } from './components/scss/Section';
+export { Container } from './components/scss/Container';
 export { FlexLayout } from './components/scss/FlexLayout';
 export { FlexLayoutItem } from './components/scss/FlexLayout/components/Item';
 export { ScssThemeProvider as ThemeProvider } from './components/scss/ThemeProvider';

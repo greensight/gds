@@ -7,8 +7,7 @@ type DirectionType = 'start' | 'end' | 'center' | 'stretch';
 export interface IFlexLayoutItemProps extends HTMLProps<HTMLDivElement> {
     /** Item content. */
     children?: ReactNode;
-
-    /** Main axis self alignment. For grids only. */
+    /** Main axis self alignment. */
     justify?: AllowMedia<DirectionType>;
     /** Cross axis self alignment. */
     align?: AllowMedia<DirectionType>;

@@ -16,7 +16,7 @@ import { Breakpoint } from '../../../types/scss/Layout';
 export { FlexLayoutItem } from './components/Item';
 
 /**
- * Компонент сетки на флексах
+ * Flex layout component
  */
 const FlexLayout: FC<IFlexLayoutProps> = ({ gap = scale(3), justify, align, className, children, wrap, ...props }) => {
     const {
