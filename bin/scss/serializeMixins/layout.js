@@ -1,3 +1,5 @@
+const imports = ["@import './breakpoints.scss';"];
+
 const helpers = [
     `@mixin getProperty($name, $value) {
             @if $value {
@@ -102,17 +104,8 @@ const mixins = [
     }`,
 ].join('\n');
 
-const getBreakpoints = (layoutFromTokens) => {
-    const [firstBreakpoint, ...breakpoints] = Object.entries(layoutFromTokens.breakpoints);
-    const list = breakpoints.map(([key, value]) => `${key}: ${value},`).join('\n');
-    const scssList = `$breakpointList: (\n${list}\n);`;
-    const defaultDefaultBreakpoints = `$defaultBreakpoint: '${firstBreakpoint[0]}';`;
-
-    return [scssList, defaultDefaultBreakpoints].join('\n');
-};
-
-const getLayoutMixin = (tokens) => {
-    return [helpers, getBreakpoints(tokens.layout), funcsFormMixins, mixins].join('\n');
+const getLayoutMixin = () => {
+    return [imports, helpers, funcsFormMixins, mixins].join('\n');
 };
 
 module.exports = { getLayoutMixin };

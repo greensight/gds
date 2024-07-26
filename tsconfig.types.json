@@ -2,7 +2,7 @@
     "compilerOptions": {
         "declaration": true,
         "types": ["node", "webpack-env", "@emotion/react/types/css-prop", "vite/client"],
-        "declarationDir": "types",
+        "declarationDir": "dist/types",
         "emitDeclarationOnly": true,
         "target": "ESNext",
         "module": "es2020",
@@ -13,5 +13,6 @@
         "resolveJsonModule": true,
         "strict": true,
         "skipLibCheck": true
-    }
+    },
+    "include": ["src"]
 }

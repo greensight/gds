@@ -1,0 +1,15 @@
+@import './variables.scss';
+
+@function gs($value, $minorBool: false) {
+    $maxMinorValue: 40;
+    @if ($minorBool) {
+        $value: calc($value * $gutterStepMinor);
+        @if ($value > $maxMinorValue) {
+            @return #{floor(calc($value / $gutterStep)) * $gutterStep};
+        } @else {
+            @return #{$value};
+        }
+    } @else {
+        @return #{calc($value * $gutterStep)};
+    }
+}

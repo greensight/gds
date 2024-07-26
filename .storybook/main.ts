@@ -13,6 +13,7 @@ const config = {
         '@storybook/addon-a11y',
         '@storybook/addon-viewport',
         '@storybook/addon-backgrounds',
+        '@storybook/preset-scss',
         {
             name: '@storybook/addon-docs',
             options: {

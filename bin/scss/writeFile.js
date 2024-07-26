@@ -17,7 +17,7 @@ const DEFAULT_PRETTIER_CONFIG = {
     parser: 'scss',
 };
 
-async function writeFile({ name, fileData, config }) {
+async function writeFile({ name, fileData, config, extension = 'scss' }) {
     const prettierConfig = outsidePrettierConfig
         ? { ...outsidePrettierConfig, parser: 'scss' }
         : DEFAULT_PRETTIER_CONFIG;
@@ -26,17 +26,17 @@ async function writeFile({ name, fileData, config }) {
     await fs.promises.mkdir(fullScssDir, { recursive: true });
     const file = await prettier.format(fileData, prettierConfig);
     try {
-        await fs.promises.writeFile(`${fullScssDir}/${name}.scss`, file);
+        await fs.promises.writeFile(`${fullScssDir}/${name}.${extension}`, file);
         try {
-            execSync(`npx stylelint "${fullScssDir}/*.scss" --fix`);
+            execSync(`npx stylelint "${fullScssDir}/*.${extension}" --fix`);
         } catch (error) {
             console.error('An error occurred during Stylelint execution:', error.message);
         }
 
-        console.log(green(`${name} are ready to use: ${config.tokensDir}/${name}.scss`));
+        console.log(green(`${name} are ready to use: ${config.tokensDir}/${name}.${extension}`));
     } catch (err) {
         console.error(red(err.message));
-        console.log(red(`Cannot write file: ${fullScssDir}/${name}.scss`));
+        console.log(red(`Cannot write file: ${fullScssDir}/${name}.${extension}`));
         process.exit(1);
     }
 }

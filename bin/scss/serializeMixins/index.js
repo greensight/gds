@@ -15,7 +15,7 @@ async function serializeMixins(config, tokens) {
         ...Object.entries(typography.styles).map(([key, value]) =>
             getTypographyMixin(key, value, typography.breakpoints),
         ),
-        getLayoutMixin(tokens),
+        getLayoutMixin(),
     ].join('\n');
 
     writeFile({ name: 'mixins', fileData, config });

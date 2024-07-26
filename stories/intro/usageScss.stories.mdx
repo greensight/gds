@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Intro / Usage Guide / Scss" />
+
+# SCSS Variant
+
+## Import
+
+```js
+import { ... } from '@greensight/gds/scss';
+```
+
+## SCSS Tokens
+
+Чтобы сгенерировать `.scss` файлы, необходимо указать путь к токенам и место для сохранения `.scss` модулей
+
+```json
+"scripts": {
+    "tokensDir": "public",
+    "scssDir": "src/scss/tokens",
+}
+```
+
+После чего выполнить скрипт `gds-scss-tokens`
+
+## Compnents
+
+Чтобы приступить к работе с компонентами, нужно создать объект со стилями, используя сгенерированные миксины, а затем передать в ThemeProvider.
+
+**Список миксинов**
+
+| Миксин           | Файл           | Поле в ThemeProvider    | Компонент      |
+| ---------------- | -------------- | ----------------------- | -------------- |
+| `gridLayout`     | layoutMixins   | styles.gridLayout.index | GridLayout     |
+| `gridLayoutItem` | layoutMixins   | styles.gridLayout.item  | GridLayoutItem |
+| `flexLayout`     | layoutMixins   | styles.flexLayout.index | FlexLayout     |
+| `flexLayoutItem` | layoutMixins   | styles.flexLayout.item  | FlexLayoutItem |
+| `container`      | containerMixin | styles.container        | Container      |
+
+Пример подключения
+
+```scss
+@import './gridLayout.scss';
+@include gridLayout();
+```
+
+```js
+import gridLayoutStyles from './gridLayout.module.scss';
+<ThemeProvider
+    state={{
+        styles: {
+            gridLayout: {
+                index: gridLayoutStyles,
+            },
+        },
+    }}
+>
+    ...
+</ThemeProvider>;
+```
+
+Теперь можно использовать компонент `GridLayout`.
+
+```js
+import { GridLayout } from '@greensight/gds/scss';
+
+<GridLayout cols={3} gap={scale(3)}>
+    ...
+</GridLayout>;
+```
+
+`Scss Variant` не обязывает использовать только `React components`. Можно обойтись только миксинами. `Scss variant` предоставляет альтернативу `React components` в виде миксинов, переменных и готовых классов. Более подробно можно узнать в разделе `DEV/Scss`.

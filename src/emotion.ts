@@ -24,3 +24,4 @@ export * from './helpers/emotion/theming';
 export type { Theme, ComponentsTheme, PalettesTheme, ColorsTheme, ShadowsTheme } from './types/emotion/Theme';
 export type { ButtonProps } from './components/emotion/Button';
 export type { LayoutProps } from './components/emotion/Layout';
+export { scale } from './utils/common/scale';
