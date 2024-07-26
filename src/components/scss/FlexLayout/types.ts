@@ -13,5 +13,6 @@ export interface IFlexLayoutProps extends Omit<HTMLProps<HTMLDivElement>, 'child
     align?: AllowMedia<DirectionType>;
     /** Multiline mode. */
     wrap?: AllowMedia<boolean>;
+    /** children */
     children: ReactNode;
 }

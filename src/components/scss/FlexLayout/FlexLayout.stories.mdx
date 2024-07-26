@@ -1,12 +1,15 @@
-import { Meta } from '@storybook/addon-docs';
+import { Meta, Props } from '@storybook/addon-docs';
 
 import { FlexLayout } from '.';
 import { FlexLayoutItem } from './components/Item';
 import { Placeholder } from '../../../helpers/common/Placeholder';
+import { FlexLayoutProps, FlexLayoutItemProps } from '../../../../.storybook/docgen/FlexLayout';
 
-<Meta title="Components / SCSS / Helpers / FlexLayout" component={FlexLayout} />
+<Meta title="Components / Scss / Helpers / FlexLayout" component={FlexLayout} />
 
-# Layout12323
+# FlexLayout
+
+Компонент FlexLayout помогает строить сетки. Используется стандартный flex. По сути это React компонент, который позволяет задать сетку через props и с упрощённым API.
 
 <Story
     name="FlexLayout"
@@ -55,3 +58,5 @@ import { Placeholder } from '../../../helpers/common/Placeholder';
         );
     }}
 </Story>
+
+<Props components={{ FlexLayout: FlexLayoutProps, FlexLayoutItem: FlexLayoutItemProps }} />

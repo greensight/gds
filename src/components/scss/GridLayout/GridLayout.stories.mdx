@@ -1,12 +1,15 @@
-import { Meta } from '@storybook/addon-docs';
-
+import { Meta, Props } from '@storybook/addon-docs';
+import { FC } from 'react';
 import { GridLayout } from '.';
 import { GridLayoutItem } from './components/Item';
 import { Placeholder } from '../../../helpers/common/Placeholder';
+import { GridLayoutProps, GridLayoutItemProps } from '../../../../.storybook/docgen/GridLayout';
 
-<Meta title="Components / SCSS / Helpers / GridLayout" component={GridLayout} />
+<Meta title="Components / Scss / Helpers / GridLayout" component={GridLayout} />
 
-# Layout12323
+# GridLayout
+
+Компонент GridLayout помогает строить сетки. Используется стандартный grid. По сути это React компонент, который позволяет задать сетку через props и с упрощённым API.
 
 <Story
     name="GridLayout"
@@ -60,3 +63,7 @@ import { Placeholder } from '../../../helpers/common/Placeholder';
         );
     }}
 </Story>
+
+## Props
+
+<Props components={{ GridLayout: GridLayoutProps, GridLayoutItem: GridLayoutItemProps }} />

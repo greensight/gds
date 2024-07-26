@@ -8,6 +8,7 @@ import gridLayoutStyles from './scss/gridLayout.module.scss';
 import gridLayoutItemStyles from './scss/gridLayoutItem.module.scss';
 import flexLayoutStyles from './scss/flexLayout.module.scss';
 import flexLayoutItemStyles from './scss/flexLayoutItem.module.scss';
+import containerStyles from './scss/container.module.scss';
 
 export const parameters = {
     options: { showRoots: true },
@@ -25,6 +26,7 @@ const componentStyles = {
         index: flexLayoutStyles,
         item: flexLayoutItemStyles,
     },
+    container: containerStyles,
 };
 
 const scssState = {

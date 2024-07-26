@@ -13,7 +13,7 @@ const STYLES_ENUM = Object.freeze({
     padding: (value) => getStyle('padding', `0 ${value}px`),
 });
 
-const imports = ["@import './mixins.scss';"].join('\n');
+const imports = ["@import './mixins.scss';", "@import './variables.scss';"].join('\n');
 
 async function serializeContainerMixin(config, tokens) {
     const { layout } = tokens;
