@@ -1,0 +1,213 @@
+import { action } from '@storybook/addon-actions';
+import { Meta, Preview, Props, Story } from '@storybook/addon-docs';
+
+import { Button } from '.';
+import centeredDecorator from '../../../../.storybook/decorators/centeredDecorator';
+import {
+    ButtonProps,
+    ButtonSizeProperties,
+    ButtonStateProperties,
+    ButtonStates,
+    ButtonTheme,
+    ButtonThemeProperties,
+} from '../../../../.storybook/docgen/Button';
+import { scale } from '../../../utils/common/scale';
+import { baseTheme } from '../../../utils/emotion/baseTheme';
+
+<Meta
+    title="Components / Emotion / Deprecated / Button"
+    component={Button}
+    decorators={[centeredDecorator]}
+    parameters={{
+        design: {
+            type: 'figma',
+            url: 'https://www.figma.com/file/Udf9B3n8wEoykSGFhhrU0J/Greensight-DS?node-id=1608%3A0',
+        },
+    }}
+/>
+
+# Button 🤖
+
+<Story
+    name="Knobs"
+    args={{
+        theme: 'primary',
+        size: 'md',
+        block: false,
+        disabled: false,
+        Icon: baseTheme.global.placeholder,
+        iconAfter: false,
+        hidden: false,
+        useCustomTheme: false,
+        themeObj: baseTheme.components.Button,
+        children: 'Button',
+    }}
+    argTypes={{
+        theme: {
+            control: 'radio',
+            options: ['primary', 'secondary'],
+        },
+        size: {
+            control: 'radio',
+            options: ['sm', 'md', 'lg'],
+        },
+    }}
+>
+    {({ children, useCustomTheme, themeObj, ...args }) => {
+        return (
+            <Button {...args} onClick={action('onClick')} __theme={useCustomTheme ? themeObj : undefined}>
+                {children}
+            </Button>
+        );
+    }}
+</Story>
+
+Кнопки определяются полем `button` в объекте темы. В целом концепт таков, что задаются глобальные настройки стилей в `base`, после чего стилистические различия диктуются сочитанием темы из `themes` и размера из `sizes`.
+
+После определения темы и размера для кнопки становятся доступны вариации, задаваемые через props: `block`, `disabled`, `hidden` и т.д. Т.е. эти вариации доступны для **любой** кнопки. Детальнее доступные props разобраны в разделе `Use cases`.
+
+Центром истины при указании размеров является высота кнопки – она должна совпадать с определённой в Figma. Однако внутри компонент не ограничивается по высоте – для него автоматически выполняется расчёт вертикальных полей. Такой подход позволяет сделать multiline режим доступным по умолчанию.
+
+Все необходимые размеры можно взять из панели `Auto Layout` в Figma, цвета берутся из палитры, типографика по имени из стилей.
+
+По умолчанию компонент рендерится через элемент `<button />` и наследует его пропсы. Вы можете изменить элемент через проп `as`, что позволит использовать компонент для ссылок, и предоставит возможность использовать пропсы переданного компонента.
+
+## Props
+
+<Props of={ButtonProps} />
+
+## Theme
+
+<Props components={{ ButtonTheme, ButtonStates, ButtonThemeProperties, ButtonStateProperties, ButtonSizeProperties }} />
+
+## Use cases
+
+### Basic
+
+Кнопка без параметров рендерится с темой "primary" и размером "md".
+
+<Preview>
+    <Story name="Basic">
+        <Button>Button</Button>
+    </Story>
+</Preview>
+
+### Themes
+
+Темы для кнопок определяются в объекте темы в поле `button.themes`. Присвоенные имена становятся доступны через проп `theme`.
+
+**Рекомендуемые имена:** 'primary', 'secondary' и их производные – так их делят дизайнеры. Могут использоваться общепринятые типы вроде 'link' и 'subtle'.
+
+<Preview>
+    <Story id="components-button--basic" />
+    <Story name="Secondary theme">
+        <Button theme="secondary">Button</Button>
+    </Story>
+</Preview>
+
+### Sizes
+
+Размеры для кнопок определяются в объекте темы в поле `button.sizes`. Присвоенные имена становятся доступны через проп `size`.
+
+**Рекомендуемые имена:** 'lg', 'md', 'sm'.
+
+<Preview>
+    <Story name="Large size">
+        <Button size="lg">Button</Button>
+    </Story>
+    <Story id="components-button--basic" />
+    <Story name="Small size">
+        <Button size="sm">Button</Button>
+    </Story>
+</Preview>
+
+### Block
+
+По умолчанию ширина кнопки определяется её контентом. Проп `block` ставит размеры по ширине контейнера.
+
+<Preview>
+    <Story name="Block">
+        <Button block>Button</Button>
+    </Story>
+</Preview>
+
+### Disabled
+
+Стилизация заблокированных кнопок может задаваться общая для всех тем через `global` или для каждой темы отдельно в `themes`.
+
+<Preview>
+    <Story name="Disabled">
+        <Button disabled>Button</Button>
+    </Story>
+</Preview>
+
+### Icons
+
+Иконки добавляются через проп `Icon`. Иконка идёт с отступом, определённым через `iconOffset` в настройках `sizes`.
+
+По умолчанию кнопка идёт перед текстом, но её можно поставить в конец через `iconAfter`.
+
+<Preview>
+    <Story name="With icon (before)">
+        <Button Icon={baseTheme.global.placeholder}>Button</Button>
+    </Story>
+    <Story name="With icon (after)">
+        <Button Icon={baseTheme.global.placeholder} iconAfter>
+            Button
+        </Button>
+    </Story>
+</Preview>
+
+### Hidden mode
+
+Доступен режим иконочной кнопки через проп `hidden`.
+
+♿️ Это «hidden mode», а не «icon mode», т.к. текст при этом всё равно должен указываться для доступа через AT.
+
+<Preview>
+    <Story name="Hidden mode">
+        <Button Icon={baseTheme.global.placeholder} hidden>
+            Button
+        </Button>
+    </Story>
+</Preview>
+
+### Links
+
+Чтобы использовать компонент для ссылок нужно изменить элемент рендера через проп `as`. После этого вам станет доступно использование пропсов `href` в случае `a` и `to` в случае `Link`.
+
+💬 GDS не включает в себя встроенного инструмента для роутинга, так что вы можете использовать не только `react-router`, но и к примеру `@reach/router`.
+
+Также ссылка может быть внешняя, т.е. открывать вкладку в новом окне. Чтобы задать подобное поведение, передайте проп `external`. Этот проп задаёт атрибуты `target="_blank"` и `rel="nofollow noopener"`.
+
+<Preview>
+    <Story name="Link">
+        <Button as="a" href="http://greensight.pro">
+            Button
+        </Button>
+    </Story>
+    <Story name="External link">
+        <Button as="a" href="http://greensight.pro" external>
+            Button
+        </Button>
+    </Story>
+</Preview>
+
+### Multiline mode
+
+Активация многострочного режима может происходить как из-за вставки `<br/>`, так и автоматически при ограничении по ширине.
+
+Иконка при этом выравнивается по центру кнопки.
+
+<Preview>
+    <Story name="Multiline mode (br)">
+        <Button>
+            Multiline
+            <br />
+            button
+        </Button>
+    </Story>
+    <Story name="Multiline mode (fixed width)">
+        <Button css={{ width: scale(14) }}>Multiline button</Button>
+    </Story>
+</Preview>

@@ -9,6 +9,9 @@ const serializeFunctions = require('./serializeFunctions');
 const serializeMixins = require('./serializeMixins');
 const serializeTypographyClasses = require('./serializeTypographyClasses');
 const serializeBaseStyles = require('./serializeBaseStyles');
+const serializeContainerMixin = require('./serializeContainerMixin');
+const serializeBreakpoints = require('./serializeBreakpoints');
+const serializeLayoutMixins = require('./serializeLayoutMixins');
 
 async function loadSCSS() {
     let configPath = resolve('gds.config.json');
@@ -47,6 +50,9 @@ async function loadSCSS() {
             serializeFunctions(config),
             serializeBaseStyles(config),
             serializeTypographyClasses(config, tokens),
+            serializeContainerMixin(config, tokens),
+            serializeBreakpoints(config, tokens),
+            serializeLayoutMixins(config, tokens),
         ]);
     } catch {
         console.error(

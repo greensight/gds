@@ -3,7 +3,7 @@ const config = {
         '../stories/intro/welcome.stories.mdx',
         '../stories/intro/*.stories.mdx',
         '../stories/design/*.stories.mdx',
-        '../stories/dev/*.stories.mdx',
+        '../stories/dev/**/*.stories.mdx',
         '../src/components/**/*.stories.mdx',
         '../src/autokits/**/*.stories.mdx',
     ],
@@ -13,6 +13,7 @@ const config = {
         '@storybook/addon-a11y',
         '@storybook/addon-viewport',
         '@storybook/addon-backgrounds',
+        '@storybook/preset-scss',
         {
             name: '@storybook/addon-docs',
             options: {

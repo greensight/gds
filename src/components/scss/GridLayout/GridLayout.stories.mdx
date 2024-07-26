@@ -1,0 +1,69 @@
+import { Meta, Props } from '@storybook/addon-docs';
+import { FC } from 'react';
+import { GridLayout } from '.';
+import { GridLayoutItem } from './components/Item';
+import { Placeholder } from '../../../helpers/common/Placeholder';
+import { GridLayoutProps, GridLayoutItemProps } from '../../../../.storybook/docgen/GridLayout';
+
+<Meta title="Components / Scss / Helpers / GridLayout" component={GridLayout} />
+
+# GridLayout
+
+Компонент GridLayout помогает строить сетки. Используется стандартный grid. По сути это React компонент, который позволяет задать сетку через props и с упрощённым API.
+
+<Story
+    name="GridLayout"
+    args={{
+        itemsCount: 5,
+        cols: 3,
+        gap: 8,
+    }}
+    argTypes={{
+        itemsCount: {
+            name: 'Items count (demo)',
+            control: {
+                type: 'range',
+                min: 2,
+                max: 16,
+                step: 1,
+            },
+        },
+        cols: {
+            name: 'cols',
+            control: {
+                type: 'range',
+                min: 2,
+                max: 16,
+                step: 1,
+            },
+        },
+        gap: {
+            name: 'gap',
+            control: {
+                type: 'range',
+                min: 0,
+                max: 48,
+                step: 1,
+            },
+        },
+    }}
+>
+    {({ itemsCount, ...props }) => {
+        return (
+            <GridLayout {...props}>
+                {new Array(itemsCount).fill('').map((_, index) => {
+                    index++;
+                    return (
+                        <GridLayoutItem key={index}>
+                            <Placeholder>Item {index}</Placeholder>
+                        </GridLayoutItem>
+                    );
+                })}
+            </GridLayout>
+        );
+    }}
+</Story>
+
+## Props
+
+<Props components={{ GridLayout: GridLayoutProps, GridLayoutItem: GridLayoutItemProps }} />

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { ButtonProps as IButtonProps } from '../../src/components/Button';
+import { ButtonProps as IButtonProps } from '../../src/components/emotion/Button';
 import {
     ButtonSizeProperties as IButtonSizeProperties,
     ButtonStateProperties as IButtonStateProperties,
     ButtonStates as IButtonStates,
     ButtonTheme as IButtonTheme,
     ButtonThemeProperties as IButtonThemeProperties,
-} from '../../src/types/Button';
+} from '../../src/types/emotion/Button';
 
 export const ButtonTheme: React.FC<IButtonTheme> = () => <div />;
 export const ButtonSizeProperties: React.FC<IButtonSizeProperties> = () => <div />;

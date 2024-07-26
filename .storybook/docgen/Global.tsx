@@ -8,7 +8,7 @@ import {
     FontsProperties as IFontsProperties,
     GlobalTheme as IGlobalTheme,
     SelectionProperties as ISelectionProperties,
-} from '../../src/types/Global';
+} from '../../src/types/emotion/Global';
 
 export const GlobalTheme: React.FC<IGlobalTheme> = () => <div />;
 export const BaseProperties: React.FC<IBaseProperties> = () => <div />;

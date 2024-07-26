@@ -1,3 +1,8 @@
+## 4.0.0 (July 26, 2024)
+
+-   🔥 The package is divided into 2 parts: emotion and scss
+-   🔥 Emotion components have been rewritten to scss
+
 ## 3.1.3 (May 24, 2024)
 
 -   Changed variables name
