@@ -113,9 +113,8 @@
     );
 
     .flexLayout {
-        @include generateResponsiveProperties($breakpointList, $properties);
-
         display: flex;
+        @include generateResponsiveProperties($breakpointList, $properties);
     }
 }
 
