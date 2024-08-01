@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { Layout } from '../../../components/emotion/Layout';
-import { typography } from '../../../helpers/emotion/typography';
 import { Breakpoint } from '../../../types/emotion/Layout';
 import { Item } from './Item';
 import { useAutokitsTheme } from '../../../utils/autokits/useTheme';
+import styles from './styles.module.scss';
 
 /**
  * Autokit for layout tokens `theme.layout`.
@@ -14,7 +13,7 @@ export const LayoutAutokit = () => {
 
     if (!layout)
         return (
-            <div css={typography('body')}>
+            <div className={styles.layoutAutokitError}>
                 <span role="img" aria-label="Error">
                     ⛔️
                 </span>{' '}
@@ -23,12 +22,12 @@ export const LayoutAutokit = () => {
         );
 
     return (
-        <Layout type="flex" direction="column" align="center">
+        <div className={styles.layoutAutokit}>
             {(Object.entries(layout.breakpoints) as [Breakpoint, number][]).map(([name, value]) => (
-                <Layout.Item key={name} css={{ width: value }}>
+                <div key={name} style={{ width: value }}>
                     <Item breakpointName={name} breakpointValue={value} />
-                </Layout.Item>
+                </div>
             ))}
-        </Layout>
+        </div>
     );
 };

@@ -1,0 +1,53 @@
+@import '../../../scss/index.scss';
+
+.layoutAutokit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: gs(3);
+    flex-wrap: wrap;
+}
+
+.layoutAutokitError {
+    @include bodyTypography;
+}
+
+.layoutAutokitItem {
+    &_title {
+        @include headlineTypography;
+        text-align: center;
+        margin-bottom: gs(2);
+    }
+    &_layout {
+        height: gs(11);
+    }
+}
+
+.layoutAutokitItemLayout {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-items: center;
+
+    &_item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include smallTypography;
+        color: $cl-grey0;
+
+        &__padding {
+            background-color: $cl-tagHit;
+            width: var(--layout-item-padding-width);
+        }
+
+        &__col {
+            background-color: $cl-grey90;
+            width: var(--layout-item-col-width);
+        }
+
+        &__gap {
+            background-color: $cl-warning;
+            width: var(--layout-item-gap-width);
+        }
+    }
+}

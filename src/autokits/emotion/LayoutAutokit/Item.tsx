@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
-import { Layout } from '../../../components/emotion/Layout';
 import { BREAKPOINTS_NAMES } from '../../../helpers/common/constants';
-import { typography } from '../../../helpers/emotion/typography';
 import { Breakpoint, LayoutTheme } from '../../../types/emotion/Layout';
-import { scale } from '../../../utils/common/scale';
-import { baseTheme } from '../../../utils/emotion/baseTheme';
-import { useTheme } from '../../../utils/emotion/useTheme';
+import { useAutokitsTheme } from '../../../autokits';
+import cn from 'classnames';
+import styles from './styles.module.scss';
 
 export interface ItemProps {
     /** Breakpoint name. */
@@ -15,9 +13,13 @@ export interface ItemProps {
     breakpointValue: number;
 }
 
+interface IStyles {
+    className: string;
+    style: CSSProperties;
+}
+
 export const Item = ({ breakpointName, breakpointValue }: ItemProps) => {
-    const { colors } = baseTheme;
-    const theme = useTheme();
+    const theme = useAutokitsTheme();
     const layout = theme.layout as LayoutTheme;
 
     const cols = getLayoutValue(layout.cols, breakpointName);
@@ -27,53 +29,46 @@ export const Item = ({ breakpointName, breakpointValue }: ItemProps) => {
     const marginRight = getLayoutValue(layout.marginRight, breakpointName);
     const padding = getLayoutValue(layout.padding, breakpointName);
 
-    const layoutItemCss = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        ...typography('small'),
-        color: colors.grey0,
-    };
+    const paddingStyles = {
+        className: cn(styles.layoutAutokitItemLayout_item, styles.layoutAutokitItemLayout_item__padding),
+        style: {
+            '--layout-item-padding-width': `${container !== 'none' ? (breakpointValue - container) / 2 : padding}px`,
+        },
+    } as IStyles;
 
-    const paddingCss = {
-        ...layoutItemCss,
-        backgroundColor: colors.tagHit,
-        width: container !== 'none' ? (breakpointValue - container) / 2 : padding,
-    };
+    const colStyles = {
+        className: cn(styles.layoutAutokitItemLayout_item, styles.layoutAutokitItemLayout_item__col),
+        style: {
+            '--layout-item-col-width': `${
+                container !== 'none'
+                    ? (container + gap) / cols - gap
+                    : (breakpointValue - padding * 2 + gap) / cols - gap
+            }px`,
+        },
+    } as IStyles;
 
-    const colCss = {
-        ...layoutItemCss,
-        backgroundColor: colors.grey90,
-        width:
-            container !== 'none' ? (container + gap) / cols - gap : (breakpointValue - padding * 2 + gap) / cols - gap,
-    };
-
-    const gapCss = { ...layoutItemCss, backgroundColor: colors.warning, width: gap };
-
+    const gapStyles = {
+        className: cn(styles.layoutAutokitItemLayout_item, styles.layoutAutokitItemLayout_item__gap),
+        style: {
+            '--layout-item-gap-width': `${gap}px`,
+        },
+    } as IStyles;
     return (
         <div>
-            <div css={{ ...typography('headline'), textAlign: 'center', marginBottom: scale(2) }}>
+            <div className={styles.layoutAutokitItem_title}>
                 {breakpointValue} ({breakpointName})
             </div>
-            <Layout
-                type="flex"
-                wrap={false}
-                gap={0}
-                justify="center"
-                css={{
-                    height: scale(11),
-                }}
-            >
-                <Layout.Item css={paddingCss}>{marginLeft || padding}</Layout.Item>
+            <div className={cn(styles.layoutAutokitItem_layout, styles.layoutAutokitItemLayout)}>
+                <div {...paddingStyles}>{marginLeft || padding}</div>
                 {new Array(cols - 1).fill('').map((item, index) => (
                     <React.Fragment key={index}>
-                        <Layout.Item css={colCss} />
-                        <Layout.Item css={gapCss}>{gap}</Layout.Item>
+                        <div {...colStyles} />
+                        <div {...gapStyles}>{gap}</div>
                     </React.Fragment>
                 ))}
-                <Layout.Item css={colCss} />
-                <Layout.Item css={paddingCss}>{marginRight || padding}</Layout.Item>
-            </Layout>
+                <div {...colStyles} />
+                <div {...paddingStyles}>{marginRight || padding}</div>
+            </div>
         </div>
     );
 };

@@ -73,21 +73,37 @@ yarn tokens
 
 В случае с компонентами идёт настройка темы, а результат отображается в автоките.
 
-Например, чтобы вывести в Storybook доступные на проекте кнопки используйте автокит `Button`:
+Например, чтобы вывести в Storybook доступные на проекте цвета используйте автокит `Colors`:
 
 ```md
 import { Meta, Preview, Story } from '@storybook/addon-docs';
-import { ButtonAutokit } from '@greensight/gds';
+import { ColorsAutokit } from '@greensight/gds/autokits';
 
-<Meta title="Autokits / Button" />
+<Meta title="Autokits / Colors" />
 
-# Button
+# Colors
 
 <Preview>
     <Story name="basic">
-        <ButtonAutokit />
+        <ColorsAutokit />
     </Story>
 </Preview>
 ```
 
 Все доступные автокиты описаны в разделе `Autokits` документации.
+
+❗️ Автокит имеет свой React.Context, что означает, что для его корректной работы необходимо использовать ThemeProvider, предоставляемый самим автокитом.
+
+```jsx
+import { ThemeProvider as AutokitsThemeProvider } from '@greensight/gds/autokits';
+
+export const decorators = [
+    (Story) => {
+        return (
+            <AutokitsThemeProvider theme={theme}>
+                <Story />
+            </AutokitsThemeProvider>
+        );
+    },
+];
+```

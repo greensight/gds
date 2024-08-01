@@ -1,11 +1,10 @@
 import deepmerge from 'deepmerge';
 import React from 'react';
 
-import { Layout } from '../../../components/emotion/Layout';
 import { typography } from '../../../helpers/emotion/typography';
 import { scale } from '../../../utils/common/scale';
 import { Icon } from './Icon';
-
+import styles from './styles.module.scss';
 export interface IconsAutokitProps {
     /** Starting heading level. */
     headingLevel?: number;
@@ -45,18 +44,18 @@ export const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
         return (
             <>
                 {!!simpleItems.length && (
-                    <Layout auto={scale(18)} gap={scale(2)} css={{ marginBottom: scale(2) }}>
+                    <div className={styles.iconsAutokit_layout}>
                         {simpleItems.map(([name, value]: [any, any]) => (
-                            <Layout.Item key={name}>
+                            <div key={name}>
                                 <Icon name={name} Component={value.Component} path={value.path} />
-                            </Layout.Item>
+                            </div>
                         ))}
-                    </Layout>
+                    </div>
                 )}
                 {!!complexItems.length &&
                     complexItems.map(([name, value]) => (
                         <React.Fragment key={name}>
-                            <Heading css={{ marginBottom: scale(2) }}>{name}</Heading>
+                            <Heading className={styles.iconsAutokit_title}>{name}</Heading>
                             {mapIcons(value, level + 1)}
                         </React.Fragment>
                     ))}

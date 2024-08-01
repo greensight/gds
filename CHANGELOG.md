@@ -1,3 +1,8 @@
+## 4.0.6 (August 1, 2024)
+
+-   Fixed esm
+-   Autokits fixed
+
 ## 4.0.0 (July 26, 2024)
 
 -   🔥 The package is divided into 2 parts: emotion and scss

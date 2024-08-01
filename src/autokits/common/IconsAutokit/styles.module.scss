@@ -1,0 +1,12 @@
+@import '../../../scss/index.scss';
+
+.iconsAutokit {
+    &_layout {
+        @include gridLayout(repeat(auto-fill, minmax(gs(18), 1fr)), gs(2));
+        margin-bottom: gs(2);
+    }
+
+    &_title {
+        margin-bottom: gs(2);
+    }
+}
