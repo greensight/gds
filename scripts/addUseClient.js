@@ -22,13 +22,14 @@ const addUseClient = (directories) => {
                     }
 
                     if (
-                        !data.includes('React.createContext') &&
+                        !data.includes('createContext') &&
                         !filePath.includes(`${directory.replaceAll('.', '')}/components`)
                     )
                         return null;
-                    if (!data.includes("require('react');")) return null;
                     // Replace the contents of the file by adding the 'use client' directive
-                    const updatedData = data.replace(/'use strict';/gm, "'use strict';\n'use client';");
+                    const updatedData = /'use strict';/.test(data)
+                        ? data.replace(/'use strict';/gm, "'use strict';\n'use client';")
+                        : `'use client';\n${data}`;
 
                     fs.writeFile(filePath, updatedData, 'utf8', (writeErr) => {
                         if (writeErr) {

@@ -3,15 +3,14 @@ import React from 'react';
 import { Layout } from '../../../components/emotion/Layout';
 import { typography } from '../../../helpers/emotion/typography';
 import { scale } from '../../../utils/common/scale';
-import { useTheme } from '../../../utils/emotion/useTheme';
 import { Shadow } from './Shadow';
+import { useAutokitsTheme } from '../../../utils/autokits/useTheme';
 
 /**
  * Autokit for shadows tokens `theme.shadows`.
  */
 export const ShadowsAutokit = () => {
-    const theme = useTheme();
-    const { shadows } = theme;
+    const { shadows } = useAutokitsTheme();
 
     if (!shadows)
         return (

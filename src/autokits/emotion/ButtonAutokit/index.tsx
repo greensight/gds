@@ -8,7 +8,7 @@ import { SVGRIcon } from '../../../types/Utils';
 import { ButtonTheme } from '../../../types/emotion/Button';
 import { scale } from '../../../utils/common/scale';
 import { baseTheme } from '../../../utils/emotion/baseTheme';
-import { useTheme } from '../../../utils/emotion/useTheme';
+import { useAutokitsTheme } from '../../../utils/autokits/useTheme';
 
 export interface ButtonAutokitProps {
     /** Placeholder text. */
@@ -21,7 +21,7 @@ export interface ButtonAutokitProps {
  * Autokit for `Button` component.
  */
 export const ButtonAutokit = ({ text = 'Button', Icon }: ButtonAutokitProps) => {
-    const theme = useTheme();
+    const theme = useAutokitsTheme();
     const { componentTheme } = useComponentTheme('Button');
     const buttonTheme = componentTheme as ButtonTheme;
     const PlaceholderIcon = Icon || theme.global?.placeholder || baseTheme.global?.placeholder;

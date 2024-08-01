@@ -4,7 +4,7 @@ import { typography as baseThemeTypography } from '../../../helpers/emotion/typo
 import { scale } from '../../../utils/common/scale';
 import { baseTheme } from '../../../utils/emotion/baseTheme';
 import { typography } from '../../../utils/emotion/typography';
-import { useTheme } from '../../../utils/emotion/useTheme';
+import { useAutokitsTheme } from '../../../utils/autokits/useTheme';
 
 export interface TypographyAutokitProps {
     /** Placeholder text. */
@@ -15,7 +15,7 @@ export interface TypographyAutokitProps {
  * Autokit for typography tokens `theme.typography` and fonts settings `theme.global.fonts`.
  */
 export const TypographyAutokit = ({ text = 'Demo text 123' }: TypographyAutokitProps) => {
-    const theme = useTheme();
+    const theme = useAutokitsTheme();
     const globalFontsTheme = theme.global?.fonts;
     const typographyTheme = theme.typography;
     const { colors } = baseTheme;

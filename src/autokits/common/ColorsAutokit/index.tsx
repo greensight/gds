@@ -3,15 +3,14 @@ import React from 'react';
 import { Layout } from '../../../components/emotion/Layout';
 import { typography } from '../../../helpers/emotion/typography';
 import { scale } from '../../../utils/common/scale';
-import { useTheme } from '../../../utils/emotion/useTheme';
 import { Color } from './Color';
+import { useAutokitsTheme } from '../../../utils/autokits/useTheme';
 
 /**
  * Autokit for colors tokens `theme.colors`.
  */
 export const ColorsAutokit = () => {
-    const theme = useTheme();
-    const { colors } = theme;
+    const { colors } = useAutokitsTheme();
 
     if (!colors)
         return (

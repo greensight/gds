@@ -3,6 +3,7 @@ import React from 'react';
 
 import { ThemeProvider } from '../src/components/emotion/ThemeProvider';
 import { ScssThemeProvider } from '../src/components/scss/ThemeProvider';
+import { AutokitsThemeProvider } from '../src/autokits/ThemeProvider';
 import { baseTheme } from '../src/utils/emotion/baseTheme';
 import gridLayoutStyles from './scss/gridLayout.module.scss';
 import gridLayoutItemStyles from './scss/gridLayoutItem.module.scss';
@@ -36,11 +37,13 @@ const scssState = {
 export const decorators = [
     (Story) => {
         return (
-            <ThemeProvider theme={baseTheme}>
-                <ScssThemeProvider state={scssState}>
-                    <Story />
-                </ScssThemeProvider>
-            </ThemeProvider>
+            <AutokitsThemeProvider theme={baseTheme}>
+                <ThemeProvider theme={baseTheme}>
+                    <ScssThemeProvider state={scssState}>
+                        <Story />
+                    </ScssThemeProvider>
+                </ThemeProvider>
+            </AutokitsThemeProvider>
         );
     },
 ];

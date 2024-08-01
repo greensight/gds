@@ -3,15 +3,14 @@ import React from 'react';
 import { Layout } from '../../../components/emotion/Layout';
 import { typography } from '../../../helpers/emotion/typography';
 import { Breakpoint } from '../../../types/emotion/Layout';
-import { useTheme } from '../../../utils/emotion/useTheme';
 import { Item } from './Item';
+import { useAutokitsTheme } from '../../../utils/autokits/useTheme';
 
 /**
  * Autokit for layout tokens `theme.layout`.
  */
 export const LayoutAutokit = () => {
-    const theme = useTheme();
-    const { layout } = theme;
+    const { layout } = useAutokitsTheme();
 
     if (!layout)
         return (
