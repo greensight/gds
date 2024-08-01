@@ -14,9 +14,10 @@
 
 .layoutAutokitItem {
     &_title {
-        @include headlineTypography;
         text-align: center;
         margin-bottom: gs(2);
+
+        @include headlineTypography;
     }
     &_layout {
         height: gs(11);
@@ -32,8 +33,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        @include smallTypography;
         color: $cl-grey0;
+
+        @include smallTypography;
 
         &__padding {
             background-color: $cl-tagHit;
