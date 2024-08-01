@@ -32,7 +32,7 @@ const addCSSImport = () => ({
 });
 
 const configInput = ['src/scss.ts', 'src/components/scss/**/*.{ts,tsx}', '!src/components/scss/**/types.{ts,tsx}'];
-const scssESMConfig = {
+const scssConfig = {
     input: configInput,
     output: [
         {
@@ -49,4 +49,4 @@ const scssESMConfig = {
     ...scssConfigOptios(),
 };
 
-export default [scssESMConfig];
+export default scssConfig;

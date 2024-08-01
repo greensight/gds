@@ -1,5 +1,3 @@
-const imports = ["@import './breakpoints.scss';"];
-
 const helpers = [
     `@mixin getProperty($name, $value) {
             @if $value {
@@ -105,7 +103,7 @@ const mixins = [
 ].join('\n');
 
 const getLayoutMixin = () => {
-    return [imports, helpers, funcsFormMixins, mixins].join('\n');
+    return [helpers, funcsFormMixins, mixins].join('\n');
 };
 
 module.exports = { getLayoutMixin };

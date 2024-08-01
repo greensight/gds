@@ -11,3 +11,4 @@ export * from './components/scss/GridLayout/types';
 export * from './components/scss/FlexLayout/types';
 export * from './components/scss/Container/types';
 export * from './components/scss/Section/types';
+export { scale } from './utils/common/scale';

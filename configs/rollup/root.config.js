@@ -29,6 +29,10 @@ const rootConfig = {
             dir: 'dist',
             format: 'cjs',
         },
+        {
+            dir: 'dist',
+            format: 'esm',
+        },
     ],
 };
 

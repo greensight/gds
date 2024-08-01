@@ -12,7 +12,7 @@ const emotionConfig = {
     output: [
         {
             dir: 'dist/emotion/esm',
-            format: 'es',
+            format: 'esm',
         },
         {
             dir: 'dist/emotion/cjs',

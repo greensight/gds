@@ -23,6 +23,7 @@ function serializeBaseStyles(config) {
         display: inline-block;
         text-decoration: none;
         color: inherit;
+        cursor: pointer;
     }
 
     h1,
@@ -42,10 +43,6 @@ function serializeBaseStyles(config) {
     button {
         border: none;
         background: none;
-        cursor: pointer;
-    }
-
-    a {
         cursor: pointer;
     }
 
