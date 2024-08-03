@@ -1,3 +1,7 @@
+## 4.0.9 (August 3, 2024)
+
+-   Autokits are adapted to vite
+
 ## 4.0.6 (August 1, 2024)
 
 -   Fixed esm

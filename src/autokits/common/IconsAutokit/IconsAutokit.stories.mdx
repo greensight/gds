@@ -2,6 +2,7 @@ import { Meta, Preview, Props, Story } from '@storybook/addon-docs';
 
 import { IconsAutokit } from '.';
 import paddingDecorator from '../../../../.storybook/decorators/paddingDecorator';
+import { useIconsWebpack } from '../../../utils/autokits/useIconsWebpack';
 
 <Meta
     title="Autokits / IconsAutokit"
@@ -19,7 +20,7 @@ import paddingDecorator from '../../../../.storybook/decorators/paddingDecorator
 
 <Preview>
     <Story name="basic">
-        <IconsAutokit />
+        <IconsAutokit useBuilderMethods={useIconsWebpack} path="/src/icons" />
     </Story>
 </Preview>
 

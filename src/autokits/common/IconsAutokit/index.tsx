@@ -1,31 +1,37 @@
 import deepmerge from 'deepmerge';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { typography } from '../../../helpers/emotion/typography';
 import { scale } from '../../../utils/common/scale';
 import { Icon } from './Icon';
 import styles from './styles.module.scss';
+import { UseBuilderMethodsType } from '../../../types/autokits/useBuilderMethods';
 export interface IconsAutokitProps {
     /** Starting heading level. */
     headingLevel?: number;
+    /** builder methods hook */
+    useBuilderMethods: UseBuilderMethodsType;
 }
 
 /**
  * Autokit for icons assets from `@icons` directory.
  */
-export const IconsAutokit = ({ headingLevel = 2 }: IconsAutokitProps) => {
-    const iconsReq = require.context(`!!@svgr/webpack!${process.env.ICONS_DIR}`);
-    const icons = iconsReq.keys().reduce((acc, name) => {
+export const IconsAutokit = ({ useBuilderMethods, headingLevel = 2 }: IconsAutokitProps) => {
+    const { getIconsReq, getIconsReqKeys, getIconComponent } = useBuilderMethods();
+    const iconsReq = getIconsReq();
+    const iconKeys = getIconsReqKeys(iconsReq);
+
+    const icons = iconKeys.reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
-        const fullPath = `@icons${matchRes?.[0].slice(1)}`;
-        const formattedName = matchRes?.[1];
-        const nameParts = formattedName?.split('/');
+        const fullPath = matchRes ? `${matchRes?.[0].slice(1)}` : name.replace('/src', '');
+        console.log(fullPath);
+        const nameParts = fullPath?.slice(1).split('/');
 
         const obj = nameParts?.reduceRight((acc, part, index) => {
             const value =
                 index === nameParts?.length - 1
                     ? {
-                          Component: iconsReq(name).default,
+                          Component: getIconComponent(iconsReq, name),
                           path: fullPath,
                       }
                     : acc;
