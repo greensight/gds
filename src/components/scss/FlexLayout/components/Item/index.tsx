@@ -7,6 +7,7 @@ import { useGenerateProperty } from '../../../../../helpers/scss/useGenerateProp
 
 import { type IFlexLayoutItemProps } from './types';
 import { useScssTheme } from '../../../../../utils/scss/useTheme';
+import { orderTransform } from './helpers';
 
 /**
  * Flex layout item component
@@ -34,7 +35,7 @@ export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
         value: align,
     });
 
-    const flexOrder = useCSSProperty({ value: order ? `${order}` : undefined });
+    const flexOrder = useCSSProperty({ value: order, transform: orderTransform });
 
     const propArray = useMemo(() => {
         const properties = [];

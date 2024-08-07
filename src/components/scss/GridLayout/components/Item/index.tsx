@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { useCSSProperty } from '../../../../../helpers/scss/useCSSProperty';
 import { useGenerateProperty } from '../../../../../helpers/scss/useGenerateProperty';
 
-import { colTransform, rowTransform } from './helpers';
+import { colTransform, orderTransform, rowTransform } from './helpers';
 
 import { type IGridLayoutItemProps } from './types';
 import { useScssTheme } from '../../../../../utils/scss/useTheme';
@@ -49,7 +49,8 @@ const GridLayoutItem: FC<IGridLayoutItemProps> = ({
     });
 
     const gridOrder = useCSSProperty({
-        value: order ? `${order}` : undefined,
+        value: order,
+        transform: orderTransform,
     });
 
     const propArray = useMemo(() => {

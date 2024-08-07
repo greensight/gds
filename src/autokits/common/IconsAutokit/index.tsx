@@ -24,7 +24,7 @@ export const IconsAutokit = ({ useBuilderMethods, headingLevel = 2 }: IconsAutok
     const icons = iconKeys.reduce((acc, name) => {
         const matchRes = name.match(/\.\/(.+)\.svg$/);
         const fullPath = matchRes ? `${matchRes?.[0].slice(1)}` : name.replace('/src', '');
-        console.log(fullPath);
+
         const nameParts = fullPath?.slice(1).split('/');
 
         const obj = nameParts?.reduceRight((acc, part, index) => {

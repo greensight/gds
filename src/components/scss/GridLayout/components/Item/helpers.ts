@@ -11,3 +11,8 @@ export const rowTransform: ((value: ValueType) => ValueType) | undefined = (rowP
     if (Number.isInteger(rowParam)) return `span ${rowParam}`;
     return rowParam;
 };
+
+export const orderTransform: ((value: ValueType) => ValueType) | undefined = (orderParam) => {
+    if (Number.isInteger(orderParam)) return `${orderParam}`;
+    return orderParam;
+};

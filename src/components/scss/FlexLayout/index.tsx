@@ -50,10 +50,11 @@ const FlexLayout: FC<IFlexLayoutProps> = ({ gap = scale(3), justify, align, clas
             {} as Record<Breakpoint, string>,
         );
     }, [wrap]);
+
     const flexWrap = useCSSProperty({
         value: wrapValue,
     });
-    console.log(flexWrap);
+
     const propArray = useMemo(() => {
         const properties = [];
 
