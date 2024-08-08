@@ -1,63 +1,63 @@
-.buttonLgTypography {
+.buttonLg {
     @include buttonLgTypography;
 }
 
-.buttonMdTypography {
+.buttonMd {
     @include buttonMdTypography;
 }
 
-.buttonSmTypography {
+.buttonSm {
     @include buttonSmTypography;
 }
 
-.captionUppercaseTypography {
+.captionUppercase {
     @include captionUppercaseTypography;
 }
 
-.captionTypography {
+.caption {
     @include captionTypography;
 }
 
-.smallBoldTypography {
+.smallBold {
     @include smallBoldTypography;
 }
 
-.smallTypography {
+.small {
     @include smallTypography;
 }
 
-.bodyBoldTypography {
+.bodyBold {
     @include bodyBoldTypography;
 }
 
-.bodyTypography {
+.body {
     @include bodyTypography;
 }
 
-.subheadingTypography {
+.subheading {
     @include subheadingTypography;
 }
 
-.titleTypography {
+.title {
     @include titleTypography;
 }
 
-.headlineTypography {
+.headline {
     @include headlineTypography;
 }
 
-.h4Typography {
+.h4 {
     @include h4Typography;
 }
 
-.h3Typography {
+.h3 {
     @include h3Typography;
 }
 
-.h2Typography {
+.h2 {
     @include h2Typography;
 }
 
-.h1Typography {
+.h1 {
     @include h1Typography;
 }

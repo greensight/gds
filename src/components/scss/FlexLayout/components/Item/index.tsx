@@ -22,7 +22,7 @@ export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
     ...props
 }) => {
     const {
-        styles: {
+        components: {
             flexLayout: { item: styles },
         },
     } = useScssTheme();

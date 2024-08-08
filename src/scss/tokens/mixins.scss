@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use 'sass:list';
+@import './breakpoints.scss';
 @mixin mqMin($breakpoint) {
     @media (min-width: #{$breakpoint}px) {
         @content;
@@ -200,7 +201,6 @@
         font-size: 3rem;
     }
 }
-@import './breakpoints.scss';
 @mixin getProperty($name, $value) {
     @if $value {
         #{$name}: $value;

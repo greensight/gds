@@ -10,7 +10,7 @@ import { useScssTheme } from '../../../utils/scss/useTheme';
  */
 const Container = forwardRef<HTMLDivElement, IContainerProps>(({ children, className, ...props }, ref) => {
     const {
-        styles: { container: styles },
+        components: { container: styles },
     } = useScssTheme();
     return (
         <div className={cn(className, styles.container)} ref={ref} {...props}>

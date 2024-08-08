@@ -31,7 +31,7 @@ const componentStyles = {
 };
 
 const scssState = {
-    styles: componentStyles,
+    components: componentStyles,
 };
 
 export const decorators = [

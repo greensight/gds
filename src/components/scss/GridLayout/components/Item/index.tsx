@@ -25,7 +25,7 @@ const GridLayoutItem: FC<IGridLayoutItemProps> = ({
     ...props
 }) => {
     const {
-        styles: {
+        components: {
             gridLayout: { item: styles },
         },
     } = useScssTheme();

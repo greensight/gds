@@ -20,6 +20,7 @@ a {
     display: inline-block;
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 h1,
@@ -39,10 +40,6 @@ ol li {
 button {
     border: none;
     background: none;
-    cursor: pointer;
-}
-
-a {
     cursor: pointer;
 }
 

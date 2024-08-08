@@ -27,7 +27,7 @@ const GridLayout: FC<IGridLayoutProps> = ({
     ...props
 }) => {
     const {
-        styles: {
+        components: {
             gridLayout: { index: styles },
         },
     } = useScssTheme();

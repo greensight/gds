@@ -10,7 +10,8 @@ export interface IComponentsTheme {
     container: CSSModuleClasses;
 }
 
-export interface ITheme {
+export interface ITheme<T> {
     /** Components theme styles */
-    styles: IComponentsTheme;
+    components: IComponentsTheme;
+    typography: T;
 }

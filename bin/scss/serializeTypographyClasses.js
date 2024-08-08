@@ -3,12 +3,11 @@ const writeFile = require('./writeFile');
 async function serializeTypographyClasses(config, tokens) {
     const { typography } = tokens;
 
-    const getClassName = (typographyName) => `${typographyName}Typography`;
+    const getMixinName = (typographyName) => `${typographyName}Typography`;
 
     const getStyle = (typographyName) => {
-        const name = getClassName(typographyName);
-        return `.${name} {
-            @include ${name}
+        return `.${typographyName} {
+            @include ${getMixinName(typographyName)}
         }`;
     };
 
