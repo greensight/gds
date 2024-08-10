@@ -1,4 +1,4 @@
-import React, { type FC, useMemo } from 'react';
+import React, { ElementType, useMemo } from 'react';
 
 import cn from 'classnames';
 
@@ -15,10 +15,21 @@ import { Breakpoint } from '../../../types/scss/Layout';
 
 export { FlexLayoutItem } from './components/Item';
 
+const DEFAULT_COMPONENT = 'div';
 /**
  * Flex layout component
  */
-const FlexLayout: FC<IFlexLayoutProps> = ({ gap = scale(3), justify, align, className, children, wrap, ...props }) => {
+const FlexLayout = <P extends ElementType = 'div'>({
+    as: ComponentProp,
+    gap = scale(3),
+    justify,
+    align,
+    className,
+    children,
+    wrap,
+    ...props
+}: IFlexLayoutProps<P>) => {
+    const Component = ComponentProp || DEFAULT_COMPONENT;
     const {
         components: {
             flexLayout: { index: styles },
@@ -73,9 +84,9 @@ const FlexLayout: FC<IFlexLayoutProps> = ({ gap = scale(3), justify, align, clas
     });
 
     return (
-        <div className={cn(styles.flexLayout, mediaStyles, className)} style={vars} {...props}>
+        <Component className={cn(styles.flexLayout, mediaStyles, className)} style={vars} {...props}>
             {children}
-        </div>
+        </Component>
     );
 };
 

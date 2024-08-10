@@ -1,10 +1,11 @@
-import { type HTMLProps, type ReactNode } from 'react';
+import { ElementType, type HTMLProps, type ReactNode } from 'react';
 
 import { type AllowMedia, type ValueType } from '../../../../../types/scss/Layout';
+import { MergeElementProps } from '../../../../../types/Utils';
 
 type DirectionType = 'start' | 'end' | 'center' | 'stretch';
 
-export interface IGridLayoutItemProps extends HTMLProps<HTMLDivElement> {
+export interface IGridLayoutItemBaseProps extends HTMLProps<HTMLDivElement> {
     /** Item content. */
     children?: ReactNode;
     /** Column settings. */
@@ -18,3 +19,11 @@ export interface IGridLayoutItemProps extends HTMLProps<HTMLDivElement> {
     /** Order. */
     order?: AllowMedia<number>;
 }
+
+export type IGridLayoutItemProps<P extends ElementType = 'div'> = {
+    /**
+     *  Element
+     * @default "div"
+     */
+    as?: P;
+} & MergeElementProps<P, Omit<IGridLayoutItemBaseProps, 'as'>>;

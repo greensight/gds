@@ -1,4 +1,4 @@
-import React, { type FC, useMemo } from 'react';
+import React, { ElementType, useMemo } from 'react';
 
 import cn from 'classnames';
 
@@ -9,10 +9,13 @@ import { type IFlexLayoutItemProps } from './types';
 import { useScssTheme } from '../../../../../utils/scss/useTheme';
 import { orderTransform } from './helpers';
 
+const DEFAULT_COMPONENT = 'div';
+
 /**
  * Flex layout item component
  */
-export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
+export const FlexLayoutItem = <P extends ElementType = 'div'>({
+    as: ComponentProp,
     justify,
     align,
     order,
@@ -20,7 +23,8 @@ export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
     className,
     children,
     ...props
-}) => {
+}: IFlexLayoutItemProps<P>) => {
+    const Component = ComponentProp || DEFAULT_COMPONENT;
     const {
         components: {
             flexLayout: { item: styles },
@@ -59,8 +63,8 @@ export const FlexLayoutItem: FC<IFlexLayoutItemProps> = ({
     });
 
     return (
-        <div className={cn(styles.flexLayoutItem, mediaStyles, className)} style={vars} {...props}>
+        <Component className={cn(styles.flexLayoutItem, mediaStyles, className)} style={vars} {...props}>
             {children}
-        </div>
+        </Component>
     );
 };

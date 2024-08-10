@@ -1,4 +1,4 @@
-import React, { type FC, useMemo } from 'react';
+import React, { ElementType, useMemo } from 'react';
 
 import cn from 'classnames';
 
@@ -12,10 +12,13 @@ import { colsTransform, gapTransform, rowsTransform } from './helpers';
 import { type IGridLayoutProps } from './types';
 import { useScssTheme } from '../../../utils/scss/useTheme';
 
+const DEFAULT_COMPONENT = 'div';
+
 /**
  * Grid layout component
  */
-const GridLayout: FC<IGridLayoutProps> = ({
+const GridLayout = <P extends ElementType = 'div'>({
+    as: ComponentProp,
     cols = 12,
     gap = scale(3),
     rows,
@@ -25,7 +28,9 @@ const GridLayout: FC<IGridLayoutProps> = ({
     className,
     children,
     ...props
-}) => {
+}: IGridLayoutProps<P>) => {
+    const Component = ComponentProp || DEFAULT_COMPONENT;
+
     const {
         components: {
             gridLayout: { index: styles },
@@ -74,9 +79,9 @@ const GridLayout: FC<IGridLayoutProps> = ({
     });
 
     return (
-        <div className={cn(styles.gridLayout, mediaStyles, className)} style={vars} {...props}>
+        <Component className={cn(styles.gridLayout, mediaStyles, className)} style={vars} {...props}>
             {children}
-        </div>
+        </Component>
     );
 };
 
