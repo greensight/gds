@@ -1,4 +1,4 @@
-import { ElementType, ForwardRefExoticComponent, type HTMLProps, type ReactNode } from 'react';
+import { ElementType, type HTMLProps, type ReactNode } from 'react';
 
 import { type AllowMedia, type ValueType } from '../../../types/scss/Layout';
 import { MergeElementProps } from '../../../types/Utils';
@@ -24,7 +24,7 @@ export type IFlexLayoutProps<P extends ElementType = 'div'> = {
      *  Element
      * @default "div"
      */
-    as?: P | ForwardRefExoticComponent<P>;
+    as?: P;
 } & MergeElementProps<P, Omit<IFlexLayoutBaseProps, 'as'>>;
 
 export interface IFlexLayoutPageProps extends Omit<IFlexLayoutProps, 'children'> {}

@@ -1,4 +1,4 @@
-import React, { ElementType, forwardRef, Ref } from 'react';
+import React, { forwardRef } from 'react';
 
 import cn from 'classnames';
 
@@ -8,10 +8,7 @@ import { useScssTheme } from '../../../utils/scss/useTheme';
 /**
  * Component for creating main page container with `layout` theme parameters.
  */
-const ContainerComponent = <P extends ElementType = 'div'>(
-    { children, className, ...props }: IContainerProps<P>,
-    ref: Ref<P>,
-) => {
+const Container = forwardRef<HTMLDivElement, IContainerProps>(({ children, className, ...props }, ref) => {
     const {
         components: { container: styles },
     } = useScssTheme();
@@ -20,7 +17,6 @@ const ContainerComponent = <P extends ElementType = 'div'>(
             {children}
         </div>
     );
-};
+});
 
-const Container = forwardRef(ContainerComponent) as typeof ContainerComponent;
 export { Container };
