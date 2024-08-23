@@ -1,4 +1,4 @@
-import { ElementType, type HTMLProps, type ReactNode } from 'react';
+import { ElementType, ForwardRefExoticComponent, type HTMLProps, type ReactNode } from 'react';
 
 import { type AllowMedia, type ValueType } from '../../../types/scss/Layout';
 
@@ -26,7 +26,7 @@ export type IGridLayoutProps<P extends ElementType = 'div'> = {
      *  Element
      * @default "div"
      */
-    as?: P;
+    as?: P | ForwardRefExoticComponent<P>;
 } & MergeElementProps<P, Omit<IGridLayoutBaseProps, 'as'>>;
 
 export interface IGridLayoutPageProps extends Omit<IGridLayoutProps, 'children'> {}

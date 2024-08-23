@@ -118,7 +118,7 @@ const flexLayoutMixin = `
     $properties: (
         (
             'gap': 'gap',
-            'justify': 'justify-items',
+            'justify': 'justify-content',
             'align': 'align-items',
             'wrap': 'flex-wrap',
         )

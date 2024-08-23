@@ -17,13 +17,13 @@ const imports = ["@import './mixins.scss';", "@import './variables.scss';"].join
 
 async function serializeContainerMixin(config, tokens) {
     const { layout } = tokens;
-
-    const stylesByBreakpoints = Object.keys(layout.breakpoints).reduce((acc, breakpointKey) => {
+    const stylesByBreakpoints = Object.keys(layout.breakpoints).reduce((acc, breakpointKey, index, breakpointKeys) => {
         Object.keys(STYLES_ENUM).forEach((key) => {
             const value = layout[key][breakpointKey];
             if (typeof value === 'undefined') return;
-            if (!acc[breakpointKey]) acc[breakpointKey] = [];
-            acc[breakpointKey].push(STYLES_ENUM[key](value));
+            const prevBreakpointKey = index ? breakpointKeys[index - 1] : breakpointKeys[index];
+            if (!acc[prevBreakpointKey]) acc[prevBreakpointKey] = [];
+            acc[prevBreakpointKey].push(STYLES_ENUM[key](value));
         });
         return acc;
     }, {});
