@@ -39,8 +39,8 @@ async function loadSCSS() {
         }
         const tokens = JSON.parse(fileTokens);
 
-        if (!config.scssDir) {
-            console.error(red('Add "scssDir" property to your config.'));
+        if (!config.scss?.dir) {
+            console.error(red('Add "scss.dir" property to your config.'));
             process.exit(1);
         }
 

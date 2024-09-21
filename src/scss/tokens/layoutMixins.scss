@@ -85,7 +85,6 @@
         @include generateResponsiveProperties($breakpointList, $properties);
     }
 }
-
 @mixin gridLayoutItem {
     $properties: (
         (
@@ -106,7 +105,7 @@
     $properties: (
         (
             'gap': 'gap',
-            'justify': 'justify-items',
+            'justify': 'justify-content',
             'align': 'align-items',
             'wrap': 'flex-wrap',
         )
@@ -126,7 +125,6 @@
             'order': 'order',
         )
     );
-
     .flexLayoutItem {
         @include generateResponsiveProperties($breakpointList, $properties);
     }

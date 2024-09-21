@@ -75,86 +75,97 @@ const helpers = `
 }
 `;
 
-const gridLayoutMixin = `
-@mixin gridLayout {
-    $properties: (
-        (
-            'cols': 'grid-template-columns',
-            'rows': 'grid-template-rows',
-            'gap': 'gap',
-            'justify': 'justify-items',
-            'align': 'align-items',
-        )
-    );
-
-    .gridLayout {
+const gridLayoutMixin = ({ layer }) => {
+    const cssClass = `.gridLayout {
         display: grid;
         @include generateResponsiveProperties($breakpointList, $properties);
-    }
-}
-`;
+    }`;
+    return `@mixin gridLayout {
+        $properties: (
+            (
+                'cols': 'grid-template-columns',
+                'rows': 'grid-template-rows',
+                'gap': 'gap',
+                'justify': 'justify-items',
+                'align': 'align-items',
+            )
+        );
 
-const gridLayoutItemMixin = `
-@mixin gridLayoutItem {
-    $properties: (
-        (
-            'col': 'grid-column',
-            'row': 'grid-template-rows',
-            'justify': 'justify-self',
-            'align': 'align-self',
-            'order': 'order',
-        )
-    );
+        ${layer ? `@layer ${layer} { ${cssClass} }` : cssClass}
+    }`;
+};
 
-    .gridLayoutItem {
+const gridLayoutItemMixin = ({ layer }) => {
+    const cssClass = `.gridLayoutItem {
         @include generateResponsiveProperties($breakpointList, $properties);
-    }
+    }`;
+    return `@mixin gridLayoutItem {
+        $properties: (
+            (
+                'col': 'grid-column',
+                'row': 'grid-template-rows',
+                'justify': 'justify-self',
+                'align': 'align-self',
+                'order': 'order',
+            )
+        );
 
-}
-`;
+        ${layer ? `@layer ${layer} { ${cssClass} }` : cssClass}
 
-const flexLayoutMixin = `
-@mixin flexLayout {
-    $properties: (
-        (
-            'gap': 'gap',
-            'justify': 'justify-content',
-            'align': 'align-items',
-            'wrap': 'flex-wrap',
-        )
-    );
+    }`;
+};
 
-    .flexLayout {
+const flexLayoutMixin = ({ layer }) => {
+    const cssClass = `.flexLayout {
         display: flex;
         @include generateResponsiveProperties($breakpointList, $properties);
-    }
-}
-`;
+    }`;
 
-const flexLayoutItemMixin = `
-@mixin flexLayoutItem {
-    $properties: (
-        (
-            'justify': 'justify-self',
-            'align': 'align-self',
-            'order': 'order',
-        )
-    );
+    return `
+        @mixin flexLayout {
+            $properties: (
+                (
+                    'gap': 'gap',
+                    'justify': 'justify-content',
+                    'align': 'align-items',
+                    'wrap': 'flex-wrap',
+                )
+            );
 
-    .flexLayoutItem {
+            ${layer ? `@layer ${layer} { ${cssClass} }` : cssClass}
+        }
+    `;
+};
+
+const flexLayoutItemMixin = ({ layer }) => {
+    const cssClass = `.flexLayoutItem {
         @include generateResponsiveProperties($breakpointList, $properties);
-    }
-}
-`;
+    }`;
+
+    return `
+        @mixin flexLayoutItem {
+            $properties: (
+                (
+                    'justify': 'justify-self',
+                    'align': 'align-self',
+                    'order': 'order',
+                )
+            );
+            ${layer ? `@layer ${layer} { ${cssClass} }` : cssClass}
+        }
+    `;
+};
 
 const serializeLayoutMixins = (config) => {
+    const gridLayer = config.scss.components?.gridLayout?.layer;
+    const flexLayer = config.scss.components?.flexLayout?.layer;
     const fileData = [
         imports,
         helpers,
-        gridLayoutMixin,
-        gridLayoutItemMixin,
-        flexLayoutMixin,
-        flexLayoutItemMixin,
+        gridLayoutMixin({ layer: gridLayer }),
+        gridLayoutItemMixin({ layer: gridLayer }),
+        flexLayoutMixin({ layer: flexLayer }),
+        flexLayoutItemMixin({ layer: flexLayer }),
     ].join('\n');
 
     writeFile({ name: 'layoutMixins', fileData, config });

@@ -16,8 +16,9 @@
     "sideEffects": false,
     "types": "types",
     "bin": {
-        "gds-scss-tokens": "bin/scss/index.js",
-        "gds-tokens": "bin/index.js"
+        "gds-init": "bin/init.js",
+        "gds-tokens": "bin/index.js",
+        "gds-scss-tokens": "bin/scss/index.js"
     },
     "scripts": {
         "build": "run-s clear build:main",
@@ -32,6 +33,7 @@
         "storybook": "start-storybook -s ./public -p 3000 --ci",
         "storybook:build": "build-storybook -o docs -s ./public",
         "storybook:serve": "serve docs -l 8080",
+        "gds-init": "node bin/init.js",
         "tokens": "node bin/index.js",
         "scss-tokens": "node bin/scss/index.js",
         "tokens:dev": "node bin/index.js -c gds-dev.config.json",

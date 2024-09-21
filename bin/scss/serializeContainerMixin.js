@@ -17,6 +17,8 @@ const imports = ["@import './mixins.scss';", "@import './variables.scss';"].join
 
 async function serializeContainerMixin(config, tokens) {
     const { layout } = tokens;
+    const layer = config.scss.components?.container?.layer;
+
     const stylesByBreakpoints = Object.keys(layout.breakpoints).reduce((acc, breakpointKey, index, breakpointKeys) => {
         Object.keys(STYLES_ENUM).forEach((key) => {
             const value = layout[key][breakpointKey];
@@ -33,8 +35,11 @@ async function serializeContainerMixin(config, tokens) {
         const style = breakpointValue.join(' ');
         return `${acc} ${mediaQuery ? `${mediaQuery} { ${style} }` : style}`;
     }, '');
+
+    const cssClass = `.${TITLE} { ${styles} }`;
+
     const mixin = `@mixin container {
-        .${TITLE} { ${styles} }
+        ${layer ? `@layer ${layer} { ${cssClass} }` : cssClass}
     }`;
     const fileData = [imports, mixin].join('\n');
     writeFile({ name: 'containerMixin', fileData, config });
