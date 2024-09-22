@@ -2373,6 +2373,7 @@ __metadata:
     react: 18.3.1
     react-dom: 18.3.1
   bin:
+    gds-init: bin/init.js
     gds-scss-tokens: bin/scss/index.js
     gds-tokens: bin/index.js
   languageName: unknown
