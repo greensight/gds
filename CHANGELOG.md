@@ -1,3 +1,9 @@
+## 4.1.0 (September 22, 2024)
+
+-   Init functionality
+-   Gradients support
+-   Layer support for scss components
+
 ## 4.0.9 (August 3, 2024)
 
 -   Autokits are adapted to vite
