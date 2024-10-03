@@ -103,7 +103,7 @@ const gridLayoutItemMixin = ({ layer }) => {
         $properties: (
             (
                 'col': 'grid-column',
-                'row': 'grid-template-rows',
+                'row': 'grid-row',
                 'justify': 'justify-self',
                 'align': 'align-self',
                 'order': 'order',
