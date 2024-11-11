@@ -42,7 +42,7 @@ export const Color = ({ name, value }: ColorProps) => {
                     backgroundColor: value,
                     borderRadius: '24px 24px 24px 0px',
                     transition: 'box-shadow ease 300ms',
-                    ':focus.focus-visible': {
+                    ':focus-visible': {
                         outline: 'none',
                         boxShadow: `0 0 0 2px ${colors.grey0}`,
                     },

@@ -34,7 +34,7 @@ export const Shadow = ({ name, value }: ShadowProps) => {
                     borderRadius: '24px 24px 24px 0px',
                     boxShadow: value,
                     transition: 'box-shadow ease 300ms',
-                    ':focus.focus-visible': {
+                    ':focus-visible': {
                         outline: 'none',
                         boxShadow: `0 0 0 2px ${colors.grey0}`,
                     },

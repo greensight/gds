@@ -69,7 +69,6 @@
         "@tippyjs/react": "4.2.6",
         "chalk": "4.1.2",
         "deepmerge": "^4.3.1",
-        "focus-visible": "^5.2.0",
         "node-fetch-commonjs": "^3.3.2",
         "normalize.css": "8.0.1",
         "tippy.js": "6.3.7",

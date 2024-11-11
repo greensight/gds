@@ -2341,7 +2341,6 @@ __metadata:
     eslint-plugin-react: ^7.34.4
     eslint-plugin-react-hooks: ^4.6.2
     eslint-plugin-storybook: ^0.8.0
-    focus-visible: ^5.2.0
     husky: ^4.3.8
     lint-staged: ^15.2.7
     node-fetch-commonjs: ^3.3.2
@@ -10621,13 +10620,6 @@ __metadata:
     inherits: ^2.0.3
     readable-stream: ^2.3.6
   checksum: 42e07747f83bcd4e799da802e621d6039787749ffd41f5517f8c4f786ee967e31ba32b09f8b28a9c6f67bd4f5346772e604202df350e8d99f4141771bae31279
-  languageName: node
-  linkType: hard
-
-"focus-visible@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "focus-visible@npm:5.2.0"
-  checksum: 876f646ef453680d3d34e9f9b23961527ffd5ccaed8690f423d4fbfa37ff023d98a490972bc1387850e37ec2e44958c81f6096ef95b67462e5c4b5404cf1dbb9
   languageName: node
   linkType: hard
 

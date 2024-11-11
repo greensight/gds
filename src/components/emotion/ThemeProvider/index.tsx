@@ -1,5 +1,4 @@
 import { CSSObject, Global as EmotionGlobal, ThemeProvider as EmotionThemeProvider } from '@emotion/react';
-import 'focus-visible';
 import 'normalize.css';
 import React, { FC, useMemo } from 'react';
 
@@ -40,7 +39,7 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({ theme, children }) => {
                     outlineOffset: focus?.offset,
                     ...focus?.css,
                 },
-                '.js-focus-visible :focus:not(.focus-visible)': {
+                '.js-focus-visible :focus-visible': {
                     outline: 'none',
                 },
                 'html, body': {
