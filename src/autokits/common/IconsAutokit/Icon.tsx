@@ -35,7 +35,7 @@ export const Icon = ({ name, Component, path }: IconProps) => {
                     textAlign: 'center',
                     color: colors.black,
                     transition: 'border-color ease 300ms',
-                    ':hover, :focus.focus-visible': {
+                    ':hover, :focus-visible': {
                         borderColor: colors.grey0,
                         outline: 'none',
                     },

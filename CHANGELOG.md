@@ -1,3 +1,8 @@
+## 4.1.1 (November 11, 2024)
+
+- Removed .focus-visible polyfill; native browser support of :focus-visible is now available
+- Fixed collisions with some third-party analytics and search libraries
+
 ## 4.1.0 (September 22, 2024)
 
 -   Init functionality
