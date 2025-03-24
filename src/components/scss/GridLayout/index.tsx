@@ -1,4 +1,4 @@
-import React, { ElementType, useMemo } from 'react';
+import React, { ElementType, forwardRef, Ref, useMemo } from 'react';
 
 import cn from 'classnames';
 
@@ -17,18 +17,21 @@ const DEFAULT_COMPONENT = 'div';
 /**
  * Grid layout component
  */
-const GridLayout = <P extends ElementType = 'div'>({
-    as: ComponentProp,
-    cols = 12,
-    gap = scale(3),
-    rows,
-    justify,
-    align,
+const GridComponent = <P extends ElementType = 'div'>(
+    {
+        as: ComponentProp,
+        cols = 12,
+        gap = scale(3),
+        rows,
+        justify,
+        align,
 
-    className,
-    children,
-    ...props
-}: IGridLayoutProps<P>) => {
+        className,
+        children,
+        ...props
+    }: IGridLayoutProps<P>,
+    ref: Ref<P>,
+) => {
     const Component = ComponentProp || DEFAULT_COMPONENT;
 
     const {
@@ -79,10 +82,12 @@ const GridLayout = <P extends ElementType = 'div'>({
     });
 
     return (
-        <Component className={cn(styles.gridLayout, mediaStyles, className)} style={vars} {...props}>
+        <Component ref={ref} className={cn(styles.gridLayout, mediaStyles, className)} style={vars} {...props}>
             {children}
         </Component>
     );
 };
+
+const GridLayout = forwardRef(GridComponent) as typeof GridComponent;
 
 export { GridLayout };

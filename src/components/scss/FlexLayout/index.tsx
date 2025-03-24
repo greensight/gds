@@ -1,4 +1,4 @@
-import React, { ElementType, useMemo } from 'react';
+import React, { ElementType, forwardRef, Ref, useMemo } from 'react';
 
 import cn from 'classnames';
 
@@ -19,16 +19,10 @@ const DEFAULT_COMPONENT = 'div';
 /**
  * Flex layout component
  */
-const FlexLayout = <P extends ElementType = 'div'>({
-    as: ComponentProp,
-    gap = scale(3),
-    justify,
-    align,
-    className,
-    children,
-    wrap,
-    ...props
-}: IFlexLayoutProps<P>) => {
+const FlexComponent = <P extends ElementType = 'div'>(
+    { as: ComponentProp, gap = scale(3), justify, align, className, children, wrap, ...props }: IFlexLayoutProps<P>,
+    ref: Ref<P>,
+) => {
     const Component = ComponentProp || DEFAULT_COMPONENT;
     const {
         components: {
@@ -84,10 +78,12 @@ const FlexLayout = <P extends ElementType = 'div'>({
     });
 
     return (
-        <Component className={cn(styles.flexLayout, mediaStyles, className)} style={vars} {...props}>
+        <Component ref={ref} className={cn(styles.flexLayout, mediaStyles, className)} style={vars} {...props}>
             {children}
         </Component>
     );
 };
+
+const FlexLayout = forwardRef(FlexComponent) as typeof FlexComponent;
 
 export { FlexLayout };
