@@ -10,7 +10,7 @@ export const useAutokitsTheme = (): IAutokitsTheme => {
     const context = useContext(ThemeContext);
 
     if (!context) {
-        throw new Error(`Hook useScssTheme must be used within ScssThemeProvider`);
+        throw new Error(`Hook useAutokitsTheme must be used within AutokitsThemeProvider`);
     }
 
     return context;

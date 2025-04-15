@@ -1,8 +1,13 @@
 @import '../../../scss/index.scss';
 
 .iconsAutokit {
+    padding-top: gs(2);
+    @include bodyTypography;
+
     &_layout {
-        @include gridLayout(repeat(auto-fill, minmax(gs(18), 1fr)), gs(2));
+        display: flex;
+        flex-wrap: wrap;
+        gap: gs(2);
         margin-bottom: gs(2);
     }
 

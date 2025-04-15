@@ -1,8 +1,6 @@
 import deepmerge from 'deepmerge';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-import { typography } from '../../../helpers/emotion/typography';
-import { scale } from '../../../utils/common/scale';
 import { Icon } from './Icon';
 import styles from './styles.module.scss';
 import { UseBuilderMethodsType } from '../../../types/autokits/useBuilderMethods';
@@ -69,5 +67,5 @@ export const IconsAutokit = ({ useBuilderMethods, headingLevel = 2 }: IconsAutok
         );
     }
 
-    return <div css={{ ...typography('body'), paddingTop: scale(2) }}>{mapIcons(icons, headingLevel)}</div>;
+    return <div className={styles.iconsAutokit}>{mapIcons(icons, headingLevel)}</div>;
 };
