@@ -7,7 +7,12 @@ import { SVGRIcon } from '../../../types/Utils';
 import { scale } from '../../../utils/common/scale';
 import { useAutokitsTheme } from '../../../autokits';
 
-export interface IconProps {
+export interface IIconProperty {
+    background: string;
+    width: number;
+    height: number;
+}
+export interface IconProps extends Partial<IIconProperty> {
     /** Icon variable name. */
     name: string;
     /** Icon component. */
@@ -16,7 +21,7 @@ export interface IconProps {
     path: string;
 }
 
-export const Icon = ({ name, Component, path }: IconProps) => {
+export const Icon = ({ name, Component, path, background, width, height }: IconProps) => {
     const { colors } = useAutokitsTheme();
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -42,7 +47,7 @@ export const Icon = ({ name, Component, path }: IconProps) => {
                 }}
                 onClick={() => copyToClipboard(path)}
             >
-                <Component css={{ marginBottom: scale(1) }} />
+                <Component css={{ background, width, height, marginBottom: scale(1) }} />
                 <span css={{ display: 'flex' }}>{name}</span>
             </button>
         </Tooltip>
