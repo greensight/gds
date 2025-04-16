@@ -1,13 +1,31 @@
 {
     "name": "@greensight/gds",
-    "version": "4.1.8",
+    "version": "4.1.9",
     "description": "Greensight Design System",
     "keywords": [
         "GDS",
         "Greensight",
         "Design System"
     ],
-    "main": "./scss/esm/index.js",
+    "main": "./scss/cjs/index.js",
+    "module": "./scss/esm/index.js",
+    "exports": {
+        ".": {
+            "import": "./esm/index.js",
+            "require": "./cjs/index.js",
+            "types": "./types/index.d.ts"
+        },
+        "./autokits": {
+            "import": "./autokits/esm/index.js",
+            "require": "./autokits/cjs/index.js",
+            "types": "./types/autokits.d.ts"
+        },
+        "./emotion": {
+            "import": "./emotion/esm/index.js",
+            "require": "./emotion/cjs/index.js",
+            "types": "./types/emotion.d.ts"
+        }
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/greensight/gds.git"
