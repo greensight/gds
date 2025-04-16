@@ -6,22 +6,20 @@ import { typography } from '../../../helpers/emotion/typography';
 import { SVGRIcon } from '../../../types/Utils';
 import { scale } from '../../../utils/common/scale';
 import { useAutokitsTheme } from '../../../autokits';
+import { CSSObject } from '@emotion/react';
 
-export interface IIconProperty {
-    background: string;
-    width: number;
-    height: number;
-}
-export interface IconProps extends Partial<IIconProperty> {
+export interface IconProps {
     /** Icon variable name. */
     name: string;
     /** Icon component. */
     Component: SVGRIcon;
     /** Path to icon from icons directory. */
     path: string;
+    /** Icon css */
+    iconCSS?: CSSObject;
 }
 
-export const Icon = ({ name, Component, path, background, width, height }: IconProps) => {
+export const Icon = ({ name, Component, path, iconCSS = {} }: IconProps) => {
     const { colors } = useAutokitsTheme();
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -47,7 +45,7 @@ export const Icon = ({ name, Component, path, background, width, height }: IconP
                 }}
                 onClick={() => copyToClipboard(path)}
             >
-                <Component css={{ background, width, height, marginBottom: scale(1) }} />
+                <Component css={{ ...iconCSS, marginBottom: scale(1) }} />
                 <span css={{ display: 'flex' }}>{name}</span>
             </button>
         </Tooltip>

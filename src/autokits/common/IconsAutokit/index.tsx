@@ -1,17 +1,19 @@
 import deepmerge from 'deepmerge';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-import { Icon, IIconProperty } from './Icon';
+import { Icon } from './Icon';
 import styles from './styles.module.scss';
 import { UseBuilderMethodsType } from '../../../types/autokits/useBuilderMethods';
+import { CSSObject } from '@emotion/react';
 
 interface IIcons {
-    [key: string]: (IIconProperty & { Component: React.ReactNode; path: string }) | IIcons;
+    [key: string]: { Component: React.ReactNode; path: string; iconCSS: CSSObject } | IIcons;
 }
 
-interface IIconGeneralProperty extends Partial<IIconProperty> {
+interface IIconGeneralProperty {
     path: string;
     visible?: boolean;
+    iconCSS: CSSObject;
 }
 export interface IconsAutokitProps {
     /** Starting heading level. */
@@ -23,7 +25,7 @@ export interface IconsAutokitProps {
     /** icon properties */
     iconProperties?: IIconGeneralProperty[];
     /** properties for all icons */
-    propertiesForAllIcons?: IIconProperty;
+    propertiesForAllIcons?: { iconCSS: CSSObject };
 }
 
 /**
@@ -44,7 +46,7 @@ export const IconsAutokit = ({
         const matchRes = name.match(/\.\/(.+)\.svg$/);
         const fullPath = matchRes ? `${matchRes?.[0].slice(1)}` : name.replace('/src', '');
 
-        const { visible, ...iconProperty } = iconProperties.find(
+        const { visible = true, ...iconProperty } = iconProperties.find(
             (p) => p.path === fullPath.slice(0, p.path.length),
         ) || {
             visible: true,
