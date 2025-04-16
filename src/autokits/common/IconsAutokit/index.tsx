@@ -13,7 +13,7 @@ interface IIcons {
 interface IIconGeneralProperty {
     path: string;
     visible?: boolean;
-    iconCSS: CSSObject;
+    iconCSS?: CSSObject;
 }
 export interface IconsAutokitProps {
     /** Starting heading level. */
