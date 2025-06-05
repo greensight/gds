@@ -1,4 +1,6 @@
-@import '../../../scss/index.scss';
+@import '../../../scss/tokens/mixins';
+@import '../../../scss/tokens/variables';
+@import '../../../scss/tokens/functions';
 
 .layoutAutokit {
     display: flex;

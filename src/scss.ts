@@ -8,7 +8,9 @@ export { ScssThemeProvider as ThemeProvider } from './components/scss/ThemeProvi
 export { ThemeContext, useScssTheme } from './utils/scss/useTheme';
 
 export * from './components/scss/GridLayout/types';
+export * from './components/scss/GridLayout/components/Item/types';
 export * from './components/scss/FlexLayout/types';
+export * from './components/scss/FlexLayout/components/Item/types';
 export * from './components/scss/Container/types';
 export * from './components/scss/Section/types';
 export { scale } from './utils/common/scale';
