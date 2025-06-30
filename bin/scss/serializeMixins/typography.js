@@ -1,20 +1,30 @@
 const getKebabCaseFromCamel = (str) => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
-const getStyles = (styles) =>
-    Object.keys(styles).reduce((acc, styleKey) => {
+const getFontFamilyStyle = (styleValue, fontFamilies) => {
+    const configValue = fontFamilies[styleValue];
+    if (configValue) return `${configValue}, sans-serif`;
+    return `'${styleValue}', sans-serif`;
+};
+
+const getStyles = (styles, config) => {
+    const fontFamilies = config.scss.fontFamily || {};
+    return Object.keys(styles).reduce((acc, styleKey) => {
         const defaultStyleValue = styles[styleKey];
-        const styleValue = styleKey === 'fontFamily' ? `'${defaultStyleValue}', sans-serif` : defaultStyleValue;
+        const styleValue =
+            styleKey === 'fontFamily' ? getFontFamilyStyle(defaultStyleValue, fontFamilies) : defaultStyleValue;
+
         return `${acc}${getKebabCaseFromCamel(styleKey)}: ${styleValue};\n`;
     }, '');
+};
 
 const pxToRem = (px) => px / 16;
 
-const getTypographyMixin = (name, typographyStyles, breakpointsParam) => {
+const getTypographyMixin = ({ name, typographyStyles, breakpoints, config }) => {
     const styles = [];
 
-    const [maxVw, minVw] = breakpointsParam;
+    const [maxVw, minVw] = breakpoints;
     const mixinHead = `@mixin ${name}Typography {`;
-    const desktopStyles = getStyles(typographyStyles.desktop);
+    const desktopStyles = getStyles(typographyStyles.desktop, config);
     styles.push(...[mixinHead, desktopStyles]);
 
     if (typographyStyles.mobile) {
@@ -34,7 +44,7 @@ const getTypographyMixin = (name, typographyStyles, breakpointsParam) => {
             return acc;
         }, {});
 
-        const mobileStyles = `@media (max-width: ${minVw}px) { ${getStyles(mobileTypography)}}`;
+        const mobileStyles = `@media (max-width: ${minVw}px) { ${getStyles(mobileTypography, config)}}`;
 
         styles.push(...[tabletStyles, mobileStyles]);
     }

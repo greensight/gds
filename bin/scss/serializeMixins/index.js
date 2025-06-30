@@ -13,7 +13,7 @@ async function serializeMixins(config, tokens) {
         mediaMinMq(),
         mediaMq(),
         ...Object.entries(typography.styles).map(([key, value]) =>
-            getTypographyMixin(key, value, typography.breakpoints),
+            getTypographyMixin({ name: key, typographyStyles: value, breakpoints: typography.breakpoints, config }),
         ),
         getLayoutMixin(),
     ].join('\n');
