@@ -12,50 +12,50 @@ const helpers = [
     `@mixin cssProperty($propertyName, $propertyValue, $fn: defaultPropertyFn) {
         @if type-of($propertyValue) == 'map' {
             @each $size, $value in $propertyValue {
-                 @if $size == $defaultBreakpoint {
-                    @include getProperty($propertyName, call(get-function($fn), $value));
+                 @if $size == breakpoints.$defaultBreakpoint {
+                    @include getProperty($propertyName, meta.call(meta.get-function($fn), $value));
                 }
 
-                @if $size != $defaultBreakpoint {
-                    @include mq(map-get($breakpointList, $size)) {
-                        @include getProperty($propertyName, call(get-function($fn), $value));
+                @if $size != breakpoints.$defaultBreakpoint {
+                    @include mq(map.get(breakpoints.$breakpointList, $size)) {
+                        @include getProperty($propertyName, meta.call(meta.get-function($fn), $value));
                     }
                 }
             }
         } @else {
-            @include getProperty($propertyName, call(get-function($fn), $propertyValue));
+            @include getProperty($propertyName, meta.call(meta.get-function($fn), $propertyValue));
         }
     }`,
 ].join('\n');
 
 const funcsFormMixins = [
     `@function gridLayoutCellFn($property) {
-        @if type-of($property) == 'number' {
-            @if unit($property) == 'px' {
+        @if meta.type-of($property) == 'number' {
+            @if math.unit($property) == 'px' {
                 @return $property;
             } @else {
                 @return repeat($property, 1fr);
             }
         }
-        @if type-of($property) == 'list' {
+        @if meta.type-of($property) == 'list' {
             @return list.join($property, (), $separator: space);
         }
-        @if type-of($property) == 'string' {
+        @if meta.type-of($property) == 'string' {
             @return $property;
         }
         @return null;
     }`,
     `@function layoutGapFn($property) {
-        @if type-of($property) == 'string' {
+        @if meta.type-of($property) == 'string' {
             @return $property;
         }
-        @if type-of($property) == 'list' and length($property) == 2 {
+        @if meta.type-of($property) == 'list' and list.length($property) == 2 {
             @return list.join($property, (), $separator: space);
         }
         @return null;
     }`,
     `@function gridLayoutItemCellFn($property) {
-        @if type-of($property) == 'list' and length($property) == 2 {
+        @if meta.type-of($property) == 'list' and list.length($property) == 2 {
             @return #{list.nth($property, 1)} / #{list.nth($property, 2)};
         }
 

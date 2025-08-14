@@ -22,7 +22,7 @@ async function writeFile({ name, fileData, config, extension = 'scss' }) {
         ? { ...outsidePrettierConfig, parser: 'scss' }
         : DEFAULT_PRETTIER_CONFIG;
 
-    const fullScssDir = resolve(config.scss.dir);
+    const fullScssDir = resolve(config.scss?.dir);
     await fs.promises.mkdir(fullScssDir, { recursive: true });
     const file = await prettier.format(fileData, prettierConfig);
     try {

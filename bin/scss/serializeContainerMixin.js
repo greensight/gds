@@ -13,11 +13,11 @@ const STYLES_ENUM = Object.freeze({
     padding: (value) => getStyle('padding', `0 ${value}px`),
 });
 
-const imports = ["@import './mixins.scss';", "@import './variables.scss';"].join('\n');
+const imports = ["@use 'mixins';", "@use 'variables';"].join('\n');
 
 async function serializeContainerMixin(config, tokens) {
     const { layout } = tokens;
-    const layer = config.scss.components?.container?.layer;
+    const layer = config.scss?.components?.container?.layer;
 
     const stylesByBreakpoints = Object.keys(layout.breakpoints).reduce((acc, breakpointKey, index, breakpointKeys) => {
         Object.keys(STYLES_ENUM).forEach((key) => {
@@ -31,7 +31,7 @@ async function serializeContainerMixin(config, tokens) {
     }, {});
 
     const styles = Object.entries(stylesByBreakpoints).reduce((acc, [breakpointKey, breakpointValue]) => {
-        const mediaQuery = breakpointKey !== BREAKPOINT_MAX ? `@include mq($${breakpointKey})` : '';
+        const mediaQuery = breakpointKey !== BREAKPOINT_MAX ? `@include mixins.mq(variables.$${breakpointKey})` : '';
         const style = breakpointValue.join(' ');
         return `${acc} ${mediaQuery ? `${mediaQuery} { ${style} }` : style}`;
     }, '');

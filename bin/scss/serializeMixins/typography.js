@@ -7,7 +7,7 @@ const getFontFamilyStyle = (styleValue, fontFamilies) => {
 };
 
 const getStyles = (styles, config) => {
-    const fontFamilies = config.scss.fontFamily || {};
+    const fontFamilies = config.scss?.typography?.fontFamily || {};
     return Object.keys(styles).reduce((acc, styleKey) => {
         const defaultStyleValue = styles[styleKey];
         const styleValue =

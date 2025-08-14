@@ -1,0 +1,65 @@
+@use './mixins.scss' as typography;
+
+.buttonLg {
+    @include typography.buttonLgTypography;
+}
+
+.buttonMd {
+    @include typography.buttonMdTypography;
+}
+
+.buttonSm {
+    @include typography.buttonSmTypography;
+}
+
+.captionUppercase {
+    @include typography.captionUppercaseTypography;
+}
+
+.caption {
+    @include typography.captionTypography;
+}
+
+.smallBold {
+    @include typography.smallBoldTypography;
+}
+
+.small {
+    @include typography.smallTypography;
+}
+
+.bodyBold {
+    @include typography.bodyBoldTypography;
+}
+
+.body {
+    @include typography.bodyTypography;
+}
+
+.subheading {
+    @include typography.subheadingTypography;
+}
+
+.title {
+    @include typography.titleTypography;
+}
+
+.headline {
+    @include typography.headlineTypography;
+}
+
+.h4 {
+    @include typography.h4Typography;
+}
+
+.h3 {
+    @include typography.h3Typography;
+}
+
+.h2 {
+    @include typography.h2Typography;
+}
+
+.h1 {
+    @include typography.h1Typography;
+}

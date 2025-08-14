@@ -1,8 +1,8 @@
 @use 'sass:map';
 @use 'sass:list';
 @use 'sass:meta';
-@import './breakpoints.scss';
-@import './mixins.scss';
+@use 'breakpoints';
+@use 'mixins';
 
 @function getResponsiveProperty($var, $breakpoints...) {
     $property: var(--#{$var});
@@ -25,12 +25,12 @@
         #{$prop}: calcResponsiveProperty($var);
     }
 
-    @for $index from 1 to length($keys) {
-        $key: nth($keys, $index);
-        $value: map-get($breakpoints, $key);
+    @for $index from 1 to list.length($keys) {
+        $key: list.nth($keys, $index);
+        $value: map.get($breakpoints, $key);
 
         &__#{$key} {
-            @include mq($value) {
+            @include mixins.mq($value) {
                 @each $var, $prop in $properties {
                     #{$prop}: calcResponsiveProperty($var, $key);
                 }
@@ -42,15 +42,15 @@
 @mixin generateResponsiveProperty($var, $default, $keys) {
     --#{$var}: #{$default};
 
-    @for $index from 1 to length($keys) {
-        $key: nth($keys, $index);
+    @for $index from 1 to list.length($keys) {
+        $key: list.nth($keys, $index);
 
         @if $index == 1 {
             --#{$var}-#{$key}: var(--#{$var});
         }
 
         @if $index > 1 {
-            $prev: nth($keys, $index - 1);
+            $prev: list.nth($keys, $index - 1);
 
             @if $prev != false {
                 --#{$var}-#{$key}: var(--#{$var}-#{$prev});
@@ -82,7 +82,7 @@
 
     .gridLayout {
         display: grid;
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }
 }
 @mixin gridLayoutItem {
@@ -97,7 +97,7 @@
     );
 
     .gridLayoutItem {
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }
 }
 
@@ -113,7 +113,7 @@
 
     .flexLayout {
         display: flex;
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }
 }
 
@@ -126,6 +126,6 @@
         )
     );
     .flexLayoutItem {
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }
 }

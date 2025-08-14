@@ -4,8 +4,8 @@ const imports = [
     "@use 'sass:map';",
     "@use 'sass:list';",
     "@use 'sass:meta';",
-    "@import './breakpoints.scss';",
-    "@import './mixins.scss';",
+    "@use 'breakpoints';",
+    "@use 'mixins';",
 ].join('\n');
 
 const helpers = `
@@ -30,12 +30,12 @@ const helpers = `
         #{$prop}: calcResponsiveProperty($var);
     }
 
-    @for $index from 1 to length($keys) {
-        $key: nth($keys, $index);
-        $value: map-get($breakpoints, $key);
+    @for $index from 1 to list.length($keys) {
+        $key: list.nth($keys, $index);
+        $value: map.get($breakpoints, $key);
 
         &__#{$key} {
-            @include mq($value) {
+            @include mixins.mq($value) {
                 @each $var, $prop in $properties {
                     #{$prop}: calcResponsiveProperty($var, $key);
                 }
@@ -47,15 +47,15 @@ const helpers = `
 @mixin generateResponsiveProperty($var, $default, $keys) {
     --#{$var}: #{$default};
 
-    @for $index from 1 to length($keys) {
-        $key: nth($keys, $index);
+    @for $index from 1 to list.length($keys) {
+        $key: list.nth($keys, $index);
 
         @if $index == 1 {
             --#{$var}-#{$key}: var(--#{$var});
         }
 
         @if $index > 1 {
-            $prev: nth($keys, $index - 1);
+            $prev: list.nth($keys, $index - 1);
 
             @if $prev != false {
                 --#{$var}-#{$key}: var(--#{$var}-#{$prev});
@@ -78,7 +78,7 @@ const helpers = `
 const gridLayoutMixin = ({ layer }) => {
     const cssClass = `.gridLayout {
         display: grid;
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }`;
     return `@mixin gridLayout {
         $properties: (
@@ -97,7 +97,7 @@ const gridLayoutMixin = ({ layer }) => {
 
 const gridLayoutItemMixin = ({ layer }) => {
     const cssClass = `.gridLayoutItem {
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }`;
     return `@mixin gridLayoutItem {
         $properties: (
@@ -118,7 +118,7 @@ const gridLayoutItemMixin = ({ layer }) => {
 const flexLayoutMixin = ({ layer }) => {
     const cssClass = `.flexLayout {
         display: flex;
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }`;
 
     return `
@@ -139,7 +139,7 @@ const flexLayoutMixin = ({ layer }) => {
 
 const flexLayoutItemMixin = ({ layer }) => {
     const cssClass = `.flexLayoutItem {
-        @include generateResponsiveProperties($breakpointList, $properties);
+        @include generateResponsiveProperties(breakpoints.$breakpointList, $properties);
     }`;
 
     return `
@@ -157,8 +157,8 @@ const flexLayoutItemMixin = ({ layer }) => {
 };
 
 const serializeLayoutMixins = (config) => {
-    const gridLayer = config.scss.components?.gridLayout?.layer;
-    const flexLayer = config.scss.components?.flexLayout?.layer;
+    const gridLayer = config.scss?.components?.gridLayout?.layer;
+    const flexLayer = config.scss?.components?.flexLayout?.layer;
     const fileData = [
         imports,
         helpers,

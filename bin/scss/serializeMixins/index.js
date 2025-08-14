@@ -3,7 +3,13 @@ const { mediaMq, mediaMinMq } = require('./media');
 const { getTypographyMixin } = require('./typography');
 const { getLayoutMixin } = require('./layout');
 
-const imports = ["@use 'sass:map';", "@use 'sass:list';", "@import './breakpoints.scss';"].join('\n');
+const imports = [
+    "@use 'sass:map';",
+    "@use 'sass:list';",
+    "@use 'sass:math';",
+    "@use 'sass:meta';",
+    "@use 'breakpoints';",
+].join('\n');
 
 async function serializeMixins(config, tokens) {
     const { typography } = tokens;
