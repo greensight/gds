@@ -10,7 +10,7 @@ const helpers = [
         }`,
 
     `@mixin cssProperty($propertyName, $propertyValue, $fn: defaultPropertyFn) {
-        @if type-of($propertyValue) == 'map' {
+        @if meta.type-of($propertyValue) == 'map' {
             @each $size, $value in $propertyValue {
                  @if $size == breakpoints.$defaultBreakpoint {
                     @include getProperty($propertyName, meta.call(meta.get-function($fn), $value));
