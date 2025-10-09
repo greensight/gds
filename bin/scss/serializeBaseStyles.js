@@ -1,7 +1,9 @@
 const writeFile = require('./writeFile');
 
 function serializeBaseStyles(config) {
-    const fileData = `*,
+    const layer = config.scss?.styles?.base?.layer;
+
+    const styles = `*,
     ::before,
     ::after {
         box-sizing: border-box;
@@ -60,6 +62,9 @@ function serializeBaseStyles(config) {
         padding: 0;
         border: none;
     }`;
+
+    const fileData = `${layer ? `@layer ${layer} { ${styles} }` : styles}`;
+
     writeFile({ name: 'base', fileData, config });
 }
 
